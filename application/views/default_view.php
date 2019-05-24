@@ -16,11 +16,31 @@
     <!-- Bootstrap Core Css -->
     <link href="<?php echo(base_url());?>assets/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
 
+    <!-- noUISlider Css -->
+    <link href="<?php echo(base_url());?>assets/plugins/nouislider/nouislider.min.css" rel="stylesheet" />
+
     <!-- Waves Effect Css -->
     <link href="<?php echo(base_url());?>assets/plugins/node-waves/waves.css" rel="stylesheet" />
 
     <!-- Animation Css -->
     <link href="<?php echo(base_url());?>assets/plugins/animate-css/animate.css" rel="stylesheet" />
+
+    <!-- Colorpicker Css -->
+    <link href="<?php echo(base_url());?>assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" rel="stylesheet" />
+
+    <!-- Dropzone Css -->
+    <link href="<?php echo(base_url());?>assets/plugins/dropzone/dropzone.css" rel="stylesheet">
+
+    <!-- Multi Select Css -->
+    <link href="<?php echo(base_url());?>assets/plugins/multi-select/css/multi-select.css" rel="stylesheet">
+    
+    <!-- Bootstrap Tagsinput Css -->
+    <link href="<?php echo(base_url());?>assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet">
+
+    <!-- Bootstrap Select Css -->
+    <link href="<?php echo(base_url());?>assets/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+
+    
 
     <!-- Morris Chart Css-->
     <link href="<?php echo(base_url());?>assets/plugins/morrisjs/morris.css" rel="stylesheet" />
@@ -30,6 +50,57 @@
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="<?php echo(base_url());?>assets/css/themes/all-themes.css" rel="stylesheet" />
+
+    
+    
+
+    <style>
+        .dropdown-submenu {
+            position: relative;
+        }
+
+        .dropdown-submenu>.dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-top: 10px !important;
+            margin-left: -1px;
+            padding: 10px;
+        }
+
+        .dropdown-submenu:hover>.dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-submenu>a:after {
+            display: block;
+            content: " ";
+            float: right;
+            width: 0;
+            height: 0;
+            border-color: transparent;
+            border-style: solid;
+            border-width: 5px 0 5px 5px;
+            border-left-color: #ccc;
+            margin-top: 5px;
+            margin-right: -10px;
+        }
+
+        .dropdown-submenu:hover>a:after {
+            border-left-color: #fff;
+        }
+
+        .dropdown-submenu.pull-left {
+            float: none;
+        }
+
+        .dropdown-submenu.pull-left>.dropdown-menu {
+            left: -100%;
+            margin-left: 10px;
+            -webkit-border-radius: 6px 0 6px 6px;
+            -moz-border-radius: 6px 0 6px 6px;
+            border-radius: 6px 0 6px 6px;
+        }
+    </style>
 </head>
 
 <body class="theme-red">
@@ -65,207 +136,78 @@
     </div>
     <!-- #END# Search Bar -->
     <!-- Top Bar -->
-    <nav class="navbar">
+    <nav class="navbar ">
         <div class="container-fluid">
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="index.html">PMS</a>
-            </div>
+                <a class="navbar-brand" href="<?php echo(base_url());?>dashboard">PMS</a>
+
+            </div>            
             <div class="collapse navbar-collapse" id="navbar-collapse">
+                
+                 <ul class="nav navbar-nav mr-auto">
+                  
+        <?php  if(sizeof($leftmenu)>0)
+		{
+			//pre($leftmenu);
+			foreach($leftmenu as $firstlevel)
+			{
+				if(sizeof($firstlevel['secondLevelMenu'])>0)
+				{ ?>
+					
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $firstlevel['FirstLevelMenuData']->menu_name; ?><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+
+                            <?php 
+							foreach($firstlevel['secondLevelMenu'] as $second_lvl)
+							{
+								if(sizeof($second_lvl['thirdLevelMenu'])>0){	
+						    ?>
+
+                            <li class="dropdown-submenu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $second_lvl['secondLevelMenuData']->menu_name; ?></a>
+                                <ul class="dropdown-menu">
+                                    <?php 
+                                        foreach($second_lvl['thirdLevelMenu'] as $third_lvl){ 
+                                    ?>                                    
+                                        <li><a href="<?php echo base_url().$third_lvl['thirdLevelMenuData']->menu_link; ?>"><?php echo $third_lvl['thirdLevelMenuData']->menu_name; ?></a></li>
+                                    <?php 
+                                         }
+                                    ?>
+                                </ul>                            
+                            </li>
+
+                            <?php 
+								}else{
+									echo '<li><a href="'.base_url().$second_lvl['secondLevelMenuData']->menu_link.'">'.$second_lvl['secondLevelMenuData']->menu_name.'</a></li>';
+								}
+							}
+						?>
+
+                        </ul>
+                    </li>                       
+						
+						
+						
+			<?php
+						
+				}
+				else
+				{
+					echo '<li><a href="'.base_url().$firstlevel['FirstLevelMenuData']->menu_link.'">'.$firstlevel['FirstLevelMenuData']->menu_name.'</a></li>';
+				}
+				
+			}
+		}
+		
+		?>
+        </ul> 
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Call Search -->
                     <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li>
-                    <!-- #END# Call Search -->
-                    <!-- Notifications -->
-                   <!--  <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                            <i class="material-icons">notifications</i>
-                            <span class="label-count">7</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">NOTIFICATIONS</li>
-                            <li class="body">
-                                <ul class="menu">
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <div class="icon-circle bg-light-green">
-                                                <i class="material-icons">person_add</i>
-                                            </div>
-                                            <div class="menu-info">
-                                                <h4>12 new members joined</h4>
-                                                <p>
-                                                    <i class="material-icons">access_time</i> 14 mins ago
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <div class="icon-circle bg-cyan">
-                                                <i class="material-icons">add_shopping_cart</i>
-                                            </div>
-                                            <div class="menu-info">
-                                                <h4>4 sales made</h4>
-                                                <p>
-                                                    <i class="material-icons">access_time</i> 22 mins ago
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <div class="icon-circle bg-red">
-                                                <i class="material-icons">delete_forever</i>
-                                            </div>
-                                            <div class="menu-info">
-                                                <h4><b>Nancy Doe</b> deleted account</h4>
-                                                <p>
-                                                    <i class="material-icons">access_time</i> 3 hours ago
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <div class="icon-circle bg-orange">
-                                                <i class="material-icons">mode_edit</i>
-                                            </div>
-                                            <div class="menu-info">
-                                                <h4><b>Nancy</b> changed name</h4>
-                                                <p>
-                                                    <i class="material-icons">access_time</i> 2 hours ago
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <div class="icon-circle bg-blue-grey">
-                                                <i class="material-icons">comment</i>
-                                            </div>
-                                            <div class="menu-info">
-                                                <h4><b>John</b> commented your post</h4>
-                                                <p>
-                                                    <i class="material-icons">access_time</i> 4 hours ago
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <div class="icon-circle bg-light-green">
-                                                <i class="material-icons">cached</i>
-                                            </div>
-                                            <div class="menu-info">
-                                                <h4><b>John</b> updated status</h4>
-                                                <p>
-                                                    <i class="material-icons">access_time</i> 3 hours ago
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <div class="icon-circle bg-purple">
-                                                <i class="material-icons">settings</i>
-                                            </div>
-                                            <div class="menu-info">
-                                                <h4>Settings updated</h4>
-                                                <p>
-                                                    <i class="material-icons">access_time</i> Yesterday
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="footer">
-                                <a href="javascript:void(0);">View All Notifications</a>
-                            </li>
-                        </ul>
-                    </li> -->
-                    
-                    <!-- #END# Notifications -->
-
-                    <!-- Tasks -->
-               <!--      <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                            <i class="material-icons">flag</i>
-                            <span class="label-count">9</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">TASKS</li>
-                            <li class="body">
-                                <ul class="menu tasks">
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <h4>
-                                                Footer display issue
-                                                <small>32%</small>
-                                            </h4>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-pink" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 32%">
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <h4>
-                                                Make new buttons
-                                                <small>45%</small>
-                                            </h4>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-cyan" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <h4>
-                                                Create new dashboard
-                                                <small>54%</small>
-                                            </h4>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-teal" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 54%">
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <h4>
-                                                Solve transition issue
-                                                <small>65%</small>
-                                            </h4>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-orange" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 65%">
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <h4>
-                                                Answer GitHub questions
-                                                <small>92%</small>
-                                            </h4>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-purple" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 92%">
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="footer">
-                                <a href="javascript:void(0);">View All Tasks</a>
-                            </li>
-                        </ul>
-                    </li> -->
-                    <!-- #END# Tasks -->
+                  
                     <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
                 </ul>
             </div>
@@ -454,6 +396,12 @@
     <!-- Waves Effect Plugin Js -->
     <script src="<?php echo(base_url());?>assets/plugins/node-waves/waves.js"></script>
 
+     <!-- Autosize Plugin Js -->
+     <script src="<?php echo(base_url());?>assets/plugins/autosize/autosize.js"></script>
+
+    <!-- Moment Plugin Js -->
+    <script src="<?php echo(base_url());?>assets/plugins/momentjs/moment.js"></script>
+
     <!-- Jquery CountTo Plugin Js -->
     <script src="<?php echo(base_url());?>assets/plugins/jquery-countto/jquery.countTo.js"></script>
 
@@ -471,12 +419,42 @@
     <script src="<?php echo(base_url());?>assets/plugins/flot-charts/jquery.flot.categories.js"></script>
     <script src="<?php echo(base_url());?>assets/plugins/flot-charts/jquery.flot.time.js"></script>
 
+    <!-- Bootstrap Colorpicker Js -->
+    <script src="<?php echo(base_url());?>assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+
+     <!-- Dropzone Plugin Js -->
+     <script src="<?php echo(base_url());?>assets/plugins/dropzone/dropzone.js"></script>
+
+    <!-- Input Mask Plugin Js -->
+    <script src="<?php echo(base_url());?>assets/plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
+
+    <!-- Multi Select Plugin Js -->
+    <script src="<?php echo(base_url());?>assets/plugins/multi-select/js/jquery.multi-select.js"></script>
+
+    
+    <!-- noUISlider Plugin Js -->
+    <script src="<?php echo(base_url());?>assets/plugins/nouislider/nouislider.js"></script>
+
+    <!-- Bootstrap Tags Input Plugin Js -->
+    <script src="<?php echo(base_url());?>assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+
     <!-- Sparkline Chart Plugin Js -->
     <script src="<?php echo(base_url());?>assets/plugins/jquery-sparkline/jquery.sparkline.js"></script>
+
+    <!-- Bootstrap Material Datetime Picker Plugin Js -->
+    <script src="<?php echo(base_url());?>assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+
+    <!-- Bootstrap Datepicker Plugin Js -->
+    <script src="<?php echo(base_url());?>assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 
     <!-- Custom Js -->
     <script src="<?php echo(base_url());?>assets/js/admin.js"></script>
     <script src="<?php echo(base_url());?>assets/js/pages/index.js"></script>
+    <script src="<?php echo(base_url());?>assets/js/pages/forms/basic-form-elements.js"></script>
+    <script src="<?php echo(base_url());?>assets/js/pages/forms/advanced-form-elements.js"></script>
+
+    
+    
 
     <!-- Demo Js -->
     <script src="<?php echo(base_url());?>assets/js/demo.js"></script>

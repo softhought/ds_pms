@@ -14,7 +14,7 @@ if ( ! function_exists('createbody_method'))
 	 $CI->load->library('template');
 	 /* leftmenu */
 	
-	 $left_menu = $CI->menumodel->getAllAdministrativeMenu('admin_menu_master');
+	 $left_menu = $CI->menumodel->getAllAdministrativeMenu('menu_master');
 
 
 	 $data['bodyview'] = $body_content_page;

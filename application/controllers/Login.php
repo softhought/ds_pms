@@ -45,7 +45,7 @@ class Login extends CI_Controller {
               
                $user_id = $this->login->checkLogin($username,$password,$clinic_id);
 
-                
+                //exit;
 
                 if($user_id!=""){
                     $user = $this->login->get_user($user_id);
@@ -60,12 +60,12 @@ class Login extends CI_Controller {
                  redirect('dashboard');
                     
                 }else{
-                    // $this->session->set_flashdata('msg','<div class="error-login">Invalid username or password</div>');
-                     //redirect('login');
-                      $schoolList['cliniclist']= $this->login->getAllClinic();
+                     $this->session->set_flashdata('msg','<div class="error-login">Invalid username or password</div>');
+                    // redirect('login');
+                      $cliniclist['cliniclist']= $this->login->getAllClinic();
                    
-                   // $page="login/login";
-                   // $this->load->view($page,$schoolList);    
+                    $page="login/login";
+                    $this->load->view($page,$cliniclist);    
 
                 }
                        //echo('success');
