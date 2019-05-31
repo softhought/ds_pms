@@ -8,6 +8,7 @@ class Commondatamodel extends CI_Model{
             $this->db->trans_begin();
 
             $this->db->insert($table, $data);
+           
             $lastinsert_id = $this->db->insert_id();
 
             if ($this->db->trans_status() === FALSE) {

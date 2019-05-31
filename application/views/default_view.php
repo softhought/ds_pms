@@ -45,11 +45,122 @@
     <!-- Morris Chart Css-->
     <link href="<?php echo(base_url());?>assets/plugins/morrisjs/morris.css" rel="stylesheet" />
 
+    <!-- Sweet Alert Css -->
+    <link href="<?php echo(base_url());?>assets/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+
     <!-- Custom Css -->
     <link href="<?php echo(base_url());?>assets/css/style.css" rel="stylesheet">
+    <link href="<?php echo(base_url());?>assets/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="<?php echo(base_url());?>assets/css/themes/all-themes.css" rel="stylesheet" />
+
+    <!-- JQuery DataTable Css -->
+    <link href="<?php echo(base_url());?>assets/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
+    
+
+
+        <!-- Jquery Core Js -->
+    <script src="<?php echo(base_url());?>assets/plugins/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core Js -->
+    <script src="<?php echo(base_url());?>assets/plugins/bootstrap/js/bootstrap.js"></script>
+
+    <!-- Select Plugin Js -->
+    <script src="<?php echo(base_url());?>assets/plugins/bootstrap-select/js/bootstrap-select.js"></script>
+
+    <!-- Slimscroll Plugin Js -->
+    <script src="<?php echo(base_url());?>assets/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+
+    <!-- Jquery Validation Plugin Css -->
+    <script src="<?php echo(base_url());?>assets/plugins/jquery-validation/jquery.validate.js"></script>
+
+    <!-- JQuery Steps Plugin Js -->
+    <script src="<?php echo(base_url());?>assets/plugins/jquery-steps/jquery.steps.js"></script>
+
+    <!-- Waves Effect Plugin Js -->
+    <script src="<?php echo(base_url());?>assets/plugins/node-waves/waves.js"></script>
+
+     <!-- Autosize Plugin Js -->
+     <script src="<?php echo(base_url());?>assets/plugins/autosize/autosize.js"></script>
+
+     <!-- Sweet Alert Plugin Js -->
+    <script src="<?php echo(base_url());?>assets/plugins/sweetalert/sweetalert.min.js"></script>
+
+    <!-- Moment Plugin Js -->
+    <script src="<?php echo(base_url());?>assets/plugins/momentjs/moment.js"></script>
+
+    <!-- Jquery CountTo Plugin Js -->
+    <script src="<?php echo(base_url());?>assets/plugins/jquery-countto/jquery.countTo.js"></script>
+
+    <!-- Morris Plugin Js -->
+    <script src="<?php echo(base_url());?>assets/plugins/raphael/raphael.min.js"></script>
+    <script src="<?php echo(base_url());?>assets/plugins/morrisjs/morris.js"></script>
+
+    <!-- ChartJs -->
+    <script src="<?php echo(base_url());?>assets/plugins/chartjs/Chart.bundle.js"></script>
+
+    <!-- Flot Charts Plugin Js -->
+    <script src="<?php echo(base_url());?>assets/plugins/flot-charts/jquery.flot.js"></script>
+    <script src="<?php echo(base_url());?>assets/plugins/flot-charts/jquery.flot.resize.js"></script>
+    <script src="<?php echo(base_url());?>assets/plugins/flot-charts/jquery.flot.pie.js"></script>
+    <script src="<?php echo(base_url());?>assets/plugins/flot-charts/jquery.flot.categories.js"></script>
+    <script src="<?php echo(base_url());?>assets/plugins/flot-charts/jquery.flot.time.js"></script>
+
+    <!-- Bootstrap Colorpicker Js -->
+    <script src="<?php echo(base_url());?>assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+
+     <!-- Dropzone Plugin Js -->
+     <script src="<?php echo(base_url());?>assets/plugins/dropzone/dropzone.js"></script>
+
+    <!-- Input Mask Plugin Js -->
+    <script src="<?php echo(base_url());?>assets/plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
+
+    <!-- Multi Select Plugin Js -->
+    <script src="<?php echo(base_url());?>assets/plugins/multi-select/js/jquery.multi-select.js"></script>
+
+    
+    <!-- noUISlider Plugin Js -->
+   <!--  <script src="<?php echo(base_url());?>assets/plugins/nouislider/nouislider.js"></script> -->
+
+    <!-- Bootstrap Tags Input Plugin Js -->
+    <script src="<?php echo(base_url());?>assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+
+    <!-- Sparkline Chart Plugin Js -->
+    <script src="<?php echo(base_url());?>assets/plugins/jquery-sparkline/jquery.sparkline.js"></script>
+
+    <!-- Bootstrap Material Datetime Picker Plugin Js -->
+    <script src="<?php echo(base_url());?>assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+
+    <!-- Bootstrap Datepicker Plugin Js -->
+    <script src="<?php echo(base_url());?>assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+
+    <!-- Custom Js -->
+    <script src="<?php echo(base_url());?>assets/js/admin.js"></script>
+    <script src="<?php echo(base_url());?>assets/js/pages/forms/form-wizard.js"></script>
+    <script src="<?php echo(base_url());?>assets/js/bootstrap-material-datetimepicker.js"></script>
+    <script src="<?php echo(base_url());?>assets/js/pages/index.js"></script>
+    <script src="<?php echo(base_url());?>assets/js/pages/forms/basic-form-elements.js"></script>
+
+  <!--   <script src="<?php echo(base_url());?>assets/js/pages/forms/advanced-form-elements.js"></script> -->
+
+
+      <!-- Jquery DataTable Plugin Js -->
+    <script src="<?php echo(base_url());?>assets/plugins/jquery-datatable/jquery.dataTables.js"></script>
+    <script src="<?php echo(base_url());?>assets/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+    <script src="<?php echo(base_url());?>assets/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+    <script src="<?php echo(base_url());?>assets/plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
+    <script src="<?php echo(base_url());?>assets/plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
+    <script src="<?php echo(base_url());?>assets/plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
+    <script src="<?php echo(base_url());?>assets/plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
+    <script src="<?php echo(base_url());?>assets/plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
+    <script src="<?php echo(base_url());?>assets/plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
+
+    
+    
+
+    <!-- Demo Js -->
+    <script src="<?php echo(base_url());?>assets/js/demo.js"></script>
 
     
     
@@ -208,7 +319,7 @@
                     <!-- Call Search -->
                     <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li>
                   
-                    <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
+                   <!--  <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li> -->
                 </ul>
             </div>
         </div>
@@ -221,7 +332,7 @@
 
         <!-- #END# Left Sidebar -->
 
-
+  <input type="hidden" value="<?php echo base_url();?>" id="basepath" readonly />
 
         <!-- Right Sidebar -->
         <aside id="rightsidebar" class="right-sidebar">
@@ -380,84 +491,104 @@
   </div>
 
 
-
-    <!-- Jquery Core Js -->
-    <script src="<?php echo(base_url());?>assets/plugins/jquery/jquery.min.js"></script>
-
-    <!-- Bootstrap Core Js -->
-    <script src="<?php echo(base_url());?>assets/plugins/bootstrap/js/bootstrap.js"></script>
-
-    <!-- Select Plugin Js -->
-    <script src="<?php echo(base_url());?>assets/plugins/bootstrap-select/js/bootstrap-select.js"></script>
-
-    <!-- Slimscroll Plugin Js -->
-    <script src="<?php echo(base_url());?>assets/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
-
-    <!-- Waves Effect Plugin Js -->
-    <script src="<?php echo(base_url());?>assets/plugins/node-waves/waves.js"></script>
-
-     <!-- Autosize Plugin Js -->
-     <script src="<?php echo(base_url());?>assets/plugins/autosize/autosize.js"></script>
-
-    <!-- Moment Plugin Js -->
-    <script src="<?php echo(base_url());?>assets/plugins/momentjs/moment.js"></script>
-
-    <!-- Jquery CountTo Plugin Js -->
-    <script src="<?php echo(base_url());?>assets/plugins/jquery-countto/jquery.countTo.js"></script>
-
-    <!-- Morris Plugin Js -->
-    <script src="<?php echo(base_url());?>assets/plugins/raphael/raphael.min.js"></script>
-    <script src="<?php echo(base_url());?>assets/plugins/morrisjs/morris.js"></script>
-
-    <!-- ChartJs -->
-    <script src="<?php echo(base_url());?>assets/plugins/chartjs/Chart.bundle.js"></script>
-
-    <!-- Flot Charts Plugin Js -->
-    <script src="<?php echo(base_url());?>assets/plugins/flot-charts/jquery.flot.js"></script>
-    <script src="<?php echo(base_url());?>assets/plugins/flot-charts/jquery.flot.resize.js"></script>
-    <script src="<?php echo(base_url());?>assets/plugins/flot-charts/jquery.flot.pie.js"></script>
-    <script src="<?php echo(base_url());?>assets/plugins/flot-charts/jquery.flot.categories.js"></script>
-    <script src="<?php echo(base_url());?>assets/plugins/flot-charts/jquery.flot.time.js"></script>
-
-    <!-- Bootstrap Colorpicker Js -->
-    <script src="<?php echo(base_url());?>assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
-
-     <!-- Dropzone Plugin Js -->
-     <script src="<?php echo(base_url());?>assets/plugins/dropzone/dropzone.js"></script>
-
     <!-- Input Mask Plugin Js -->
     <script src="<?php echo(base_url());?>assets/plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
 
-    <!-- Multi Select Plugin Js -->
-    <script src="<?php echo(base_url());?>assets/plugins/multi-select/js/jquery.multi-select.js"></script>
 
+
+
+    <!-- Success Modal-->
+<div class="modal fade sucesssModal" id="suceessmodal">
+         <div class="modal-dialog" style="width:25%;margin-top: 150px;">
+           <div class="modal-content">
+             <div class="modal-header">
+                <p class=" responsemsg" id="responsemsg"></p>
+             </div>
+             <div class="modal-body">
+                <h4 class="modal-title">What do you want to do?</h4>
+             </div>
+             <div class="modal-footer">
+                <a href="<?php echo base_url();?>dashboard" class="btn bg-orange waves-effect">Dashboard</a>
+               <a href="javascript:;" class="btn bg-pink waves-effect" style="" id="response_add_more"> + Add More</a>
+               <a href="javascript;" class="btn bg-purple waves-effect" id="response_list_view">Go to List</a>
+             </div>
+           </div>
+           <!-- /.modal-content -->
+         </div>
+         <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+<!-- end success modal-->
+
+<!--  modal  success -->
+<div class="modal modal-success fade" id="modal-success" style="display: none;">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+              <!-- <a href="javascript;" id="redirectToListsuccess" class="close"  aria-label="Close">
+                  <span aria-hidden="true">×</span></a> -->
+                <!-- <h4 class="modal-title">Success Modal</h4> -->
+              </div>
+              <div class="modal-body">
+              <h3 id="appendBody"></h3>
+              </div>
+              <div class="modal-footer">
+              <a href="javascript;" id="redirectToListsuccess" class="btn btn-outline pull-left">Close</a>
+              
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+    <!-- /modal -->
+
+<script type="text/javascript">
+
+ function numericFilter(txb) {
+   txb.value = txb.value.replace(/[^\0-9]/ig, "");
+}
+
+ function setActiveStatus(uid,status,path)
+{
     
-    <!-- noUISlider Plugin Js -->
-    <script src="<?php echo(base_url());?>assets/plugins/nouislider/nouislider.js"></script>
+    $.ajax({
+            type: "POST",
+            url:  path,
+            data: {uid:uid,setstatus:status},
+            dataType: 'json',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
+            success: function (result) {
+                if(result.msg_status=1)
+                {
+                    location.reload();
+                }
+                
+            }, 
+            error: function (jqXHR, exception) {
+                var msg = '';
+                if (jqXHR.status === 0) {
+                    msg = 'Not connect.\n Verify Network.';
+                } else if (jqXHR.status == 404) {
+                    msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status == 500) {
+                    msg = 'Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
+                    msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                    msg = 'Time out error.';
+                } else if (exception === 'abort') {
+                    msg = 'Ajax request aborted.';
+                } else {
+                        msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                    }
+                alert(msg);  
+                }
+        }); 
+}
 
-    <!-- Bootstrap Tags Input Plugin Js -->
-    <script src="<?php echo(base_url());?>assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+</script>
 
-    <!-- Sparkline Chart Plugin Js -->
-    <script src="<?php echo(base_url());?>assets/plugins/jquery-sparkline/jquery.sparkline.js"></script>
-
-    <!-- Bootstrap Material Datetime Picker Plugin Js -->
-    <script src="<?php echo(base_url());?>assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
-
-    <!-- Bootstrap Datepicker Plugin Js -->
-    <script src="<?php echo(base_url());?>assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-
-    <!-- Custom Js -->
-    <script src="<?php echo(base_url());?>assets/js/admin.js"></script>
-    <script src="<?php echo(base_url());?>assets/js/pages/index.js"></script>
-    <script src="<?php echo(base_url());?>assets/js/pages/forms/basic-form-elements.js"></script>
-    <script src="<?php echo(base_url());?>assets/js/pages/forms/advanced-form-elements.js"></script>
-
-    
-    
-
-    <!-- Demo Js -->
-    <script src="<?php echo(base_url());?>assets/js/demo.js"></script>
 </body>
 
 </html>

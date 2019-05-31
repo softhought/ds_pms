@@ -2501,7 +2501,7 @@ section.content {
     top: 3px; }
   .btn:not(.btn-link):not(.btn-circle) span {
     position: relative;
-    top: -2px;
+   # top: -2px;
     margin-left: 3px; }
 
 .btn-warning,
@@ -6200,7 +6200,7 @@ fieldset[disabled] .form-control {
   -moz-border-radius: 0;
   -ms-border-radius: 0;
   border-radius: 0;
-  overflow-y: auto; }
+  #overflow-y: auto; }
   .wizard .content .body {
     padding: 15px; }
 
@@ -8220,3 +8220,172 @@ html.ie11 .bs-searchbox .form-control {
 .mediumContainerCenter {
   margin: 127px 221px 0 221px !important;
 }
+
+
+
+
+/*---------------------------- Custome css -----------------------------------------------*/
+
+.form_error {
+    color: #fff;
+    font-weight: 600;
+    background: #f84f4f;
+    padding: 5px;
+    border-radius: 4px;
+    text-indent: 13px;
+    display: none;
+}
+
+.head_title{
+  color: #171786 !important;;
+}
+
+
+.bordererror{
+    border-bottom: 1px solid red;
+}
+
+.nonclick{
+pointer-events: none;
+}
+
+.dataTables thead th{
+  background:#9C27B0 !important;;
+  color: #fff;
+}
+
+table.dataTable.no-footer {
+    border-bottom: 1px solid #dfdddd!important;
+}
+
+
+/*.dataTables tbody td.details-control {
+    background: url('https://datatables.net/examples/resources/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+.dataTables tbody tr.details td.details-control {
+    background: url('https://datatables.net/examples/resources/details_close.png') no-repeat center center;
+}
+*/
+
+/* Enquiry */
+
+.dataTblDetailCls tr td.details-control {
+    background: url('../images/plus_icon.png') no-repeat center center;
+    cursor: pointer;
+}
+
+.dataTblDetailCls tr.details td.details-control {
+    background: url('../images/details_minus.png') no-repeat center center;
+}
+
+.datatbl_style {
+    font-family: verdana;
+    font-size: 12px;
+}
+
+.dataTblDetailCls tbody td.no-padding {
+    padding: 0;
+}
+
+.color_theme {
+    background-color: #b745d9;
+    letter-spacing: 2px;
+    font-size: 11px;
+}
+
+.errborder {
+    border: 1px solid #fe7a31 !important;
+    box-shadow: 0px 0px 2px 0px #ff7225 !important;
+}
+
+.expandrowDetails{
+  background:#8D9DBF!important;
+  color: #fff;
+}
+
+.rowexpandTable{
+ width: 70%;
+ border-bottom: 1px solid #8d9dbf;
+ margin-left: 30px; 
+}
+
+
+.bootstrap-select.btn-group.show-tick .dropdown-menu li.selected a span.check-mark {
+
+    color: #7cbd7c!important;
+
+}
+
+
+ /* icon prefix focus color */
+   .input-field .prefix.active {
+     color: #000;
+   }
+
+
+
+   #treatment_div{
+    font-size: 18px;
+    color: olive;
+    #text-align: center;
+    margin-left: 10px;
+
+   }
+
+
+    #treatment_div_stage{
+    font-size: 18px;
+    color: olive;
+   # text-align: center;
+
+   }
+
+#case_div,#new_patient_div,#existing_patient_div,.newundertreatsec{
+  display: none;
+}
+
+
+.tabtnnonclck{
+  background-color: #66c0b8 !important;
+  background-color: #9cd2ce !important;
+  color: #fff!important;
+}
+
+#btn_tab_content{
+  border: 1px solid #eee;
+  padding: 5px;
+
+}
+
+/* patient add edit Case */
+
+#patientcase_body{
+min-height: 500px;
+}
+
+
+.lefttabtnnonclck{
+  background-color: #9E9E9E !important
+  color: #fff!important;
+}
+
+.treatmentsection{
+  display: none;
+  padding: 10px;
+}
+
+.antenantalDataSection{
+   display: none;
+
+}
+
+
+.title_head{
+  color: #607D8B;
+}
+
+#patient_case_title{
+  margin-left: 10px;
+}
+
