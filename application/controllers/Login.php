@@ -15,7 +15,7 @@ class Login extends CI_Controller {
        $schoolList['cliniclist']= $this->login->getAllClinic();
       // $schoolList['acdsessionList']= $this->login->getAllAcademinSession();
      
-       $page="login/login";
+       $page="login/login.php";
        $this->load->view($page,$schoolList);
     }
     

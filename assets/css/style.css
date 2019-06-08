@@ -4814,7 +4814,9 @@ section.content {
       .panel-group .panel .panel-heading a:hover, .panel-group .panel .panel-heading a:focus, .panel-group .panel .panel-heading a:active {
         text-decoration: none; }
   .panel-group .panel .panel-body {
-    color: #555; }
+    #color: #555;
+    color: #d58585;
+     }
 
 .panel-group .panel-primary {
   border: 1px solid #1f91f3; }
@@ -8362,6 +8364,7 @@ table.dataTable.no-footer {
 
 #patientcase_body{
 min-height: 500px;
+color: #d58585;
 }
 
 
@@ -8389,3 +8392,14 @@ min-height: 500px;
   margin-left: 10px;
 }
 
+#cigarette_per_day,#other_addiction{
+  margin-top: 22px;
+ 
+}
+
+.inpsamelevel{
+  margin-top: 25px;
+}
+.txtsamelevel{
+  margin-top: 15px;
+}

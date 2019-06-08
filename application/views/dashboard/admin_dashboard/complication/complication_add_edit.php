@@ -75,9 +75,11 @@ border-bottom: 1px solid #f0c7f9;
                   
                                     </div>
 
-                                </form>
+                               
 
-                                </div>
+                                </div> 
+
+                            </form>
                             </div>
                         </div>
                     </div>

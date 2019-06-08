@@ -72,4 +72,117 @@ class Patientcasemodel extends CI_Model{
         return $serialno;
     }
 
+
+    public function getMenstrualLastMedecineDetails($case_master_id)
+    {
+     $data = [];
+      $where = [
+                "case_master_id" => $case_master_id
+            ];
+            $query = $this->db->select("*")
+                    ->from('menstrual_medecine_details')
+                    ->where($where)
+                    ->get();
+                
+                if($query->num_rows()> 0)
+                {
+                  
+                       
+                    foreach ($query->result() as $rows)
+                    {
+                        $data[] = $rows;
+                    }
+                    return $data;
+                  
+                     
+                }
+                
+                return $data;
+    
+    }
+
+
+
+  public function getPreviousChildBirthDetails($case_master_id)
+    {
+     $data = [];
+      $where = [
+                "case_master_id" => $case_master_id
+            ];
+            $query = $this->db->select("*")
+                    ->from('previous_child_birth_history')
+                    ->where($where)
+                    ->get();
+                
+                if($query->num_rows()> 0)
+                {
+                  
+                       
+                    foreach ($query->result() as $rows)
+                    {
+                        $data[] = $rows;
+                    }
+                    return $data;
+                  
+                     
+                }
+                
+                return $data;
+    
+    }
+
+
+    public function getSurgeryDetails($case_master_id)
+    {
+     $data = [];
+     
+            $query = $this->db->select("*")
+                    ->from('surgery_master')
+                    ->join('surgery_details',"surgery_master.surgery_id=surgery_details.surgery_mst_id and surgery_details.case_master_id='".$case_master_id."'",'LEFT')
+                    ->get();
+                #q();
+                if($query->num_rows()> 0)
+                {
+                  
+                       
+                    foreach ($query->result() as $rows)
+                    {
+                        $data[] = $rows;
+                    }
+                    return $data;
+                  
+                     
+                }
+                
+                return $data;
+    
+    }
+
+
+    public function getFamilyComponentDetails($case_master_id)
+    {
+     $data = [];
+     
+            $query = $this->db->select("*")
+                    ->from('family_history_componrnt')
+                    ->join('family_history_details',"family_history_details.family_comp_mst_id=family_history_componrnt.family_component_id and family_history_details.case_master_id='".$case_master_id."'",'LEFT')
+                    ->get();
+                #q();
+                if($query->num_rows()> 0)
+                {
+                  
+                       
+                    foreach ($query->result() as $rows)
+                    {
+                        $data[] = $rows;
+                    }
+                    return $data;
+                  
+                     
+                }
+                
+                return $data;
+    
+    }
+
 } // end of class

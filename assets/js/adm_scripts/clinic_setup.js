@@ -27,7 +27,7 @@ $(document).ready(function(){
         rowno++;
         $.ajax({
             type: "POST",
-            url: basepath+'clinicsetup/addVisitingDaydetail',
+            url: basepath+'clinicsetup/addLastMenstrualMedicinedetail',
             dataType: "html",
             data: {rowNo:rowno},
             success: function (result) {
