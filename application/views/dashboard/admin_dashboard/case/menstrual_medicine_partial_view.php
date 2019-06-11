@@ -4,9 +4,9 @@
 		<tr id="rowMenMedicine_<?php echo $rowno; ?>" class="row clearfix" >
 
 
-						<td> 
+						<td style="width: 40%"> 
              <div class="input-group fromToerr" >
-              <div class="form-group form-float ">
+              <div class="form-group form-float inpsamelevel">
                 <div class="form-line" id="mensumedicineerr_<?php echo $rowno; ?>">
                     <input type="text" class="form-control mensumedicinecls" name="mensumedicine[]" id="mensumedicine_<?php echo $rowno; ?>" autocomplete="off" placeholder="Medicine">
                               <label class="form-label">Medicine </label>
@@ -16,9 +16,9 @@
 						</td>
 
 
-						<td> 
+						<td style="width: 40%"> 
              <div class="input-group fromToerr" id="mensumedicinedurationerr_<?php echo $rowno; ?>">
-              <div class="form-group form-float">
+              <div class="form-group form-float inpsamelevel">
                 <div class="form-line">
                     <input type="text" class="form-control" name="mensumedicineduration[]" id="mensumedicineduration_<?php echo $rowno; ?>" autocomplete="off"  placeholder="Duration">
                               <label class="form-label">Duration </label>

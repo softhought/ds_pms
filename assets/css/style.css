@@ -3004,7 +3004,9 @@ section.content {
     .card .body .col-sm-2,
     .card .body .col-md-2,
     .card .body .col-lg-2 {
-      margin-bottom: 20px; }
+      #margin-bottom: 20px;
+      margin-bottom: 0px;
+       }
     .card .body .col-xs-3,
     .card .body .col-sm-3,
     .card .body .col-md-3,
@@ -4999,7 +5001,9 @@ section.content {
 /* Input Group ================================= */
 .input-group {
   width: 100%;
-  margin-bottom: 20px; }
+  #margin-bottom: 20px; 
+  margin-bottom: 0px; 
+}
   .input-group .form-line {
     display: inline-block;
     width: 100%;
@@ -5092,7 +5096,9 @@ section.content {
 
 .form-group {
   width: 100%;
-  margin-bottom: 25px; }
+  #margin-bottom: 25px; 
+  margin-bottom: 0px; 
+}
   .form-group .form-control {
     width: 100%;
     border: none;
@@ -8349,9 +8355,12 @@ table.dataTable.no-footer {
 
 
 .tabtnnonclck{
-  background-color: #66c0b8 !important;
-  background-color: #9cd2ce !important;
-  color: #fff!important;
+  #background-color: #66c0b8 !important;
+  #background-color: #9cd2ce !important;
+  #color: #fff!important;
+
+  background-color: #eee !important;
+  color: #aaa !important;
 }
 
 #btn_tab_content{
@@ -8402,4 +8411,35 @@ color: #d58585;
 }
 .txtsamelevel{
   margin-top: 15px;
+}
+
+.topcol{
+    padding-right: 2px;
+    padding-left: 3px;
+}
+.tab_lf_btn{
+  text-align: left;
+  width: 200px;
+}
+
+
+
+label {
+    margin-bottom: 0px!important;
+}
+
+#patientbasicsavebtn,.antenatelbasicsavebtn{
+  margin-bottom: 10px!important;
+}
+
+.tabbtn,.tab_lf_btn{
+  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2), 0 2px 10px rgba(255, 255, 255, 0.1)!important;
+}
+#treatmenthead{
+  background-color: #B469C1;
+ 
+}
+
+#treatmenthead_title{
+   color: #fff!important;
 }

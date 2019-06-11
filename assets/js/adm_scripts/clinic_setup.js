@@ -23,11 +23,11 @@ $(document).ready(function(){
     	  // rowNoUpload++;
 
           var rowno=  $("#rowno").val();
-        console.log(basepath);
+        console.log(rowno);
         rowno++;
         $.ajax({
             type: "POST",
-            url: basepath+'clinicsetup/addLastMenstrualMedicinedetail',
+            url: basepath+'clinicsetup/addVisitingDaydetail',
             dataType: "html",
             data: {rowNo:rowno},
             success: function (result) {

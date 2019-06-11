@@ -7,8 +7,48 @@ $("#antenantalbtn").addClass("bg-teal");
 $("#antenantalbtn_section").css("display", "block");
 $("#antenantal_left_tab_menu_1").addClass("bg-light-green");
 $("#antenantal_left_tab_menu_1_section").css("display", "block");
-//$('#procedure_date').datepicker({format: 'mm/dd/yyyy'});
 
+ // $('#investallTable').DataTable(
+ //    {
+ //        "bPaginate": false,
+ //        "bFilter": false,
+ //        "bInfo": false
+ //                 } );
+
+
+
+  var oTable = $('#investallTable').DataTable({
+                                                    "bPaginate": false,
+                                                    "bFilter": false,
+                                                    "bInfo": false
+                                                             } );
+
+      $("#investallTable tbody tr td:nth-child(1)").attr("class", "details-control");
+
+        $('#investallTable').on('click', 'td.details-control', function() {
+        var tr = $(this).closest('tr');
+        var row = oTable.row(tr);
+        var rowdata = (oTable.row(tr).data());
+
+        /* if (row.child.isShown()) {
+             tr.removeClass('details');
+             row.child.hide();
+
+         }*/
+        if (row.child.isShown()) {
+            // This row is already open - close it
+            $('div.slider', row.child()).slideUp(function() {
+                tr.removeClass('details');
+                row.child.hide();
+            });
+        } else {
+            console.log(oTable.row(tr).data());
+            tr.addClass('details');
+            row.child(format(row.child, rowdata, basepath)).show();
+
+            $('div.slider', row.child()).slideDown();
+        }
+    });
 
  /* Top Tab button on click*/
 
@@ -154,7 +194,7 @@ $("#antenantal_left_tab_menu_1_section").css("display", "block");
 
             var formData = { formDatas: formDataserialize };
             $("#patientbasicsavebtn").css('display', 'none');
-           // $(".antenatelbasicsavebtn").css('display', 'none');
+            $(".antenatelbasicsavebtn").css('display', 'none');
             $(".loaderbtn").css('display', 'block');
         
 
@@ -321,6 +361,73 @@ $("#antenantal_left_tab_menu_1_section").css("display", "block");
         //$("tr#rowDocument_"+rowDtlNo[1]+"_"+rowDtlNo[2]).remove();
         $("tr#rowMenMedicine_"+rowDtlNo[1]).remove();
     });
+
+
+       // Add regular medicine Details
+    $(document).on('click','.addRegularMedicines',function(){
+
+          // rowNoUpload++;
+
+          var rowno=  $("#rowno").val();
+        console.log(basepath);
+        rowno++;
+        $.ajax({
+            type: "POST",
+            url: basepath+'patientcase/addRegularMedicinesDetail',
+            dataType: "html",
+            data: {rowNo:rowno},
+            success: function (result) {
+                $("#rowno").val(rowno);
+                $("#detail_regularmedicine table").css("display","block"); 
+                $("#detail_regularmedicine table tbody").append(result);   
+                $('select').selectpicker();
+              //  $(".demo-masked-input").inputmask();
+                var $demoMaskedInput = $('.demo-masked-input');
+
+           
+         
+            }, 
+            error: function (jqXHR, exception) {
+              var msg = '';
+                if (jqXHR.status === 0) {
+                    msg = 'Not connect.\n Verify Network.';
+                } else if (jqXHR.status == 404) {
+                    msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status == 500) {
+                    msg = 'Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
+                    msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                    msg = 'Time out error.';
+                } else if (exception === 'abort') {
+                    msg = 'Ajax request aborted.';
+                } else {
+                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                }
+               // alert(msg);  
+            }
+            }); /*end ajax call*/
+  
+    }); // End Visiting Details
+
+
+      // Delete Table Row
+
+    $(document).on('click','.delRegularMedicine',function(){
+        
+        var currRowID = $(this).attr('id');
+        var rowDtlNo = currRowID.split('_');
+       // console.log(rowDtlNo[1]);
+        console.log(currRowID);
+
+        //$("tr#rowDocument_"+rowDtlNo[1]+"_"+rowDtlNo[2]).remove();
+        $("tr#rowRegularMedicine_"+rowDtlNo[1]).remove();
+    });
+
+
+
+
+
 
 
     $('#cigarette_addiction').on('change', function() {
@@ -541,6 +648,149 @@ $(document).on('change','.sel_diseases',function(event){
     });
 
 
+// high risk values
+
+$(document).on('change','.highrisk',function(event){
+     event.stopImmediatePropagation();
+
+        var currRowID = $(this).attr('id');
+        console.log('currow : '+currRowID);
+        var rowDtlNo = currRowID.split('_');
+       // console.log(rowDtlNo[1]);
+       
+       var selectvalue = this.value; 
+    //   console.log(selectvalue);
+
+        var highrisk = [];
+
+        $.each($("#highrisk option:selected"), function(){            
+
+            highrisk.push($(this).val());
+
+        });
+
+        console.log('highrisk'+highrisk);
+
+        console.log(highrisk.toString());
+        $("#highriskValues").val(highrisk.toString());
+
+
+         /* 5 : high risk others */
+        if(jQuery.inArray("5", highrisk) != -1) {
+        
+            $('#othersriskerr').css('display','block'); 
+             $("#isOtherHighrisk").val('Y');
+        } else {
+           // console.log("is NOT in array");
+            $('#othersriskerr').css('display','none');
+            $("#isOtherHighrisk").val('N');
+        } 
+
+       /* select value 6= others */
+
+       // if (selectvalue==6) {
+       //    $('#othersproblemerr_'+rowDtlNo[1]).css('display','block');
+       // }else{
+       //     $('#othersproblemerr_'+rowDtlNo[1]).css('display','none');
+       // }
+
+    });
+
+
+// family component father
+
+$(document).on('change','.fmlycmpfather',function(event){
+     event.stopImmediatePropagation();
+        
+        var currRowID = $(this).attr('id');
+       // console.log('currow : '+currRowID);
+        var rowDtlNo = currRowID.split('_');
+
+        //console.log(rowDtlNo);
+      if($(this).prop('checked')) {
+           // alert("Checked Box Selected");
+           //alert("#ischeckfatherhist_"+rowDtlNo);
+           $("#ischeckfatherhist_"+rowDtlNo[2]).val('Y');
+        } else {
+           // alert("Checked Box deselect");
+            $("#ischeckfatherhist_"+rowDtlNo[2]).val('N');
+        }
+
+
+});
+
+// family component mother
+
+$(document).on('change','.fmlycmpmother',function(event){
+     event.stopImmediatePropagation();
+        
+        var currRowID = $(this).attr('id');
+       // console.log('currow : '+currRowID);
+        var rowDtlNo = currRowID.split('_');
+
+        //console.log(rowDtlNo);
+      if($(this).prop('checked')) {
+           // alert("Checked Box Selected");
+           //alert("#ischeckfatherhist_"+rowDtlNo);
+           $("#ischeckmotherhist_"+rowDtlNo[2]).val('Y');
+        } else {
+           // alert("Checked Box deselect");
+            $("#ischeckmotherhist_"+rowDtlNo[2]).val('N');
+        }
+
+
+});
+
+
+// on change examination select
+
+$(document).on('change','.selexam',function(event){
+
+ $("#ischangeExamination").val('Y');
+});
+
+$(document).on('input','.inpexam',function(event){
+
+ $("#ischangeExamination").val('Y');
+});
+
+
+// on change investigation select
+
+$(document).on('input','.inpinve',function(event){
+
+ $("#ischangeInvestigation").val('Y');
+});
+
+$(document).on('change','.selinve',function(event){
+
+ $("#ischangeInvestigation").val('Y');
+});
+
+ 
+
+ $(document).on('click','#resetinvestigation',function(event){
+
+$('.inpinve,.selinve').val('');
+
+});
+
+
+$(document).on('click','#examallshowbtn',function(event){
+
+ //$("#examdataall").show();
+ $("#examdataall").toggle('slow');
+});
+
+
+$(document).on('click','#investallshowbtn',function(event){
+
+ //$("#examdataall").show();
+ $("#investdataall").toggle('slow');
+});
+
+
+
 
 }); // end of document ready
 
@@ -643,27 +893,27 @@ function validatAntinatalBasicRecord()
     //     return false;
     // }
 
-    if(cigarette_addiction=="0")
-    {    
-        $("#cigarette_addiction").focus();
-        $("#cigarette_addictionerr").addClass("bordererror");
-        $("#antenatelmsg")
-        .text("Error : Select cigarette addiction .")
-        .addClass("form_error")
-        .css("display", "block");
-        return false;
-    }
+    // if(cigarette_addiction=="0")
+    // {    
+    //     $("#cigarette_addiction").focus();
+    //     $("#cigarette_addictionerr").addClass("bordererror");
+    //     $("#antenatelmsg")
+    //     .text("Error : Select cigarette addiction .")
+    //     .addClass("form_error")
+    //     .css("display", "block");
+    //     return false;
+    // }
 
-    if(alcohol_addiction=="0")
-    {    
-        $("#alcohol_addiction").focus();
-        $("#alcohol_addictionerr").addClass("bordererror");
-        $("#antenatelmsg")
-        .text("Error : Select alcohol addiction .")
-        .addClass("form_error")
-        .css("display", "block");
-        return false;
-    }
+    // if(alcohol_addiction=="0")
+    // {    
+    //     $("#alcohol_addiction").focus();
+    //     $("#alcohol_addictionerr").addClass("bordererror");
+    //     $("#antenatelmsg")
+    //     .text("Error : Select alcohol addiction .")
+    //     .addClass("form_error")
+    //     .css("display", "block");
+    //     return false;
+    // }
  
  
     return true;
@@ -671,7 +921,7 @@ function validatAntinatalBasicRecord()
 
 
 $(window).load(function () {
-    $('#antenantal_left_tab_menu_4').click();
+    $('#antenantal_left_tab_menu_6').click();
 })
 
 
@@ -780,5 +1030,94 @@ function EddUsgDateCalculation(basepath,lmpdate){
                // alert(msg);  
             }
             }); /*end ajax call*/
+
+}
+
+
+/* data table details rows investigation_record_master */
+
+function format(callback, id, basepath) {
+    var inv_record_id = id[1];
+    $.ajax({
+        url: basepath + 'patientcase/getInvestigationDetailRow',
+        data: { inv_record_id: inv_record_id },
+        dataType: "json",
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        complete: function(response) {
+            var data = JSON.parse(response.responseText);
+
+            console.log(data);
+
+            // console.log(response);
+            var thead = '<tr class="expandrowDetails"><th style="width:10%;">Test</th><th style="width:10%;">Test Result</th><th style="width:10%;">Test Date</th></tr>';
+            tbody = '';
+
+            $.each(data, function(i, datas) {
+
+               
+
+                tbody += '<tr>';
+                tbody += '<td>Hb</td>';
+                tbody += '<td>'+datas.hb_result+'</td>';
+                tbody += '<td>'+dateFormat(datas.hb_date)+'</td>';
+                tbody += '</tr>';
+
+                tbody += '<tr>';
+                tbody += '<td>TC</td>';
+                tbody += '<td>'+datas.tc_result+'</td>';
+                tbody += '<td>'+dateFormat(datas.tc_date)+'</td>';
+                tbody += '</tr>';
+
+                tbody += '<tr>';
+                tbody += '<td>DC</td>';
+                tbody += '<td>'+datas.dc_result+'</td>';
+                tbody += '<td>'+dateFormat(datas.dc_date)+'</td>';
+                tbody += '</tr>';
+
+                tbody += '<tr>';
+                tbody += '<td>FBS</td>';
+                tbody += '<td>'+datas.fbs_result+'</td>';
+                tbody += '<td>'+dateFormat(datas.fbs_date)+'</td>';
+                tbody += '</tr>';
+
+                tbody += '<tr>';
+                tbody += '<td>PPBS</td>';
+                tbody += '<td>'+datas.ppbs_result+'</td>';
+                tbody += '<td>'+dateFormat(datas.ppbs_date)+'</td>';
+                tbody += '</tr>';
+
+                tbody += '<tr>';
+                tbody += '<td>VDRL</td>';
+                tbody += '<td>'+datas.vdrl_result+'</td>';
+                tbody += '<td>'+dateFormat(datas.vdrl_date)+'</td>';
+                tbody += '</tr>';
+
+
+            });
+
+            callback($('<div class="slider"><table class="table table-striped rowexpandTable" >' + thead + tbody + '</table></div>')).show();
+        },
+        error: function() {
+            console.log("Error Found");
+        }
+    });
+}
+
+
+function dateFormat(date){
+
+    if (date=='null') {
+
+    var dateval = date.slice(0, 10);
+    console.log(dateval);
+     var dateDtl = dateval.split('-');
+      console.log(dateDtl);
+
+      var newDt=dateDtl[2]+'-'+dateDtl[1]+'-'+dateDtl[0];
+      return newDt;
+
+    }else{
+        return '';
+    }
 
 }

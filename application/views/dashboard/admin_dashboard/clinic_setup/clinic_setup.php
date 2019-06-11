@@ -1,4 +1,4 @@
-<?php// pre($bodycontent['DaysList']); ?>
+
 <script src="<?php echo(base_url());?>assets/js/adm_scripts/clinic_setup.js"></script>
 
 <style>
