@@ -8443,3 +8443,19 @@ label {
 #treatmenthead_title{
    color: #fff!important;
 }
+
+.invlb{
+  margin-top: 21px;
+}
+
+.upText{
+  #color: #aaa;
+  font-size: 12px;
+  top: -5px;
+  left: 0;
+
+}
+
+.antenantalDataSection .col-sm-3{
+    margin-bottom: 10px!important;
+}

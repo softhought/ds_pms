@@ -458,6 +458,9 @@ class Patientcase extends CI_Controller {
                   $result['OnetoOtherDropDown'] = array('1','2','3','4','5','6','7','8','9','10','Others');
                   $result['OnetoTenDropDown'] = array('1','2','3','4','5','6','7','8','9','10');
                   $result['ZerotoTwentyDropDown'] = array('0','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20');
+                  $result['fourtoTwelveDropDown'] = array('4','5','6','7','8','9','10','11','12');
+                  $result['zerotoSevenDropDown'] = array('0','1','2','3','4','5','6','7');
+                  $result['seventeentotwentyfourDropDown'] = array('17','18','19','20','21','22','23','24');
                   
                 //  pre( $result['OnetoOtherDropDown']);exit;
                   $result['genderList']=$this->commondatamodel->getAllDropdownData('gender_master');
@@ -487,6 +490,7 @@ class Patientcase extends CI_Controller {
 
                     $result['pallor'] = array('Nil','Mild','Mod','Severe' );
                     $result['icterus'] = array('Nil','Present');
+                    $result['ntscanrisk'] = array("Down's",'Edward','Patan');
 
                     $result['examinationLatestData']=$this->patientcasemodel->getExaminationLatestByCase($caseID);
                     $result['examinationAllData']=$this->patientcasemodel->getAllExaminationLatestByCase($caseID);
@@ -496,7 +500,12 @@ class Patientcase extends CI_Controller {
 
                     $result['investigationAllData']=$this->patientcasemodel->getAllInvestigationByCase($caseID);
 
+                    $result['placentaList']=$this->commondatamodel->getAllDropdownData('placenta_master');
 
+                    $result['medicineList']=$this->commondatamodel->getAllDropdownData('medicine_master');
+                    $result['dosageList'] = array('0.5','1','1.5','2','2.5','5','7.5','10');
+                    $result['frequencyList'] = array('OD','BD','TDS','HS');
+                     $result['testList']=$this->commondatamodel->getAllDropdownData('investigation_component');
 
                    
                   // $arrd=explode(",",'.$test.');
@@ -810,6 +819,108 @@ class Patientcase extends CI_Controller {
       $vdrl_date = date("Y-m-d", strtotime($dataArry['vdrl_date']));
       }else{ $vdrl_date=NULL; }
 
+      $hiv_one_result = $dataArry['hiv_one_result'];
+      if ($dataArry['hiv_one_date']!='') {
+      $hiv_one_date = date("Y-m-d", strtotime($dataArry['hiv_one_date']));
+      }else{ $hiv_one_date=NULL; }
+
+      $hiv_two_result = $dataArry['hiv_two_result'];
+      if ($dataArry['hiv_two_date']!='') {
+      $hiv_two_date = date("Y-m-d", strtotime($dataArry['hiv_two_date']));
+      }else{ $hiv_two_date=NULL; }
+
+      $hbsag_result = $dataArry['hbsag_result'];
+      if ($dataArry['hbsag_date']!='') {
+      $hbsag_date = date("Y-m-d", strtotime($dataArry['hbsag_date']));
+      }else{ $hbsag_date=NULL; }
+
+      $antihcv_result = $dataArry['antihcv_result'];
+      if ($dataArry['antihcv_date']!='') {
+      $antihcv_date = date("Y-m-d", strtotime($dataArry['antihcv_date']));
+      }else{ $antihcv_date=NULL; }
+
+      $urine_re_result = $dataArry['urine_re_result'];
+      if ($dataArry['urine_re_date']!='') {
+      $urine_re_date = date("Y-m-d", strtotime($dataArry['urine_re_date']));
+      }else{ $urine_re_date=NULL; }
+
+      $cs_sensitive_to_result = $dataArry['cs_sensitive_to_result'];
+      if ($dataArry['cs_sensitive_date']!='') {
+      $cs_sensitive_date = date("Y-m-d", strtotime($dataArry['cs_sensitive_date']));
+      }else{ $cs_sensitive_date=NULL; }
+
+      $stsh_result = $dataArry['stsh_result'];
+      if ($dataArry['stsh_date']!='') {
+      $stsh_date = date("Y-m-d", strtotime($dataArry['stsh_date']));
+      }else{ $stsh_date=NULL; }
+
+      $s_urea_result = $dataArry['s_urea_result'];
+      if ($dataArry['s_urea_date']!='') {
+      $s_urea_date = date("Y-m-d", strtotime($dataArry['s_urea_date']));
+      }else{ $s_urea_date=NULL; }
+
+      $s_creatinine_result = $dataArry['s_creatinine_result'];
+      if ($dataArry['s_creatinine_date']!='') {
+      $s_creatinine_date = date("Y-m-d", strtotime($dataArry['s_creatinine_date']));
+      }else{ $s_creatinine_date=NULL; }
+
+      $combined_test_result = $dataArry['combined_test_result'];
+      if ($dataArry['combined_test_date']!='') {
+      $combined_test_date = date("Y-m-d", strtotime($dataArry['combined_test_date']));
+      }else{ $combined_test_date=NULL; }
+
+      $thalassemia_result = $dataArry['thalassemia_result'];
+      if ($dataArry['thalassemia_date']!='') {
+      $thalassemia_date = date("Y-m-d", strtotime($dataArry['thalassemia_date']));
+      }else{ $thalassemia_date=NULL; }
+
+      $usg_scan_date = $dataArry['usg_scan_date'];
+      if ($dataArry['usg_scan_date']!='') {
+      $usg_scan_date = date("Y-m-d", strtotime($dataArry['usg_scan_date']));
+      }else{ $usg_scan_date=NULL; }
+
+      $usg_slf_week = $dataArry['usg_slf_week'];
+      $usg_slf_day = $dataArry['usg_slf_day'];
+
+      if ($dataArry['nt_scan_date']!='') {
+      $nt_scan_date = date("Y-m-d", strtotime($dataArry['nt_scan_date']));
+      }else{ $nt_scan_date=NULL; }
+
+      $nt_scan_lowerrisk = $dataArry['nt_scan_lowerrisk'];
+      $nt_scan_highrisk = $dataArry['nt_scan_highrisk'];
+
+      if ($dataArry['anomaly_scan_date']!='') {
+      $anomaly_scan_date = date("Y-m-d", strtotime($dataArry['anomaly_scan_date']));
+      }else{ $anomaly_scan_date=NULL; }
+      $anomaly_slf_week = $dataArry['anomaly_slf_week'];
+      $anomaly_slf_day = $dataArry['anomaly_slf_day'];
+     
+
+        if (isset($dataArry['anomaly_placenta'])) {
+                $anomaly_placenta = '';
+                foreach ($dataArry['anomaly_placenta'] as  $value) {
+                  $anomaly_placenta.=$value.',';
+                }
+                $anomaly_placenta = substr($anomaly_placenta, 0, -1);
+                
+                 }else{
+                 $anomaly_placenta = '';
+               }
+
+             
+       $is_no_anomaly_seen = $dataArry['is_no_anomaly_seen'];
+       $is_other_anomaly = $dataArry['is_other_anomaly'];
+       $other_anomaly = $dataArry['other_anomaly'];
+       if ($is_other_anomaly=='N') {
+
+        $other_anomaly='';
+       }
+
+      if ($dataArry['growth_date']!='') {
+      $growth_date = date("Y-m-d", strtotime($dataArry['growth_date']));
+      }else{ $growth_date=NULL; }
+      $growth_slf_week = $dataArry['growth_slf_week'];
+      $growth_slf_day = $dataArry['growth_slf_day'];
 
 /* insert into investigation_record */
 
@@ -830,11 +941,57 @@ $investigation_record_array = array(
                                     'ppbs_date' => $ppbs_date, 
                                     'vdrl_result' => $vdrl_result, 
                                     'vdrl_date' => $vdrl_date, 
+                                    'hiv_one_result' => $hiv_one_result, 
+                                    'hiv_one_date' => $hiv_one_date, 
+                                    'hiv_two_result' => $hiv_two_result, 
+                                    'hiv_two_date' => $hiv_two_date, 
+                                    'hbsag_result' => $hbsag_result, 
+                                    'hbsag_date' => $hbsag_date, 
+                                    'antihcv_result' => $antihcv_result, 
+                                    'antihcv_date' => $antihcv_date, 
+                                    'urine_re_result' => $urine_re_result, 
+                                    'urine_re_date' => $urine_re_date, 
+                                    'cs_sensitive_to_result' => $cs_sensitive_to_result, 
+                                    'cs_sensitive_date' => $cs_sensitive_date, 
+                                    'stsh_result' => $stsh_result, 
+                                    'stsh_date' => $stsh_date, 
+                                    's_urea_result' => $s_urea_result, 
+                                    's_urea_date' => $s_urea_date, 
+                                    's_creatinine_result' => $s_creatinine_result, 
+                                    's_creatinine_date' => $s_creatinine_date, 
+                                    'combined_test_result' => $combined_test_result, 
+                                    'combined_test_date' => $combined_test_date, 
+                                    'thalassemia_result' => $thalassemia_result, 
+                                    'thalassemia_date' => $thalassemia_date, 
+                                    'usg_scan_date' => $usg_scan_date, 
+                                    'usg_slf_week' => $usg_slf_week, 
+                                    'usg_slf_day' => $usg_slf_day, 
+                                    'nt_scan_date' => $nt_scan_date, 
+                                    'nt_scan_lowerrisk' => $nt_scan_lowerrisk, 
+                                    'nt_scan_highrisk' => $nt_scan_highrisk, 
+                                    'anomaly_scan_date' => $anomaly_scan_date, 
+                                    'anomaly_slf_week' => $anomaly_slf_week,
+                                    'anomaly_slf_day' => $anomaly_slf_day, 
+                                    'anomaly_placenta' => $anomaly_placenta, 
+                                    'is_no_anomaly_seen' => $is_no_anomaly_seen, 
+                                    'is_other_anomaly' => $is_other_anomaly, 
+                                    'other_anomaly' => $other_anomaly, 
+                                    'growth_date' => $growth_date, 
+                                    'growth_slf_week' => $growth_slf_week, 
+                                    'growth_slf_day' => $growth_slf_day, 
                                     );
 
- $insertInvestigation=$this->commondatamodel->insertSingleTableData('investigation_record_master',$investigation_record_array);
+$insertInvestigation=$this->commondatamodel->insertSingleTableData('investigation_record_master',$investigation_record_array);
+
 
 }
+
+/* insert into prescription_master */
+
+  $prescription_master = array(
+                                'case_master_id' => $caseID, 
+                                'created_on' => date('Y-m-d'), 
+                               );
 
 
 
@@ -1376,6 +1533,77 @@ $investigation_record_array = array(
         else
         {
             redirect('administratorpanel','refresh');
+        }
+    }
+
+
+    public function addPrescriptionMedicineDetails()
+    {
+        if($this->session->userdata('user_data'))
+        {
+            $session = $this->session->userdata('user_data');
+        
+
+            $row_no = $this->input->post('rowNo');
+            $medicineID = $this->input->post('medicine');
+
+
+             $where_medicine= array('medicine_id' => $medicineID );
+                       $medicineData = $this->commondatamodel->getSingleRowByWhereCls('medicine_master',$where_medicine);
+                      // pre($medicineData);exit;
+
+
+            $data['rowno'] = $row_no;
+            $data['medicineID'] = $medicineID;
+            $data['medicine'] = $medicineData->medicine_name;
+            $data['dosage'] = $this->input->post('dosage');
+            $data['frequency'] = $this->input->post('frequency');
+            $data['days'] = $this->input->post('days');
+            $data['DaysList']=$this->commondatamodel->getAllDropdownData('day_master');
+            
+            $page = 'dashboard/admin_dashboard/case/add_prescription_medicine_partial_view';
+            $viewTemp = $this->load->view($page,$data,TRUE);
+            echo $viewTemp;
+        }
+        else
+        {
+            redirect('login','refresh');
+        }
+    }
+
+
+
+        public function addPrescriptionTestDetails()
+    {
+        if($this->session->userdata('user_data'))
+        {
+            $session = $this->session->userdata('user_data');
+        
+
+            $row_no = $this->input->post('rowNo');
+            $medicineID = $this->input->post('medicine');
+
+
+             $where_medicine= array('medicine_id' => $medicineID );
+                       $medicineData = $this->commondatamodel->getSingleRowByWhereCls('medicine_master',$where_medicine);
+                      // pre($medicineData);exit;
+
+
+            $data['rowno'] = $row_no;
+            $data['medicineID'] = $medicineID;
+            $data['medicine'] = $medicineData->medicine_name;
+            $data['dosage'] = $this->input->post('dosage');
+            $data['frequency'] = $this->input->post('frequency');
+            $data['days'] = $this->input->post('days');
+            $data['DaysList']=$this->commondatamodel->getAllDropdownData('day_master');
+            
+            $page = 'dashboard/admin_dashboard/case/add_prescription_test_partial_view.php';
+            $viewTemp = $this->load->view($page,$data,TRUE);
+            echo $viewTemp;
+        }
+        else
+        {
+            redirect('login','refresh');
         }
     }
 

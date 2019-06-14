@@ -745,11 +745,13 @@ $(document).on('change','.fmlycmpmother',function(event){
 // on change examination select
 
 $(document).on('change','.selexam',function(event){
+     event.preventDefault();
 
  $("#ischangeExamination").val('Y');
 });
 
 $(document).on('input','.inpexam',function(event){
+     event.preventDefault();
 
  $("#ischangeExamination").val('Y');
 });
@@ -777,9 +779,8 @@ $('.inpinve,.selinve').val('');
 
 
 $(document).on('click','#examallshowbtn',function(event){
-
- //$("#examdataall").show();
  $("#examdataall").toggle('slow');
+ $('#spanexamallshow').text( $('#spanexamallshow').text() == 'Hide All Record' ? 'Show All Record' : 'Hide All Record' );
 });
 
 
@@ -787,9 +788,201 @@ $(document).on('click','#investallshowbtn',function(event){
 
  //$("#examdataall").show();
  $("#investdataall").toggle('slow');
+ $('#spaninvestallshow').text( $('#spaninvestallshow').text() == 'Hide All Record' ? 'Show All Record' : 'Hide All Record' );
+
 });
 
 
+
+
+$(document).on('change','.noanomalyckbx',function(event){
+     event.stopImmediatePropagation();
+
+      if($(this).prop('checked')) {
+         
+           $("#is_no_anomaly_seen").val('Y');
+          
+        } else {
+        
+            $("#is_no_anomaly_seen").val('N');
+            
+        }
+
+
+});
+
+
+$(document).on('change','.otheranomalyckbx',function(event){
+     event.stopImmediatePropagation();
+
+      if($(this).prop('checked')) {
+           $("#other_annomaly_div").show();
+           $("#is_other_anomaly").val('Y');
+
+        } else {
+            $("#other_annomaly_div").hide();
+            $("#is_other_anomaly").val('N');
+        }
+
+
+});
+
+/* add prescription medicine*/
+
+ 
+    $(document).on('click','#addPresMedicine',function(){
+
+          // rowNoUpload++;
+
+          var rowno=  $("#presmedrow").val();
+          var medicine=  $("#prescription_medicine").val();
+          var dosage=  $("#pres_medicine_dosage").val();
+          var frequency=  $("#pres_medicine_frequency").val();
+          var days=  $("#pres_medicine_days").val();
+
+           $("#prescription_medicineerr").removeClass("bordererror");
+
+          if (medicine!='0') {
+        console.log(rowno);
+        rowno++;
+        $.ajax({
+            type: "POST",
+            url: basepath+'patientcase/addPrescriptionMedicineDetails',
+            dataType: "html",
+            data: {rowNo:rowno,medicine:medicine,dosage:dosage,frequency:frequency,days:days},
+            success: function (result) {
+                $("#presmedrow").val(rowno);
+                $("#detail_presmed table").css("display","block"); 
+                $("#detail_presmed table tbody").append(result);   
+                $('select').selectpicker();
+              //  $(".demo-masked-input").inputmask();
+                var $demoMaskedInput = $('.demo-masked-input');
+
+            //Time
+
+            $('.selecttime').bootstrapMaterialDatePicker
+            ({
+                date: false,
+                shortTime: true,
+                format: 'hh:mm a'
+            });
+         
+            }, 
+            error: function (jqXHR, exception) {
+              var msg = '';
+                if (jqXHR.status === 0) {
+                    msg = 'Not connect.\n Verify Network.';
+                } else if (jqXHR.status == 404) {
+                    msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status == 500) {
+                    msg = 'Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
+                    msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                    msg = 'Time out error.';
+                } else if (exception === 'abort') {
+                    msg = 'Ajax request aborted.';
+                } else {
+                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                }
+               // alert(msg);  
+            }
+            }); /*end ajax call*/
+
+    }else{      
+
+            $("#prescription_medicine").focus();
+            $("#prescription_medicineerr").addClass("bordererror");
+          
+
+    }
+  
+    }); // End Visiting Details
+
+
+ // Delete Table Row of prescription medicine
+
+    $(document).on('click','.delPresMed',function(){
+        
+        var currRowID = $(this).attr('id');
+        var rowDtlNo = currRowID.split('_');
+       // console.log(rowDtlNo[1]);
+        console.log(currRowID);
+
+        //$("tr#rowDocument_"+rowDtlNo[1]+"_"+rowDtlNo[2]).remove();
+        $("tr#rowPrescriptionMedicine_"+rowDtlNo[1]).remove();
+    });
+
+
+/* add prescription medicine*/
+
+ 
+    $(document).on('click','#addPresTest',function(){
+
+          // rowNoUpload++;
+
+          var rowno=  $("#presTestrow").val();
+          var investigation=  $("#prescription_investigation").val();
+        
+
+           $("#prescription_investigationerr").removeClass("bordererror");
+
+          if (investigation!='0') {
+        console.log(rowno);
+        rowno++;
+        $.ajax({
+            type: "POST",
+            url: basepath+'patientcase/addPrescriptionTestDetails',
+            dataType: "html",
+            data: {rowNo:rowno,medicine:medicine,dosage:dosage,frequency:frequency,days:days},
+            success: function (result) {
+                $("#presTestrow").val(rowno);
+                $("#detail_presTest table").css("display","block"); 
+                $("#detail_presTest table tbody").append(result);   
+                $('select').selectpicker();
+              //  $(".demo-masked-input").inputmask();
+                var $demoMaskedInput = $('.demo-masked-input');
+
+            //Time
+
+            $('.selecttime').bootstrapMaterialDatePicker
+            ({
+                date: false,
+                shortTime: true,
+                format: 'hh:mm a'
+            });
+         
+            }, 
+            error: function (jqXHR, exception) {
+              var msg = '';
+                if (jqXHR.status === 0) {
+                    msg = 'Not connect.\n Verify Network.';
+                } else if (jqXHR.status == 404) {
+                    msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status == 500) {
+                    msg = 'Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
+                    msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                    msg = 'Time out error.';
+                } else if (exception === 'abort') {
+                    msg = 'Ajax request aborted.';
+                } else {
+                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                }
+               // alert(msg);  
+            }
+            }); /*end ajax call*/
+
+    }else{      
+
+            $("#prescription_investigation").focus();
+            $("#prescription_investigationerr").addClass("bordererror");
+          
+
+    }
+  
+    }); // End Visiting Details
 
 
 }); // end of document ready
@@ -921,7 +1114,7 @@ function validatAntinatalBasicRecord()
 
 
 $(window).load(function () {
-    $('#antenantal_left_tab_menu_6').click();
+    $('#antenantal_left_tab_menu_7').click();
 })
 
 
@@ -1049,7 +1242,7 @@ function format(callback, id, basepath) {
             console.log(data);
 
             // console.log(response);
-            var thead = '<tr class="expandrowDetails"><th style="width:10%;">Test</th><th style="width:10%;">Test Result</th><th style="width:10%;">Test Date</th></tr>';
+            var thead = '<tr class="expandrowDetails"><th style="width:10%;">Test</th><th style="width:10%;">Test Result</th><th style="width:5%;">Test Date</th></tr>';
             tbody = '';
 
             $.each(data, function(i, datas) {
@@ -1058,39 +1251,130 @@ function format(callback, id, basepath) {
 
                 tbody += '<tr>';
                 tbody += '<td>Hb</td>';
-                tbody += '<td>'+datas.hb_result+'</td>';
+                tbody += '<td>'+CheckNull(datas.hb_result)+'</td>';
                 tbody += '<td>'+dateFormat(datas.hb_date)+'</td>';
                 tbody += '</tr>';
 
                 tbody += '<tr>';
                 tbody += '<td>TC</td>';
-                tbody += '<td>'+datas.tc_result+'</td>';
+                tbody += '<td>'+CheckNull(datas.tc_result)+'</td>';
                 tbody += '<td>'+dateFormat(datas.tc_date)+'</td>';
                 tbody += '</tr>';
 
                 tbody += '<tr>';
                 tbody += '<td>DC</td>';
-                tbody += '<td>'+datas.dc_result+'</td>';
+                tbody += '<td>'+CheckNull(datas.dc_result)+'</td>';
                 tbody += '<td>'+dateFormat(datas.dc_date)+'</td>';
                 tbody += '</tr>';
 
                 tbody += '<tr>';
                 tbody += '<td>FBS</td>';
-                tbody += '<td>'+datas.fbs_result+'</td>';
+                tbody += '<td>'+CheckNull(datas.fbs_result)+'</td>';
                 tbody += '<td>'+dateFormat(datas.fbs_date)+'</td>';
                 tbody += '</tr>';
 
                 tbody += '<tr>';
                 tbody += '<td>PPBS</td>';
-                tbody += '<td>'+datas.ppbs_result+'</td>';
+                tbody += '<td>'+CheckNull(datas.ppbs_result)+'</td>';
                 tbody += '<td>'+dateFormat(datas.ppbs_date)+'</td>';
                 tbody += '</tr>';
 
                 tbody += '<tr>';
                 tbody += '<td>VDRL</td>';
-                tbody += '<td>'+datas.vdrl_result+'</td>';
+                tbody += '<td>'+CheckNull(datas.vdrl_result)+'</td>';
                 tbody += '<td>'+dateFormat(datas.vdrl_date)+'</td>';
                 tbody += '</tr>';
+
+                tbody += '<tr>';
+                tbody += '<td>HIV 1</td>';
+                tbody += '<td>'+CheckNull(datas.hiv_one_result)+'</td>';
+                tbody += '<td>'+dateFormat(datas.hiv_one_date)+'</td>';
+                tbody += '</tr>';
+
+                tbody += '<tr>';
+                tbody += '<td>HIV 2</td>';
+                tbody += '<td>'+CheckNull(datas.hiv_two_result)+'</td>';
+                tbody += '<td>'+dateFormat(datas.hiv_two_date)+'</td>';
+                tbody += '</tr>';
+
+                tbody += '<tr>';
+                tbody += '<td>Hbs Ag</td>';
+                tbody += '<td>'+CheckNull(datas.hbsag_result)+'</td>';
+                tbody += '<td>'+dateFormat(datas.hbsag_date)+'</td>';
+                tbody += '</tr>';
+
+                tbody += '<tr>';
+                tbody += '<td>Anti HCV</td>';
+                tbody += '<td>'+CheckNull(datas.antihcv_result)+'</td>';
+                tbody += '<td>'+dateFormat(datas.antihcv_date)+'</td>';
+                tbody += '</tr>';
+
+                tbody += '<tr>';
+                tbody += '<td>Urine R/E</td>';
+                tbody += '<td>'+CheckNull(datas.urine_re_result)+'</td>';
+                tbody += '<td>'+dateFormat(datas.urine_re_date)+'</td>';
+                tbody += '</tr>';
+
+                tbody += '<tr>';
+                tbody += '<td>Urine C/S</td>';
+                tbody += '<td>'+CheckNull(datas.cs_sensitive_to_result)+'</td>';
+                tbody += '<td>'+dateFormat(datas.cs_sensitive_date)+'</td>';
+                tbody += '</tr>';
+
+                tbody += '<tr>';
+                tbody += '<td>STSH</td>';
+                tbody += '<td>'+CheckNull(datas.stsh_result)+'</td>';
+                tbody += '<td>'+dateFormat(datas.stsh_date)+'</td>';
+                tbody += '</tr>';
+
+                tbody += '<tr>';
+                tbody += '<td>S urea</td>';
+                tbody += '<td>'+CheckNull(datas.s_urea_result)+'</td>';
+                tbody += '<td>'+dateFormat(datas.s_urea_date)+'</td>';
+                tbody += '</tr>';
+
+                tbody += '<tr>';
+                tbody += '<td>S creatinine</td>';
+                tbody += '<td>'+CheckNull(datas.s_creatinine_result)+'</td>';
+                tbody += '<td>'+dateFormat(datas.s_creatinine_date)+'</td>';
+                tbody += '</tr>';
+
+                tbody += '<tr>';
+                tbody += '<td>Combined Test</td>';
+                tbody += '<td>'+CheckNull(datas.combined_test_result)+'</td>';
+                tbody += '<td>'+dateFormat(datas.combined_test_date)+'</td>';
+                tbody += '</tr>';
+
+                tbody += '<tr>';
+                tbody += '<td>Thalassemia</td>';
+                tbody += '<td>'+CheckNull(datas.thalassemia_result)+'</td>';
+                tbody += '<td>'+dateFormat(datas.thalassemia_date)+'</td>';
+                tbody += '</tr>';
+
+                tbody += '<tr>';
+                tbody += '<td>USG dating scan</td>';
+                tbody += '<td>SLF of '+CheckNull(datas.usg_slf_week)+' week '+CheckNull(datas.usg_slf_day)+' day'+'</td>';
+                tbody += '<td>'+dateFormat(datas.usg_scan_date)+'</td>';
+                tbody += '</tr>';
+
+                tbody += '<tr>';
+                tbody += '<td>NT scan + Double marker</td>';
+                tbody += '<td> Low risk for <b>'+CheckNull(datas.nt_scan_lowerrisk)+'</b><br> High risk for <b>'+CheckNull(datas.nt_scan_highrisk)+'</b></td>';
+                tbody += '<td>'+dateFormat(datas.nt_scan_date)+'</td>';
+                tbody += '</tr>';
+
+                tbody += '<tr>';
+                tbody += '<td>Anomaly scan</td>';
+                tbody += '<td>SLF of '+CheckNull(datas.anomaly_slf_week)+' week '+CheckNull(datas.anomaly_slf_day)+' day'+'</td>';
+                tbody += '<td>'+dateFormat(datas.anomaly_scan_date)+'</td>';
+                tbody += '</tr>';
+
+                tbody += '<tr>';
+                tbody += '<td>Growth scan</td>';
+                tbody += '<td>SLF of '+CheckNull(datas.growth_slf_week)+' week '+CheckNull(datas.growth_slf_day)+' day'+'</td>';
+                tbody += '<td>'+dateFormat(datas.growth_date)+'</td>';
+                tbody += '</tr>';
+
 
 
             });
@@ -1106,18 +1390,31 @@ function format(callback, id, basepath) {
 
 function dateFormat(date){
 
-    if (date=='null') {
+ var newDt='';
+    if (date==null) {
 
-    var dateval = date.slice(0, 10);
+    return newDt;
+
+    }else{
+        var dateval = date.slice(0, 10);
     console.log(dateval);
      var dateDtl = dateval.split('-');
       console.log(dateDtl);
 
       var newDt=dateDtl[2]+'-'+dateDtl[1]+'-'+dateDtl[0];
       return newDt;
+    }
 
-    }else{
+}
+
+
+function CheckNull(result){
+
+
+    if (result==null) {
         return '';
+    }else{
+        return result;
     }
 
 }
