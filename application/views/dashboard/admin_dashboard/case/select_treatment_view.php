@@ -178,10 +178,10 @@ border-bottom: 1px solid #f0c7f9;
                                             </div>
                                         </div>
 
-                              <div class="col-sm-4">
+                              <div class="col-sm-2">
                               <div class="form-group form-float">
                               <div class="input-group bloodgrpeerr" id="bloodgrpeerr">
-                                   <label class="form-label">Blood Group</label> 
+                                   <label class="form-label">Self Blood Group</label> 
                                <select name="bloodgroup" id="bloodgroup" class="form-control show-tick" data-live-search="true" tabindex="-98">
                                 <option value="0"> Select </option>
                                  <?php 
@@ -197,9 +197,45 @@ border-bottom: 1px solid #f0c7f9;
                                </select>   
                            </div>  
                             </div>
-                             </div>                                       
+                             </div>   
+
+
+                              <div class="col-sm-2">
+                              <div class="form-group form-float">
+                              <div class="input-group bloodgrpeerr" id="husbandbloodgrpeerr">
+                                   <label class="form-label">Husband Blood Group</label> 
+                               <select name="husband_bloodgroup" id="husband_bloodgroup" class="form-control show-tick" data-live-search="true" tabindex="-98">
+                                <option value="0"> Select </option>
+                                 <?php 
+
+                                 foreach ($bodycontent['bloodGroupList'] as $value) {  ?>
+                                   <option value="<?php echo $value->id;?>"
+                                        
+                                      
+
+                                        ><?php echo $value->bld_group_code?></option>
+                                 <?php     } ?>
+                                   
+                               </select>   
+                           </div>  
+                            </div>
+                             </div>                                     
                                                                              
                         </div>
+
+                          <div class="row clearfix">
+                              <div class="col-sm-2"></div>
+                           <div class="col-sm-8">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <textarea rows="1" name="address" id="address" class="form-control no-resize auto-growth"  style="overflow: hidden; overflow-wrap: break-word; height: 32px;" autocomplete="off"
+                                                      ></textarea>
+                                                    <label class="form-label">Address</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                            </div> 
 
 
 
@@ -344,10 +380,10 @@ border-bottom: 1px solid #f0c7f9;
                                             </div>
                                         </div>
 
-                              <div class="col-sm-4">
+                              <div class="col-sm-2">
                               <div class="form-group form-float">
                               <div class="input-group extpbloodgrpeerr" id="extpbloodgrpeerr">
-                                   <label class="form-label">Blood Group</label> 
+                                   <label class="form-label">Self Blood Group</label> 
                                <select name="extpbloodgroup" id="extpbloodgroup" class="form-control show-tick" data-live-search="true" tabindex="-98">
                                 <option value="0"> Select </option>
                                  <?php 
@@ -363,9 +399,46 @@ border-bottom: 1px solid #f0c7f9;
                                </select>   
                            </div>  
                             </div>
-                             </div>                                       
+                             </div>
+
+
+                              <div class="col-sm-2">
+                              <div class="form-group form-float">
+                              <div class="input-group bloodgrpeerr" id="extphusbandbloodgrpeerr">
+                                   <label class="form-label">Husband Blood Group</label> 
+                               <select name="extphusband_bloodgroup" id="extphusband_bloodgroup" class="form-control show-tick" data-live-search="true" tabindex="-98">
+                                <option value="0"> Select </option>
+                                 <?php 
+
+                                 foreach ($bodycontent['bloodGroupList'] as $value) {  ?>
+                                   <option value="<?php echo $value->id;?>"
+                                        
+                                      
+
+                                        ><?php echo $value->bld_group_code?></option>
+                                 <?php     } ?>
+                                   
+                               </select>   
+                           </div>  
+                            </div>
+                             </div>                                        
                                                                              
                         </div>
+
+
+                           <div class="row clearfix">
+                              <div class="col-sm-2"></div>
+                           <div class="col-sm-8">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <textarea rows="1" name="extpaddress" id="extpaddress" class="form-control no-resize auto-growth"  style="overflow: hidden; overflow-wrap: break-word; height: 32px;" autocomplete="off"
+                                                      ></textarea>
+                                                    <label class="form-label">Address</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                            </div> 
 
 
 

@@ -202,6 +202,8 @@ $("#newcasebtn").addClass("bg-teal");
                 $("#newcaseExistingPatientForm #patient_id").val(result.pdata.patient_id).focus();
                 $("#newcaseExistingPatientForm #extpgender").val(result.pdata.patientgender).trigger("change");
                 $("#newcaseExistingPatientForm #extpbloodgroup").val(result.pdata.bloodgroup).trigger("change");
+                $("#newcaseExistingPatientForm #extphusband_bloodgroup").val(result.pdata.husband_bloodgroup).trigger("change");
+                $("#newcaseExistingPatientForm #extpaddress").val(result.pdata.address).focus();
            }else{
                  $('#newcaseExistingPatientForm')[0].reset();
            }

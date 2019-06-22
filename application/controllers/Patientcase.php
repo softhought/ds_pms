@@ -73,14 +73,15 @@ class Patientcase extends CI_Controller {
             $patientage = trim(htmlspecialchars($dataArry['patientage']));
             $patientgender = trim(htmlspecialchars($dataArry['gender']));
             $bloodgroup = trim(htmlspecialchars($dataArry['bloodgroup']));
+            $husband_bloodgroup = trim(htmlspecialchars($dataArry['husband_bloodgroup']));
+            $address = trim(htmlspecialchars($dataArry['address']));
 
-          //  pre($session);
+          
+
+           //  pre($session);
 
 
 
-
-
-           
 
             if($selfmobile!="")
             {
@@ -146,6 +147,8 @@ class Patientcase extends CI_Controller {
                                           'patientage' => $patientage,       
                                           'patientgender' => $patientgender,       
                                           'bloodgroup' => $bloodgroup,            
+                                          'husband_bloodgroup' => $husband_bloodgroup,            
+                                          'address' => $address,            
                                           'created_on' => date('Y-m-d H:i:s'),       
                                          );
 
@@ -236,6 +239,8 @@ class Patientcase extends CI_Controller {
             $patientage = trim(htmlspecialchars($dataArry['extppatientage']));
             $patientgender = trim(htmlspecialchars($dataArry['extpgender']));
             $bloodgroup = trim(htmlspecialchars($dataArry['extpbloodgroup']));
+            $husband_bloodgroup = trim(htmlspecialchars($dataArry['extphusband_bloodgroup']));
+            $extpaddress = trim(htmlspecialchars($dataArry['extpaddress']));
 
           //  pre($session);
 
@@ -322,6 +327,8 @@ class Patientcase extends CI_Controller {
                                           'patientage' => $patientage,       
                                           'patientgender' => $patientgender,       
                                           'bloodgroup' => $bloodgroup,             
+                                          'husband_bloodgroup' => $husband_bloodgroup,             
+                                          'address' => $extpaddress,             
                                           'last_modified' => date('Y-m-d H:i:s'),    
                                     );
                               
@@ -507,6 +514,23 @@ class Patientcase extends CI_Controller {
                     $result['frequencyList'] = array('OD','BD','TDS','HS');
                      $result['testList']=$this->commondatamodel->getAllDropdownData('investigation_component');
 
+                   $result['prescriptionLatestData']=$this->patientcasemodel->getPrescriptionLatestByCase($caseID);
+
+                   if ($result['prescriptionLatestData']) {
+                     $prescriptionID=$result['prescriptionLatestData']->prescription_id;
+
+                      $result['prescriptionMedicineList']=$this->patientcasemodel->getMedicineDetailsByPrescriptionId($prescriptionID);
+
+                      $result['prescriptionInvestigationList']=$this->patientcasemodel->getInvestigationDetailsByPrescriptionId($prescriptionID);
+
+
+                   }else{
+                    $result['prescriptionMedicineList']=[];
+                    $result['prescriptionInvestigationList']=[];
+                   }
+
+                   $result['prescriptioAllData']=$this->patientcasemodel->getAllPrescriptionByCase($caseID);
+
                    
                   // $arrd=explode(",",'.$test.');
                   //                     pre($arrd);
@@ -555,6 +579,8 @@ class Patientcase extends CI_Controller {
             $patientage = trim(htmlspecialchars($dataArry['patientage']));
             $patientgender = trim(htmlspecialchars($dataArry['gender']));
             $bloodgroup = trim(htmlspecialchars($dataArry['bloodgroup']));
+            $husband_bloodgroup = trim(htmlspecialchars($dataArry['husband_bloodgroup']));
+            $address = trim(htmlspecialchars($dataArry['address']));
             
             $update_array  = array(
      
@@ -564,6 +590,8 @@ class Patientcase extends CI_Controller {
                                           'patientage' => $patientage,       
                                           'patientgender' => $patientgender,       
                                           'bloodgroup' => $bloodgroup,             
+                                          'husband_bloodgroup' => $husband_bloodgroup,             
+                                          'address' => $address,             
                                           'last_modified' => date('Y-m-d H:i:s'),    
                                     );
                 
@@ -762,8 +790,16 @@ class Patientcase extends CI_Controller {
 
 /* insert into examination */
         if ($ischangeExamination=='Y') {
+
+              $where_examination = array(
+                             'case_master_id' => $caseID,
+                             'created_on' => date('Y-m-d')
+                           );
+
+    /* delete today data data*/
+$deleteTodayInvestigation=$this->commondatamodel->deleteTableData('examination_master',$where_examination);
        
-       $mensumedicine_array = array(
+       $examination_array = array(
                                      'case_master_id' => $caseID,                                  
                                      'exam_height' => $exam_height,                                  
                                      'exam_weight' => $exam_weight,                                  
@@ -780,7 +816,7 @@ class Patientcase extends CI_Controller {
                                      'created_on' => date('Y-m-d'), 
                                      );
 
-                           $insertExamination=$this->commondatamodel->insertSingleTableData('examination_master',$mensumedicine_array);
+                           $insertExamination=$this->commondatamodel->insertSingleTableData('examination_master',$examination_array);
 
 
                           }
@@ -922,9 +958,22 @@ class Patientcase extends CI_Controller {
       $growth_slf_week = $dataArry['growth_slf_week'];
       $growth_slf_day = $dataArry['growth_slf_day'];
 
+
+ 
+
+
 /* insert into investigation_record */
 
   if ($ischangeInvestigation=='Y') {
+
+    $where_investigation_record = array(
+                             'case_master_id' => $caseID,
+                             'created_on' => date('Y-m-d')
+                           );
+
+    /* delete today data data*/
+$deleteTodayInvestigation=$this->commondatamodel->deleteTableData('investigation_record_master',$where_investigation_record);
+   
 
 $investigation_record_array = array(
                                     'case_master_id' => $caseID, 
@@ -986,12 +1035,113 @@ $insertInvestigation=$this->commondatamodel->insertSingleTableData('investigatio
 
 }
 
-/* insert into prescription_master */
 
+$doctor_note = trim($dataArry['doctor_note']);
+$ischangePrescription = $dataArry['ischangePrescription'];
+if ($dataArry['next_checkup_date']!='') {
+      
+    $next_checkup_date = date("Y-m-d", strtotime($dataArry['next_checkup_date']));
+
+}else{ $next_checkup_date=NULL; }
+
+
+
+
+// check prescription today data exist
+
+
+$where_prescription = array(
+                             'case_master_id' => $caseID,
+                             'entry_date' => date('Y-m-d')
+                           );
+
+
+$isExistPrescription=$this->commondatamodel->duplicateValueCheck('prescription_master',$where_prescription);
+
+if ($isExistPrescription) {
+
+
+    $todayPresData=$this->commondatamodel->getSingleRowByWhereCls('prescription_master',$where_prescription);
+
+    $oldPresId=$todayPresData->prescription_id;
+
+    $where_pres_mst = array('prescription_mst_id' => $oldPresId);
+    
+    /* delete data from prescription_medicine_dtl & prescription_investigation_dtl*/
+
+$deleteTodayPresMed=$this->commondatamodel->deleteTableData('prescription_medicine_dtl',$where_pres_mst);
+$deleteTodayPresInves=$this->commondatamodel->deleteTableData('prescription_investigation_dtl',$where_pres_mst);
+
+   
+/* delete master data*/
+$deleteTodayPrescription=$this->commondatamodel->deleteTableData('prescription_master',$where_prescription);
+   // pre($todayPresData);
+
+}
+
+
+
+
+
+
+
+
+/* insert into prescription_master */  
   $prescription_master = array(
                                 'case_master_id' => $caseID, 
-                                'created_on' => date('Y-m-d'), 
+                                'created_on' => date('Y-m-d H:i:s'),
+                                'doctor_note' => $doctor_note, 
+                                'next_checkup_dt' => $next_checkup_date,
+                                'entry_date' => date('Y-m-d'), 
                                );
+
+
+  $insertPrescriptionID=$this->commondatamodel->insertSingleTableData('prescription_master',$prescription_master);
+
+  
+  if(isset($dataArry['presMedID'])) {
+
+    $presMedID = $dataArry['presMedID'];
+    $presdosage = $dataArry['presdosage'];
+    $presfrequency = $dataArry['presfrequency'];
+    $presdays = $dataArry['presdays'];
+
+    for ($i=0; $i <count($dataArry['presMedID']) ; $i++) { 
+     
+
+        $pres_med_arr = array(
+                              'prescription_mst_id' => $insertPrescriptionID, 
+                              'medicine_id' => $presMedID[$i], 
+                              'dosage' => $presdosage[$i], 
+                              'frequency' => $presfrequency[$i], 
+                              'days' => $presdays[$i],
+                              'created_on' => date('Y-m-d'), 
+                            );
+
+         $insertPresMedicine=$this->commondatamodel->insertSingleTableData('prescription_medicine_dtl',$pres_med_arr);
+    }
+
+  }
+
+   if(isset($dataArry['presinvestigationID'])) {
+     $presinvestigationID = $dataArry['presinvestigationID'];
+
+     for ($i=0; $i < count($dataArry['presinvestigationID']); $i++) { 
+
+
+          $presinvestigation_arr = array(
+                                   'prescription_mst_id' => $insertPrescriptionID,
+                                   'investigation_comp_id' => $presinvestigationID[$i],
+                                   'created_on' => date('Y-m-d'), 
+                                  );
+
+           $insertPresInvestigation=$this->commondatamodel->insertSingleTableData('prescription_investigation_dtl',$presinvestigation_arr);
+      
+     }
+     
+
+   }
+
 
 
 
@@ -1220,11 +1370,6 @@ $insertInvestigation=$this->commondatamodel->insertSingleTableData('investigatio
 
 
 
-
-                  
-
-
-
                     
                     if($update)
                     {
@@ -1310,7 +1455,8 @@ $insertInvestigation=$this->commondatamodel->insertSingleTableData('investigatio
                             "msg_status" => 1,
                             "msg_data" => "Saved successfully",
                             "mode" => "EDIT",
-                            "antenantalID" => $antenantalID
+                            "antenantalID" => $antenantalID,
+                            "caseID" => $caseID
                            
                         );
                     }
@@ -1318,7 +1464,8 @@ $insertInvestigation=$this->commondatamodel->insertSingleTableData('investigatio
                     {
                         $json_response = array(
                             "msg_status" => 1,
-                            "msg_data" => "There is some problem.Try again"
+                            "msg_data" => "There is some problem.Try again",
+                            "caseID" => $caseID
                         );
                     }
 
@@ -1573,7 +1720,7 @@ $insertInvestigation=$this->commondatamodel->insertSingleTableData('investigatio
 
 
 
-        public function addPrescriptionTestDetails()
+   public function addPrescriptionTestDetails()
     {
         if($this->session->userdata('user_data'))
         {
@@ -1581,20 +1728,18 @@ $insertInvestigation=$this->commondatamodel->insertSingleTableData('investigatio
         
 
             $row_no = $this->input->post('rowNo');
-            $medicineID = $this->input->post('medicine');
+            $investigationID = $this->input->post('investigation');
 
 
-             $where_medicine= array('medicine_id' => $medicineID );
-                       $medicineData = $this->commondatamodel->getSingleRowByWhereCls('medicine_master',$where_medicine);
+             $where_investigation= array('investigation_comp_id' => $investigationID );
+                       $investigationData = $this->commondatamodel->getSingleRowByWhereCls('investigation_component',$where_investigation);
                       // pre($medicineData);exit;
 
 
             $data['rowno'] = $row_no;
-            $data['medicineID'] = $medicineID;
-            $data['medicine'] = $medicineData->medicine_name;
-            $data['dosage'] = $this->input->post('dosage');
-            $data['frequency'] = $this->input->post('frequency');
-            $data['days'] = $this->input->post('days');
+            $data['investigationID'] = $investigationID;
+            $data['investigation'] = $investigationData->inv_component_name;
+        
             $data['DaysList']=$this->commondatamodel->getAllDropdownData('day_master');
             
             $page = 'dashboard/admin_dashboard/case/add_prescription_test_partial_view.php';
@@ -1606,5 +1751,299 @@ $insertInvestigation=$this->commondatamodel->insertSingleTableData('investigatio
             redirect('login','refresh');
         }
     }
+
+
+    public function getPrescriptionDetailRow()
+    {
+        $session = $this->session->userdata('user_data');
+        if($this->session->userdata('user_data'))
+        {
+            $json_response = array();
+            $inv_record_id = $this->input->get("inv_record_id");
+           
+
+            $result['medicineRowData'] = $this->patientcasemodel->getMedicineDetailsByPrescriptionId($inv_record_id);
+
+            $result['investigationRowData'] = $this->patientcasemodel->getInvestigationDetailsByPrescriptionId($inv_record_id);
+
+          //  $json_response = $result['medicineRowData'];
+            $json_response = array(
+                                    'medicine' => $result['medicineRowData'], 
+                                    'investigation' => $result['investigationRowData'], 
+                                  );
+
+            header('Content-Type: application/json');
+            echo json_encode( $json_response );
+            exit;
+        }
+        else
+        {
+            redirect('login','refresh');
+        }
+    }
+
+
+
+ public function print_item(){
+       if($this->session->userdata('user_data'))
+        {
+       // load library
+            $this->load->library('Pdf');
+            $pdf = $this->pdf->load();
+            ini_set('memory_limit', '256M'); 
+       
+
+     
+                ini_set('memory_limit', '256M'); 
+                $page = 'dashboard/admin_dashboard/case/case_add_edit';
+               // $html = $this->load->view($page, $result, true);
+               
+                $html="Hello";
+                // render the view into HTML
+                $pdf->WriteHTML($html); 
+                $output = 'saleBillPdf' . date('Y_m_d_H_i_s') . '_.pdf'; 
+                $pdf->Output("$output", 'I');
+                exit();
+         }
+         else {
+            redirect('login', 'refresh');
+        }
+}
+
+
+ public function print_prescription(){
+      $session = $this->session->userdata('user_data');
+       if($this->session->userdata('user_data'))
+        {
+          $result=[];
+          $result['patientCaseData']=[];
+          $result['patientmasterData']=[];
+          $result['total_parity']=[];
+          $result['lastchildBirth']=[];
+          $result['previousChildHistory']=[];
+          $result['previousChild']=[];
+          $result['diseases']='';
+          $result['surgicaData']=[];
+          $result['familyComponentList']=[];
+          $result['highrisk']='';
+          $result['regularMedicineList']=[];
+          $result['inveltdata']=[];
+          $result['examinationFirstData']=[];
+          $result['examinationLatestData']=[];
+          $result['prescriptionLatestData']=[];
+          $result['prescriptionLatestData']=[];
+          $result['prescriptionMedicineList']=[];
+          $result['prescriptionInvestigationList']=[];
+
+
+
+          if($this->uri->rsegment(3) == NULL)
+            {
+                $caseID = 0;
+                 $html="";
+            
+            }
+            else
+            {
+
+                $caseID = $this->uri->segment(3);
+
+                $clinic_id=$session['clinic_id'];
+                $doctor_id=$session['doctor_id'];
+
+                $where_clinic_master = [
+                    'clinic_master.clinic_id' => $clinic_id
+                ];
+
+                $result['clinicData'] = $this->commondatamodel->getSingleRowByWhereCls('clinic_master',$where_clinic_master);
+                $where_doctor = [
+                    'doctor_master.doctor_id' => $clinic_id
+                ];
+
+                $result['doctorData'] = $this->commondatamodel->getSingleRowByWhereCls('doctor_master',$where_doctor);
+
+                 $where_case_master = [
+                    'case_master.case_id' => $caseID
+                ];
+
+                $result['patientCaseData'] = $this->commondatamodel->getSingleRowByWhereCls('case_master',$where_case_master); 
+
+                $result['patientmasterData'] = $this->patientcasemodel->getPatientBasicInfo($result['patientCaseData']->patient_id); 
+
+                 $where_antenatel_master = [
+                    'antenantal_master.case_master_id' => $caseID
+                 ];
+
+                // getSingleRowByWhereCls(tablename,where params)
+                 $result['antenantalCaseData'] = $this->commondatamodel->getSingleRowByWhereCls('antenantal_master',$where_antenatel_master);
+
+                 if ($result['antenantalCaseData']) {
+                  
+                
+
+                 $parity_term_delivery=$result['antenantalCaseData']->parity_term_delivery;
+                 $parity_preterm=$result['antenantalCaseData']->parity_preterm;
+                 $parity_abortion=$result['antenantalCaseData']->parity_abortion;
+                 $parity_issue=$result['antenantalCaseData']->parity_issue;
+
+                 $result['total_parity'] =($parity_term_delivery+$parity_preterm+$parity_abortion+$parity_issue);
+
+                 $result['total_cesarean'] = $this->patientcasemodel->getTotalCesareanByCase($caseID);
+                 $result['lastchildBirth'] = $this->patientcasemodel->getLastChildBirthByCase($caseID);
+                 $result['previousChildHistory'] = $this->patientcasemodel->getAllPreviousChildHistory($caseID);
+
+
+                 $previousChild = [];
+                 foreach ($result['previousChildHistory'] as $key => $previouschild) {
+                  $complications='';
+                  $medicalproblem='';
+                  
+                 
+                  $complicationids = explode (",", $previouschild->complication);
+                 
+                  $complicationData=$this->patientcasemodel->getComplicationsByIds($complicationids);
+
+                  foreach ($complicationData as $complicationdata) {
+                    $complications.=$complicationdata->complication_name.',';
+                  }
+                  $complications=rtrim($complications,',');
+
+
+
+                  $medicalproblemids = explode (",", $previouschild->medicalproblem);
+                  $medicalproblemData=$this->patientcasemodel->getMedicalProblemByIds($medicalproblemids);
+
+                   foreach ($medicalproblemData as $medicalproblemrow) {
+                    $medicalproblem.=$medicalproblemrow->problem.',';
+                  }
+                  $medicalproblem=rtrim($medicalproblem,',');
+                 
+                   $previousChild[]= array(
+                                            'year' => $previouschild->year,
+                                            'complications' => $complications,
+                                            'med_prob' => $medicalproblem,
+                                            'med_prob_other' => $previouschild->medicalproblem_other
+                                             );
+                 }
+
+                 $result['previousChild']=$previousChild;
+
+                
+
+                 $diseases_ids = explode (",", $result['antenantalCaseData']->diseases_ids);
+                 $diseasesData=$this->patientcasemodel->getDiseasesByIds($diseases_ids);
+                 $diseases='';
+                  foreach ($diseasesData as $diseasesrow) {
+                    $diseases.=$diseasesrow->diseases_name.',';
+                  }
+                $result['diseases']=rtrim($diseases,',');
+
+
+                $result['surgicaData']=$this->patientcasemodel->getAllSurgicaRecordByCase($caseID);
+
+
+                $result['familyComponentList']=$this->patientcasemodel->getFamilyComponentDetails($caseID);
+
+
+
+                 $highrisk_ids = explode (",", $result['antenantalCaseData']->highrisk_ids);
+
+                 $highriskData=$this->patientcasemodel->getHighRiskByIds($highrisk_ids);
+                 $highrisk='';
+                  foreach ($highriskData as $highriskrow) {
+                    $highrisk.=$highriskrow->risk_type.',';
+                  }
+
+
+               $result['highrisk']=rtrim($highrisk,',');
+              
+                // pre($result['familyComponentList']);
+
+               if ($result['antenantalCaseData']->is_highrisk_others=='Y') {
+                 $highrisk=rtrim($highrisk,',Others');
+                 $result['highrisk']=$highrisk.','.$result['antenantalCaseData']->highrisk_others;
+               }
+
+              $result['regularMedicineList']=$this->patientcasemodel->getRegularMedecineDetails($caseID);
+
+              //investigation Latest Data
+              $result['inveltdata']=$this->patientcasemodel->getInvestigationLatestByCase($caseID);
+              
+           $result['examinationFirstData']=$this->patientcasemodel->getFirstExaminationDataByCase($caseID);
+           $result['examinationLatestData']=$this->patientcasemodel->getExaminationLatestByCase($caseID);
+
+
+           $result['prescriptionLatestData']=$this->patientcasemodel->getPrescriptionLatestByCase($caseID);
+
+             if ($result['prescriptionLatestData']) {
+
+                    if($this->uri->rsegment(4) == NULL)
+                    {
+                     $prescriptionID=$result['prescriptionLatestData']->prescription_id;
+                    }else{
+                       $prescriptionID= $this->uri->segment(4);
+                       $result['prescriptionLatestData']=$this->patientcasemodel->getPrescriptionDetailsById($prescriptionID);
+                    }
+                     
+
+                      $result['prescriptionMedicineList']=$this->patientcasemodel->getMedicineDetailsByPrescriptionId($prescriptionID);
+
+                      $result['prescriptionInvestigationList']=$this->patientcasemodel->getInvestigationDetailsByPrescriptionId($prescriptionID);
+
+
+                   }else{
+                    $result['prescriptionMedicineList']=[];
+                    $result['prescriptionInvestigationList']=[];
+                   }
+
+
+
+
+                    }// end of if block antenantal case data
+
+//echo $prescriptionID;
+
+
+
+
+        
+        //pre($result['examinationFirstData']);exit;
+
+
+
+
+                $page = 'dashboard/admin_dashboard/case/print_prescription';
+              //  $page = 'dashboard/admin_dashboard/case/testtable';
+               $html = $this->load->view($page, $result, true);
+               //exit;
+                
+            }
+
+
+            // pre($result['clinicData']);
+
+             //exit;
+
+                // load library
+                $this->load->library('Pdf');
+                $pdf = $this->pdf->load();
+                ini_set('memory_limit', '256M'); 
+       
+                $pdf->SetHeader('Document Title');
+                // render the view into HTML
+                $pdf->WriteHTML($html); 
+                $output = 'Prescription' . date('Y_m_d_H_i_s') . '_.pdf'; 
+                $pdf->Output("$output", 'I');
+                exit();
+         }
+         else {
+            redirect('login', 'refresh');
+        }
+}
+
+
+
+
+
 
 }// end of class

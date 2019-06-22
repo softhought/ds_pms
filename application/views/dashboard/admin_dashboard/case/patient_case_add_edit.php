@@ -83,14 +83,20 @@ border-bottom: 1px solid #f0c7f9;
                                      <button type="button" class="btn btn-block btn-xs waves-effect tab_lf_btn"  id="antenantal_left_tab_menu_6"><span>➤</span>&nbsp;Investigation</button> 
                                    
                                      <button type="button" class="btn btn-block btn-xs waves-effect tab_lf_btn"  id="antenantal_left_tab_menu_7"><span>➤</span>&nbsp;Prescription</button>
+
+                                    <button type="button" class="btn btn-block btn-xs waves-effect 
+                                    tab_lf_btn"  id="antenantal_left_tab_menu_8"><span>➤</span>&nbsp;Print</button>
                                      
-                                        <!--
-                                      <button type="button" class="btn btn-block btn-xs waves-effect tab_lf_btn"  id="antenantal_left_tab_menu_8"><span>➤</span>&nbsp;Investigation Record</button>
-                                      -->
+                                      
 
-                                      <button type="button" class="btn btn-block btn-xs waves-effect tab_lf_btn"  id="antenantal_left_tab_menu_9"><span>➤</span>&nbsp;Print</button>
 
-                                    		
+
+                               
+                                      
+                                      <!--
+                                      <button type="button" class="btn btn-block btn-xs waves-effect tab_lf_btn"  id="antenantal_left_tab_menu_9"><span>➤</span>&nbsp;XXXXXXXXX</button>
+
+                                    		-->
                                     	</div>
                                     	<!-- start of right side content-->
                                     	<div class="col-sm-10" style="border: 1px solid #eeecec;">
@@ -185,7 +191,7 @@ border-bottom: 1px solid #f0c7f9;
                                             </div>
                                         </div>
 
-                              <div class="col-sm-4">
+                              <div class="col-sm-2">
                               <div class="form-group form-float">
                               <div class="input-group bloodgrpeerr" id="bloodgrpeerr">
                                    <label class="form-label">Blood Group</label> 
@@ -206,9 +212,44 @@ border-bottom: 1px solid #f0c7f9;
                                </select>   
                            </div>  
                             </div>
-                             </div>                                       
+                             </div> 
+
+                             <div class="col-sm-2">
+                              <div class="form-group form-float">
+                              <div class="input-group bloodgrpeerr" id="husbandbloodgrpeerr">
+                                   <label class="form-label">Husband Blood Group</label> 
+                               <select name="husband_bloodgroup" id="husband_bloodgroup" class="form-control show-tick" data-live-search="true" tabindex="-98">
+                                <option value="0"> Select </option>
+                                 <?php 
+
+                                 foreach ($bodycontent['bloodGroupList'] as $value) {  ?>
+                                   <option value="<?php echo $value->id;?>"
+                                      <?php if(($bodycontent['mode']=="EDIT") && $value->id==$bodycontent['patientmasterEditdata']->husband_bloodgroup){echo "selected";}else{echo "";} ?>   
+                                      
+
+                                        ><?php echo $value->bld_group_code?></option>
+                                 <?php     } ?>
+                                   
+                               </select>   
+                           </div>  
+                            </div>
+                             </div>                                      
                                                                              
                         </div>
+
+                           <div class="row clearfix">
+                              <div class="col-sm-2"></div>
+                           <div class="col-sm-8">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <textarea rows="1" name="address" id="address" class="form-control no-resize auto-growth"  style="overflow: hidden; overflow-wrap: break-word; height: 32px;" autocomplete="off"
+                                                      ><?php if($bodycontent['mode']=="EDIT"){echo $bodycontent['patientmasterEditdata']->address;} ?></textarea>
+                                                    <label class="form-label">Address</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                            </div> 
 
 
 
@@ -846,7 +887,7 @@ border-bottom: 1px solid #f0c7f9;
 	            </div>
 	            <div class="col-sm-2">
 	                           		  
-		            <button type="submit" class="btn btn-block btn-lg btn-primary waves-effect antenatelbasicsavebtn" ><?php echo $bodycontent['antenantalbtnText']; ?></button> 
+		            <button type="submit" class="btn btn-block btn-lg btn-primary waves-effect antenatelbasicsavebtn" id="savebtn_basic_record" ><?php echo $bodycontent['antenantalbtnText']; ?></button> 
 
 		            <span class="btn btn-block btn-lg btn-primary waves-effect loaderbtn" id="loaderbtn" style="display:none;"> <?php echo $bodycontent['antenantalbtnTextLoader']; ?></span>
 	                                       
@@ -948,7 +989,7 @@ border-bottom: 1px solid #f0c7f9;
               <div class="input-group selectyearerr" id="selectyearerr_<?php echo $childdtlrowno; ?>">
               <label>Year</label>
                                <select name="selectYear[]" id="selectYear_<?php echo $childdtlrowno; ?>" class="form-control show-tick  selectYear" data-live-search="true" tabindex="-98">
-                                <option value="0">&nbsp;</option>
+                                <option value="">&nbsp;</option>
                                   <?php
                                       for ($i=1970; $i <= date('Y'); $i++) {     
                                    ?>
@@ -1144,7 +1185,7 @@ border-bottom: 1px solid #f0c7f9;
               </div>
               <div class="col-sm-2">
                                   
-                <button type="submit" class="btn btn-block btn-lg btn-primary waves-effect antenatelbasicsavebtn" ><?php echo $bodycontent['antenantalbtnText']; ?></button> 
+                <button type="submit" class="btn btn-block btn-lg btn-primary waves-effect antenatelbasicsavebtn" id="savebtn_previous_birth" ><?php echo $bodycontent['antenantalbtnText']; ?></button> 
 
                 <span class="btn btn-block btn-lg btn-primary waves-effect loaderbtn" id="loaderbtn" style="display:none;"> <?php echo $bodycontent['antenantalbtnTextLoader']; ?></span>
                                          
@@ -1950,7 +1991,7 @@ border-bottom: 1px solid #f0c7f9;
               </div>
               <div class="col-sm-2">
                                   
-                <button type="submit" class="btn btn-block btn-lg btn-primary waves-effect antenatelbasicsavebtn" ><?php echo $bodycontent['antenantalbtnText']; ?></button> 
+                <button type="submit" class="btn btn-block btn-lg btn-primary waves-effect antenatelbasicsavebtn" id="savebtn_history" ><?php echo $bodycontent['antenantalbtnText']; ?></button> 
 
                 <span class="btn btn-block btn-lg btn-primary waves-effect loaderbtn" id="loaderbtn" style="display:none;"> <?php echo $bodycontent['antenantalbtnTextLoader']; ?></span>
                                          
@@ -2141,19 +2182,31 @@ border-bottom: 1px solid #f0c7f9;
 
                          <input type="hidden" name="ischangeExamination" id="ischangeExamination" value="N">
                    </div>
-                   <br>
-
-                   <?php
-
-                   if ($bodycontent['examinationAllData']) {
-                   
-
-                   ?>
-
-                   <button type="button" class="btn bg-deep-purple waves-effect" id="examallshowbtn">
+                     <br>
+                <div class="row clearfix"><!-- start of save and error row-->
+              <div class="col-sm-2">
+                 <?php if ($bodycontent['examinationAllData']) { ?>
+                <button type="button" class="btn bg-deep-purple waves-effect" id="examallshowbtn">
                                   
                                     <span id="spanexamallshow">Show All Record</span>
                                 </button>
+                                 <?php }?>
+              </div>
+              <div class="col-sm-6">
+              <p id="antenatelmsg" class="form_error"></p>
+              </div>
+              <div class="col-sm-2">
+                                  
+                <button type="submit" class="btn btn-block btn-lg btn-primary waves-effect antenatelbasicsavebtn" id="savebtn_examination" ><?php echo $bodycontent['antenantalbtnText']; ?></button> 
+
+                <span class="btn btn-block btn-lg btn-primary waves-effect loaderbtn" id="loaderbtn" style="display:none;"> <?php echo $bodycontent['antenantalbtnTextLoader']; ?></span>
+                                         
+              </div>
+              </div><!-- start of save and error row-->
+  <br>
+                  
+                 
+                   
                       <div id="examdataall" style="padding: 10px;display: none;">
                         <table class="table table-striped rowexpandTable" style="width: 95%">
                           <tbody><tr class="expandrowDetails">
@@ -2198,24 +2251,11 @@ border-bottom: 1px solid #f0c7f9;
                           </tbody>
                         </table>
                       </div>
-                    <?php }?>
+                   
  
                      
 
-                  <br>
-                <div class="row clearfix"><!-- start of save and error row-->
-              <div class="col-sm-2"></div>
-              <div class="col-sm-6">
-              <p id="antenatelmsg" class="form_error"></p>
-              </div>
-              <div class="col-sm-2">
-                                  
-                <button type="submit" class="btn btn-block btn-lg btn-primary waves-effect antenatelbasicsavebtn" ><?php echo $bodycontent['antenantalbtnText']; ?></button> 
-
-                <span class="btn btn-block btn-lg btn-primary waves-effect loaderbtn" id="loaderbtn" style="display:none;"> <?php echo $bodycontent['antenantalbtnTextLoader']; ?></span>
-                                         
-              </div>
-              </div><!-- start of save and error row-->
+               
  
 
                          	</section>
@@ -3063,7 +3103,7 @@ border-bottom: 1px solid #f0c7f9;
               </div>
               <div class="col-sm-2">
                                   
-                <button type="submit" class="btn btn-block btn-lg btn-primary waves-effect antenatelbasicsavebtn" ><?php echo $bodycontent['antenantalbtnText']; ?></button> 
+                <button type="submit" class="btn btn-block btn-lg btn-primary waves-effect antenatelbasicsavebtn" id="savebtn_investigation" ><?php echo $bodycontent['antenantalbtnText']; ?></button> 
 
                 <span class="btn btn-block btn-lg btn-primary waves-effect loaderbtn" id="loaderbtn" style="display:none;"> <?php echo $bodycontent['antenantalbtnTextLoader']; ?></span>
                                          
@@ -3142,6 +3182,15 @@ border-bottom: 1px solid #f0c7f9;
 
           			     	<center><h3>Prescription</h3></center>
                      <br>
+
+                       <?php
+                       if ($bodycontent['prescriptionLatestData']) {
+                         $isDataprescription='Y';
+                        }else{
+                           $isDataprescription='N';
+                        }
+
+                      ?>
                        <div class="row clearfix">
  
               <div class="col-sm-6" >
@@ -3150,7 +3199,7 @@ border-bottom: 1px solid #f0c7f9;
                          <div class="col-sm-4">
                          <div class="input-group " id="prescription_medicineerr">
                          <label class="form-label upText">Medicine</label>
-                         <select name="prescription_medicine" id="prescription_medicine" class="form-control selinve show-tick"  data-live-search="true" tabindex="-98">
+                         <select name="prescription_medicine" id="prescription_medicine" class="form-control selpres show-tick"  data-live-search="true" tabindex="-98">
                          <option value="0"> &nbsp; </option>
                          <?php 
 
@@ -3168,7 +3217,7 @@ border-bottom: 1px solid #f0c7f9;
                         <div class="col-sm-2">
                          <div class="input-group " >
                          <label class="form-label upText">Dosage</label>
-                         <select name="pres_medicine_dosage" id="pres_medicine_dosage" class="form-control selinve show-tick"  data-live-search="true" tabindex="-98">
+                         <select name="pres_medicine_dosage" id="pres_medicine_dosage" class="form-control selpres show-tick"  data-live-search="true" tabindex="-98">
                          <option value="0"> &nbsp; </option>
                          <?php 
 
@@ -3187,7 +3236,7 @@ border-bottom: 1px solid #f0c7f9;
                         <div class="col-sm-2">
                          <div class="input-group " >
                          <label class="form-label upText">Frequency</label>
-                         <select name="pres_medicine_frequency" id="pres_medicine_frequency" class="form-control selinve show-tick"  data-live-search="true" tabindex="-98">
+                         <select name="pres_medicine_frequency" id="pres_medicine_frequency" class="form-control selpres show-tick"  data-live-search="true" tabindex="-98">
                          <option value="0"> &nbsp; </option>
                          <?php 
 
@@ -3205,7 +3254,7 @@ border-bottom: 1px solid #f0c7f9;
                       <div class="col-sm-2">
                           <div class="form-group"><label class="form-label upText">Days</label>
                            <div class="form-line ">
-                            <input type="text" class="form-control inpinve" name="pres_medicine_days" id="pres_medicine_days" autocomplete="off" placeholder="" value="" >
+                            <input type="text" class="form-control selpres" name="pres_medicine_days" id="pres_medicine_days" autocomplete="off" placeholder="" value="" >
                            
                            </div>
                            </div>
@@ -3223,38 +3272,85 @@ border-bottom: 1px solid #f0c7f9;
                       </div>
                           
                   </div>
-
+                <br>
                   <!-- 333333333333333333333333333333333333333333333333333-->
                      <div id="detail_presmed" style="#border: 1px solid #e49e9e;">
                     <div class="table-responsive">
                            <?php
                           $presmedrow=0;
-                          $detailCount = 0;
-                          if($bodycontent['mode']=="EDIT")
+                          $detailPresMedCount = 0;
+                          if($isDataprescription=='Y')
                           {
-                          // $detailCount = sizeof($bodycontent['clinicDetailsEditdata']);
+                           $detailPresMedCount = sizeof($bodycontent['prescriptionMedicineList']);
                           }
 
                           // For Table style Purpose
-                          if($bodycontent['mode']=="EDIT" && $detailCount>0)
+                          if($isDataprescription=='Y' && $detailPresMedCount>0)
                           {
-                            $style_var = "display:block;width:100%;";
+                            $style_varmed = "display:block;width:100%;";
                           }
                           else
                           {
-                            $style_var = "display:none;width:100%;";
+                            $style_varmed = "display:none;width:100%;";
                           }
                         ?>
 
                     
-                    <table  class="table  no-footer" style="<?php echo $style_var; ?>">
+                    <table  class="table  no-footer" style="<?php echo $style_varmed; ?>">
                         <thead>
                         
                            
                         </thead>
                         <tbody>
+                            <?php
+
+                            foreach ($bodycontent['prescriptionMedicineList'] as $key => $prescriptionmedicine) {?>
+
                            <tr id="rowPrescriptionMedicine_<?php echo $presmedrow; ?>" class="row clearfix">
+
+                          
+
+
+                                <td style="width:36%;text-align: left;"> 
+                   <input type="hidden" name="presMedID[]" id="presMedID_<?php echo $presmedrow; ?>" value="<?php echo $prescriptionmedicine->medicine_id;?>">   
+                   <?php echo $prescriptionmedicine->medicine_name;?>       
+                      
+            </td>
+            
+            <td style="width:18%;text-align: center;"> 
+             
+               <input type="hidden" name="presdosage[]" id="presdosage_<?php echo $presmedrow; ?>" value="<?php echo $prescriptionmedicine->dosage;?>">   
+                   <?php echo $prescriptionmedicine->dosage;?>                
+
+            </td> 
+              <td style="width:18%;text-align: center;"> 
+             
+               <input type="hidden" name="presfrequency[]" id="presfrequency_<?php echo $presmedrow; ?>" value="<?php echo $prescriptionmedicine->frequency;?>">   
+                   <?php echo $prescriptionmedicine->frequency;?>                
+
+            </td> 
+             <td style="width:20%;text-align: center;"> 
+             
+               <input type="hidden" name="presdays[]" id="presdays_<?php echo $presmedrow; ?>" value="<?php echo $prescriptionmedicine->days;?>">   
+                   <?php echo $prescriptionmedicine->days;?>                
+
+            </td>
+
+            <td style="width:10%;vertical-align: middle;">
+              
+      <a href="javascript:;" class="delPresMed" id="delDocRow_<?php echo $presmedrow; ?>" title="Delete">
+          <i class="material-icons" style="color: red;">clear</i>
+          
+
+        </a>
+      </td>
+                            
                            </tr>
+                            <?php
+                            $presmedrow++;
+                            }
+
+                            ?>
 
                     <input type="hidden" name="presmedrow" id="presmedrow" value="<?php echo $presmedrow;?>">      
                     
@@ -3276,7 +3372,7 @@ border-bottom: 1px solid #f0c7f9;
                           <div class="col-sm-10">
                          <div class="input-group " id="prescription_investigationerr">
                          <label class="form-label upText">Investigation</label>
-                         <select name="prescription_investigation" id="prescription_investigation" class="form-control selinve show-tick"  data-live-search="true" tabindex="-98">
+                         <select name="prescription_investigation" id="prescription_investigation" class="form-control selpres show-tick"  data-live-search="true" tabindex="-98">
                          <option value="0"> &nbsp; </option>
                          <?php 
 
@@ -3294,7 +3390,7 @@ border-bottom: 1px solid #f0c7f9;
                           <div class="col-sm-1">
                           <div class="form-group"><label class="form-label upText">Action</label>
                            <div class="icon-button-demo">
-                            <button type="button" class="btn bg-purple btn-circle waves-effect waves-circle waves-float" id="addPresTest">
+                            <button type="button" class="btn bg-purple btn-circle waves-effect waves-circle waves-float selpres" id="addPresTest">
                                     <i class="material-icons">add_circle</i>
                                 </button>
                            
@@ -3306,38 +3402,68 @@ border-bottom: 1px solid #f0c7f9;
                           </div>
 
                              <!-- 333333333333333333333333333333333333333333333333333-->
-                     <div id="detail_presTest" style="#border: 1px solid #e49e9e;">
+                     <div id="detail_presTest" style="#border: 1px solid #e49e9e;margin-top: -20px;">
                     <div class="table-responsive">
                            <?php
                           $presTestrow=0;
-                          $detailCount = 0;
-                          if($bodycontent['mode']=="EDIT")
+                          $detailCountPresInv = 0;
+                          if($isDataprescription=='Y')
                           {
-                          // $detailCount = sizeof($bodycontent['clinicDetailsEditdata']);
+                           $detailCountPresInv = sizeof($bodycontent['prescriptionInvestigationList']);
                           }
 
                           // For Table style Purpose
-                          if($bodycontent['mode']=="EDIT" && $detailCount>0)
+                          if($isDataprescription=='Y' && $detailCountPresInv>0)
                           {
-                            $style_var = "display:block;width:100%;";
+                            $style_var_presinv = "display:block;width:100%;";
                           }
                           else
                           {
-                            $style_var = "display:none;width:100%;";
+                            $style_var_presinv = "display:none;width:100%;";
                           }
                         ?>
 
                     
-                    <table  class="table  no-footer" style="<?php echo $style_var; ?>">
+                    <table  class="table  no-footer" style="<?php echo $style_var_presinv; ?>">
                         <thead>
                         
                            
                         </thead>
                         <tbody>
-                           <tr id="rowPrescriptionMedicine_<?php echo $presTestrow; ?>" class="row clearfix">
-                           </tr>
+                          <?php
+                                  foreach ($bodycontent['prescriptionInvestigationList'] as $key => $prescriptionInvestigation) {
+                                    ?>
+                           <tr id="rowPrescriptionInvestigation_<?php echo $presTestrow; ?>" class="row clearfix">
 
-                    <input type="text" name="presTestrow" id="presTestrow" value="<?php echo $presTestrow;?>">      
+                            
+                                  
+                      <td style="width:90%;text-align: left;"> 
+                   <input type="hidden" name="presinvestigationID[]" id="presinvestigationID_<?php echo $presTestrow; ?>" value="<?php echo $prescriptionInvestigation->investigation_comp_id?>">   
+                   <?php echo $prescriptionInvestigation->inv_component_name;?>       
+                      
+            </td>
+            
+            
+        
+        
+
+      <td style="width:10%;vertical-align: middle;">
+            
+      <a href="javascript:;" class="delPresInvestigation" id="delDocRow_<?php echo $presTestrow; ?>" title="Delete">
+          <i class="material-icons" style="color: red;">clear</i>
+          
+
+        </a>
+      </td> 
+
+
+                                 
+                           </tr>
+                             <?php
+                               $presTestrow++;   }
+                            ?>
+
+                    <input type="hidden" name="presTestrow" id="presTestrow" value="<?php echo $presTestrow;?>">      
                     
                         </tbody>
                     </table>
@@ -3356,25 +3482,119 @@ border-bottom: 1px solid #f0c7f9;
 
                      </div>
 
+                    <div class="row clearfix">
+                        <div class="col-sm-8">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <textarea rows="1" name="doctor_note" id="doctor_note" class="form-control no-resize auto-growth selpres"  style="overflow: hidden; overflow-wrap: break-word; height: 32px;" autocomplete="off"
+                                                      ><?php if($isDataprescription=='Y'){echo $bodycontent['prescriptionLatestData']->doctor_note;
+                                                    }?></textarea>
+                                                    <label class="form-label">Note</label>
+                                                </div>
+                                            </div>
+                           </div>
+
+                   <div class="col-sm-2">
+                      <div class="form-group">
+                     
+                      <div class="form-line">
+
+                        <input type="text" class="form-control selpres datepicker2" placeholder="Next Checkup Date" name="next_checkup_date" id="next_checkup_date" autocomplete="off" value="" 
+                           >        
+                         </div>
+                         </div>
+                  </div>
+ 
+                   
+                   </div>
+           <input type="text" name="ischangePrescription" id="ischangePrescription" value="N">
                       <br>
                 <div class="row clearfix"><!-- start of save and error row-->
               <div class="col-sm-2">
-                <!--  <button type="button" class="btn bg-deep-purple waves-effect" id="investallshowbtn">
+                 <button type="button" class="btn bg-deep-purple waves-effect" id="prescallshowbtn">
                                   
-                                    <span id="spaninvestallshow">Show All Record</span>
-                                </button> -->
+                                    <span id="spanprescriptionallshow">Show All Record</span>
+                                </button>
               </div>
               <div class="col-sm-6">
               <p id="antenatelmsg" class="form_error"></p>
               </div>
               <div class="col-sm-2">
                                   
-                <button type="submit" class="btn btn-block btn-lg btn-primary waves-effect antenatelbasicsavebtn" ><?php echo $bodycontent['antenantalbtnText']; ?></button> 
+                <button type="submit" class="btn btn-block btn-lg btn-primary waves-effect antenatelbasicsavebtn" id="savebtn_prescription" ><?php echo $bodycontent['antenantalbtnText']; ?></button> 
 
                 <span class="btn btn-block btn-lg btn-primary waves-effect loaderbtn" id="loaderbtn" style="display:none;"> <?php echo $bodycontent['antenantalbtnTextLoader']; ?></span>
                                          
               </div>
               </div><!-- start of save and error row-->
+
+                 <div id="presdataall" style="padding: 10px;display: none;">
+                  <!-- -----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx------------------- -->
+
+
+                   <div class="table-responsive">
+                               
+                                    <table id="pressallTable" class="table table-bordered table-striped dataTables display dataTblDetailCls datatbl_style"  style="border-collapse: collapse !important;width: 100%">
+                                    <thead>
+                                        <th style="width: 3%"></th>
+                                        <th style="width: 3%;display: none;"> Clinic Id</th>
+                                        <th style="width: 10%">Prescription Date</th>
+                                        <th style="width: 60%">Doctor Note</th>
+                                        <th style="width: 10%">Next Checkup</th>
+                                         <th style="width: 10%">Print</th>
+                                       
+                                        
+                                       
+                                      
+                                    </thead>
+                                   
+                                    <tbody>
+                                        
+   
+                                        
+                                      <?php
+                                        $i = 1;
+                                      foreach ($bodycontent['prescriptioAllData'] as $key => $prescriptioallrow) 
+                                      {
+
+                      
+                                      ?>  
+                            <tr id="row_<?php echo $i;?>">
+                              <td ></td>
+                               <td style="display: none;"><?php echo $prescriptioallrow->prescription_id;?></td>
+                               <td ><?php echo date('l d M Y', strtotime($prescriptioallrow->created_on));?></td>
+                               <td  style="width: 60%"><?php echo $prescriptioallrow->doctor_note;?></td>
+                               <td><?php 
+                               if ($prescriptioallrow->next_checkup_dt!='') {
+                                 echo date('d-m-Y', strtotime($prescriptioallrow->next_checkup_dt));
+                               }
+                              
+                               ?></td>
+                          <td style="text-align: center;vertical-align:middle">
+
+                              <a href="<?php echo base_url(); ?>patientcase/print_prescription/<?php echo $bodycontent['caseID']; ?>/<?php echo $prescriptioallrow->prescription_id?>" data-title="Print" target="_blank">          
+                              <button type="button" class="btn bg-deep-purple waves-effect">
+                                <i class="material-icons">print</i></button> </a>
+                         </td>
+                              
+                                           
+                                          
+                                            
+                                            
+                                           
+                                        </tr>
+                                    <?php 
+                                      $i++;
+                                }?>
+                                    </tbody>
+                                </table>
+                           
+                     
+
+                           </div>
+                  <!-- -----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx------------------- -->
+                  
+                </div>
  
 
                          	</section>
@@ -3384,7 +3604,21 @@ border-bottom: 1px solid #f0c7f9;
                            <!-- ======= start of antenantal_left_tab_menu_8_section ============ -->
                             <section class="antenantalDataSection" id="antenantal_left_tab_menu_8_section">
 
-          			     	<center><h3></h3></center>
+          			     	 <center><h3>Print</h3></center>
+
+       
+
+                         <!-- <button type="button" class="btn bg-deep-purple waves-effect prescriptionprint" target="_blank">
+                                  
+                                   Print Prescription
+                                </button>   -->
+
+                                <a href="<?php echo base_url(); ?>patientcase/print_prescription/<?php echo $bodycontent['caseID']; ?>" data-title="Print" target="_blank">          
+                              <button type="button" class="btn bg-deep-purple waves-effect">
+                                <i class="material-icons">print</i>&nbsp;Print Prescription</button> </a>    
+
+
+                                 <br>   <br>      
 
                          	</section>
                
@@ -3393,7 +3627,8 @@ border-bottom: 1px solid #f0c7f9;
                            <!-- ======= start of antenantal_left_tab_menu_9_section ============ -->
                             <section class="antenantalDataSection" id="antenantal_left_tab_menu_9_section">
 
-          			     	<center><h3>Print</h3></center>
+          			         
+                                          
 
                          	</section>
                

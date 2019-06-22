@@ -20,7 +20,7 @@
               <div class="input-group selectyearerr" id="selectyearerr_<?php echo $childdtlrowno; ?>">
               <label>Year</label>
                                <select name="selectYear[]" id="selectYear_<?php echo $childdtlrowno; ?>" class="form-control show-tick  selectYear" data-live-search="true" tabindex="-98">
-                                <option value="0">&nbsp;</option>
+                                <option value="">&nbsp;</option>
                                   <?php
                                       for ($i=1970; $i <= date('Y'); $i++) {     
                                    ?>

@@ -25,6 +25,38 @@ class Patientcasemodel extends CI_Model{
     
     } */
 
+
+    public function getPatientBasicInfo($patientid)
+    {
+        $data = array();
+        $where = array('patient_master.patient_id' =>$patientid);
+        $this->db->select("patient_master.*,
+                            bldself.bld_group_code as slfbldgrp,
+                            husbldgp.bld_group_code as husbldgrp,
+                            gender_master.gender
+                            ")
+                ->from('patient_master')
+                ->join('blood_group as bldself','bldself.id=patient_master.bloodgroup','INNER')
+                ->join('blood_group as husbldgp','husbldgp.id=patient_master.husband_bloodgroup','LEFT')
+                ->join('gender_master','gender_master.id=patient_master.patientgender','INNER')
+                ->where($where)
+                ->limit(1);
+        $query = $this->db->get();
+        
+        #echo $this->db->last_query();
+        
+        if($query->num_rows()> 0)
+        {
+           $row = $query->row();
+           return $data = $row;
+             
+        }
+        else
+        {
+            return $data;
+        }
+    }
+
     public function getAllCaseDetails()
     {
      $data = [];
@@ -380,5 +412,397 @@ class Patientcasemodel extends CI_Model{
                 return $data;
     
     }
+
+
+
+    public function getPrescriptionLatestByCase($case_master_id)
+    {
+        $data = array();
+        $where = [
+                "case_master_id" => $case_master_id
+            ];
+        $this->db->select("*")
+                ->from('prescription_master')
+                ->where($where)
+                ->order_by("prescription_master.prescription_id", "DESC")
+                ->limit(1);
+        $query = $this->db->get();
+        
+        #echo $this->db->last_query();
+        
+        if($query->num_rows()> 0)
+        {
+           $row = $query->row();
+           return $data = $row;
+             
+        }
+        else
+        {
+            return $data;
+        }
+    }
+
+
+    public function getPrescriptionDetailsById($prescription_id)
+    {
+        $data = array();
+        $where = [
+                "prescription_id" => $prescription_id
+            ];
+        $this->db->select("*")
+                ->from('prescription_master')
+                ->where($where)
+                ->limit(1);
+        $query = $this->db->get();
+        
+        #echo $this->db->last_query();
+        
+        if($query->num_rows()> 0)
+        {
+           $row = $query->row();
+           return $data = $row;
+             
+        }
+        else
+        {
+            return $data;
+        }
+    }
+
+    public function getMedicineDetailsByPrescriptionId($prescription_id)
+    {
+     $data = [];
+      $where = [
+                "prescription_medicine_dtl.prescription_mst_id" => $prescription_id
+            ];
+            $query = $this->db->select("prescription_medicine_dtl.*,medicine_master.medicine_name")
+                    ->from('prescription_medicine_dtl')
+                    ->join('medicine_master','medicine_master.medicine_id = prescription_medicine_dtl.medicine_id','LEFT')
+                    ->where($where)
+                    ->get();
+                
+                if($query->num_rows()> 0)
+                {
+                  foreach($query->result() as $rows)
+                    {
+                        $data[] = $rows;
+                    }
+                     
+                }
+                
+                return $data;
+    
+    }
+
+
+ public function getInvestigationDetailsByPrescriptionId($prescription_id)
+    {
+     $data = [];
+      $where = [
+                "prescription_investigation_dtl.prescription_mst_id" => $prescription_id
+            ];
+            $query = $this->db->select("prescription_investigation_dtl.*,investigation_component.inv_component_name")
+                    ->from('prescription_investigation_dtl')
+                    ->join('investigation_component','investigation_component.investigation_comp_id = prescription_investigation_dtl.investigation_comp_id','LEFT')
+                    ->where($where)
+                    ->get();
+                
+                if($query->num_rows()> 0)
+                {
+                  foreach($query->result() as $rows)
+                    {
+                        $data[] = $rows;
+                    }
+                     
+                }
+                
+                return $data;
+    
+    }
+
+
+ public function getAllPrescriptionByCase($case_master_id)
+    {
+     $data = [];
+      $where = [
+                "case_master_id" => $case_master_id
+            ];
+            $query = $this->db->select("*")
+                    ->from('prescription_master')
+                    ->where($where)
+                    ->order_by("prescription_master.prescription_id", "DESC")
+                    ->get();
+                
+                if($query->num_rows()> 0)
+                {
+                  
+                       
+                    foreach ($query->result() as $rows)
+                    {
+                        $data[] = $rows;
+                    }
+                    return $data;
+                  
+                     
+                }
+                
+                return $data;
+    
+    }
+
+
+    public function getTotalCesareanByCase($case_master_id)
+    {
+
+        $data = '';
+        $where = array(
+                        'previous_child_birth_history.case_master_id' =>$case_master_id,
+                        'previous_child_birth_history.delevery_type' =>'CS'
+                        );
+        $this->db->select("count(*) as total_cs")
+                ->from('previous_child_birth_history')
+                ->where($where)
+                ->limit(1);
+        $query = $this->db->get();
+        
+        #echo $this->db->last_query();
+        
+        if($query->num_rows()> 0)
+        {
+           $row = $query->row();
+           return $data = $row->total_cs;
+             
+        }
+        else
+        {
+            return $data;
+        }
+    }
+
+
+    public function getLastChildBirthByCase($case_master_id)
+    {
+
+        $data = [];
+        $where = array(
+                        'previous_child_birth_history.case_master_id' =>$case_master_id                       
+                        );
+        $this->db->select("*")
+                ->from('previous_child_birth_history')
+                ->where($where)
+                ->order_by("previous_child_birth_history.child_dtl_id", "DESC")
+                ->limit(1);
+        $query = $this->db->get();
+        
+        #echo $this->db->last_query();
+        
+        if($query->num_rows()> 0)
+        {
+           $row = $query->row();
+           return $data = $row;
+             
+        }
+        else
+        {
+            return $data;
+        }
+    }
+
+
+    public function getAllPreviousChildHistory($case_master_id)
+    {
+     $data = [];
+      $where = [
+                "case_master_id" => $case_master_id
+            ];
+            $query = $this->db->select("*")
+                    ->from('previous_child_birth_history')
+                    ->where($where)
+                    ->order_by("previous_child_birth_history.child_dtl_id", "DESC")
+                    ->get();
+                
+                if($query->num_rows()> 0)
+                {
+                  
+                       
+                    foreach ($query->result() as $rows)
+                    {
+                        $data[] = $rows;
+                    }
+                    return $data;
+                  
+                     
+                }
+                
+                return $data;
+    
+    }
+
+    public function getComplicationsByIds($ids)
+    {
+     $data = [];
+
+            $query = $this->db->select("*")
+                    ->from('complication_master')
+                    ->where_in('complication_id', $ids )
+                    ->get();
+                #q();
+                if($query->num_rows()> 0)
+                {
+                  
+                       
+                    foreach ($query->result() as $rows)
+                    {
+                        $data[] = $rows;
+                    }
+                    return $data;
+                  
+                     
+                }
+                
+                return $data;
+    
+    }
+
+
+    public function getMedicalProblemByIds($ids)
+    {
+     $data = [];
+
+            $query = $this->db->select("*")
+                    ->from('medical_problem')
+                    ->where_in('medicle_problem_id', $ids )
+                    ->get();
+                #q();
+                if($query->num_rows()> 0)
+                {
+                  
+                       
+                    foreach ($query->result() as $rows)
+                    {
+                        $data[] = $rows;
+                    }
+                    return $data;
+                  
+                     
+                }
+                
+                return $data;
+    
+    }
+
+ public function getDiseasesByIds($ids)
+    {
+     $data = [];
+
+            $query = $this->db->select("*")
+                    ->from('diseases_master')
+                    ->where_in('diseases_id', $ids )
+                    ->get();
+                #q();
+                if($query->num_rows()> 0)
+                {
+                  
+                       
+                    foreach ($query->result() as $rows)
+                    {
+                        $data[] = $rows;
+                    }
+                    return $data;
+                  
+                     
+                }
+                
+                return $data;
+    
+    }
+
+
+
+    public function getAllSurgicaRecordByCase($case_master_id)
+    {
+     $data = [];
+      $where = [
+                "case_master_id" => $case_master_id
+            ];
+            $query = $this->db->select("*")
+                    ->from('surgery_details')
+                    ->join('surgery_master','surgery_master.surgery_id=surgery_details.surgery_mst_id','INNER')
+                    ->where($where)
+                    ->where('yearback IS NOT NULL', null, false)
+                    ->get();
+                
+                if($query->num_rows()> 0)
+                {
+                  
+                       
+                    foreach ($query->result() as $rows)
+                    {
+                        $data[] = $rows;
+                    }
+                    return $data;
+                  
+                     
+                }
+                
+                return $data;
+    
+    }
+
+
+    public function getHighRiskByIds($ids)
+    {
+     $data = [];
+
+            $query = $this->db->select("*")
+                    ->from('high_risk_master')
+                    ->where_in('high_risk_id', $ids )
+                    ->get();
+                #q();
+                if($query->num_rows()> 0)
+                {
+                  
+                       
+                    foreach ($query->result() as $rows)
+                    {
+                        $data[] = $rows;
+                    }
+                    return $data;
+                  
+                     
+                }
+                
+                return $data;
+    
+    }
+
+
+    public function getFirstExaminationDataByCase($case_master_id)
+    {
+        $data = array();
+        $where = [
+                "case_master_id" => $case_master_id
+            ];
+        $this->db->select("*")
+                ->from('examination_master')
+                ->where($where)
+                ->order_by("examination_master.examination_id", "ASC")
+                ->limit(1);
+        $query = $this->db->get();
+        
+        #echo $this->db->last_query();
+        
+        if($query->num_rows()> 0)
+        {
+           $row = $query->row();
+           return $data = $row;
+             
+        }
+        else
+        {
+            return $data;
+        }
+    }
+
 
 } // end of class

@@ -50,6 +50,40 @@ $("#antenantal_left_tab_menu_1_section").css("display", "block");
         }
     });
 
+
+    var oTablePres = $('#pressallTable').DataTable({
+                                                    "bPaginate": false,
+                                                    "bFilter": false,
+                                                    "bInfo": false
+                                                             } );
+
+      $("#pressallTable tbody tr td:nth-child(1)").attr("class", "details-control");
+
+         $('#pressallTable').on('click', 'td.details-control', function() {
+        var tr = $(this).closest('tr');
+        var row = oTablePres.row(tr);
+        var rowdata = (oTablePres.row(tr).data());
+
+        /* if (row.child.isShown()) {
+             tr.removeClass('details');
+             row.child.hide();
+
+         }*/
+        if (row.child.isShown()) {
+            // This row is already open - close it
+            $('div.slider', row.child()).slideUp(function() {
+                tr.removeClass('details');
+                row.child.hide();
+            });
+        } else {
+            console.log(oTablePres.row(tr).data());
+            tr.addClass('details');
+            row.child(formatPrescription(row.child, rowdata, basepath)).show();
+
+            $('div.slider', row.child()).slideDown();
+        }
+    });
+
  /* Top Tab button on click*/
 
  $(document).on('click','.tabtnnonclck',function(){
@@ -219,6 +253,10 @@ $("#antenantal_left_tab_menu_1_section").css("display", "block");
                        $(".antenatelbasicsavebtn").html('Updated');
                        $("#antenantalID").val(result.antenantalID);
                        $("#antenantalmode").val(result.mode);
+                       $("#ischangePrescription").val('N');
+                       $("#ischangeExamination").val('N');
+                       $("#ischangeInvestigation").val('N');
+
                             
                   
                     } 
@@ -261,10 +299,107 @@ $("#antenantal_left_tab_menu_1_section").css("display", "block");
         }   // end master validation
 
   
+  
+    });
 
+
+    /**/
+
+       /* save and update Prescription information and print details */
+
+
+    $(document).on('click','#savebtn_prescription',function(event)
+    {
+        event.preventDefault();
+        if(validatAntinatalBasicRecord())
+        { 
+
+            if (MensuMeddetailValidation()) { 
+
+            var formDataserialize = $("#antinatalBasicRecordForm").serialize();
+            formDataserialize = decodeURI(formDataserialize);
+            console.log(formDataserialize);
+
+            var formData = { formDatas: formDataserialize };
+            $("#patientbasicsavebtn").css('display', 'none');
+            $(".antenatelbasicsavebtn").css('display', 'none');
+            $(".loaderbtn").css('display', 'block');
+        
+
+            console.log('-----------');
+            
+    
+        $.ajax({
+                type: "POST",
+                url: basepath+'patientcase/antenantalinfo_action',
+                dataType: "json",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                data: formData,
+                
+                success: function (result) {
+
+                     $(".antenatelbasicsavebtn").css('display', 'block');
+                    if (result.msg_status == 1) {
+
+                      
+                       $(".antenatelbasicsavebtn").removeClass("btn-danger");
+                       $(".antenatelbasicsavebtn").addClass("btn-primary");
+                       $(".antenatelbasicsavebtn").html('Updated');
+                       $("#antenantalID").val(result.antenantalID);
+                       $("#antenantalmode").val(result.mode);
+                       $("#ischangePrescription").val('N');
+                       $("#ischangeExamination").val('N');
+                       $("#ischangeInvestigation").val('N');
+
+                         var caseID = $("#caseID").val();
+                         console.log('Pres caseID : '+caseID);
+                 
+                     window.open(basepath+'patientcase/print_prescription/'+caseID,'_blank');
+                            
+                  
+                    } 
+                    else {
+                     //   $("#cls_response_msg").text(result.msg_data);
+                    }
+                    
+                    $(".loaderbtn").css('display', 'none');
+                    
+                    $("#patientbasicsavebtn").css({
+                        "display": "block",
+                        "margin": "0 auto"
+                    });
+                  
+                }, 
+                error: function (jqXHR, exception) {
+                  var msg = '';
+                    if (jqXHR.status === 0) {
+                        msg = 'Not connect.\n Verify Network.';
+                    } else if (jqXHR.status == 404) {
+                        msg = 'Requested page not found. [404]';
+                    } else if (jqXHR.status == 500) {
+                        msg = 'Internal Server Error [500].';
+                    } else if (exception === 'parsererror') {
+                        msg = 'Requested JSON parse failed.';
+                    } else if (exception === 'timeout') {
+                        msg = 'Time out error.';
+                    } else if (exception === 'abort') {
+                        msg = 'Ajax request aborted.';
+                    } else {
+                        msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                    }
+                   // alert(msg);  
+                }
+            }); /*end ajax call*/
 
         
+              }// mensu med validation
+
+        }   // end master validation
+
+  
+  
     });
+
 
 
 
@@ -769,6 +904,14 @@ $(document).on('change','.selinve',function(event){
  $("#ischangeInvestigation").val('Y');
 });
 
+
+$(document).on('keyup paste change','.selpres',function(event){
+
+ $("#ischangePrescription").val('Y');
+});
+
+
+
  
 
  $(document).on('click','#resetinvestigation',function(event){
@@ -789,6 +932,15 @@ $(document).on('click','#investallshowbtn',function(event){
  //$("#examdataall").show();
  $("#investdataall").toggle('slow');
  $('#spaninvestallshow').text( $('#spaninvestallshow').text() == 'Hide All Record' ? 'Show All Record' : 'Hide All Record' );
+
+});
+
+
+$(document).on('click','#prescallshowbtn',function(event){
+
+ //$("#examdataall").show();
+ $("#presdataall").toggle('slow');
+ $('#spanprescriptionallshow').text( $('#spaninvestallshow').text() == 'Hide All Record' ? 'Show All Record' : 'Hide All Record' );
 
 });
 
@@ -857,6 +1009,11 @@ $(document).on('change','.otheranomalyckbx',function(event){
                 $('select').selectpicker();
               //  $(".demo-masked-input").inputmask();
                 var $demoMaskedInput = $('.demo-masked-input');
+               
+                $('#pres_medicine_days').val('');
+                $('#prescription_medicine').val(0).change();
+                $('#pres_medicine_dosage').val(0).change();
+                $('#pres_medicine_frequency').val(0).change();
 
             //Time
 
@@ -908,7 +1065,7 @@ $(document).on('change','.otheranomalyckbx',function(event){
         var rowDtlNo = currRowID.split('_');
        // console.log(rowDtlNo[1]);
         console.log(currRowID);
-
+        $("#ischangePrescription").val('Y');
         //$("tr#rowDocument_"+rowDtlNo[1]+"_"+rowDtlNo[2]).remove();
         $("tr#rowPrescriptionMedicine_"+rowDtlNo[1]).remove();
     });
@@ -934,7 +1091,7 @@ $(document).on('change','.otheranomalyckbx',function(event){
             type: "POST",
             url: basepath+'patientcase/addPrescriptionTestDetails',
             dataType: "html",
-            data: {rowNo:rowno,medicine:medicine,dosage:dosage,frequency:frequency,days:days},
+            data: {rowNo:rowno,investigation:investigation},
             success: function (result) {
                 $("#presTestrow").val(rowno);
                 $("#detail_presTest table").css("display","block"); 
@@ -943,14 +1100,7 @@ $(document).on('change','.otheranomalyckbx',function(event){
               //  $(".demo-masked-input").inputmask();
                 var $demoMaskedInput = $('.demo-masked-input');
 
-            //Time
-
-            $('.selecttime').bootstrapMaterialDatePicker
-            ({
-                date: false,
-                shortTime: true,
-                format: 'hh:mm a'
-            });
+            $('#prescription_investigation').val(0).change();
          
             }, 
             error: function (jqXHR, exception) {
@@ -983,6 +1133,32 @@ $(document).on('change','.otheranomalyckbx',function(event){
     }
   
     }); // End Visiting Details
+
+
+     // Delete Table Row of Investigation
+
+    $(document).on('click','.delPresInvestigation',function(){
+        
+        var currRowID = $(this).attr('id');
+        var rowDtlNo = currRowID.split('_');
+       // console.log(rowDtlNo[1]);
+        console.log(currRowID);
+        $("#ischangePrescription").val('Y');
+        //$("tr#rowDocument_"+rowDtlNo[1]+"_"+rowDtlNo[2]).remove();
+        $("tr#rowPrescriptionInvestigation_"+rowDtlNo[1]).remove();
+    })
+
+
+
+    /*  Print Prescription */
+
+     $(document).on('click','.prescriptionprint',function(){
+        
+     var caseID = $("#caseID").val();
+     console.log('caseID : '+caseID);
+
+       window.location.replace(basepath+'patientcase/print_prescription/'+caseID,'_blank');
+    });
 
 
 }); // end of document ready
@@ -1114,7 +1290,7 @@ function validatAntinatalBasicRecord()
 
 
 $(window).load(function () {
-    $('#antenantal_left_tab_menu_7').click();
+    $('#antenantal_left_tab_menu_8').click();
 })
 
 
@@ -1380,6 +1556,68 @@ function format(callback, id, basepath) {
             });
 
             callback($('<div class="slider"><table class="table table-striped rowexpandTable" >' + thead + tbody + '</table></div>')).show();
+        },
+        error: function() {
+            console.log("Error Found");
+        }
+    });
+}
+
+
+/* data table details rows investigation_record_master */
+
+function formatPrescription(callback, id, basepath) {
+    var inv_record_id = id[1];
+   
+    $.ajax({
+        url: basepath + 'patientcase/getPrescriptionDetailRow',
+        data: { inv_record_id: inv_record_id },
+        dataType: "json",
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        complete: function(response) {
+            var data = JSON.parse(response.responseText);
+
+           // console.log(data['medicine']);
+
+            // console.log(response);
+            var thead = '<tr class="expandrowDetails"><th style="width:10%;">Medicine</th><th style="width:10%;">Dosage</th><th style="width:5%;">Frequency</th><th style="width:5%;">Days</th></tr>';
+            tbody = '';
+
+            $.each(data['medicine'], function(i, datas) {
+
+                console.log(datas);
+
+                tbody += '<tr>';
+                tbody += '<td>'+CheckNull(datas.medicine_name)+'</td>';
+                tbody += '<td>'+CheckNull(datas.dosage)+'</td>';
+                tbody += '<td>'+CheckNull(datas.frequency)+'</td>';
+                tbody += '<td>'+CheckNull(datas.days)+'</td>';
+                tbody += '</tr>';
+
+              
+
+
+            });
+
+             tbody += '<tr><td colspan="4">&nbsp;</td></tr>';
+            var thead2 = '<tr class="expandrowDetails"><th colspan="4" style="width:10%;">Investigation</th></tr>';
+            tbody2 = '';
+
+              $.each(data['investigation'], function(i, datasin) {
+
+                //console.log(datasin);
+
+                tbody2 += '<tr>';
+                tbody2 += '<td colspan="4">'+CheckNull(datasin.inv_component_name)+'</td>';
+              
+                tbody2 += '</tr>';
+
+              
+
+
+            });
+
+            callback($('<div class="slider"><table class="table table-striped rowexpandTable" >' + thead + tbody + thead2 + tbody2 +'</table></div>')).show();
         },
         error: function() {
             console.log("Error Found");
