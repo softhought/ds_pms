@@ -69,7 +69,7 @@ border-bottom: 1px solid #f0c7f9;
                        				 </div>
 
                        				 <div class="col-sm-2 topcol">
-                       				 <button type="button" class="btn btn-block btn-md  waves-effect tabbtn tabtnnonclck" id="undtreatbtn">Under Treatmentt</button> 	
+                       				 <button type="button" class="btn btn-block btn-md  waves-effect tabbtn tabtnnonclck" id="undtreatbtn">Under Treatment</button> 	
                        				 </div>
                        				
                        			</div><br>
@@ -161,7 +161,7 @@ border-bottom: 1px solid #f0c7f9;
                            	<div class="col-sm-2"></div>
                              <div class="col-sm-4">
                                 <div class="form-group form-float">
-                                <label class="form-label">Sex</label>
+                                <label class="form-label">Gender</label>
                                <select name="gender" id="gender" class="form-control show-tick" data-live-search="true" tabindex="-98">
                               
                                  <?php 
@@ -176,9 +176,9 @@ border-bottom: 1px solid #f0c7f9;
                                    
                                </select> 
                                             </div>
-                                        </div>
+                           </div>
 
-                              <div class="col-sm-2">
+                        <!--       <div class="col-sm-2">
                               <div class="form-group form-float">
                               <div class="input-group bloodgrpeerr" id="bloodgrpeerr">
                                    <label class="form-label">Self Blood Group</label> 
@@ -219,7 +219,7 @@ border-bottom: 1px solid #f0c7f9;
                                </select>   
                            </div>  
                             </div>
-                             </div>                                     
+                             </div>  -->                                    
                                                                              
                         </div>
 
@@ -363,7 +363,7 @@ border-bottom: 1px solid #f0c7f9;
                             <div class="col-sm-2"></div>
                              <div class="col-sm-4">
                                 <div class="form-group form-float">
-                                <label class="form-label">Sex</label>
+                                <label class="form-label">Gender</label>
                                <select name="extpgender" id="extpgender" class="form-control show-tick" data-live-search="true" tabindex="-98">
                               
                                  <?php 
@@ -380,7 +380,7 @@ border-bottom: 1px solid #f0c7f9;
                                             </div>
                                         </div>
 
-                              <div class="col-sm-2">
+                              <!-- <div class="col-sm-2">
                               <div class="form-group form-float">
                               <div class="input-group extpbloodgrpeerr" id="extpbloodgrpeerr">
                                    <label class="form-label">Self Blood Group</label> 
@@ -421,7 +421,7 @@ border-bottom: 1px solid #f0c7f9;
                                </select>   
                            </div>  
                             </div>
-                             </div>                                        
+                             </div>  -->                                       
                                                                              
                         </div>
 

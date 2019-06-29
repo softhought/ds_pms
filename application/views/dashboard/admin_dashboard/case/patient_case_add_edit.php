@@ -173,7 +173,7 @@ border-bottom: 1px solid #f0c7f9;
                            	<div class="col-sm-2"></div>
                              <div class="col-sm-4">
                                 <div class="form-group form-float">
-                                <label class="form-label">Sex</label>
+                                <label class="form-label">Gender</label>
                                <select name="gender" id="gender" class="form-control show-tick" data-live-search="true" tabindex="-98">
                               
                                  <?php 
@@ -191,7 +191,7 @@ border-bottom: 1px solid #f0c7f9;
                                             </div>
                                         </div>
 
-                              <div class="col-sm-2">
+                           <!--  <div class="col-sm-2">
                               <div class="form-group form-float">
                               <div class="input-group bloodgrpeerr" id="bloodgrpeerr">
                                    <label class="form-label">Blood Group</label> 
@@ -233,7 +233,7 @@ border-bottom: 1px solid #f0c7f9;
                                </select>   
                            </div>  
                             </div>
-                             </div>                                      
+                             </div> -->                                      
                                                                              
                         </div>
 
@@ -305,9 +305,9 @@ border-bottom: 1px solid #f0c7f9;
                 <div class="col-sm-3">
 	               <div class="form-group form-float">
 	                 <div class="input-group wifebloodgrpeerr" id="wifebloodgrpeerr">
-	                    <label class="form-label">Wife Blood Group</label> 
+	                    <label class="form-label">Blood Group</label> 
 				        <select name="wifebloodgroup" id="wifebloodgroup" class="form-control show-tick"  data-live-search="true" tabindex="-98">
-				        <option value="0"> Select </option>
+				        <option value="0"> &nbsp; </option>
 				        <?php 
 
 				        foreach ($bodycontent['bloodGroupList'] as $value) {  ?>
@@ -332,9 +332,9 @@ border-bottom: 1px solid #f0c7f9;
                <div class="col-sm-3">
 	                <div class="form-group form-float">
 	                   <div class="input-group wifeoccupationerr" id="wifeoccupationerr">
-		                     <label class="form-label">Wife Occupation</label> 
+		                     <label class="form-label">Occupation</label> 
 					         <select name="wifeoccupation" id="wifeoccupation" class="form-control show-tick"  data-live-search="true" tabindex="-98">
-					         <option value="0"> Select </option>
+					         <option value="0"> &nbsp; </option>
 					         <?php 
 
 					         foreach ($bodycontent['occupationList'] as $value) {  ?>
@@ -355,9 +355,9 @@ border-bottom: 1px solid #f0c7f9;
                 <div class="col-sm-3">
 	                <div class="form-group form-float">
 	                   <div class="input-group wifeeducationerr" id="wifeeducationerr">
-		                     <label class="form-label">Wife Education</label> 
+		                     <label class="form-label">Education</label> 
 					         <select name="wifeeducation" id="wifeeducation" class="form-control show-tick"  data-live-search="true" tabindex="-98">
-					         <option value="0"> Select </option>
+					         <option value="0"> &nbsp; </option>
 					         <?php 
 
 					         foreach ($bodycontent['educationList'] as $value) {  ?>
@@ -384,7 +384,7 @@ border-bottom: 1px solid #f0c7f9;
 	                   <div class="input-group husbloodgrpeerr" id="husbloodgrpeerr">
 		                     <label class="form-label">Husband Blood Group</label> 
 					         <select name="husbandbloodgroup" id="husbandbloodgroup" class="form-control show-tick"  data-live-search="true" tabindex="-98">
-					         <option value="0"> Select </option>
+					         <option value="0"> &nbsp; </option>
 					         <?php 
 
 					         foreach ($bodycontent['bloodGroupList'] as $value) {  ?>
@@ -406,7 +406,7 @@ border-bottom: 1px solid #f0c7f9;
 	                   <div class="input-group husoccupationerr" id="husoccupationerr">
 		                     <label class="form-label">Husband Occupation</label> 
 					         <select name="husbandoccupation" id="husbandoccupation" class="form-control show-tick"  data-live-search="true" tabindex="-98">
-					         <option value="0"> Select </option>
+					         <option value="0"> &nbsp; </option>
 					         <?php 
 
 					         foreach ($bodycontent['occupationList'] as $value) {  ?>
@@ -433,7 +433,7 @@ border-bottom: 1px solid #f0c7f9;
 	                   <div class="input-group huseducationerr" id="huseducationerr">
 		                     <label class="form-label">Husband Education</label> 
 					         <select name="husbandeducation" id="husbandeducation" class="form-control show-tick"  data-live-search="true" tabindex="-98">
-					         <option value="0"> Select </option>
+					         <option value="0"> &nbsp; </option>
 					         <?php 
 
 					         foreach ($bodycontent['educationList'] as $value) {  ?>
@@ -462,7 +462,7 @@ border-bottom: 1px solid #f0c7f9;
 	                   <div class="input-group marriedforyearerr" id="marriedforyearerr">
 		                     <label class="form-label">Married For (years)</label> 
 					         <select name="marriedforyear" id="marriedforyear" class="form-control show-tick"  data-live-search="true" tabindex="-98">
-					         <option value="0"> Select </option>
+					         <option value="0"> &nbsp; </option>
 					         <?php 
 
 					         foreach ($bodycontent['OnetoOtherDropDown'] as $marriedyear) {  ?>
@@ -486,7 +486,7 @@ border-bottom: 1px solid #f0c7f9;
 	                   <div class="input-group tryingforrerr" id="tryingforrerr">
 		                     <label class="form-label">Trying For (years)</label> 
 					         <select name="tryingfor" id="tryingfor" class="form-control show-tick"  data-live-search="true" tabindex="-98">
-					         <option value="0"> Select </option>
+					         <option value="0"> &nbsp; </option>
 					         <?php 
 
 					         foreach ($bodycontent['OnetoOtherDropDown'] as $tryingyear) {  ?>
@@ -730,7 +730,7 @@ border-bottom: 1px solid #f0c7f9;
                          <div class="input-group " id="cigarette_addictionerr" >
                               <label class="form-label">Cigarette Addiction</label> 
                                <select name="cigarette_addiction" id="cigarette_addiction" class="form-control show-tick" data-live-search="true" tabindex="-98">
-                                <option value="0"> Select </option>
+                                <option value="0"> &nbsp; </option>
                                 <option value="Yes" <?php if ($bodycontent['antenantalmode']=="EDIT" && $bodycontent['antenantalCaseEditdata']->cigarette_addiction=='Yes') { echo "Selected"; }?> > Yes</option>
                                 <option value="No" <?php if ($bodycontent['antenantalmode']=="EDIT" && $bodycontent['antenantalCaseEditdata']->cigarette_addiction=='No') { echo "Selected"; }?> > No</option>
    
@@ -766,7 +766,7 @@ border-bottom: 1px solid #f0c7f9;
                          <div class="input-group " id="alcohol_addictionerr" >
                               <label class="form-label">Alcohol Addiction</label> 
                                <select name="alcohol_addiction" id="alcohol_addiction" class="form-control show-tick" data-live-search="true" tabindex="-98">
-                                <option value="0"> Select </option>
+                                <option value="0"> &nbsp; </option>
                                 <option value="Never" <?php if ($bodycontent['antenantalmode']=="EDIT" && $bodycontent['antenantalCaseEditdata']->alcohol_addiction=='Never') { echo "Selected"; }?> >Never</option>
                                 <option value="Occasional" <?php if ($bodycontent['antenantalmode']=="EDIT" && $bodycontent['antenantalCaseEditdata']->alcohol_addiction=='Occasional') { echo "Selected"; }?> >Occasional</option>
                                 <option value="Regular" <?php if ($bodycontent['antenantalmode']=="EDIT" && $bodycontent['antenantalCaseEditdata']->alcohol_addiction=='Regular') { echo "Selected"; }?> >Regular</option>
@@ -991,7 +991,7 @@ border-bottom: 1px solid #f0c7f9;
                                <select name="selectYear[]" id="selectYear_<?php echo $childdtlrowno; ?>" class="form-control show-tick  selectYear" data-live-search="true" tabindex="-98">
                                 <option value="">&nbsp;</option>
                                   <?php
-                                      for ($i=1970; $i <= date('Y'); $i++) {     
+                                      for ($i=2000; $i <= date('Y'); $i++) {     
                                    ?>
                                      <option value="<?php echo $i;?>"
                                       <?php
@@ -1011,7 +1011,7 @@ border-bottom: 1px solid #f0c7f9;
 
            <td> 
               <div class="input-group complicationerr" id="complicationerr_<?php echo $childdtlrowno; ?>">
-              <label>Complication</label>
+              <label>Complication(s)</label>
                                <select name="complicationChild[]" id="complicationChild_<?php echo $childdtlrowno; ?>" class="form-control show-tick complicationChild" data-live-search="true" tabindex="-98" multiple data-selected-text-format="count">
                                   <?php
                                       foreach ($bodycontent['complicationList']  as $complication ) { 
@@ -1040,7 +1040,7 @@ border-bottom: 1px solid #f0c7f9;
 
         <td> 
               <div class="input-group medicalproblemerr" id="medicalproblemerr_<?php echo $childdtlrowno; ?>">
-              <label>Medical Problem</label>
+              <label>Medical Problem(s)</label>
                  <select name="medicalproblem[]" id="medicalproblem_<?php echo $childdtlrowno; ?>" class="form-control show-tick medicalproblem"   data-live-search="true" tabindex="-98"
                    multiple data-selected-text-format="count" >
                                   <?php
@@ -1232,12 +1232,12 @@ border-bottom: 1px solid #f0c7f9;
                      
                       <div class="col-sm-3">
                          <div class="input-group termdeliveryerr" id="termdeliveryerr">
-                         <label>Termdelivery</label>
+                         <label>Term Delivery</label>
                          <select name="termdelivery" id="termdelivery" class="form-control show-tick"  data-live-search="true" tabindex="-98">
-                         <option value="0"> Select </option>
+                         <option value=""> &nbsp; </option>
                          <?php 
 
-                         foreach ($bodycontent['OnetoTenDropDown'] as $termdelivery) {  ?>
+                         foreach ($bodycontent['ZerotoTenDropDown'] as $termdelivery) {  ?>
                          <option value="<?php echo $termdelivery;?>"
 
                          <?php if(($bodycontent['antenantalmode']=="EDIT") && $termdelivery==$bodycontent['antenantalCaseEditdata']->parity_term_delivery){echo "selected";}else{echo "";} ?>
@@ -1256,7 +1256,7 @@ border-bottom: 1px solid #f0c7f9;
                          <div class="input-group paritypretermerr" id="paritypretermerr">
                          <label>Preterm</label>
                          <select name="paritypreterm" id="paritypreterm" class="form-control show-tick"  data-live-search="true" tabindex="-98">
-                         <option value="0"> Select </option>
+                         <option value=""> &nbsp; </option>
                          <?php 
 
                          foreach ($bodycontent['OnetoTenDropDown'] as $paritypretermrow) {  ?>
@@ -1278,7 +1278,7 @@ border-bottom: 1px solid #f0c7f9;
                          <div class="input-group " id="parityabortionerr">
                          <label>Abortion</label>
                          <select name="parityabortion" id="parityabortion" class="form-control show-tick"  data-live-search="true" tabindex="-98">
-                         <option value="0"> Select </option>
+                         <option value=""> &nbsp; </option>
                          <?php 
 
                          foreach ($bodycontent['OnetoTenDropDown'] as $parityabortionrow) {  ?>
@@ -1300,7 +1300,7 @@ border-bottom: 1px solid #f0c7f9;
                          <div class="input-group " id="parityissueerr">
                          <label>Issue</label>
                          <select name="parityissue" id="parityissue" class="form-control show-tick"  data-live-search="true" tabindex="-98">
-                         <option value="0"> Select </option>
+                         <option value=""> &nbsp; </option>
                          <?php 
 
                          foreach ($bodycontent['OnetoTenDropDown'] as $parityissuerow) {  ?>
@@ -1326,13 +1326,26 @@ border-bottom: 1px solid #f0c7f9;
                                        
                        <div class="col-sm-2"></div>
 
-                       <div class="col-sm-4">
-                         <div class="form-group form-float">
-                           <div class="form-line">
-                            <input type="text" class="form-control" name="gravida_parity" id="gravida_parity" autocomplete="off" value="<?php if($bodycontent['antenantalmode']=="EDIT"){echo $bodycontent['antenantalCaseEditdata']->gravida_parity;}?>" >
-                               <label class="form-label">Gravida</label>
-                            </div>
-                         </div>
+                       <div class="col-sm-3">
+                        <div class="input-group " id="parityissueerr">
+                         <label>Gravida</label>
+                         <select name="gravida_parity" id="gravida_parity" class="form-control show-tick"  data-live-search="true" tabindex="-98">
+                         <option value=""> &nbsp; </option>
+                         <?php 
+
+                         foreach ($bodycontent['OnetoTenDropDown'] as $gravidarow) {  ?>
+                         <option value="<?php echo $gravidarow;?>"
+
+                         <?php if(($bodycontent['antenantalmode']=="EDIT") && $gravidarow==$bodycontent['antenantalCaseEditdata']->gravida_parity){echo "selected";}else{echo "";} ?>
+                                                        
+                                                      
+
+                          ><?php echo $gravidarow;?></option>
+                          <?php     } ?>
+                                                   
+                          </select>   
+                           </div>
+                         
                        </div>
 
                        <div class="col-sm-4">
@@ -1368,7 +1381,7 @@ border-bottom: 1px solid #f0c7f9;
                        <div class="input-group " id="menstrual_cycle_typeerr">
                          <label>Cycle Type</label>
                          <select name="menstrual_cycle_type" id="menstrual_cycle_type" class="form-control show-tick"  data-live-search="true" tabindex="-98">
-                         <option value="0"> Select </option>
+                         <option value="0"> &nbsp; </option>
                          <?php 
 
                          foreach ($bodycontent['menstrualCycleType'] as $cycletyperow) {  ?>
@@ -1391,7 +1404,7 @@ border-bottom: 1px solid #f0c7f9;
                        <div class="input-group " id="menstrual_floweerr">
                          <label>Flow</label>
                          <select name="menstrual_flow" id="menstrual_flow" class="form-control show-tick"  data-live-search="true" tabindex="-98">
-                         <option value="0"> Select </option>
+                         <option value="0"> &nbsp; </option>
                          <?php 
 
                          foreach ($bodycontent['menstrualCycleFlow'] as $flowrow) {  ?>
@@ -1412,7 +1425,7 @@ border-bottom: 1px solid #f0c7f9;
                     <div class="col-sm-2">
                          <div class="form-group form-float">
                            <div class="form-line">
-                            <input type="text" class="form-control inpsamelevel" name="menstrual_duration_days" id="menstrual_duration_days" autocomplete="off" value="<?php if($bodycontent['antenantalmode']=="EDIT"){echo $bodycontent['antenantalCaseEditdata']->menstrual_duration_days;}?>" >
+                            <input type="text" class="form-control txtsamelevel" name="menstrual_duration_days" id="menstrual_duration_days" autocomplete="off" value="<?php if($bodycontent['antenantalmode']=="EDIT"){echo $bodycontent['antenantalCaseEditdata']->menstrual_duration_days;}?>" >
                                <label class="form-label">Duration Days</label>
                             </div>
                           </div>
@@ -1421,7 +1434,7 @@ border-bottom: 1px solid #f0c7f9;
                       <div class="col-sm-2">
                          <div class="form-group form-float">
                            <div class="form-line">
-                            <input type="text" class="form-control inpsamelevel" name="menstrual_cycle_days" id="menstrual_cycle_days" autocomplete="off" value="<?php if($bodycontent['antenantalmode']=="EDIT"){echo $bodycontent['antenantalCaseEditdata']->menstrual_cycle_days;}?>" >
+                            <input type="text" class="form-control txtsamelevel" name="menstrual_cycle_days" id="menstrual_cycle_days" autocomplete="off" value="<?php if($bodycontent['antenantalmode']=="EDIT"){echo $bodycontent['antenantalCaseEditdata']->menstrual_cycle_days;}?>" >
                                <label class="form-label">Cycle Days</label>
                             </div>
                           </div>
@@ -1455,8 +1468,8 @@ border-bottom: 1px solid #f0c7f9;
 
                        <div class="input-group " id="sel_diseaseserr">
                          <label>Diseases</label>
-                         <select name="sel_diseases" id="sel_diseases" class="form-control show-tick sel_diseases"  data-live-search="true" tabindex="-98" multiple  >
-                         <option value="0"> &nbsp; </option>
+                         <select name="sel_diseases" id="sel_diseases" class="form-control show-tick sel_diseases"  data-live-search="true" tabindex="-98" multiple  data-none-selected-text >
+                        <!--  <option value="0"> &nbsp; </option> -->
                          <?php 
 
                          foreach ($bodycontent['diseasesList'] as $diseaseslist) {  ?>
@@ -1660,7 +1673,7 @@ border-bottom: 1px solid #f0c7f9;
                   <div class="row clearfix">
                                        
                   <div class="col-sm-2"></div>
-                  <div class="col-sm-2"><b><?php echo $familycomponent->component_name;?></b>
+                  <div class="col-sm-2" style=""><b><?php echo $familycomponent->component_name;?></b>
                     <?php
 
                     if ($familycomponent->is_textfield=='Y') {
@@ -1672,7 +1685,7 @@ border-bottom: 1px solid #f0c7f9;
                     ?>
                      <div class="input-group" style="<?php echo $disp_fmlycopmtext;?>">
                    
-                         <div class="form-line">
+                         <div class="form-line" style="width: 150px;">
                          <input type="text" class="form-control" name="other_component_name[]"  autocomplete="off"  placeholder="Any Others " value="<?php echo $familycomponent->othercomptext;?>" > 
                         </div> 
                   </div>
@@ -1718,7 +1731,8 @@ border-bottom: 1px solid #f0c7f9;
                   <?php 
                           $famicom++;
                       } ?>
-
+                      <br>
+        
                        <div class="row clearfix">
  
                       <div class="col-sm-2"> </div>
@@ -1873,7 +1887,21 @@ border-bottom: 1px solid #f0c7f9;
              <div class="input-group fromToerr" id="mensumedicinedurationerr_<?php echo $regularmedicinerowno; ?>">
               <div class="form-group form-float"><label class="form-label">Dose </label>
                 <div class="form-line">
-                    <input type="text" class="form-control " name="regularmedicinedose[]" id="regularmedicinedose_<?php echo $regularmedicinerowno; ?>" autocomplete="off"  value="<?php echo $value->medicine_dose;?>">
+                    
+
+
+                     <select name="regularmedicinedose[]" id="regularmedicinedose_<?php echo $regularmedicinerowno; ?>"  class="form-control selpres show-tick"  data-live-search="true" tabindex="-98">
+                         <option value="0"> &nbsp; </option>
+                         <?php 
+
+                         foreach ($bodycontent['dosageList'] as $dosagelist) {  ?>
+                         <option value="<?php echo $dosagelist;?>"
+
+                          ><?php echo $dosagelist;?></option>
+                          <?php     } ?>
+                                                   
+                          </select> 
+                           
                               
                 </div>
               </div>
@@ -2911,7 +2939,7 @@ border-bottom: 1px solid #f0c7f9;
                  <div class="col-sm-2">
                          <div class="input-group " id="anomaly_placentaerr">
                          <label class="form-label upText">Placenta</label>
-                       <select name="anomaly_placenta[]"  class="form-control show-tick selinve anomalyplacenta" data-live-search="true" tabindex="-98" multiple >
+                       <select name="anomaly_placenta[]"  class="form-control show-tick selinve anomalyplacenta" data-live-search="true" tabindex="-98" multiple data-none-selected-text>
                                   <?php
                                       foreach ($bodycontent['placentaList']  as $placentalist ) { 
                                    ?>
@@ -3507,7 +3535,7 @@ border-bottom: 1px solid #f0c7f9;
  
                    
                    </div>
-           <input type="text" name="ischangePrescription" id="ischangePrescription" value="N">
+           <input type="hidden" name="ischangePrescription" id="ischangePrescription" value="N">
                       <br>
                 <div class="row clearfix"><!-- start of save and error row-->
               <div class="col-sm-2">

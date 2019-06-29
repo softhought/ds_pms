@@ -20,7 +20,17 @@
              <div class="input-group fromToerr" id="mensumedicinedurationerr_<?php echo $regularmedicinerowno; ?>">
               <div class="form-group form-float"><label class="form-label">Dose </label>
                 <div class="form-line">
-                    <input type="text" class="form-control " name="regularmedicinedose[]" id="regularmedicinedose_<?php echo $regularmedicinerowno; ?>" autocomplete="off"  placeholder="">
+                     <select name="regularmedicinedose[]" id="regularmedicinedose_<?php echo $regularmedicinerowno; ?>"  class="form-control selpres show-tick"  data-live-search="true" tabindex="-98">
+                         <option value="0"> &nbsp; </option>
+                         <?php 
+
+                         foreach ($dosageList as $dosagelist) {  ?>
+                         <option value="<?php echo $dosagelist;?>"
+
+                          ><?php echo $dosagelist;?></option>
+                          <?php     } ?>
+                                                   
+                          </select> 
                               
                 </div>
               </div>
@@ -31,7 +41,7 @@
              <div class="input-group regularmedforYearerr" id="regularmedforYearerr_<?php echo $regularmedicinerowno; ?>">
               <label>for last(year)</label>
                                <select name="regularmedforYear[]" id="regularmedforYear_<?php echo $regularmedicinerowno; ?>" class="form-control show-tick" data-live-search="true" tabindex="-98">
-                                <option value="0">&nbsp;</option>
+                                <option value="">&nbsp;</option>
                                   <?php
                                       for ($i=0; $i <= 30; $i++) {     
                                    ?>
@@ -48,7 +58,7 @@
              <div class="input-group regularmedforMontherr" id="regularmedforMontherr_<?php echo $regularmedicinerowno; ?>">
               <label>for last(month)</label>
                                <select name="regularmedforMonth[]" id="regularmedforMonth_<?php echo $regularmedicinerowno; ?>" class="form-control show-tick" data-live-search="true" tabindex="-98">
-                                <option value="0">select month&nbsp;</option>
+                                <option value="">&nbsp;</option>
                                   <?php
                                       for ($i=0; $i <= 11; $i++) {     
                                    ?>

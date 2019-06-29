@@ -132,23 +132,26 @@ div.footer {
     <div class="custom-page-start" style="padding:3px 0;height:23.5cm;#border:1px solid gray;  ">
     	
     	<span class="spanhead">Patient Particulars</span>
+        <?php
+                if ($patientmasterData) {
+                 
+        ?>
 
     	<table width="100%"   class="demo_font" style="margin-left: 40px;margin-top: 10px;" >
     		<tr>
     			<td width="7%">Name : </td>
     			<td width="35%"><?php echo $patientmasterData->patientname;?></td>
     			<td width="40%">Age : <?php echo $patientmasterData->patientage;?>
-    				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sex : <?php echo $patientmasterData->gender;?>
+    				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gender : <?php echo $patientmasterData->gender;?>
     			</td>
     			
-    			
-    			
+	
     		</tr>
     		
     		<tr>
     			<td >Self Blood Group :</td>
-    			<td><?php echo $patientmasterData->slfbldgrp;?></td>
-    			<td width="40%" style="word-wrap: no-warp;">Husband Blood Group : <?php echo $patientmasterData->husbldgrp;?></td>
+    			<td><?php echo $slfbldgrp;?></td>
+    			<td width="40%" style="word-wrap: no-warp;">Husband Blood Group : <?php echo $husbldgrp;?></td>
     			
     			
     			
@@ -173,6 +176,7 @@ div.footer {
     		</tr>
     		
     	</table>
+    <?php }?>
 
 		<br>
     	<span class="spanhead">History Summary</span>
@@ -180,7 +184,7 @@ div.footer {
     		<tr>
     			<td colspan="2"><span>&#9744;&nbsp;&nbsp;</span>Parity : <?php if($antenantalCaseData){echo $total_parity;}?>&nbsp;
     				
-    				[ sTermdelivery : <?php if($antenantalCaseData){echo $antenantalCaseData->parity_term_delivery;}?>, 
+    				[ Term Delivery : <?php if($antenantalCaseData){echo $antenantalCaseData->parity_term_delivery;}?>, 
     				Preterm : <?php if($antenantalCaseData){ echo $antenantalCaseData->parity_preterm;}?>, 
     				Abortion : <?php if($antenantalCaseData){echo $antenantalCaseData->parity_abortion;}?>,
     				Issue : <?php if($antenantalCaseData){echo $antenantalCaseData->parity_issue;}?> ] 

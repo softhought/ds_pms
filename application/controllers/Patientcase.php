@@ -72,8 +72,8 @@ class Patientcase extends CI_Controller {
             $patientname = trim(htmlspecialchars($dataArry['patientname']));
             $patientage = trim(htmlspecialchars($dataArry['patientage']));
             $patientgender = trim(htmlspecialchars($dataArry['gender']));
-            $bloodgroup = trim(htmlspecialchars($dataArry['bloodgroup']));
-            $husband_bloodgroup = trim(htmlspecialchars($dataArry['husband_bloodgroup']));
+            // $bloodgroup = trim(htmlspecialchars($dataArry['bloodgroup']));
+            // $husband_bloodgroup = trim(htmlspecialchars($dataArry['husband_bloodgroup']));
             $address = trim(htmlspecialchars($dataArry['address']));
 
           
@@ -146,8 +146,8 @@ class Patientcase extends CI_Controller {
                                           'patientname' => $patientname,       
                                           'patientage' => $patientage,       
                                           'patientgender' => $patientgender,       
-                                          'bloodgroup' => $bloodgroup,            
-                                          'husband_bloodgroup' => $husband_bloodgroup,            
+                                          'bloodgroup' => NULL,            
+                                          'husband_bloodgroup' => NULL,            
                                           'address' => $address,            
                                           'created_on' => date('Y-m-d H:i:s'),       
                                          );
@@ -238,8 +238,8 @@ class Patientcase extends CI_Controller {
             $patientname = trim(htmlspecialchars($dataArry['extppatientname']));
             $patientage = trim(htmlspecialchars($dataArry['extppatientage']));
             $patientgender = trim(htmlspecialchars($dataArry['extpgender']));
-            $bloodgroup = trim(htmlspecialchars($dataArry['extpbloodgroup']));
-            $husband_bloodgroup = trim(htmlspecialchars($dataArry['extphusband_bloodgroup']));
+            // $bloodgroup = trim(htmlspecialchars($dataArry['extpbloodgroup']));
+            // $husband_bloodgroup = trim(htmlspecialchars($dataArry['extphusband_bloodgroup']));
             $extpaddress = trim(htmlspecialchars($dataArry['extpaddress']));
 
           //  pre($session);
@@ -326,8 +326,8 @@ class Patientcase extends CI_Controller {
                                           'patientname' => $patientname,       
                                           'patientage' => $patientage,       
                                           'patientgender' => $patientgender,       
-                                          'bloodgroup' => $bloodgroup,             
-                                          'husband_bloodgroup' => $husband_bloodgroup,             
+                                          'bloodgroup' => NUll,             
+                                          'husband_bloodgroup' => NUll,             
                                           'address' => $extpaddress,             
                                           'last_modified' => date('Y-m-d H:i:s'),    
                                     );
@@ -463,6 +463,7 @@ class Patientcase extends CI_Controller {
   
                }
                   $result['OnetoOtherDropDown'] = array('1','2','3','4','5','6','7','8','9','10','Others');
+                  $result['ZerotoTenDropDown'] = array('0','1','2','3','4','5','6','7','8','9','10');
                   $result['OnetoTenDropDown'] = array('1','2','3','4','5','6','7','8','9','10');
                   $result['ZerotoTwentyDropDown'] = array('0','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20');
                   $result['fourtoTwelveDropDown'] = array('4','5','6','7','8','9','10','11','12');
@@ -578,8 +579,8 @@ class Patientcase extends CI_Controller {
             $patientname = trim(htmlspecialchars($dataArry['patientname']));
             $patientage = trim(htmlspecialchars($dataArry['patientage']));
             $patientgender = trim(htmlspecialchars($dataArry['gender']));
-            $bloodgroup = trim(htmlspecialchars($dataArry['bloodgroup']));
-            $husband_bloodgroup = trim(htmlspecialchars($dataArry['husband_bloodgroup']));
+            // $bloodgroup = trim(htmlspecialchars($dataArry['bloodgroup']));
+            // $husband_bloodgroup = trim(htmlspecialchars($dataArry['husband_bloodgroup']));
             $address = trim(htmlspecialchars($dataArry['address']));
             
             $update_array  = array(
@@ -589,8 +590,8 @@ class Patientcase extends CI_Controller {
                                           'patientname' => $patientname,       
                                           'patientage' => $patientage,       
                                           'patientgender' => $patientgender,       
-                                          'bloodgroup' => $bloodgroup,             
-                                          'husband_bloodgroup' => $husband_bloodgroup,             
+                                          'bloodgroup' => NUll,             
+                                          'husband_bloodgroup' => NUll,             
                                           'address' => $address,             
                                           'last_modified' => date('Y-m-d H:i:s'),    
                                     );
@@ -1551,6 +1552,7 @@ $deleteTodayPrescription=$this->commondatamodel->deleteTableData('prescription_m
             $row_no = $this->input->post('rowNo');
             $data['regularmedicinerowno'] = $row_no;
             $data['DaysList']=$this->commondatamodel->getAllDropdownData('day_master');
+            $data['dosageList'] = array('0.5','1','1.5','2','2.5','5','7.5','10');
             
            
              $page = 'dashboard/admin_dashboard/case/regular_medicines_partial_view';
@@ -1834,8 +1836,17 @@ $deleteTodayPrescription=$this->commondatamodel->deleteTableData('prescription_m
           $result['prescriptionLatestData']=[];
           $result['prescriptionMedicineList']=[];
           $result['prescriptionInvestigationList']=[];
+          $result['total_parity']='';
+          $result['total_cesarean']=[];
+          $parity_term_delivery=0;
+          $parity_preterm=0;
+          $parity_abortion=0;
+          $parity_issue=0;
+          $result['slfbldgrp']='';
+          $result['husbldgrp']='';
 
-
+        
+         
 
           if($this->uri->rsegment(3) == NULL)
             {
@@ -1877,14 +1888,31 @@ $deleteTodayPrescription=$this->commondatamodel->deleteTableData('prescription_m
                 // getSingleRowByWhereCls(tablename,where params)
                  $result['antenantalCaseData'] = $this->commondatamodel->getSingleRowByWhereCls('antenantal_master',$where_antenatel_master);
 
-                 if ($result['antenantalCaseData']) {
+
+                if ($result['antenantalCaseData']) {
+
+                $result['slfbldgrp']=$this->patientcasemodel->getBloodGroupById($result['antenantalCaseData']->wife_bloodgroup);
+                $result['husbldgrp']=$this->patientcasemodel->getBloodGroupById($result['antenantalCaseData']->husband_bloodgroup);
                   
                 
+                  if ($result['antenantalCaseData']->parity_term_delivery!='') {
+                    $parity_term_delivery=$result['antenantalCaseData']->parity_term_delivery;
+                  }
 
-                 $parity_term_delivery=$result['antenantalCaseData']->parity_term_delivery;
-                 $parity_preterm=$result['antenantalCaseData']->parity_preterm;
-                 $parity_abortion=$result['antenantalCaseData']->parity_abortion;
-                 $parity_issue=$result['antenantalCaseData']->parity_issue;
+                  if ($result['antenantalCaseData']->parity_preterm!='') {
+                    $parity_preterm=$result['antenantalCaseData']->parity_preterm;
+                  }
+                
+                 if ($result['antenantalCaseData']->parity_abortion!='') {
+                   $parity_abortion=$result['antenantalCaseData']->parity_abortion;
+                 }
+                  
+                  if ($result['antenantalCaseData']->parity_issue!='') {
+                     $parity_issue=$result['antenantalCaseData']->parity_issue;
+                  }
+
+
+                
 
                  $result['total_parity'] =($parity_term_delivery+$parity_preterm+$parity_abortion+$parity_issue);
 
@@ -2007,7 +2035,7 @@ $deleteTodayPrescription=$this->commondatamodel->deleteTableData('prescription_m
 
 
         
-        //pre($result['examinationFirstData']);exit;
+       //s pre($result['patientmasterData']);exit;
 
 
 
@@ -2042,7 +2070,40 @@ $deleteTodayPrescription=$this->commondatamodel->deleteTableData('prescription_m
 }
 
 
+    public function checkPatientMobile() {
+        $session = $this->session->userdata('user_data');
+        if($this->session->userdata('user_data'))
+        {
 
+           $json_response = [];
+           $selfmobile = $this->input->post("selfmobile");
+           $where = [
+               "patient_master.selfmobile" => $selfmobile
+           ];
+           $isExist = $this->commondatamodel->duplicateValueCheck("patient_master",$where);
+           if($isExist) {
+                $json_response = [
+                    "msg_status" => 1,
+                    "msg_data" => "This mobile no already registered.Please go for existing patient.",
+                    
+                ];
+           }
+           else{
+                $json_response = [
+                    "msg_status" => 0,
+                    "msg_data" => "",
+                  
+                ];
+           }
+
+           header('Content-Type: application/json');
+           echo json_encode( $json_response );
+           exit;
+
+        }else{
+            redirect('login','refresh');
+        }
+  }
 
 
 

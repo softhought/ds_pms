@@ -2,6 +2,10 @@ $(document).ready(function(){
     var basepath = $("#basepath").val();
     var rowNoUpload = 0;
 
+    $("#sel_diseases").selectpicker({
+                    noneSelectedText : '&nbsp;' // by this default 'Nothing selected'
+                });
+
 
 $("#antenantalbtn").addClass("bg-teal");
 $("#antenantalbtn_section").css("display", "block");
@@ -618,7 +622,11 @@ $("#antenantal_left_tab_menu_1_section").css("display", "block");
                 $("#childdtlrowno").val(rowno);
                 $("#detail_childHistory table").css("display","block"); 
                 $("#detail_childHistory table tbody").append(result);   
-                $('select').selectpicker();
+               // $('select').selectpicker();
+
+                $("select").selectpicker({
+                    noneSelectedText : '&nbsp;' // by this default 'Nothing selected'
+                });
               //  $(".demo-masked-input").inputmask();
                 var $demoMaskedInput = $('.demo-masked-input');
 
@@ -1290,7 +1298,7 @@ function validatAntinatalBasicRecord()
 
 
 $(window).load(function () {
-    $('#antenantal_left_tab_menu_8').click();
+    $('#antenantal_left_tab_menu_1').click();
 })
 
 

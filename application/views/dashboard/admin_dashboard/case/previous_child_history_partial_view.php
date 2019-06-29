@@ -22,7 +22,7 @@
                                <select name="selectYear[]" id="selectYear_<?php echo $childdtlrowno; ?>" class="form-control show-tick  selectYear" data-live-search="true" tabindex="-98">
                                 <option value="">&nbsp;</option>
                                   <?php
-                                      for ($i=1970; $i <= date('Y'); $i++) {     
+                                      for ($i=2000; $i <= date('Y'); $i++) {     
                                    ?>
                                      <option value="<?php echo $i;?>"><?php echo $i;?></option>
                                    <?php
@@ -35,7 +35,7 @@
 
            <td> 
               <div class="input-group complicationerr" id="complicationerr_<?php echo $childdtlrowno; ?>">
-              <label>Complication</label>
+              <label>Complication(s)</label>
                                <select name="complicationChild[]" id="complicationChild_<?php echo $childdtlrowno; ?>" class="form-control show-tick complicationChild" data-live-search="true" tabindex="-98" multiple data-selected-text-format="count">
                                   <?php
                                       foreach ($complicationList as $complication ) { 
@@ -53,7 +53,7 @@
 
         <td> 
               <div class="input-group medicalproblemerr" id="medicalproblemerr_<?php echo $childdtlrowno; ?>">
-              <label>Medical Problem</label>
+              <label>Medical Problem(s)</label>
                  <select name="medicalproblem[]" id="medicalproblem_<?php echo $childdtlrowno; ?>" class="form-control show-tick medicalproblem"   data-live-search="true" tabindex="-98"
                    multiple data-selected-text-format="count" >
                                   <?php
@@ -107,6 +107,12 @@
                                   <?php 
                                  foreach ($genderList as $value) {  ?>
                                    <option value="<?php echo $value->id;?>"
+                                    <?php
+                                    if ($value->id == 2) {
+                                       echo "selected";
+                                      }
+
+                                    ?>
                                         ><?php echo $value->gender?></option>
                                  <?php     } ?>                               
                                </select>   

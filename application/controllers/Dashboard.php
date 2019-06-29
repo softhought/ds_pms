@@ -17,8 +17,17 @@ class Dashboard extends CI_Controller {
       header("Access-Control-Allow-Origin: *");
       $session = $this->session->userdata('user_data');      
       $page = 'dashboard/admin_dashboard/home/dashboard-home';
-      $result="";
+      $result=[];
       $header = "";
+      $result['clinicCount']=$this->commondatamodel->rowcount('clinic_master');
+      $result['caseCount']=$this->commondatamodel->rowcount('case_master');
+      $where_prescription = array('entry_date' => date('Y-m-d') );
+
+       $prescriptionData=$this->commondatamodel-> getAllRecordWhere('prescription_master',$where_prescription);
+
+      $result['todayVisit']=count($prescriptionData);
+    
+
       createbody_method($result, $page, $header, $session);
       }
     else

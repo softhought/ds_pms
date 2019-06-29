@@ -201,8 +201,8 @@ $("#newcasebtn").addClass("bg-teal");
                 $("#newcaseExistingPatientForm #previous_case_id").val(caseid).focus();
                 $("#newcaseExistingPatientForm #patient_id").val(result.pdata.patient_id).focus();
                 $("#newcaseExistingPatientForm #extpgender").val(result.pdata.patientgender).trigger("change");
-                $("#newcaseExistingPatientForm #extpbloodgroup").val(result.pdata.bloodgroup).trigger("change");
-                $("#newcaseExistingPatientForm #extphusband_bloodgroup").val(result.pdata.husband_bloodgroup).trigger("change");
+              //  $("#newcaseExistingPatientForm #extpbloodgroup").val(result.pdata.bloodgroup).trigger("change");
+               // $("#newcaseExistingPatientForm #extphusband_bloodgroup").val(result.pdata.husband_bloodgroup).trigger("change");
                 $("#newcaseExistingPatientForm #extpaddress").val(result.pdata.address).focus();
            }else{
                  $('#newcaseExistingPatientForm')[0].reset();
@@ -316,6 +316,43 @@ $("#newcasebtn").addClass("bg-teal");
         
     });
 
+/* check if mobile number already register 25.06.2019 */
+$(document).on('keyup paste ', '#selfmobile', function () {
+
+    var selfmobile = $("#selfmobile").val();
+    $("#caseregsavebtn").attr('disabled',false);
+    $("#caseregmsg").text("").css("dispaly", "none").removeClass("form_error");
+
+    var type = "POST"; 
+                var urlpath = basepath + 'patientcase/checkPatientMobile';
+                $.ajax({
+                    type: type,
+                    url: urlpath,
+                    data: {selfmobile:selfmobile},
+                    dataType: 'json',
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    success: function(result) {
+                        if(result.msg_status==1){
+                            $("#caseregmsg")
+                            .text("Error : This mobile no already registered.Please go for existing patient.")
+                            .addClass("form_error")
+                            .css("display", "block");
+                            $("#caseregsavebtn").attr('disabled',true);
+                        }
+                        else{
+                           
+                        }
+                    },
+                    error: function(jqXHR, exception) {
+                        var msg = '';
+                    }
+                });
+
+
+    
+
+});
+
 
  }); // end of document ready
 
@@ -327,7 +364,7 @@ function validatNewCase()
     var selfmobile = $("#selfmobile").val();
     var patientname = $("#patientname").val();
     var patientage = $("#patientage").val();
-    var bloodgroup = $("#bloodgroup").val();
+    // var bloodgroup = $("#bloodgroup").val();
   
 
     $("#caseregmsg").text("").css("dispaly", "none").removeClass("form_error");
@@ -365,16 +402,16 @@ function validatNewCase()
     }
 
 
-    if(bloodgroup=="0")
-    {    
-        $("#bloodgroup").focus();
-        $("#bloodgrpeerr").addClass("bordererror");
-        $("#caseregmsg")
-        .text("Error : Select blood group .")
-        .addClass("form_error")
-        .css("display", "block");
-        return false;
-    }
+    // if(bloodgroup=="0")
+    // {    
+    //     $("#bloodgroup").focus();
+    //     $("#bloodgrpeerr").addClass("bordererror");
+    //     $("#caseregmsg")
+    //     .text("Error : Select blood group .")
+    //     .addClass("form_error")
+    //     .css("display", "block");
+    //     return false;
+    // }
  
     return true;
 }
@@ -386,7 +423,7 @@ function validatNewCaseExistingPatient()
     var selfmobile = $("#extpselfmobile").val();
     var patientname = $("#extppatientname").val();
     var patientage = $("#extppatientage").val();
-    var bloodgroup = $("#extpbloodgroup").val();
+    // var bloodgroup = $("#extpbloodgroup").val();
   
 
     $("#extpcaseregmsg").text("").css("dispaly", "none").removeClass("form_error");
@@ -435,16 +472,16 @@ function validatNewCaseExistingPatient()
     }
 
 
-    if(bloodgroup=="0")
-    {    
-        $("#extpbloodgroup").focus();
-        $("#extpbloodgrpeerr").addClass("bordererror");
-        $("#extpcaseregmsg")
-        .text("Error : Select blood group .")
-        .addClass("form_error")
-        .css("display", "block");
-        return false;
-    }
+    // if(bloodgroup=="0")
+    // {    
+    //     $("#extpbloodgroup").focus();
+    //     $("#extpbloodgrpeerr").addClass("bordererror");
+    //     $("#extpcaseregmsg")
+    //     .text("Error : Select blood group .")
+    //     .addClass("form_error")
+    //     .css("display", "block");
+    //     return false;
+    // }
  
     return true;
 }

@@ -805,4 +805,29 @@ class Patientcasemodel extends CI_Model{
     }
 
 
+    public function getBloodGroupById($bloodgrpid)
+    {
+        $data = '';
+        $where = array('blood_group.id' =>$bloodgrpid);
+        $this->db->select("*")
+                ->from('blood_group')
+                ->where($where)
+                ->limit(1);
+        $query = $this->db->get();
+        
+        #echo $this->db->last_query();
+        
+        if($query->num_rows()> 0)
+        {
+           $row = $query->row();
+           return $data = $row->bld_group_code;
+             
+        }
+        else
+        {
+            return $data;
+        }
+    }
+
+
 } // end of class
