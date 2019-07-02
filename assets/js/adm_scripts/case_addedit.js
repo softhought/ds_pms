@@ -566,6 +566,81 @@ $("#antenantal_left_tab_menu_1_section").css("display", "block");
 
 
 
+    /*Add clinical examination Details */
+
+           
+           $(document).on('click','.addClicinalExam',function(){
+
+            // rowNoUpload++;
+  
+            var rowno=  $("#cliexmrowno").val();
+          console.log(basepath);
+          rowno++;
+          $.ajax({
+              type: "POST",
+              url: basepath+'patientcase/addClinicalExaminationdetail',
+              dataType: "html",
+              data: {rowNo:rowno},
+              success: function (result) {
+                  $("#cliexmrowno").val(rowno);
+                  $("#detail_clinical_exam table").css("display","block"); 
+                  $("#detail_clinical_exam table tbody").append(result);   
+                  $('select').selectpicker();
+                  $('.datepicker2').bootstrapMaterialDatePicker({
+                    format: 'DD-MM-YYYY',
+                    clearButton: true,
+                    weekStart: 1,
+                    time: false
+                });
+  
+              //Time
+  
+              $('.selecttime').bootstrapMaterialDatePicker
+              ({
+                  date: false,
+                  shortTime: true,
+                  format: 'hh:mm a'
+              });
+           
+              }, 
+              error: function (jqXHR, exception) {
+                var msg = '';
+                  if (jqXHR.status === 0) {
+                      msg = 'Not connect.\n Verify Network.';
+                  } else if (jqXHR.status == 404) {
+                      msg = 'Requested page not found. [404]';
+                  } else if (jqXHR.status == 500) {
+                      msg = 'Internal Server Error [500].';
+                  } else if (exception === 'parsererror') {
+                      msg = 'Requested JSON parse failed.';
+                  } else if (exception === 'timeout') {
+                      msg = 'Time out error.';
+                  } else if (exception === 'abort') {
+                      msg = 'Ajax request aborted.';
+                  } else {
+                      msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                  }
+                 // alert(msg);  
+              }
+              }); /*end ajax call*/
+    
+      }); // End Visiting Details
+
+
+      $(document).on('click','.delClinicalExam',function(){
+        
+        var currRowID = $(this).attr('id');
+        var rowDtlNo = currRowID.split('_');
+       // console.log(rowDtlNo[1]);
+        console.log(currRowID);
+
+        //$("tr#rowDocument_"+rowDtlNo[1]+"_"+rowDtlNo[2]).remove();
+        $("tr#rowClinicalExam_"+rowDtlNo[1]).remove();
+    });
+
+
+
+
 
 
 
@@ -586,23 +661,66 @@ $("#antenantal_left_tab_menu_1_section").css("display", "block");
       console.log(lmpdate);
 
       EddDateCalculation(basepath,lmpdate);
-      EddUsgDateCalculation(basepath,lmpdate);
+     
 
 
     });
 
+    /* added on 02.07.2019 */
+    
+    $('#seleddbyusg_date').on('change', function() {
+
+        // alert(this.value)
+  
+        var seleddbyusg_date = this.value;
+        console.log(seleddbyusg_date);
+  
+      
+        EddUsgDateCalculation(basepath,seleddbyusg_date);
+  
+  
+      });
+
 
     $('#edd_week,#edd_days').on('input', function() {
 
-    var lmpdate = $("#lmp_date").val();
+   // var lmpdate = $("#lmp_date").val();
+    var seleddbyusg_date = $("#seleddbyusg_date").val();
 
-        if (lmpdate!='') {
-             EddUsgDateCalculation(basepath,lmpdate);
+        if (seleddbyusg_date!='') {
+             EddUsgDateCalculation(basepath,seleddbyusg_date);
 
         }
      
 
     });
+
+
+
+    /* ------------------- start clinical examination calculation ---------------*/
+
+  $(document).on('change','.cliexmDate',function(){
+
+
+        var cliexmDate = this.value;
+        console.log(cliexmDate);
+
+        var currRowID = $(this).attr('id');
+        var rowDtlNo = currRowID.split('_');
+      //  console.log('cliexmId '+rowDtlNo[2]);
+
+        // 
+        WeekDaysCalculationByLmp(basepath,cliexmDate,rowDtlNo[2]);
+
+        WeekDaysCalculationByUsg(basepath,cliexmDate,rowDtlNo[2]);
+
+
+  
+      });
+
+
+
+    /* ------------------- end clinical examination calculation ---------------*/
 
 
     // Add previous child Birth Details
@@ -1298,7 +1416,7 @@ function validatAntinatalBasicRecord()
 
 
 $(window).load(function () {
-    $('#antenantal_left_tab_menu_1').click();
+    $('#antenantal_left_tab_menu_9').click();
 })
 
 
@@ -1370,7 +1488,7 @@ function EddDateCalculation(basepath,lmpdate){
 }
 
 
-function EddUsgDateCalculation(basepath,lmpdate){
+function EddUsgDateCalculation(basepath,seleddbyusg_date){
 
      var edd_week = $('#edd_week').val() || 0;
      var edd_days = $('#edd_days').val() || 0;
@@ -1381,7 +1499,7 @@ function EddUsgDateCalculation(basepath,lmpdate){
             type: "POST",
             url: basepath+'patientcase/eddUsgDateCalculation',
             dataType: "html",
-            data: {lmpdate:lmpdate,edd_week:edd_week,edd_days:edd_days},
+            data: {seleddbyusg_date:seleddbyusg_date,edd_week:edd_week,edd_days:edd_days},
             success: function (result) {
              
             $("#usg_date").val(result);
@@ -1662,5 +1780,113 @@ function CheckNull(result){
     }else{
         return result;
     }
+
+}
+
+
+/* claculate weeks days by LMP  */ 
+function WeekDaysCalculationByLmp(basepath,cliexmDate,rowID){
+
+    var lmp_date = $('#lmp_date').val();
+    console.log(lmp_date);
+    console.log(cliexmDate);
+    
+
+
+        if(lmp_date!='' && cliexmDate!=''){
+       $.ajax({
+           type: "POST",
+           url: basepath+'patientcase/weekDaysCalculationByLmp',
+           dataType: "html",
+           data: {lmp_date:lmp_date,cliexmDate:cliexmDate},
+           success: function (result) {
+            
+         var weeks_days=result;
+         var dataDtl = weeks_days.split('_');
+
+         console.log(dataDtl);
+           $("#weeks_by_lmp_"+rowID).val(dataDtl[0]);
+           $("#days_by_lmp_"+rowID).val(dataDtl[1]);
+        
+           }, 
+           error: function (jqXHR, exception) {
+             var msg = '';
+               if (jqXHR.status === 0) {
+                   msg = 'Not connect.\n Verify Network.';
+               } else if (jqXHR.status == 404) {
+                   msg = 'Requested page not found. [404]';
+               } else if (jqXHR.status == 500) {
+                   msg = 'Internal Server Error [500].';
+               } else if (exception === 'parsererror') {
+                   msg = 'Requested JSON parse failed.';
+               } else if (exception === 'timeout') {
+                   msg = 'Time out error.';
+               } else if (exception === 'abort') {
+                   msg = 'Ajax request aborted.';
+               } else {
+                   msg = 'Uncaught Error.\n' + jqXHR.responseText;
+               }
+              // alert(msg);  
+           }
+           }); /*end ajax call*/
+
+
+        }
+
+
+}
+
+
+
+
+/* claculate weeks days by USG  */ 
+function WeekDaysCalculationByUsg(basepath,cliexmDate,rowID){
+
+    var seleddbyusg_date = $('#seleddbyusg_date').val();
+    console.log(seleddbyusg_date);
+    console.log(cliexmDate);
+    
+
+
+        if(seleddbyusg_date!='' && cliexmDate!=''){
+       $.ajax({
+           type: "POST",
+           url: basepath+'patientcase/weekDaysCalculationByUsg',
+           dataType: "html",
+           data: {seleddbyusg_date:seleddbyusg_date,cliexmDate:cliexmDate},
+           success: function (result) {
+            
+         var weeks_days=result;
+         var dataDtl = weeks_days.split('_');
+
+         console.log(dataDtl);
+           $("#weeks_by_usg_"+rowID).val(dataDtl[0]);
+           $("#days_by_usg_"+rowID).val(dataDtl[1]);
+        
+           }, 
+           error: function (jqXHR, exception) {
+             var msg = '';
+               if (jqXHR.status === 0) {
+                   msg = 'Not connect.\n Verify Network.';
+               } else if (jqXHR.status == 404) {
+                   msg = 'Requested page not found. [404]';
+               } else if (jqXHR.status == 500) {
+                   msg = 'Internal Server Error [500].';
+               } else if (exception === 'parsererror') {
+                   msg = 'Requested JSON parse failed.';
+               } else if (exception === 'timeout') {
+                   msg = 'Time out error.';
+               } else if (exception === 'abort') {
+                   msg = 'Ajax request aborted.';
+               } else {
+                   msg = 'Uncaught Error.\n' + jqXHR.responseText;
+               }
+              // alert(msg);  
+           }
+           }); /*end ajax call*/
+
+
+        }
+
 
 }

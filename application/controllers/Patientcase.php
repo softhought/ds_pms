@@ -710,6 +710,8 @@ class Patientcase extends CI_Controller {
                 $edd_date = NULL; 
             }
 
+            
+
             $edd_week = $dataArry['edd_week'];
             $edd_days = $dataArry['edd_days'];
 
@@ -717,6 +719,13 @@ class Patientcase extends CI_Controller {
                  $usg_date = date('Y-m-d', strtotime($dataArry['usg_date']));
             }else{
                 $usg_date = NULL; 
+            }
+
+            if ($dataArry['seleddbyusg_date']!='') {
+                $seleddbyusg_date = date('Y-m-d', strtotime($dataArry['seleddbyusg_date']));
+            }else{
+               $seleddbyusg_date = NULL; 
+               $usg_date = NULL; 
             }
 
              $termdelivery = $dataArry['termdelivery'];
@@ -755,6 +764,20 @@ class Patientcase extends CI_Controller {
                  }else{
                  $vaccination = '';
                }
+
+
+
+               if ($dataArry['tt_taken_on_tobe_taken_on']!='') {
+                $tt_taken_on_tobe_taken_on = date('Y-m-d', strtotime($dataArry['tt_taken_on_tobe_taken_on']));
+               }else{
+                    $tt_taken_on_tobe_taken_on = NULL; 
+               }
+
+                if ($dataArry['tdap_taken_on_tobe_taken_on']!='') {
+                    $tdap_taken_on_tobe_taken_on = date('Y-m-d', strtotime($dataArry['tdap_taken_on_tobe_taken_on']));
+                }else{
+                        $tdap_taken_on_tobe_taken_on = NULL; 
+                }
 
      $familycomponent = $dataArry['familycomponent'];
      $other_component_name = $dataArry['other_component_name'];
@@ -1338,6 +1361,7 @@ $deleteTodayPrescription=$this->commondatamodel->deleteTableData('prescription_m
                                           'edd_date' => $edd_date,       
                                           'usg_week' => $edd_week,       
                                           'usg_days' => $edd_days,       
+                                          'seleddbyusg_date' => $seleddbyusg_date,       
                                           'usg_date' => $usg_date,       
                                           'parity_term_delivery' => $termdelivery,       
                                           'parity_preterm' => $paritypreterm,       
@@ -1357,6 +1381,8 @@ $deleteTodayPrescription=$this->commondatamodel->deleteTableData('prescription_m
                                           'highrisk_ids' => $highriskValues,       
                                           'is_highrisk_others' => $isOtherHighrisk,       
                                           'highrisk_others' => $highrisk_others,       
+                                          'tt_taken_on_tobe_taken_on' => $tt_taken_on_tobe_taken_on,  
+                                          'tdap_taken_on_tobe_taken_on' => $tdap_taken_on_tobe_taken_on,        
                                      );
                      $upd_where = array('antenantal_master.antenantal_id' => $antenantalID);
 
@@ -1421,7 +1447,8 @@ $deleteTodayPrescription=$this->commondatamodel->deleteTableData('prescription_m
                                           'lmp_date' => $lmp_date,       
                                           'edd_date' => $edd_date,       
                                           'usg_week' => $edd_week,       
-                                          'usg_days' => $edd_days,       
+                                          'usg_days' => $edd_days,
+                                          'seleddbyusg_date' => $seleddbyusg_date,         
                                           'usg_date' => $usg_date,       
                                           'parity_term_delivery' => $termdelivery,       
                                           'parity_preterm' => $paritypreterm,       
@@ -1440,7 +1467,9 @@ $deleteTodayPrescription=$this->commondatamodel->deleteTableData('prescription_m
                                           'vaccination_ids' => $vaccination,       
                                           'highrisk_ids' => $highriskValues,       
                                           'is_highrisk_others' => $isOtherHighrisk,       
-                                          'highrisk_others' => $highrisk_others,         
+                                          'highrisk_others' => $highrisk_others, 
+                                          'tt_taken_on_tobe_taken_on' => $tt_taken_on_tobe_taken_on,  
+                                          'tdap_taken_on_tobe_taken_on' => $tdap_taken_on_tobe_taken_on,        
                                                 
                                          );
 
@@ -1565,6 +1594,29 @@ $deleteTodayPrescription=$this->commondatamodel->deleteTableData('prescription_m
         }
     }
 
+    public function addClinicalExaminationdetail()
+    {
+        if($this->session->userdata('user_data'))
+        {
+            $session = $this->session->userdata('user_data');
+        
+
+            $row_no = $this->input->post('rowNo');
+            $data['cliexmrowno'] = $row_no;
+            $data['DaysList']=$this->commondatamodel->getAllDropdownData('day_master');
+            $result['pallor'] = array('Nil','Mild','Mod','Severe' );
+            
+           
+             $page = 'dashboard/admin_dashboard/case/clinical_examination_partial_view';
+            $viewTemp = $this->load->view($page,$data,TRUE);
+            echo $viewTemp;
+        }
+        else
+        {
+            redirect('login','refresh');
+        }
+    }
+
 
     public function eddDateCalculation()
     {
@@ -1572,7 +1624,7 @@ $deleteTodayPrescription=$this->commondatamodel->deleteTableData('prescription_m
         {
               $lmpdate = $this->input->post('lmpdate');
 
-             echo $next_due_date = date('l d M Y', strtotime($lmpdate. ' +259 days'));
+             echo $next_due_date = date('l d M Y', strtotime($lmpdate. ' +280 days'));
         }
         else
         {
@@ -1585,14 +1637,92 @@ $deleteTodayPrescription=$this->commondatamodel->deleteTableData('prescription_m
     {
         if($this->session->userdata('user_data'))
         {
-              $lmpdate = $this->input->post('lmpdate');
+              $seleddbyusg_date = $this->input->post('seleddbyusg_date');
               $edd_week = $this->input->post('edd_week');
               $edd_days = $this->input->post('edd_days');
 
-             $addDays=260-($edd_week*7+$edd_days);
+             $addDays=280-($edd_week*7+$edd_days);
 
 
-             echo $next_due_date = date('l d M Y', strtotime($lmpdate. ' +'.$addDays.' days'));
+             echo $next_due_date = date('l d M Y', strtotime($seleddbyusg_date. ' +'.$addDays.' days'));
+        }
+        else
+        {
+            redirect('login','refresh');
+        }
+    }
+
+
+    public function weekDaysCalculationByLmp()
+    {
+        if($this->session->userdata('user_data'))
+        {
+            $days=0;$weeks=0;
+               $lmp_date = date('Y-m-d', strtotime($this->input->post('lmp_date')));
+               $cliexmDate = date('Y-m-d', strtotime($this->input->post('cliexmDate'))); 
+              
+
+                // Declare two dates 
+                $start_date = strtotime($lmp_date); 
+                $end_date = strtotime($cliexmDate); 
+                
+                // Get the difference and divide into  
+                // total no. seconds 60/60/24 to get  
+                // number of days 
+                 $daysCount= ($end_date - $start_date)/60/60/24; 
+
+                    if($daysCount<7){
+                        $days=$daysCount;
+                        $weeks=0;
+
+                    }else{
+                        $weeks = floor($daysCount/7);
+                        $days = $daysCount%7;
+                    }
+
+                    echo $weeks_days=$weeks.'_'.$days;
+            
+
+           
+        }
+        else
+        {
+            redirect('login','refresh');
+        }
+    }
+
+
+    public function weekDaysCalculationByUsg()
+    {
+        if($this->session->userdata('user_data'))
+        {
+            $days=0;$weeks=0;
+               $seleddbyusg_date = date('Y-m-d', strtotime($this->input->post('seleddbyusg_date')));
+               $cliexmDate = date('Y-m-d', strtotime($this->input->post('cliexmDate'))); 
+              
+
+                // Declare two dates 
+                $start_date = strtotime($seleddbyusg_date); 
+                $end_date = strtotime($cliexmDate); 
+                
+                // Get the difference and divide into  
+                // total no. seconds 60/60/24 to get  
+                // number of days 
+                 $daysCount= ($end_date - $start_date)/60/60/24; 
+
+                    if($daysCount<7){
+                        $days=$daysCount;
+                        $weeks=0;
+
+                    }else{
+                        $weeks = floor($daysCount/7);
+                        $days = $daysCount%7;
+                    }
+
+                    echo $weeks_days=$weeks.'_'.$days;
+            
+
+           
         }
         else
         {

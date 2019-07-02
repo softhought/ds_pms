@@ -177,7 +177,7 @@ class Commondatamodel extends CI_Model{
 				->from($table)
 				->where_not_in('id',$ignorarray);
 		$query = $this->db->get();
-		echo $this->db->last_query();
+		#echo $this->db->last_query();
 
 		if($query->num_rows()> 0)
 		{
@@ -387,7 +387,7 @@ class Commondatamodel extends CI_Model{
         {
             
             $query = $this->db->select("*")->from($table)->where($where)->get();
-            echo $this->db->last_query();
+            #echo $this->db->last_query();
             if($query->num_rows()>0){
 			return TRUE;
 		}

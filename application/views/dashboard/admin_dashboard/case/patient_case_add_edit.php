@@ -8,6 +8,7 @@
 .table tbody tr td, .table tbody tr th {
    
     border-top: 1px solid #f0c7f9;
+
 border-bottom: 1px solid #f0c7f9;
 }
 
@@ -78,8 +79,8 @@ border-bottom: 1px solid #f0c7f9;
                                     <button type="button" class="btn btn-block btn-xs waves-effect tab_lf_btn" id="antenantal_left_tab_menu_2"><span>➤</span>&nbsp;Basic Record</button>
                                     <button type="button" class="btn btn-block btn-xs waves-effect tab_lf_btn" id="antenantal_left_tab_menu_3"><span>➤</span>&nbsp;Previous Child Birth</button>
                                     <button type="button" class="btn btn-block btn-xs waves-effect tab_lf_btn"  id="antenantal_left_tab_menu_4"><span>➤</span>&nbsp;History</button>
-                                    <button type="button" class="btn btn-block btn-xs waves-effect tab_lf_btn"  id="antenantal_left_tab_menu_5"><span>➤</span>&nbsp;Examination</button>
-                                    
+                                    <button type="button" class="btn btn-block btn-xs waves-effect tab_lf_btn"  id="antenantal_left_tab_menu_5"><span>➤</span>&nbsp;First Examination</button>
+                                    <button type="button" class="btn btn-block btn-xs waves-effect tab_lf_btn"  id="antenantal_left_tab_menu_9"><span>➤</span>&nbsp;Clinical Examination</button>
                                      <button type="button" class="btn btn-block btn-xs waves-effect tab_lf_btn"  id="antenantal_left_tab_menu_6"><span>➤</span>&nbsp;Investigation</button> 
                                    
                                      <button type="button" class="btn btn-block btn-xs waves-effect tab_lf_btn"  id="antenantal_left_tab_menu_7"><span>➤</span>&nbsp;Prescription</button>
@@ -828,10 +829,22 @@ border-bottom: 1px solid #f0c7f9;
                 </div><!-- end row of LMP -->
 
                 <div class="row clearfix"> <!-- start of usg row -->
-                                       
-                <div class="col-sm-2"></div>
+                <div class="col-sm-2"></div>                  
+                <div class="col-sm-2">
+                  <div class="form-group"> <label class="form-label">EDD By USG</label>
+                  <div class="form-line input-group">
+                                 <input type="text" class="datepicker"  name="seleddbyusg_date" id="seleddbyusg_date" placeholder="select Date" autocomplete="off" value="<?php 
+                                 if($bodycontent['antenantalmode']=="EDIT" && $bodycontent['antenantalCaseEditdata']->seleddbyusg_date!=''){
+                                 echo date('l d M Y', strtotime($bodycontent['antenantalCaseEditdata']->seleddbyusg_date));}
+
+                                 ?>" 
+                                 >
+                                 
+                     </div>
+                     </div>
+					 </div>
                       <div class="col-sm-2">
-                  <div class="form-group"> <label class="form-label">EDD By USG of</label>
+                  <div class="form-group"> <label class="form-label"></label>
                   <div class="form-line input-group">
                     <input type="text"  name="edd_week" id="edd_week" placeholder="no of week" autocomplete="off" 
                     value="<?php if($bodycontent['antenantalmode']=="EDIT"){
@@ -1647,6 +1660,42 @@ border-bottom: 1px solid #f0c7f9;
              </div>
     
                  </div>
+
+                 <div class="row clearfix">
+
+                <div class="col-sm-2"></div>
+
+                  <div class="col-sm-3">
+                          <div class="form-group"> <label class="form-label">TT Taken on/To be Taken on</label>
+                          <div class="form-line input-group">
+                                        <input type="text" class="datepicker"  name="tt_taken_on_tobe_taken_on" id="tt_taken_on_tobe_taken_on" placeholder="select Date" autocomplete="off" value="<?php 
+                                        if($bodycontent['antenantalmode']=="EDIT" && $bodycontent['antenantalCaseEditdata']->tt_taken_on_tobe_taken_on!=''){
+                                        echo date('l d M Y', strtotime($bodycontent['antenantalCaseEditdata']->tt_taken_on_tobe_taken_on));}
+
+                                        ?>" 
+                                        >
+                                        
+                            </div>
+                            </div>
+                  </div>
+
+                  <div class="col-sm-3">
+                          <div class="form-group"> <label class="form-label">Tdap Taken on/To be Taken on</label>
+                          <div class="form-line input-group">
+                                        <input type="text" class="datepicker"  name="tdap_taken_on_tobe_taken_on" id="tdap_taken_on_tobe_taken_on" placeholder="select Date" autocomplete="off" value="<?php 
+                                        if($bodycontent['antenantalmode']=="EDIT" && $bodycontent['antenantalCaseEditdata']->tdap_taken_on_tobe_taken_on!=''){
+                                        echo date('l d M Y', strtotime($bodycontent['antenantalCaseEditdata']->tdap_taken_on_tobe_taken_on));}
+
+                                        ?>" 
+                                        >
+                                        
+                            </div>
+                            </div>
+                  </div>
+					 
+                </div><br>
+
+                 
     
 
 
@@ -2038,7 +2087,7 @@ border-bottom: 1px solid #f0c7f9;
                            <!-- ======= start of antenantal_left_tab_menu_5_section ============ -->
                             <section class="antenantalDataSection" id="antenantal_left_tab_menu_5_section">
 
-          			     	<center><h3> Examination</h3></center><hr>
+          			     	<center><h3> First Examination</h3></center><hr>
                       <?php
                        if ($bodycontent['examinationLatestData']) {
                      $isDataExam='Y';
@@ -2214,7 +2263,7 @@ border-bottom: 1px solid #f0c7f9;
                 <div class="row clearfix"><!-- start of save and error row-->
               <div class="col-sm-2">
                  <?php if ($bodycontent['examinationAllData']) { ?>
-                <button type="button" class="btn bg-deep-purple waves-effect" id="examallshowbtn">
+                <button type="button" class="btn bg-deep-purple waves-effect" id="examallshowbtn" style="display:none;">
                                   
                                     <span id="spanexamallshow">Show All Record</span>
                                 </button>
@@ -3654,6 +3703,97 @@ border-bottom: 1px solid #f0c7f9;
 
                            <!-- ======= start of antenantal_left_tab_menu_9_section ============ -->
                             <section class="antenantalDataSection" id="antenantal_left_tab_menu_9_section">
+                            <br>
+
+                            <div class="row clearfix">
+                              
+                                       <div class="col-sm-3">
+                                          <button type="button" class="btn btn-sm btn-warning addClicinalExam">
+                                           <span class="glyphicon glyphicon-plus" style="margin-top: 0px;"></span> Add Details
+                                            </button>
+                                             </div>
+                              
+                           </div>
+
+
+                        <!-- -------------------------- Medicine Details-------------------------- -->
+
+
+             
+             <div class="row clearfix">
+                                      
+                                      <!-- <div class="col-sm-2"></div> -->
+                         
+                                      <div class="col-sm-12">
+                                       <div  id="detail_clinical_exam" style="#border: 1px solid #e49e9e;">
+                                             <div class="table-responsive">
+                                                    <?php
+                                                   $cliexmrowno=0;
+                                                   $detailCount = 0;
+                                                   if($bodycontent['antenantalmode']=="EDIT")
+                                                   {
+                                                    $detailCount = sizeof($bodycontent['mensuMedList']);
+                                                   // $detailCount = 0;
+                                                   }
+                         
+                                                   // For Table style Purpose
+                                                   if($bodycontent['antenantalmode']=="EDIT" && $detailCount>0)
+                                                   {
+                                                     $style_var = "display:block;width:100%;";
+                                                   }
+                                                   else
+                                                   {
+                                                     $style_var = "display:none;width:100%;";
+                                                   }
+                                                 ?>
+                         
+                                             
+                                             <table class="table  no-footer" style="<?php echo $style_var; ?>">
+                                                 <thead>
+                                                    
+                                                 </thead>
+                                                 <tbody>
+                         
+                                                     <?php
+                         
+                                         if($detailCount>3)
+                                         {
+                                           foreach ($bodycontent['mensuMedList'] as $key => $value) 
+                                           {
+                                             $cliexmrowno++;
+                                             
+                                         ?>
+                                         
+                                    <tr id="rowClinicalExam_<?php echo $cliexmrowno; ?>" class="row clearfix">
+                         
+                               
+                               
+                                   </tr>
+                         
+                         
+                                       <?php   
+                                           }
+                                         }
+                         
+                                           ?>
+                                             <input type="hidden" name="cliexmrowno" id="cliexmrowno" value="<?php echo $cliexmrowno;?>">      
+                                             
+                                                 </tbody>
+                                             </table>
+                                                 
+                                             </div>
+                                           
+                                             
+                                           </div>
+                         
+                         
+                                         </div>
+                                       </div>
+                         
+                         
+                                      <!-- ------------------------------------------------------------------------------------------------------ -->
+
+
 
           			         
                                           
