@@ -278,7 +278,7 @@ border-bottom: 1px solid #f0c7f9;
            <div class="col-sm-8"> 
                  <div class="form-group form-float">
                    <div class="input-group existing_patienterr" id="existing_patienterr">
-                      <label class="form-label">Molile or Case No </label> 
+                      <label class="form-label">Mobile or Case No </label> 
                 <select name="existing_patient_sel_caseno" id="existing_patient_sel_caseno" class="form-control show-tick"  data-live-search="true" tabindex="-98">
                 <option value="0"> &nbsp; </option>
                 <?php 
