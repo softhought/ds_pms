@@ -158,6 +158,36 @@ class Patientcasemodel extends CI_Model{
     }
 
 
+    
+    public function getClinicalExaminationDetails($case_master_id)
+    {
+     $data = [];
+      $where = [
+                "case_master_id" => $case_master_id
+            ];
+            $query = $this->db->select("*")
+                    ->from('clinical_examination_details')
+                    ->where($where)
+                    ->get();
+                
+                if($query->num_rows()> 0)
+                {
+                  
+                       
+                    foreach ($query->result() as $rows)
+                    {
+                        $data[] = $rows;
+                    }
+                    return $data;
+                  
+                     
+                }
+                
+                return $data;
+    
+    }
+
+
 
   public function getPreviousChildBirthDetails($case_master_id)
     {

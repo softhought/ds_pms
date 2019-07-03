@@ -5,7 +5,7 @@
 
 
      <!-- <td> <b>Sl.</b><label class="form-label" style="margin-top: 12px;" > <?php echo $cliexmrowno; ?>.</label></td> -->
-     <td style="width: 9%;"> 
+     <td style="width: 10%;"> 
                <b>Date</b>
                <div class="input-group examination_dateerr" id="examination_dateerr_<?php echo $cliexmrowno; ?>">
               
@@ -16,21 +16,21 @@
                                       
      </td>
      <td> 
-               <b>By LMP</b>
+               <b>LMP(Weeks)</b>
                <div class="input-group weeks_by_lmperr" id="weeks_by_lmperr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
-                <input type="text" name="weeks_by_lmp[]" id="weeks_by_lmp_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="Weeks" style="margin-top: 5px;" >
+                <input type="text" name="weeks_by_lmp[]" id="weeks_by_lmp_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" readonly>
                  </div>
                 </div>
                                       
      </td>
      <td> 
-               <b>By LMP</b>
+               <b>LMP(Days)</b>
                <div class="input-group days_by_lmperr" id="days_by_lmperr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
-                <input type="text" name="days_by_lmp[]" id="days_by_lmp_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="Days" style="margin-top: 5px;" >
+                <input type="text" name="days_by_lmp[]" id="days_by_lmp_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" readonly>
                  </div>
                 </div>
                                       
@@ -39,21 +39,21 @@
 
 
      <td> 
-               <b>By USG</b>
+               <b>USG(Weeks)</b>
                <div class="input-group weeks_by_usgerr" id="weeks_by_usgerr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
-                <input type="text" name="weeks_by_usg[]" id="weeks_by_usg_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="Weeks" style="margin-top: 5px;" >
+                <input type="text" name="weeks_by_usg[]" id="weeks_by_usg_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" readonly>
                  </div>
                 </div>
                                       
      </td>
      <td> 
-               <b>By USG</b>
+               <b>USG(Days)</b>
                <div class="input-group days_by_usgerr" id="days_by_usgerr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
-                <input type="text" name="days_by_usg[]" id="days_by_usg_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="Days" style="margin-top: 5px;" >
+                <input type="text" name="days_by_usg[]" id="days_by_usg_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" readonly>
                  </div>
                 </div>
                                       
@@ -73,11 +73,22 @@
      </td>
 
      <td> 
-               <b>BP</b>
-               <div class="input-group cliexm_bperr" id="cliexm_bperr_<?php echo $cliexmrowno; ?>">
+               <b>BP(S)</b>
+               <div class="input-group " id="cliexm_bp_serr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
-                <input type="text" name="cliexm_bp[]" id="cliexm_bp_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" >
+                <input type="text" name="cliexm_bp_s[]" id="cliexm_bp_s_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" >
+                 </div>
+                </div>
+                                      
+     </td>
+
+     <td> 
+               <b>BP(D)</b>
+               <div class="input-group " id="cliexm_bp_derr_<?php echo $cliexmrowno; ?>">
+              
+               <div class="form-line">
+                <input type="text" name="cliexm_bp_d[]" id="cliexm_bp_d_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" >
                  </div>
                 </div>
                                       
@@ -85,12 +96,17 @@
 
      <td> 
                <b>Pallor</b>
-               <div class="input-group cliexm_pallorerr" id="cliexm_pallorerr_<?php echo $cliexmrowno; ?>">
-              
-               <div class="form-line">
-                <input type="text" name="cliexm_pallor[]" id="cliexm_pallor_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" >
-                 </div>
-                </div>
+               <select name="cliexm_pallor[]" id="cliexm_pallor_<?php echo $cliexmrowno; ?>" class="form-control"   data-live-search="true" tabindex="-98" placeholder="test"
+                    >              <option value="">&nbsp;</option>
+                                  <?php
+                                      foreach ($pallor as $pallor) { 
+                                   ?>
+                                     <option value="<?php echo $pallor;?>"
+                                      ><?php echo $pallor;?></option>
+                                   <?php
+                                    }
+                                   ?>
+                               </select>  
                                       
      </td>
 
@@ -145,34 +161,34 @@
                                       
      </td>
 
-     <td> 
+     <td style="width: 10%;"> 
                <b>Appointment</b>
                <div class="input-group " id="cliexm_appointment_dateerr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
-                <input type="text" name="cliexm_appointment_date[]" id="cliexm_appointment_date_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="Date" style="margin-top: 5px;" >
+                <input type="text" name="cliexm_appointment_date[]" id="cliexm_appointment_date_<?php echo $cliexmrowno; ?>" class="form-control datepicker2" placeholder="" style="margin-top: 5px;" >
                  </div>
                 </div>
                                       
      </td>
 
      <td> 
-               <b>After</b>
+               <b>After(Weeks)</b>
                <div class="input-group " id="cliexm_after_weekerr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
-                <input type="text" name="cliexm_after_week[]" id="cliexm_after_week_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="Weeks" style="margin-top: 5px;" >
+                <input type="text" name="cliexm_after_week[]" id="cliexm_after_week_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" >
                  </div>
                 </div>
                                       
      </td>
 
      <td> 
-               <b>After</b>
+               <b>After(Days)</b>
                <div class="input-group " id="cliexm_after_dayserr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
-                <input type="text" name="cliexm_after_days[]" id="cliexm_after_days_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="days" style="margin-top: 5px;" >
+                <input type="text" name="cliexm_after_days[]" id="cliexm_after_days_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" >
                  </div>
                 </div>
                                       

@@ -1287,6 +1287,100 @@ $(document).on('change','.otheranomalyckbx',function(event){
     });
 
 
+    $(document).on('click','.newMedAdd',function(){
+        
+        var callfrom = $(this).data("callfrom");
+
+        $("#medicinemodelcallfrom").val(callfrom);
+      
+    
+    });
+
+
+
+
+
+    /*----------------------- add new medicine to master ------------------- */
+
+    
+    $(document).on('submit','#medicineForm',function(event)
+    {
+        event.preventDefault();
+        if(validatemedicine())
+        {   
+
+            var formDataserialize = $("#medicineForm").serialize();
+            formDataserialize = decodeURI(formDataserialize);
+            console.log(formDataserialize);
+
+            var medicinemodelcallfrom = $("#medicinemodelcallfrom").val();
+
+            var formData = { formDatas: formDataserialize };
+            $(".medicinesavebtn").css('display', 'none');
+            $(".loademedicinesavebtnn").css('display', 'block');
+        
+
+            console.log(medicinemodelcallfrom);
+            
+    
+        $.ajax({
+                type: "POST",
+                url: basepath+'medicine/medicine_action',
+                dataType: "json",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                data: formData,
+                
+                success: function (result) {
+                    
+                    if (result.msg_status == 1) {
+
+                        if(medicinemodelcallfrom=='prescription'){
+                            resetPrescriptionMedDropdown(basepath);
+                        }
+                            
+                     
+                    } 
+                    else {
+                       
+                    }
+                    
+                    $(".medicinesavebtn").css('display', 'none');
+                    $(".loademedicinesavebtnn").css('display', 'none');
+                    $('#prescription_newmedmodel').modal('hide');
+                  
+                  
+                }, 
+                error: function (jqXHR, exception) {
+                  var msg = '';
+                    if (jqXHR.status === 0) {
+                        msg = 'Not connect.\n Verify Network.';
+                    } else if (jqXHR.status == 404) {
+                        msg = 'Requested page not found. [404]';
+                    } else if (jqXHR.status == 500) {
+                        msg = 'Internal Server Error [500].';
+                    } else if (exception === 'parsererror') {
+                        msg = 'Requested JSON parse failed.';
+                    } else if (exception === 'timeout') {
+                        msg = 'Time out error.';
+                    } else if (exception === 'abort') {
+                        msg = 'Ajax request aborted.';
+                    } else {
+                        msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                    }
+                   // alert(msg);  
+                }
+            }); /*end ajax call*/
+
+        
+        	
+
+        }   // end master validation
+
+
+        
+    });
+
+
 }); // end of document ready
 
 
@@ -1416,7 +1510,7 @@ function validatAntinatalBasicRecord()
 
 
 $(window).load(function () {
-    $('#antenantal_left_tab_menu_9').click();
+    $('#antenantal_left_tab_menu_1').click();
 })
 
 
@@ -1887,6 +1981,69 @@ function WeekDaysCalculationByUsg(basepath,cliexmDate,rowID){
 
 
         }
+
+
+}
+
+
+function validatemedicine()
+{
+    var medicinename = $("#medicinename").val();
+  
+
+    $("#medicinemsg").text("").css("dispaly", "none").removeClass("form_error");
+
+    if(medicinename=="")
+    {
+        $("#medicinename").focus();
+        $("#medicinemsg")
+        .text("Error : Enter medicine name .")
+        .addClass("form_error")
+        .css("display", "block");
+        return false;
+    }
+ 
+    return true;
+}
+
+
+
+function resetPrescriptionMedDropdown(basepath){
+
+    var callfrom='prescription';
+
+    $.ajax({
+        type: "POST",
+        url: basepath+'patientcase/resetPrescriptionMedDropdown',
+        dataType: "html",
+        data: {callfrom:callfrom},
+        success: function (result) {
+            
+            $("#prescription_medicinedrp").html(result);
+            $('select').selectpicker();
+     
+        }, 
+        error: function (jqXHR, exception) {
+          var msg = '';
+            if (jqXHR.status === 0) {
+                msg = 'Not connect.\n Verify Network.';
+            } else if (jqXHR.status == 404) {
+                msg = 'Requested page not found. [404]';
+            } else if (jqXHR.status == 500) {
+                msg = 'Internal Server Error [500].';
+            } else if (exception === 'parsererror') {
+                msg = 'Requested JSON parse failed.';
+            } else if (exception === 'timeout') {
+                msg = 'Time out error.';
+            } else if (exception === 'abort') {
+                msg = 'Ajax request aborted.';
+            } else {
+                msg = 'Uncaught Error.\n' + jqXHR.responseText;
+            }
+           // alert(msg);  
+        }
+        }); /*end ajax call*/
+
 
 
 }

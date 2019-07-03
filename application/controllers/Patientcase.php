@@ -7,6 +7,7 @@ class Patientcase extends CI_Controller {
         $this->load->library('session');
         $this->load->model('commondatamodel','commondatamodel',TRUE);
          $this->load->model('Patientcasemodel','patientcasemodel',TRUE);
+         $this->load->model('Medicinecmodel','medicinecmodel',TRUE);
     }
 
 
@@ -531,6 +532,12 @@ class Patientcase extends CI_Controller {
                    }
 
                    $result['prescriptioAllData']=$this->patientcasemodel->getAllPrescriptionByCase($caseID);
+                   $result['clinicalExaminationData']=$this->patientcasemodel->getClinicalExaminationDetails($caseID);
+
+                   $where_medicine_type=[];
+                   $orderby='medicine_type.medicine_type';
+                   
+                   $result['medicineTypeList']=$this->commondatamodel->getAllRecordWhereOrderBy('medicine_type',$where_medicine_type,$orderby);
 
                    
                   // $arrd=explode(",",'.$test.');
@@ -674,16 +681,23 @@ class Patientcase extends CI_Controller {
             }
 
 
+            // if (isset($dataArry['procedure_concieve'])) {
+            //     $procedure_concieve = '';
+            //     foreach ($dataArry['procedure_concieve'] as  $value) {
+            //       $procedure_concieve.=$value.',';
+            //     }
+            //     $procedure_concieve = substr($procedure_concieve, 0, -1);
+            //     $procedure_concieve;
+            // }else{
+            //     $procedure_concieve = '';
+            // }
             if (isset($dataArry['procedure_concieve'])) {
-                $procedure_concieve = '';
-                foreach ($dataArry['procedure_concieve'] as  $value) {
-                  $procedure_concieve.=$value.',';
-                }
-                $procedure_concieve = substr($procedure_concieve, 0, -1);
-                $procedure_concieve;
+                $procedure_concieve = $dataArry['procedure_concieve'];
             }else{
-                $procedure_concieve = '';
+                $procedure_concieve='';
             }
+           
+          
 
             if ($dataArry['procedure_date']!='') {
                  $procedure_date = date('Y-m-d', strtotime($dataArry['procedure_date']));
@@ -1325,6 +1339,83 @@ $deleteTodayPrescription=$this->commondatamodel->deleteTableData('prescription_m
 
 
 
+         /* insert into clinical examination detail data */
+
+         if(isset($dataArry['examination_date'])) {
+
+            $deleteClinicalExaminationDetails=$this->commondatamodel->deleteTableData('clinical_examination_details',$where_caseId);
+            $examination_date = $dataArry['examination_date'];
+            $weeks_by_lmp = $dataArry['weeks_by_lmp'];
+            $days_by_lmp = $dataArry['days_by_lmp'];
+            $weeks_by_usg = $dataArry['weeks_by_usg'];
+            $days_by_usg = $dataArry['days_by_usg'];
+            $cliexm_weight = $dataArry['cliexm_weight'];
+            $cliexm_bp_s = $dataArry['cliexm_bp_s'];
+            $cliexm_bp_d = $dataArry['cliexm_bp_d'];
+            $cliexm_pallor = $dataArry['cliexm_pallor'];
+            $cliexm_oedema = $dataArry['cliexm_oedema'];
+            $fundal_height = $dataArry['fundal_height'];
+            $cliexm_sfh = $dataArry['cliexm_sfh'];
+            $cliexm_fsh = $dataArry['cliexm_fsh'];
+            $cliexm_appointment_date = $dataArry['cliexm_appointment_date'];
+            $cliexm_after_week = $dataArry['cliexm_after_week'];
+            $cliexm_after_days = $dataArry['cliexm_after_days'];
+ 
+
+            for ($i=0; $i < count($dataArry['examination_date']) ; $i++) { 
+
+                if($cliexm_appointment_date[$i]!=''){
+                    $appcliexmDate=date("Y-m-d", strtotime($cliexm_appointment_date[$i]));
+                }else{
+                    $appcliexmDate=NULL;
+                }
+
+                if($examination_date[$i]!=''){
+                    $cliexmDate=date("Y-m-d", strtotime($examination_date[$i]));
+                }else{
+                    $cliexmDate=NULL;
+                }
+               
+
+                $clinicalexam_dtl_array = array(
+                    'case_master_id' => $caseID ,
+                    'examination_date' => $cliexmDate,
+                    'weeks_by_lmp' => $weeks_by_lmp[$i],
+                    'days_by_lmp' => $days_by_lmp[$i],
+                    'weeks_by_usg' => $weeks_by_usg[$i],
+                    'days_by_usg' => $days_by_usg[$i],
+                    'cliexm_weight' => $cliexm_weight[$i],
+                    'cliexm_bp_s' => $cliexm_bp_s[$i],
+                    'cliexm_bp_d' => $cliexm_bp_d[$i],
+                    'cliexm_pallor' => $cliexm_pallor[$i],
+                    'cliexm_oedema' => $cliexm_oedema[$i],
+                    'fundal_height' => $fundal_height[$i],
+                    'cliexm_sfh' => $cliexm_sfh[$i],
+                    'cliexm_fsh' => $cliexm_fsh[$i],
+                    'cliexm_appointment_date' => $appcliexmDate,
+                    'cliexm_after_week' => $cliexm_after_week[$i],
+                    'cliexm_after_days' => $cliexm_after_days[$i],
+                    'entry_date' => date('Y-m-d'),
+                   
+                   );
+
+$insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinical_examination_details',$clinicalexam_dtl_array);
+
+              
+
+                
+            }
+
+          
+
+         }
+
+        //  exit;
+
+
+
+
+
 
 
 
@@ -1604,7 +1695,7 @@ $deleteTodayPrescription=$this->commondatamodel->deleteTableData('prescription_m
             $row_no = $this->input->post('rowNo');
             $data['cliexmrowno'] = $row_no;
             $data['DaysList']=$this->commondatamodel->getAllDropdownData('day_master');
-            $result['pallor'] = array('Nil','Mild','Mod','Severe' );
+            $data['pallor'] = array('Nil','Mild','Mod','Severe' );
             
            
              $page = 'dashboard/admin_dashboard/case/clinical_examination_partial_view';
@@ -2236,5 +2327,36 @@ $deleteTodayPrescription=$this->commondatamodel->deleteTableData('prescription_m
   }
 
 
+
+
+
+
+
+   public function resetPrescriptionMedDropdown()
+  {
+      if($this->session->userdata('user_data'))
+      {
+        $result['medicineList']=$this->medicinecmodel->getAllMedicineList();
+        ?>
+         <select name="prescription_medicine" id="prescription_medicine" class="form-control selpres show-tick"  data-live-search="true" tabindex="-98">
+                         <option value="0"> &nbsp; </option>
+                         <?php 
+
+                         foreach ($result['medicineList'] as $medicinelist) {  ?>
+                         <option value="<?php echo $medicinelist->medicine_id;?>"
+
+                          ><?php echo $medicinelist->medicine_name;?></option>
+                          <?php     } ?>
+                                                   
+                          </select> 
+        <?php
+
+
+      }
+      else
+      {
+          redirect('login','refresh');
+      }
+  }
 
 }// end of class
