@@ -31,13 +31,11 @@ class Patientcasemodel extends CI_Model{
         $data = array();
         $where = array('patient_master.patient_id' =>$patientid);
         $this->db->select("patient_master.*,
-                            bldself.bld_group_code as slfbldgrp,
-                            husbldgp.bld_group_code as husbldgrp,
+                          
                             gender_master.gender
                             ")
                 ->from('patient_master')
-                ->join('blood_group as bldself','bldself.id=patient_master.bloodgroup','INNER')
-                ->join('blood_group as husbldgp','husbldgp.id=patient_master.husband_bloodgroup','LEFT')
+                
                 ->join('gender_master','gender_master.id=patient_master.patientgender','INNER')
                 ->where($where)
                 ->limit(1);
@@ -135,8 +133,12 @@ class Patientcasemodel extends CI_Model{
       $where = [
                 "case_master_id" => $case_master_id
             ];
-            $query = $this->db->select("*")
+            $query = $this->db->select("
+                                        menstrual_medecine_details.*,
+                                        medicine_master.medicine_name
+                                        ")
                     ->from('menstrual_medecine_details')
+                    ->join('medicine_master','medicine_master.medicine_id = menstrual_medecine_details.medicine_mst_id','LEFT')
                     ->where($where)
                     ->get();
                 
@@ -278,8 +280,9 @@ class Patientcasemodel extends CI_Model{
       $where = [
                 "case_master_id" => $case_master_id
             ];
-            $query = $this->db->select("*")
+            $query = $this->db->select("regular_medicines_details.*, medicine_master.medicine_name")
                     ->from('regular_medicines_details')
+                    ->join('medicine_master','medicine_master.medicine_id = regular_medicines_details.medicine_mst_id','LEFT')
                     ->where($where)
                     ->get();
                 
@@ -328,6 +331,37 @@ class Patientcasemodel extends CI_Model{
             return $data;
         }
     }
+
+
+    /* get clinical examination data latest */
+    public function getClinicalExaminationLatestByCase($case_master_id)
+    {
+        $data = array();
+        $where = [
+                "case_master_id" => $case_master_id
+            ];
+        $this->db->select("*")
+                ->from('clinical_examination_details')
+                ->where($where)
+                ->order_by("clinical_examination_details.clinical_exm_dtl_id", "DESC")
+                ->limit(1);
+        $query = $this->db->get();
+        
+        #echo $this->db->last_query();
+        
+        if($query->num_rows()> 0)
+        {
+           $row = $query->row();
+           return $data = $row;
+             
+        }
+        else
+        {
+            return $data;
+        }
+    }
+
+
 
 
     public function getAllExaminationLatestByCase($case_master_id)

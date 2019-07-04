@@ -88,9 +88,8 @@ div.footer {
 */
 
 
+</style>
 
-</style>
-</style>
 
 
 </head>
@@ -170,9 +169,9 @@ div.footer {
     			<td colspan="3">&nbsp;</td>
     		</tr>
     		<tr>
-    			<td width="15%">TT Taken on :</td>
-    			<td>&nbsp;</td>
-    			<td width="15%">T dap Taken on :</td>
+    			<td width="30%">TT Taken on : <?php echo $tt_taken;?></td>
+    			
+    			<td width="15%">T dap Taken on : <?php echo $tdap_taken;?></td>
     		</tr>
     		
     	</table>
@@ -183,11 +182,11 @@ div.footer {
     	<table width="100%"   class="demo_font" style="margin-left: 40px;margin-top: 10px;" >
     		<tr>
     			<td colspan="2"><span>&#9744;&nbsp;&nbsp;</span>Parity : <?php if($antenantalCaseData){echo $total_parity;}?>&nbsp;
-    				
-    				[ Term Delivery : <?php if($antenantalCaseData){echo $antenantalCaseData->parity_term_delivery;}?>, 
+    				[<span>P</span><sub>A+B+C+D</sub>]
+    				<!-- [ Term Delivery : <?php if($antenantalCaseData){echo $antenantalCaseData->parity_term_delivery;}?>, 
     				Preterm : <?php if($antenantalCaseData){ echo $antenantalCaseData->parity_preterm;}?>, 
     				Abortion : <?php if($antenantalCaseData){echo $antenantalCaseData->parity_abortion;}?>,
-    				Issue : <?php if($antenantalCaseData){echo $antenantalCaseData->parity_issue;}?> ] 
+    				Issue : <?php if($antenantalCaseData){echo $antenantalCaseData->parity_issue;}?> ]  -->
     			</td>
     			
     		</tr>
@@ -275,47 +274,29 @@ div.footer {
     		</tr>
 
     		<tr>
-    			<td><span>&#9744;&nbsp;&nbsp;</span>With surgica history of :</td>
+    			<td><span>&#9744;&nbsp;&nbsp;</span>With surgical history of :</td>
     			<td>  </td>
     		</tr>
     	</table>
-
+           <div style="margin-left:180px;word-wrap: break-word;font-size:12px;">
         <?php
                 if ($surgicaData) {
-                    
+
+                    foreach ($surgicaData as $surgicadatarow) {
+
+                        if ($surgicadatarow->other_surgery_name!='') {
+                            echo $surgicadatarow->other_surgery_name;
+                        }else{   
+                            echo $surgicadatarow->surgery_name;
+                        }
+
+                        echo '('.$surgicadatarow->yearback.' years back) |';
+                    }
+             
 
 ?>
-        <table style="margin-left: 180px;width: 60%;font-size: 12px;" cellspacing="6"  >
-                        
-                            <tr>
-                                <th width="10%" align="left">Surgery</th>
-                                <th width="5%" align="left">Years back</th>
-                              
-                            </tr>
-                            
-                                <?php
-                                foreach ($surgicaData as $surgicadatarow) {
-                                ?>
-                            <tr>
-                                <td><?php 
-
-                                if ($surgicadatarow->other_surgery_name!='') {
-                                    echo $surgicadatarow->other_surgery_name;
-                                }else{   
-                                    echo $surgicadatarow->surgery_name;
-                                }
-
-                                ?></td>
-                                <td align="center">&nbsp;<?php echo $surgicadatarow->yearback;?></td>
-                               
-                            </tr>
-                            <?php
-                                    }
-
-                            ?>
-                            
-                        
-                    </table>
+</div>
+        
                 <?php }?>
 
 
@@ -498,241 +479,64 @@ div.footer {
                 if ($inveltdata) {
                     
 
-?>
+                ?>
 <span class="spanhead">Investigation :</span>
-        <table style="margin-left: 180px;width: 80%;font-size: 12px;" cellspacing="6"  >
+                        <div style="margin-left:120px;word-wrap: break-word;font-size: 12px;">
                         
-                            <tr>
-                                <th width="15%" align="left">Test </th>
-                                <th width="40%" align="left">Test Result </th>
-                                <th width="10%" align="left">Test Date </th>
-                              
-                              
-                            </tr>
+                        <?php if($inveltdata->hb_result!=''){ 
+                          
+                          echo "Hb : "; echo $inveltdata->hb_result.'   |   ';
+                           
+                        }
+                        ?>
+                       
+                        <?php if($inveltdata->tc_result!=''){ echo "TC : "; echo $inveltdata->tc_result.'   |   ';} ?>
+                          
+                        <?php if($inveltdata->dc_result!=''){ echo "DC : "; echo $inveltdata->dc_result.'   |   '; } ?>
 
-                             <?php if($inveltdata->hb_result!=''){?> 
-                             <tr> <td>Hb</td> <td><?php echo $inveltdata->hb_result;?></td>
-                             <td><?php 
-                             if ($inveltdata->hb_date!='') {
-                                echo date('d-m-Y', strtotime($inveltdata->hb_date));
-                             }
-                             ?></td>
-                            </tr>
-                            <?php }
+                        <?php if($inveltdata->fbs_result!=''){ echo "FBS : "; echo $inveltdata->fbs_result.'   |   '; } ?>
 
-                             if($inveltdata->tc_result!=''){
-                             ?> 
-                            <tr><td>TC</td> <td><?php echo $inveltdata->tc_result;?></td>
-                             <td><?php 
-                             if ($inveltdata->tc_date!='') {
-                                echo date('d-m-Y', strtotime($inveltdata->tc_date));
-                             }
-                             ?></td>
-                            </tr>
-                            <?php }
+                        <?php if($inveltdata->ppbs_result!=''){ echo "PPBS : "; echo $inveltdata->ppbs_result.'   |   '; } ?>
 
-                            if($inveltdata->dc_result!=''){
-                             ?> 
-                            <tr><td>DC</td> <td><?php echo $inveltdata->dc_result;?></td>
-                            <td><?php 
-                             if ($inveltdata->dc_date!='') {
-                                echo date('d-m-Y', strtotime($inveltdata->dc_date));
-                             }
-                             ?></td>
-                            </tr>
-                            <?php }
+                        <?php if($inveltdata->vdrl_result!=''){ echo "VDRL : "; echo $inveltdata->vdrl_result.'   |   '; } ?>
 
-                            if($inveltdata->fbs_result!=''){ ?> 
-                            <tr><td>FBS</td> <td><?php echo $inveltdata->fbs_result;?></td>
-                            <td><?php 
-                             if ($inveltdata->fbs_date!='') {
-                                echo date('d-m-Y', strtotime($inveltdata->fbs_date));
-                             }
-                             ?></td>
-                            </tr>
-                            <?php }
+                        <?php if($inveltdata->hiv_one_result!=''){ echo "HIV 1 : "; echo $inveltdata->hiv_one_result.'   |   '; } ?>
 
-                            if($inveltdata->ppbs_result!=''){ ?> 
-                            <tr><td>PPBS</td> <td><?php echo $inveltdata->ppbs_result;?></td>
-                            <td><?php 
-                             if ($inveltdata->ppbs_date!='') {
-                                echo date('d-m-Y', strtotime($inveltdata->ppbs_date));
-                             }
-                             ?></td>
-                            </tr>
-                            <?php }
+                        <?php if($inveltdata->hiv_two_result!=''){ echo "HIV 2 : "; echo $inveltdata->hiv_two_result.'   |   '; } ?>
 
-                             if($inveltdata->vdrl_result!=''){ ?> 
-                            <tr><td>VDRL</td> <td><?php echo $inveltdata->vdrl_result;?></td>
-                            <td><?php 
-                             if ($inveltdata->vdrl_date!='') {
-                                echo date('d-m-Y', strtotime($inveltdata->vdrl_date));
-                             }
-                             ?></td>
-                            </tr>
-                            <?php }
+                        <?php if($inveltdata->hbsag_result!=''){ echo "Hbs Ag : "; echo $inveltdata->hbsag_result.'   |   '; } ?>
 
-                             if($inveltdata->hiv_one_result!=''){ ?> 
-                            <tr><td>HIV 1</td> <td><?php echo $inveltdata->hiv_one_result;?></td>
-                            <td><?php 
-                             if ($inveltdata->hiv_one_date!='') {
-                                echo date('d-m-Y', strtotime($inveltdata->hiv_one_date));
-                             }
-                             ?></td>
-                            </tr>
-                            <?php }
+                        <?php if($inveltdata->antihcv_result!=''){ echo "Anti HCV : "; echo $inveltdata->antihcv_result.'   |   '; } ?>
 
-                            if($inveltdata->hiv_two_result!=''){ ?> 
-                            <tr><td>HIV 2</td> <td><?php echo $inveltdata->hiv_two_result;?></td>
-                            <td><?php 
-                             if ($inveltdata->hiv_two_date!='') {
-                                echo date('d-m-Y', strtotime($inveltdata->hiv_two_date));
-                             }
-                             ?></td>
-                            </tr>
-                            <?php }
+                        <?php if($inveltdata->urine_re_result!=''){ echo "Urine R/E : "; echo $inveltdata->urine_re_result.'   |   '; } ?>
 
-                            if($inveltdata->hbsag_result!=''){ ?> 
-                            <tr><td>Hbs Ag</td> <td><?php echo $inveltdata->hbsag_result;?></td>
-                            <td><?php 
-                             if ($inveltdata->hbsag_date!='') {
-                                echo date('d-m-Y', strtotime($inveltdata->hbsag_date));
-                             }
-                             ?></td>
-                            </tr>
-                            <?php }
+                        <?php if($inveltdata->cs_sensitive_to_result!=''){ echo "Urine C/S : "; echo $inveltdata->cs_sensitive_to_result.'   |   '; } ?>
 
-                            if($inveltdata->antihcv_result!=''){ ?> 
-                            <tr><td>Anti HCV</td> <td><?php echo $inveltdata->antihcv_result;?></td>
-                            <td><?php 
-                             if ($inveltdata->antihcv_date!='') {
-                                echo date('d-m-Y', strtotime($inveltdata->antihcv_date));
-                             }
-                             ?></td>
-                            </tr>
-                            <?php }
-
-                            if($inveltdata->urine_re_result!=''){ ?> 
-                            <tr><td>Urine R/E</td> <td><?php echo $inveltdata->urine_re_result;?></td>
-                            <td><?php 
-                             if ($inveltdata->urine_re_date!='') {
-                                echo date('d-m-Y', strtotime($inveltdata->urine_re_date));
-                             }
-                             ?></td>
-                            </tr>
-                            <?php }
-
-                            if($inveltdata->cs_sensitive_to_result!=''){ ?> 
-                            <tr><td>Urine C/S</td> <td><?php echo $inveltdata->cs_sensitive_to_result;?></td>
-                            <td><?php 
-                             if ($inveltdata->cs_sensitive_date!='') {
-                                echo date('d-m-Y', strtotime($inveltdata->cs_sensitive_date));
-                             }
-                             ?></td>
-                            </tr>
-                            <?php }
-
-                             if($inveltdata->stsh_result!=''){ ?> 
-                            <tr><td>Urine C/S</td> <td><?php echo $inveltdata->stsh_result;?></td>
-                            <td><?php 
-                             if ($inveltdata->stsh_date!='') {
-                                echo date('d-m-Y', strtotime($inveltdata->stsh_date));
-                             }
-                             ?></td>
-                            </tr>
-                            <?php }
-
-                             if($inveltdata->s_urea_result!=''){ ?> 
-                            <tr><td>S urea</td> <td><?php echo $inveltdata->s_urea_result;?></td>
-                            <td><?php 
-                             if ($inveltdata->s_urea_date!='') {
-                                echo date('d-m-Y', strtotime($inveltdata->s_urea_date));
-                             }
-                             ?></td>
-                            </tr>
-                            <?php }
-
-                             if($inveltdata->s_creatinine_result!=''){ ?> 
-                            <tr><td>S creatinine</td> <td><?php echo $inveltdata->s_creatinine_result;?></td>
-                            <td><?php 
-                             if ($inveltdata->s_creatinine_date!='') {
-                                echo date('d-m-Y', strtotime($inveltdata->s_creatinine_date));
-                             }
-                             ?></td>
-                            </tr>
-                            <?php }
-
-                            if($inveltdata->combined_test_result!=''){ ?> 
-                            <tr><td>Combined Test</td> <td><?php echo $inveltdata->combined_test_result;?></td>
-                            <td><?php 
-                             if ($inveltdata->combined_test_date!='') {
-                                echo date('d-m-Y', strtotime($inveltdata->combined_test_date));
-                             }
-                             ?></td>
-                            </tr>
-                            <?php }
-
-                            if($inveltdata->thalassemia_result!=''){ ?> 
-                            <tr><td>Thalassemia</td> <td><?php echo $inveltdata->thalassemia_result;?></td>
-                            <td><?php 
-                             if ($inveltdata->thalassemia_date!='') {
-                                echo date('d-m-Y', strtotime($inveltdata->thalassemia_date));
-                             }
-                             ?></td>
-                            </tr>
-                            <?php }
-
-                            if($inveltdata->usg_slf_week!=''){ ?> 
-                            <tr><td>USG dating scan</td> <td><?php echo 'SLF of '.$inveltdata->usg_slf_week.' week '.$inveltdata->usg_slf_day.' day ';?>
-      
-                            </td>
-                            <td><?php 
-                             if ($inveltdata->usg_scan_date!='') {
-                                echo date('d-m-Y', strtotime($inveltdata->usg_scan_date));
-                             }
-                             ?></td>
-                            </tr>
-                            <?php }
-
-                            if($inveltdata->nt_scan_lowerrisk!=''){ ?> 
-                            <tr><td>NT scan + Double marker</td> <td><?php echo 'Low risk for <b>'.$inveltdata->nt_scan_lowerrisk.'</b> <br> High risk for <b>'.$inveltdata->nt_scan_highrisk.'</b>';?>
-      
-                            </td>
-                            <td><?php 
-                             if ($inveltdata->nt_scan_date!='') {
-                                echo date('d-m-Y', strtotime($inveltdata->nt_scan_date));
-                             }
-                             ?></td>
-                            </tr>
-                            <?php }
-
+                        <?php if($inveltdata->stsh_result!=''){ echo "STSH : "; echo $inveltdata->stsh_result.'   |   '; } ?>
                         
-                            if($inveltdata->anomaly_slf_week!=''){ ?> 
-                            <tr><td>Anomaly scan</td> <td><?php echo 'SLF of '.$inveltdata->anomaly_slf_week.' week '.$inveltdata->anomaly_slf_day.' day ';?>
-      
-                            </td>
-                            <td><?php 
-                             if ($inveltdata->anomaly_scan_date!='') {
-                                echo date('d-m-Y', strtotime($inveltdata->anomaly_scan_date));
-                             }
-                             ?></td>
-                            </tr>
-                            <?php }
+                        <?php if($inveltdata->s_urea_result!=''){ echo "S urea : "; echo $inveltdata->s_urea_result.'   |   '; } ?>
 
-                             if($inveltdata->growth_slf_week!=''){ ?> 
-                            <tr><td>Growth scan</td> <td><?php echo 'SLF of '.$inveltdata->growth_slf_week.' week '.$inveltdata->growth_slf_day.' day ';?>
-      
-                            </td>
-                            <td><?php 
-                             if ($inveltdata->growth_date!='') {
-                                echo date('d-m-Y', strtotime($inveltdata->growth_date));
-                             }
-                             ?></td>
-                            </tr>
-                            <?php }?>
+                        <?php if($inveltdata->s_creatinine_result!=''){ echo "S creatinine : "; echo $inveltdata->s_creatinine_result.'   |   '; } ?>
+
+                        <?php if($inveltdata->combined_test_result!=''){ echo "Combined Test : "; echo $inveltdata->combined_test_result.'   |   '; } ?>
+
+                        <?php if($inveltdata->thalassemia_result!=''){ echo "Thalassemia : "; echo $inveltdata->thalassemia_result.'   |   '; } ?>
+
+                        <?php if($inveltdata->usg_slf_week!=''){ echo "USG dating scan : "; echo 'SLF of '.$inveltdata->usg_slf_week.' week '.$inveltdata->usg_slf_day.' day    |   '; } ?>
+
+                        <?php if($inveltdata->nt_scan_lowerrisk!=''){ echo "NT scan + Double marker : "; echo 'Low risk for <b>'.$inveltdata->nt_scan_lowerrisk.'</b>  High risk for <b>'.$inveltdata->nt_scan_highrisk.'</b>   |   '; } ?>
+                   
+
+                        <?php if($inveltdata->anomaly_slf_week!=''){ echo "Anomaly scan : "; echo 'SLF of '.$inveltdata->anomaly_slf_week.' week '.$inveltdata->anomaly_slf_day.' day    |   '; } ?>
+
+                        <?php if($inveltdata->thalassemia_result!=''){ echo "Growth scan : "; echo 'SLF of '.$inveltdata->growth_slf_week.' week '.$inveltdata->growth_slf_day.' day    |   '; } ?>
+                        </div>
+
+                      
 
 
-                    </table>
+
+        
                 <?php }?>
 
               <table width="100%"   class="demo_font" style="margin-left: 150px;margin-top: 10px;" >
@@ -749,53 +553,152 @@ div.footer {
 
 
                 <?php
-                if ($examinationLatestData) {
+                if ($clinicalExaminationLatestData) {
                     
 
 ?>
-        <table style="width: 90%;font-size: 12px;margin-left: 140px;" cellspacing="6"  >
+        <table style="width: 90%;font-size: 12px;margin-left:60px;" cellspacing="6"  >
                         
                             <tr>
-                                <th  align="left">Height(cm) </th>
-                                <th  align="left">Weight(kg)</th>
-                                <th  align="left">BMI</th>
-                                <th  align="left">Pulse/min</th>
-                                <th  align="left">BP(S)</th>
+                                <th  align="left">Date  </th>
+                                <th  align="left">weeks by LMP</th>
+                                <th  align="left">Days by LMP</th>
+                                <th  align="left">weeks by USG</th>
+                                <th  align="left">Days by USG</th>
+                                <th  align="left">Weight</th>
+                                <th  align="left">BP(S) </th>
                                 <th  align="left">BP(D)</th>
+                              
                               
                             </tr>
                             
                                 
                             <tr>
-                                 <td><?php echo $examinationLatestData->exam_height;?></td>
-                                 <td><?php echo $examinationLatestData->exam_weight;?></td>
-                                 <td><?php echo $examinationLatestData->exam_bmi;?></td>
-                                 <td><?php echo $examinationLatestData->exam_pluse;?></td>
-                                 <td><?php echo $examinationLatestData->exam_bp_systolic;?></td>
-                                 <td><?php echo $examinationLatestData->exam_bp_diastolic;?></td>
+                                 <td><?php 
+                                 if($clinicalExaminationLatestData->examination_date!=''){
+                                    echo date('d-m-Y', strtotime($clinicalExaminationLatestData->examination_date));}
+                                ?></td>
+                                 <td align="center"><?php echo $clinicalExaminationLatestData->weeks_by_lmp;?></td>
+                                 <td align="center"><?php echo $clinicalExaminationLatestData->days_by_lmp;?></td>
+                                 <td align="center"><?php echo $clinicalExaminationLatestData->weeks_by_usg;?></td>
+                                 <td align="center"><?php echo $clinicalExaminationLatestData->days_by_usg;?></td>
+                                 <td align="center"><?php echo $clinicalExaminationLatestData->cliexm_weight;?> kg.</td>
+                                 <td align="center"><?php echo $clinicalExaminationLatestData->cliexm_bp_s;?></td>
+                                 <td align="center"><?php echo $clinicalExaminationLatestData->cliexm_bp_d;?></td>
+                               
                             </tr>
+
                             <tr>
-                                <td colspan="6">&nbsp;</td>
+                                <td colspan="8">&nbsp;</td>
                             </tr>
                               <tr>
+                                
                                 <th  align="left">Pallor </th>
-                                <th  align="left">Icterus </th>
-                                <th  align="left">Thyroid </th>
-                                <th  align="left">Teeth </th>
-                                <th  align="left">Cus  </th>
-                                <th  align="left">Chest </th>
+                                <th  align="left">Oedema </th>
+                                <th  align="left">Fundal Height</th>
+                                <th  align="left">SFH(cm)</th>
+                                <th  align="left">FSH(/min)</th>
+                                <th  align="left">Appointment</th>
+                              
                             </tr>
                             <tr>
-                                 <td><?php echo $examinationLatestData->exam_pallor;?></td>
-                                 <td><?php echo $examinationLatestData->exam_icterus;?></td>
-                                 <td><?php echo $examinationLatestData->exam_thyroid;?></td>
-                                 <td><?php echo $examinationLatestData->exam_teeth;?></td>
-                                 <td><?php echo $examinationLatestData->exam_cus;?></td>
-                                 <td><?php echo $examinationLatestData->exam_chest;?></td>
+                                
+                                 <td><?php echo $clinicalExaminationLatestData->cliexm_pallor;?></td>
+                                 <td><?php echo $clinicalExaminationLatestData->cliexm_oedema;?></td>
+                                 <td><?php echo $clinicalExaminationLatestData->fundal_height;?></td>
+                                 <td><?php echo $clinicalExaminationLatestData->cliexm_sfh;?></td>
+                                 <td><?php echo $clinicalExaminationLatestData->cliexm_fsh;?></td>
+                                 <td><?php 
+
+                                        if($clinicalExaminationLatestData->cliexm_appointment_date!=''){
+                                            echo date('d-m-Y', strtotime($clinicalExaminationLatestData->cliexm_appointment_date));
+                                        }else{
+                                                if($clinicalExaminationLatestData->cliexm_after_week!=''){
+                                                    echo $clinicalExaminationLatestData->cliexm_after_week.' weeks ';
+                                                }
+                                                if($clinicalExaminationLatestData->cliexm_after_days!=''){
+                                                    echo $clinicalExaminationLatestData->cliexm_after_days.' days ';
+                                                }
+                                            }
+                                 
+                                 ?></td>
+                                 
                             </tr>
                    
                     </table>
                 <?php }?>
+
+
+                <span class="spanhead">Prescription :</span>
+
+<?php
+      if ($prescriptionMedicineList) {
+          
+
+?>
+<table style="margin-left: 180px;width: 80%;font-size: 12px;" cellspacing="6"  >
+              
+                  <tr>
+                      <th width="15%" align="left">Medicine </th>
+                      <th width="5%" align="left">Dosage </th>
+                      <th width="15%" align="left">Frequency</th>
+                      <th width="15%" align="left">Days</th>
+                    
+                  </tr>
+                  
+                      <?php
+                      foreach ($prescriptionMedicineList as $prescriptionmedicinerow) {
+
+                      ?>
+                   <tr>
+                       <td><?php echo $prescriptionmedicinerow->medicine_name;?></td>
+                       <td><?php echo $prescriptionmedicinerow->dosage;?></td>
+                       <td><?php echo $prescriptionmedicinerow->frequency;?></td>
+                       <td><?php echo $prescriptionmedicinerow->days;?></td>
+
+                  </tr>
+                  <?php
+                    
+                       }
+
+                  ?>
+                  
+              
+          </table>
+      <?php }?>
+
+
+
+<br>
+<span>Doctor Note :</span><p><?php  if ($prescriptionMedicineList) {echo $prescriptionLatestData->doctor_note;}?></p><br><br>
+<span >Next Checkup Date :</span><?php 
+if ($prescriptionMedicineList) {
+if ($prescriptionLatestData->next_checkup_dt!='') {
+                       echo date('l d M Y', strtotime($prescriptionLatestData->next_checkup_dt));
+                     }
+
+              }
+
+
+?>
+
+
+<br><br>
+
+<span class="spanhead">Suggested Investigation : </span>&nbsp;     <?php
+                                             if ($prescriptionMedicineList) {
+                                                 $chkcoma=0;
+                                              foreach ($prescriptionInvestigationList as $prescriptionInvestigation) {
+                                                  if($chkcoma!=0){echo ",";}
+                                                  echo $prescriptionInvestigation->inv_component_name;
+                                                  $chkcoma++;
+                                              }
+                                             }
+                                              ?>
+
+<br><br>
+<span class="spanhead">Review :</span><br><br>
+<span class="spanhead">Diagnosis Summary :</span><br>
 
      
 
@@ -807,7 +710,7 @@ div.footer {
     In case emergency to call 9874746006 /Techno Global Emergency number 9073943772</p>
 
 
-    <div class="page_3">
+    <!-- <div class="page_3">
 
     <div class='header'>
     
@@ -840,103 +743,14 @@ div.footer {
 
     <div class="custom-page-start" style="padding:3px 0;height:23.5cm;#border:1px solid gray;  ">
         
-        <span class="spanhead">Prescription :</span>
-
-          <?php
-                if ($prescriptionMedicineList) {
-                    
-
-?>
-        <table style="margin-left: 180px;width: 80%;font-size: 12px;" cellspacing="6"  >
-                        
-                            <tr>
-                                <th width="15%" align="left">Medicine </th>
-                                <th width="5%" align="left">Dosage </th>
-                                <th width="15%" align="left">Frequency</th>
-                                <th width="15%" align="left">Days</th>
-                              
-                            </tr>
-                            
-                                <?php
-                                foreach ($prescriptionMedicineList as $prescriptionmedicinerow) {
-
-                                ?>
-                             <tr>
-                                 <td><?php echo $prescriptionmedicinerow->medicine_name;?></td>
-                                 <td><?php echo $prescriptionmedicinerow->dosage;?></td>
-                                 <td><?php echo $prescriptionmedicinerow->frequency;?></td>
-                                 <td><?php echo $prescriptionmedicinerow->days;?></td>
- 
-                            </tr>
-                            <?php
-                              
-                                 }
-
-                            ?>
-                            
-                        
-                    </table>
-                <?php }?>
-
-
-
-          <?php
-                if ($prescriptionMedicineList) {
-                    
-
-?>
-        <table style="margin-left: 180px;width: 80%;font-size: 12px;" cellspacing="6"  >
-                        
-                            <tr>
-                                <th width="15%" align="left">Investigation</th>
-                               
-                              
-                            </tr>
-                            
-                                <?php
-                                foreach ($prescriptionInvestigationList as $prescriptionInvestigation) {
-
-                                ?>
-                             <tr>
-                                 <td><?php echo $prescriptionInvestigation->inv_component_name;?></td>
-                              
- 
-                            </tr>
-                            <?php
-                              
-                                 }
-
-                            ?>
-                            
-                        
-                    </table>
-                <?php }?>
-
-<br>
-   <span>Doctor Note :</span><p><?php  if ($prescriptionMedicineList) {echo $prescriptionLatestData->doctor_note;}?></p><br><br>
-   <span >Next Checkup Date :</span><?php 
- if ($prescriptionMedicineList) {
-   if ($prescriptionLatestData->next_checkup_dt!='') {
-                                 echo date('l d M Y', strtotime($prescriptionLatestData->next_checkup_dt));
-                               }
-
-                        }
-
-
-   ?>
-
-
-<br><br>
-
-<span class="spanhead">Suggested Investigation :</span><br><br>
-<span class="spanhead">Review :</span><br><br>
-<span class="spanhead">Diagnosis Summary :</span><br>
+      
 
     </div>
 
 
         
-    </div><!-- end of page_3 -->
+    </div> -->
+    <!-- end of page_3 -->
 
 </div>
 

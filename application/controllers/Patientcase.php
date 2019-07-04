@@ -502,6 +502,7 @@ class Patientcase extends CI_Controller {
                     $result['ntscanrisk'] = array("Down's",'Edward','Patan');
 
                     $result['examinationLatestData']=$this->patientcasemodel->getExaminationLatestByCase($caseID);
+                    
                     $result['examinationAllData']=$this->patientcasemodel->getAllExaminationLatestByCase($caseID);
                     $result['investigationLatestData']=$this->patientcasemodel->getInvestigationLatestByCase($caseID);
 
@@ -1206,7 +1207,7 @@ $deleteTodayPrescription=$this->commondatamodel->deleteTableData('prescription_m
                           for ($i=0; $i < count($dataArry['mensumedicine']); $i++) { 
                            
                            $mensumedicine_array = array(
-                                                        'medicine_name' => $mensumedicine[$i], 
+                                                        'medicine_mst_id' => $mensumedicine[$i], 
                                                         'medicine_duration' => $mensumedicineduration[$i], 
                                                         'case_master_id' => $caseID, 
                                                         'created_on' => date('Y-m-d'), 
@@ -1325,7 +1326,7 @@ $deleteTodayPrescription=$this->commondatamodel->deleteTableData('prescription_m
 
                             $regularmedicine_dtl_array = array(
                                                         'case_master_id' => $caseID ,
-                                                        'medicine_name' => $regularmedicine[$i] ,
+                                                        'medicine_mst_id' => $regularmedicine[$i] ,
                                                         'medicine_dose' => $regularmedicinedose[$i] ,
                                                         'for_year' => $regularmedforYear[$i] ,
                                                         'for_month' => $regularmedforMonth[$i] ,
@@ -1617,6 +1618,17 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
         
 
             $row_no = $this->input->post('rowNo');
+            $selmens_medicine = $this->input->post('selmens_medicine');
+            $data['medicine_duration'] = $this->input->post('selmens_medicine_duration');
+
+
+            $where_medicine= array('medicine_id' => $selmens_medicine );
+            $medicineData = $this->commondatamodel->getSingleRowByWhereCls('medicine_master',$where_medicine);
+            //pre($medicineData);exit;
+
+            $data['medicineID'] = $selmens_medicine;
+            $data['medicine'] = $medicineData->medicine_name;
+
             $data['rowno'] = $row_no;
             $data['DaysList']=$this->commondatamodel->getAllDropdownData('day_master');
             
@@ -1670,7 +1682,17 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
         
 
             $row_no = $this->input->post('rowNo');
+            $medicineID = $this->input->post('medicine');
+            $data['dose'] = $this->input->post('dose');
+            $data['year'] = $this->input->post('year');
+            $data['month'] = $this->input->post('month');
+
+            $where_medicine= array('medicine_id' => $medicineID );
+            $medicineData = $this->commondatamodel->getSingleRowByWhereCls('medicine_master',$where_medicine);
+
             $data['regularmedicinerowno'] = $row_no;
+            $data['medicineID'] = $medicineID;
+            $data['medicine'] = $medicineData->medicine_name;
             $data['DaysList']=$this->commondatamodel->getAllDropdownData('day_master');
             $data['dosageList'] = array('0.5','1','1.5','2','2.5','5','7.5','10');
             
@@ -2065,6 +2087,8 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
           $parity_issue=0;
           $result['slfbldgrp']='';
           $result['husbldgrp']='';
+          $result['tt_taken']='';
+          $result['tdap_taken']='';
 
         
          
@@ -2102,6 +2126,7 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
 
                 $result['patientmasterData'] = $this->patientcasemodel->getPatientBasicInfo($result['patientCaseData']->patient_id); 
 
+              
                  $where_antenatel_master = [
                     'antenantal_master.case_master_id' => $caseID
                  ];
@@ -2131,6 +2156,15 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
                   if ($result['antenantalCaseData']->parity_issue!='') {
                      $parity_issue=$result['antenantalCaseData']->parity_issue;
                   }
+
+                  if($result['antenantalCaseData']->tt_taken_on_tobe_taken_on!=''){
+                    $result['tt_taken']= date('d-m-Y', strtotime($result['antenantalCaseData']->tt_taken_on_tobe_taken_on));}
+
+                 if($result['antenantalCaseData']->tdap_taken_on_tobe_taken_on!=''){
+                        $result['tdap_taken']= date('d-m-Y', strtotime($result['antenantalCaseData']->tdap_taken_on_tobe_taken_on));}
+
+                 
+                 
 
 
                 
@@ -2220,6 +2254,7 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
               
            $result['examinationFirstData']=$this->patientcasemodel->getFirstExaminationDataByCase($caseID);
            $result['examinationLatestData']=$this->patientcasemodel->getExaminationLatestByCase($caseID);
+           $result['clinicalExaminationLatestData']=$this->patientcasemodel->getClinicalExaminationLatestByCase($caseID);
 
 
            $result['prescriptionLatestData']=$this->patientcasemodel->getPrescriptionLatestByCase($caseID);
@@ -2256,7 +2291,7 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
 
 
         
-       //s pre($result['patientmasterData']);exit;
+         //pre($result['clinicalExaminationLatestData']); exit;
 
 
 
@@ -2339,6 +2374,64 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
         $result['medicineList']=$this->medicinecmodel->getAllMedicineList();
         ?>
          <select name="prescription_medicine" id="prescription_medicine" class="form-control selpres show-tick"  data-live-search="true" tabindex="-98">
+                         <option value="0"> &nbsp; </option>
+                         <?php 
+
+                         foreach ($result['medicineList'] as $medicinelist) {  ?>
+                         <option value="<?php echo $medicinelist->medicine_id;?>"
+
+                          ><?php echo $medicinelist->medicine_name;?></option>
+                          <?php     } ?>
+                                                   
+                          </select> 
+        <?php
+
+
+      }
+      else
+      {
+          redirect('login','refresh');
+      }
+  }
+
+
+  public function resetMensuMedDropdown()
+  {
+      if($this->session->userdata('user_data'))
+      {
+        $result['medicineList']=$this->medicinecmodel->getAllMedicineList();
+        ?>
+         <select name="selmens_medicine" id="selmens_medicine" class="form-control selpres show-tick"  data-live-search="true" tabindex="-98">
+                         <option value="0"> &nbsp; </option>
+                         <?php 
+
+                         foreach ($result['medicineList'] as $medicinelist) {  ?>
+                         <option value="<?php echo $medicinelist->medicine_id;?>"
+
+                          ><?php echo $medicinelist->medicine_name;?></option>
+                          <?php     } ?>
+                                                   
+                          </select> 
+        <?php
+
+
+      }
+      else
+      {
+          redirect('login','refresh');
+      }
+  }
+
+
+
+  
+  public function resetRegularMedDropdown()
+  {
+      if($this->session->userdata('user_data'))
+      {
+        $result['medicineList']=$this->medicinecmodel->getAllMedicineList();
+        ?>
+         <select name="selregular_medicine" id="selregular_medicine" class="form-control selpres show-tick"  data-live-search="true" tabindex="-98">
                          <option value="0"> &nbsp; </option>
                          <?php 
 

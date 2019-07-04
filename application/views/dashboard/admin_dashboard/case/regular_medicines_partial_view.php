@@ -1,10 +1,34 @@
 
     
 
-		<tr id="rowRegularMedicine_<?php echo $regularmedicinerowno; ?>" class="row clearfix" >
+    <tr id="rowRegularMedicine_<?php echo $regularmedicinerowno; ?>" class="row clearfix" >
+    
+    <td style="width:40%;text-align: left;"> 
+						       <input type="hidden" name="regularmedicine[]" id="regularmedicine_<?php echo $regularmedicinerowno; ?>" value="<?php echo $medicineID;?>">   
+                   <?php echo $medicine;?>       
+							        
+    </td>
+
+    <td style="width:20%;text-align: left;"> 
+						       <input type="hidden" name="regularmedicinedose[]" id="regularmedicinedose_<?php echo $regularmedicinerowno; ?>" value="<?php echo $dose;?>">   
+                   <?php echo $dose;?>       
+							        
+    </td>
+
+    <td style="width:20%;text-align: left;"> 
+						       <input type="hidden" name="regularmedforYear[]" id="regularmedforYearerr_<?php echo $regularmedicinerowno; ?>" value="<?php echo $year;?>">   
+                   <?php echo $year;?>       
+							        
+    </td>
+
+    <td style="width:20%;text-align: center;"> 
+						       <input type="hidden" name="regularmedforMonth[]" id="regularmedforMonth_<?php echo $regularmedicinerowno; ?>" value="<?php echo $month;?>">   
+                   <?php echo $month;?>       
+							        
+    </td>
 
 
-						<td> 
+						<!-- <td> 
              <div class="input-group fromToerr" >
               <div class="form-group form-float "> <label class="form-label">Medicine </label>
                 <div class="form-line " id="mensumedicineerr_<?php echo $regularmedicinerowno; ?>">
@@ -13,10 +37,10 @@
                 </div>
               </div>
             </div>                        
-						</td>
+						</td> -->
 
 
-						<td> 
+						<!-- <td> 
              <div class="input-group fromToerr" id="mensumedicinedurationerr_<?php echo $regularmedicinerowno; ?>">
               <div class="form-group form-float"><label class="form-label">Dose </label>
                 <div class="form-line">
@@ -35,9 +59,9 @@
                 </div>
               </div>
             </div>                        
-            </td>
+            </td> -->
 
-              <td> 
+              <!-- <td> 
              <div class="input-group regularmedforYearerr" id="regularmedforYearerr_<?php echo $regularmedicinerowno; ?>">
               <label>for last(year)</label>
                                <select name="regularmedforYear[]" id="regularmedforYear_<?php echo $regularmedicinerowno; ?>" class="form-control show-tick" data-live-search="true" tabindex="-98">
@@ -52,9 +76,9 @@
                                 
                                </select>   
                            </div>                        
-            </td>
+            </td> -->
 
-               <td> 
+               <!-- <td> 
              <div class="input-group regularmedforMontherr" id="regularmedforMontherr_<?php echo $regularmedicinerowno; ?>">
               <label>for last(month)</label>
                                <select name="regularmedforMonth[]" id="regularmedforMonth_<?php echo $regularmedicinerowno; ?>" class="form-control show-tick" data-live-search="true" tabindex="-98">
@@ -69,7 +93,7 @@
                                 
                                </select>   
                            </div>                        
-            </td>
+            </td> -->
 
 						<td style="vertical-align: middle;">
 							<?php 

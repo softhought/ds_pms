@@ -557,41 +557,18 @@ border-bottom: 1px solid #f0c7f9;
                   <div class="col-sm-2">	
 
 
-                 <?php 
-                		// if ($bodycontent['antenantalmode']=="EDIT") {
-                		// $procedure_concieve_array = explode (",", $bodycontent['antenantalCaseEditdata']->procedure_concieve); 
-                		// }
-                ?>         
-	            <!-- <div class="form-group">
-	                   <div class="input-group" >
-		                   
-		                     <input type="checkbox" name="procedure_concieve[]" id="iui_checkbox" class="filled-in chk-col-deep-purple" value="IUI" 
-		                     <?php if ($bodycontent['antenantalmode']=="EDIT") {
-                		  	 if(in_array("IUI" ,$procedure_concieve_array)){ echo "checked";} }?> 
-                		   		> <label for="iui_checkbox">IUI</label> &nbsp;&nbsp;&nbsp;
-
-                		   	<input type="checkbox" name="procedure_concieve[]" id="ivffet_checkbox" class="filled-in chk-col-deep-purple" value="IVF->FET" 
-		                     <?php if ($bodycontent['antenantalmode']=="EDIT") {
-                		  	 if(in_array("IVF->FET" ,$procedure_concieve_array)){ echo "checked";} }?> 
-                		   		> <label for="ivffet_checkbox">IVF -> FET</label> &nbsp;&nbsp;&nbsp;
-
-                		   	<input type="checkbox" name="procedure_concieve[]" id="et_checkbox" class="filled-in chk-col-deep-purple" value="ET" 
-		                     <?php if ($bodycontent['antenantalmode']=="EDIT") {
-                		  	 if(in_array("ET" ,$procedure_concieve_array)){ echo "checked";} }?> 
-                		   		> <label for="et_checkbox">ET</label> &nbsp;&nbsp;&nbsp;
-                		   		<lebel style="float: right;">on Date</lebel>
-                		   	
- 
-	                    </div>  
-              </div> -->
+              
 
              
                       <div class="form-group form-float demo-radio-button">
-                       	 <input name="procedure_concieve" type="radio" class="with-gap" id="procedure_concieve_1" value="IUI">
+                       	 <input name="procedure_concieve" type="radio" class="with-gap" id="procedure_concieve_1" value="IUI" 
+                          <?php if($bodycontent['antenantalCaseEditdata']->procedure_concieve=='IUI'){echo "checked";} ?>>
                        <label for="procedure_concieve_1">IUI</label>
-                        <input name="procedure_concieve" type="radio" class="with-gap" id="procedure_concieve_2" value="IVF->FET" >
+                        <input name="procedure_concieve" type="radio" class="with-gap" id="procedure_concieve_2" value="IVF->FET" 
+                        <?php if($bodycontent['antenantalCaseEditdata']->procedure_concieve=='IVF->FET'){echo "checked";} ?>>
                         <label for="procedure_concieve_2">IVF->FET</label>
-                      	<input name="procedure_concieve" type="radio" class="with-gap" id="procedure_concieve_3" value="ET">
+                      	<input name="procedure_concieve" type="radio" class="with-gap" id="procedure_concieve_3" value="ET" 
+                        <?php if($bodycontent['antenantalCaseEditdata']->procedure_concieve=='ET'){echo "checked";} ?>>
                         <label for="procedure_concieve_3">ET</label>
                                               
                          </div>
@@ -621,21 +598,83 @@ border-bottom: 1px solid #f0c7f9;
                                        
              <div class="col-sm-2"></div>
              <div class="col-sm-4">
-              <label class="form-label">Any Medicine taken from last Menstrual Period </label>
+              <label class="form-label">Any Medicine taken from last Menstrual Period </label><br>
+              <label class="form-label newMedAdd " style="text-decoration: underline;cursor: pointer;" data-callfrom="mensmedicine"  
+              data-toggle="modal" data-target="#prescription_newmedmodel"  data-backdrop="static" data-keyboard="false">Add Medicine</label>
              </div>
              <div class="col-sm-3">
-                <button type="button" class="btn btn-sm btn-warning addMensuMedicine">
+                <!-- <button type="button" class="btn btn-sm btn-warning addMensuMedicine">
                  <span class="glyphicon glyphicon-plus" style="margin-top: 0px;"></span> Add Details
-                  </button>
+                  </button> -->
                  
                    </div>
     
              </div>
+           
+
+             <div class="row clearfix" style="#border: 1px solid red;">
+                         <div class="col-sm-2"></div>
+                         <div class="col-sm-2">
+                         <div class="input-group " id="selmens_medicineerr">
+                         <label class="form-label upText">Medicine</label>
+                         <div id="selmens_medicinedrp">
+                         <select name="selmens_medicine" id="selmens_medicine" class="form-control selpres show-tick"  data-live-search="true" tabindex="-98">
+                         <option value="0"> &nbsp; </option>
+                         <?php 
+
+                         foreach ($bodycontent['medicineList'] as $medicinelist) {  ?>
+                         <option value="<?php echo $medicinelist->medicine_id;?>"
+
+                          ><?php echo $medicinelist->medicine_name;?></option>
+                          <?php     } ?>
+                                                   
+                          </select> 
+                          </div>
+                           
+                           </div>
+                        
+                        </div>
+                   
+
+                   
+                      <div class="col-sm-2">
+                          <div class="form-group"><label class="form-label upText">Duration</label>
+                           <div class="form-line ">
+                            <input type="text" class="form-control selpres" name="selmens_medicine_duration" id="selmens_medicine_duration" autocomplete="off" placeholder="" value="" >
+                           
+                           </div>
+                           </div>
+                      </div>
+
+                      <div class="col-sm-2">
+                          <div class="form-group"><label class="form-label upText">Action</label> 
+                           <div class="icon-button-demo">
+                           <button type="button" class="btn btn-xs bg-light-green addMensuMedicine">
+                            <span class="glyphicon glyphicon-plus" style="margin-top: 0px;"></span> 
+                         
+                              </button>
+                           
+                           </div>
+                           </div>
+                      </div>
+                          
+                  </div>
+
+
+
+
+
+
+
+
+
+
+
 
              <!-- -------------------------- Medicine Details-------------------------- -->
 
 
-             
+             <br>
              <div class="row clearfix">
                                       
              <div class="col-sm-2"></div>
@@ -682,7 +721,19 @@ border-bottom: 1px solid #f0c7f9;
                 
            <tr id="rowMenMedicine_<?php echo $rowno; ?>" class="row clearfix">
 
-            <td style="width: 40%"> 
+           <td style="width:50%;text-align: left;"> 
+						       <input type="hidden" name="mensumedicine[]" id="mensumedicine_<?php echo $rowno; ?>" value=" <?php echo $value->medicine_mst_id;?>">   
+                   <?php echo $value->medicine_name;?>      
+							        
+    </td>
+
+    <td style="width:40%;text-align: left;"> 
+						       <input type="hidden" name="mensumedicineduration[]" id="mensumedicineduration_<?php echo $rowno; ?>" value="<?php echo $value->medicine_duration;?>">   
+                   <?php echo $value->medicine_duration;?>       
+							        
+		</td>
+
+            <!-- <td style="width: 40%"> 
              <div class="input-group fromToerr" >
               <div class="form-group form-float inpsamelevel">
                 <div class="form-line" id="mensumedicineerr_<?php echo $rowno; ?>">
@@ -703,12 +754,12 @@ border-bottom: 1px solid #f0c7f9;
                 </div>
               </div>
             </div>                        
-            </td>
+            </td> -->
 
         <td style="vertical-align: middle;">
             
       <a href="javascript:;" class="delMenMedicine" id="delDocRow_<?php echo $rowno; ?>" title="Delete">
-          <i class="material-icons">delete</i>
+      <i class="material-icons" style="color: red;">clear</i>
             
 
         </a>
@@ -1878,15 +1929,123 @@ border-bottom: 1px solid #f0c7f9;
              <div class="row clearfix">
                                        
              <div class="col-sm-3">
-                <button type="button" class="btn btn-sm btn-warning addRegularMedicines">
-                 <span class="glyphicon glyphicon-plus" style="margin-top: 0px;"></span> Add Details
+                <button type="button" class="btn btn-sm btn-warning newMedAdd" data-callfrom="regularmedicine"  data-toggle="modal" data-target="#prescription_newmedmodel"  data-backdrop="static" data-keyboard="false">
+                 <span class="glyphicon glyphicon-plus" style="margin-top: 0px;cursor: pointer;"></span> Add Medicine
                   </button>
+
+                 
                    </div>
              </div>
 
 
 
-                 <!-- -------------------------- Regular Medicines Details-------------------------- -->
+             <div class="row clearfix" style="#border: 1px solid red;">
+                         <div class="col-sm-2"></div>
+                         <div class="col-sm-2">
+                         <div class="input-group " id="regular_medicineerr">
+                         <label class="form-label upText">Medicine</label>
+                         <div id="regular_medicinedrp">
+                         <select name="selregular_medicine" id="selregular_medicine" class="form-control selpres show-tick"  data-live-search="true" tabindex="-98">
+                         <option value="0"> &nbsp; </option>
+                         <?php 
+
+                         foreach ($bodycontent['medicineList'] as $medicinelist) {  ?>
+                         <option value="<?php echo $medicinelist->medicine_id;?>"
+
+                          ><?php echo $medicinelist->medicine_name;?></option>
+                          <?php     } ?>
+                                                   
+                          </select> 
+                          </div>
+                           
+                           </div>
+                        
+                        </div>
+
+                        <div class="col-sm-2">
+                        <div class="input-group" >
+                         <label class="form-label upText">Dose</label>
+                         
+                     <select name="selregular_dose" id="selregular_dose"  class="form-control selpres show-tick"  data-live-search="true" tabindex="-98">
+                         <option value=""> &nbsp; </option>
+                         <?php 
+
+                         foreach ($bodycontent['dosageList'] as $dosagelist) {  ?>
+                         <option value="<?php echo $dosagelist;?>"
+
+                          ><?php echo $dosagelist;?></option>
+                          <?php     } ?>
+                                                   
+                          </select> 
+
+                        </div>
+                        </div>
+
+                        <div class="col-sm-2">
+                        <div class="input-group" >
+                         <label class="form-label upText">for last(year)</label>
+                         <select name="selregularmed_year" id="selregularmed_year" class="form-control show-tick" data-live-search="true" tabindex="-98">
+                                <option value="">&nbsp;</option>
+                                  <?php
+                                      for ($i=0; $i <= 30; $i++) {     
+                                   ?>
+                                     <option value="<?php echo $i;?>"
+                                     
+                                      ><?php echo $i;?></option>
+                                   <?php
+                                    }
+                                   ?>
+                                
+                               </select> 
+                        </div>
+                        </div>
+
+                        <div class="col-sm-2">
+                        <div class="input-group" >
+                         <label class="form-label upText">for last(month)</label>
+
+                         <select name="selregularmed_month" id="selregularmed_month" class="form-control show-tick" data-live-search="true" tabindex="-98">
+                                <option value="">&nbsp;</option>
+                                  <?php
+                                      for ($i=0; $i <= 30; $i++) {     
+                                   ?>
+                                     <option value="<?php echo $i;?>"
+                                      ><?php echo $i;?></option>
+                                   <?php
+                                    }
+                                   ?>
+                                
+                               </select> 
+                         
+                     
+
+                        </div>
+                        </div>
+                   
+
+                   
+                    
+
+                      <div class="col-sm-2">
+                          <div class="form-group"><label class="form-label upText">Action</label> 
+                           <div class="icon-button-demo">
+                           <button type="button" class="btn btn-xs bg-light-green addRegularMedicines">
+                            <span class="glyphicon glyphicon-plus" style="margin-top: 0px;"></span> 
+                         
+                              </button>
+                           
+                           </div>
+                           </div>
+                      </div>
+                          
+                  </div>
+                  <br>
+
+
+
+              
+             
+             <!-- -------------------------- Regular Medicines Details-------------------------- -->
 
 
              
@@ -1937,93 +2096,34 @@ border-bottom: 1px solid #f0c7f9;
            <tr id="rowRegularMedicine_<?php echo $regularmedicinerowno; ?>" class="row clearfix">
 
 
-            <td> 
-             <div class="input-group fromToerr" >
-              <div class="form-group form-float "> <label class="form-label">Medicine </label>
-                <div class="form-line " id="mensumedicineerr_<?php echo $regularmedicinerowno; ?>">
-                    <input type="text" class="form-control regularmedicinecls" name="regularmedicine[]" id="regularmedicine_<?php echo $regularmedicinerowno; ?>" autocomplete="off" value="<?php echo $value->medicine_name;?>" >
-                             
-                </div>
-              </div>
-            </div>                        
-            </td>
+         
 
+            <td style="width:40%;text-align: left;"> 
+						       <input type="hidden" name="regularmedicine[]" id="regularmedicine_<?php echo $regularmedicinerowno; ?>" value="<?php echo $value->medicine_mst_id;?>">   
+                   <?php echo $value->medicine_name;?>       
+							        
+    </td>
 
-            <td> 
-             <div class="input-group fromToerr" id="mensumedicinedurationerr_<?php echo $regularmedicinerowno; ?>">
-              <div class="form-group form-float"><label class="form-label">Dose </label>
-                <div class="form-line">
-                    
+    <td style="width:20%;text-align: left;"> 
+						       <input type="hidden" name="regularmedicinedose[]" id="regularmedicinedose_<?php echo $regularmedicinerowno; ?>" value="<?php echo $value->medicine_dose;?>">   
+                   <?php echo $value->medicine_dose;?>      
+							        
+    </td>
 
+    <td style="width:20%;text-align: left;"> 
+						       <input type="hidden" name="regularmedforYear[]" id="regularmedforYearerr_<?php echo $regularmedicinerowno; ?>" value="<?php echo $value->for_year;?>">   
+                   <?php echo $value->for_year;?>     
+							        
+    </td>
 
-                     <select name="regularmedicinedose[]" id="regularmedicinedose_<?php echo $regularmedicinerowno; ?>"  class="form-control selpres show-tick"  data-live-search="true" tabindex="-98">
-                         <option value="0"> &nbsp; </option>
-                         <?php 
+    <td style="width:20%;text-align: center;"> 
+						       <input type="hidden" name="regularmedforMonth[]" id="regularmedforMonth_<?php echo $regularmedicinerowno; ?>" value="<?php echo $value->for_month;?>">   
+                   <?php echo $value->for_month;?>       
+							        
+    </td>
+      
 
-                         foreach ($bodycontent['dosageList'] as $dosagelist) {  ?>
-                         <option value="<?php echo $dosagelist;?>"
-
-                          ><?php echo $dosagelist;?></option>
-                          <?php     } ?>
-                                                   
-                          </select> 
-                           
-                              
-                </div>
-              </div>
-            </div>                        
-            </td>
-
-              <td> 
-             <div class="input-group regularmedforYearerr" id="regularmedforYearerr_<?php echo $regularmedicinerowno; ?>">
-              <label>for last(year)</label>
-                               <select name="regularmedforYear[]" id="regularmedforYear_<?php echo $regularmedicinerowno; ?>" class="form-control show-tick" data-live-search="true" tabindex="-98">
-                                <option value="0">&nbsp;</option>
-                                  <?php
-                                      for ($i=0; $i <= 30; $i++) {     
-                                   ?>
-                                     <option value="<?php echo $i;?>"
-                                      <?php 
-
-                                      if ($value->for_year==$i) {
-                                      echo "selected";
-                                      }
-
-                                      ?>
-
-                                      ><?php echo $i;?></option>
-                                   <?php
-                                    }
-                                   ?>
-                                
-                               </select>   
-                           </div>                        
-            </td>
-
-               <td> 
-             <div class="input-group regularmedforMontherr" id="regularmedforMontherr_<?php echo $regularmedicinerowno; ?>">
-              <label>for last(month)</label>
-                               <select name="regularmedforMonth[]" id="regularmedforMonth_<?php echo $regularmedicinerowno; ?>" class="form-control show-tick" data-live-search="true" tabindex="-98">
-                                <option value="0">&nbsp;</option>
-                                  <?php
-                                      for ($i=0; $i <= 11; $i++) {     
-                                   ?>
-                                     <option value="<?php echo $i;?>"
-                                       <?php 
-
-                                      if ($value->for_month==$i) {
-                                      echo "selected";
-                                      }
-
-                                      ?>
-                                      ><?php echo $i;?></option>
-                                   <?php
-                                    }
-                                   ?>
-                                
-                               </select>   
-                           </div>                        
-            </td>
+         
 
             <td style="vertical-align: middle;">
               <?php 
@@ -3370,7 +3470,7 @@ border-bottom: 1px solid #f0c7f9;
                       </div>
                           
                   </div>
-                  
+
                 <br>
                   <!-- 333333333333333333333333333333333333333333333333333-->
                      <div id="detail_presmed" style="#border: 1px solid #e49e9e;">

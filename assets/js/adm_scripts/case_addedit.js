@@ -437,15 +437,19 @@ $("#antenantal_left_tab_menu_1_section").css("display", "block");
     $(document).on('click','.addMensuMedicine',function(){
 
           // rowNoUpload++;
+          $("#selmens_medicineerr").removeClass("bordererror");
 
           var rowno=  $("#rowno").val();
+          var selmens_medicine=  $("#selmens_medicine").val();
+          var selmens_medicine_duration=  $("#selmens_medicine_duration").val();
         console.log(basepath);
+        if (selmens_medicine!='0') {
         rowno++;
         $.ajax({
             type: "POST",
             url: basepath+'patientcase/addLastMenstrualMedicinedetail',
             dataType: "html",
-            data: {rowNo:rowno},
+            data: {rowNo:rowno,selmens_medicine:selmens_medicine,selmens_medicine_duration:selmens_medicine_duration},
             success: function (result) {
                 $("#rowno").val(rowno);
                 $("#detail_timeslot table").css("display","block"); 
@@ -454,14 +458,10 @@ $("#antenantal_left_tab_menu_1_section").css("display", "block");
               //  $(".demo-masked-input").inputmask();
                 var $demoMaskedInput = $('.demo-masked-input');
 
-            //Time
+                $('#selmens_medicine_duration').val('');
+                $('#selmens_medicine').val(0).change();
 
-            $('.selecttime').bootstrapMaterialDatePicker
-            ({
-                date: false,
-                shortTime: true,
-                format: 'hh:mm a'
-            });
+            
          
             }, 
             error: function (jqXHR, exception) {
@@ -484,6 +484,12 @@ $("#antenantal_left_tab_menu_1_section").css("display", "block");
                // alert(msg);  
             }
             }); /*end ajax call*/
+
+        }else{
+            $("#selmens_medicine").focus();
+            $("#selmens_medicineerr").addClass("bordererror");
+           
+        }
   
     }); // End Visiting Details
 
@@ -508,13 +514,19 @@ $("#antenantal_left_tab_menu_1_section").css("display", "block");
           // rowNoUpload++;
 
           var rowno=  $("#rowno").val();
+          var medicine =  $("#selregular_medicine").val();
+          var dose =  $("#selregular_dose").val();
+          var year =  $("#selregularmed_year").val();
+          var month =  $("#selregularmed_month").val();
+
         console.log(basepath);
+        if(medicine!='0'){
         rowno++;
         $.ajax({
             type: "POST",
             url: basepath+'patientcase/addRegularMedicinesDetail',
             dataType: "html",
-            data: {rowNo:rowno},
+            data: {rowNo:rowno,medicine:medicine,dose:dose,year:year,month:month},
             success: function (result) {
                 $("#rowno").val(rowno);
                 $("#detail_regularmedicine table").css("display","block"); 
@@ -522,6 +534,11 @@ $("#antenantal_left_tab_menu_1_section").css("display", "block");
                 $('select').selectpicker();
               //  $(".demo-masked-input").inputmask();
                 var $demoMaskedInput = $('.demo-masked-input');
+
+                $('#selregular_dose').val('');
+                $('#selregularmed_year').val('');
+                $('#selregularmed_month').val('');
+                $('#selregular_medicine').val(0).change();
 
            
          
@@ -546,6 +563,13 @@ $("#antenantal_left_tab_menu_1_section").css("display", "block");
                // alert(msg);  
             }
             }); /*end ajax call*/
+
+        }else{
+           
+            $("#selregular_medicine").focus();
+            $("#regular_medicineerr").addClass("bordererror");
+           
+        }
   
     }); // End Visiting Details
 
@@ -1333,12 +1357,10 @@ $(document).on('change','.otheranomalyckbx',function(event){
                 success: function (result) {
                     
                     if (result.msg_status == 1) {
-
-                        if(medicinemodelcallfrom=='prescription'){
-                            resetPrescriptionMedDropdown(basepath);
-                        }
-                            
-                     
+   
+                        resetPrescriptionMedDropdown(basepath);
+                        resetMensuMedDropdown(basepath);
+                        resetRegularMedDropdown(basepath);
                     } 
                     else {
                        
@@ -2019,7 +2041,94 @@ function resetPrescriptionMedDropdown(basepath){
         data: {callfrom:callfrom},
         success: function (result) {
             
+           
+            
             $("#prescription_medicinedrp").html(result);
+            $('select').selectpicker();
+     
+        }, 
+        error: function (jqXHR, exception) {
+          var msg = '';
+            if (jqXHR.status === 0) {
+                msg = 'Not connect.\n Verify Network.';
+            } else if (jqXHR.status == 404) {
+                msg = 'Requested page not found. [404]';
+            } else if (jqXHR.status == 500) {
+                msg = 'Internal Server Error [500].';
+            } else if (exception === 'parsererror') {
+                msg = 'Requested JSON parse failed.';
+            } else if (exception === 'timeout') {
+                msg = 'Time out error.';
+            } else if (exception === 'abort') {
+                msg = 'Ajax request aborted.';
+            } else {
+                msg = 'Uncaught Error.\n' + jqXHR.responseText;
+            }
+           // alert(msg);  
+        }
+        }); /*end ajax call*/
+
+
+
+}
+
+
+function resetMensuMedDropdown(basepath){
+
+    var callfrom='mensmedicine';
+
+    $.ajax({
+        type: "POST",
+        url: basepath+'patientcase/resetMensuMedDropdown',
+        dataType: "html",
+        data: {callfrom:callfrom},
+        success: function (result) {
+            
+            $("#selmens_medicinedrp").html(result);
+           
+            $('select').selectpicker();
+     
+        }, 
+        error: function (jqXHR, exception) {
+          var msg = '';
+            if (jqXHR.status === 0) {
+                msg = 'Not connect.\n Verify Network.';
+            } else if (jqXHR.status == 404) {
+                msg = 'Requested page not found. [404]';
+            } else if (jqXHR.status == 500) {
+                msg = 'Internal Server Error [500].';
+            } else if (exception === 'parsererror') {
+                msg = 'Requested JSON parse failed.';
+            } else if (exception === 'timeout') {
+                msg = 'Time out error.';
+            } else if (exception === 'abort') {
+                msg = 'Ajax request aborted.';
+            } else {
+                msg = 'Uncaught Error.\n' + jqXHR.responseText;
+            }
+           // alert(msg);  
+        }
+        }); /*end ajax call*/
+
+
+
+}
+
+
+
+function resetRegularMedDropdown(basepath){
+
+    var callfrom='regularmedicine';
+
+    $.ajax({
+        type: "POST",
+        url: basepath+'patientcase/resetRegularMedDropdown',
+        dataType: "html",
+        data: {callfrom:callfrom},
+        success: function (result) {
+            
+            $("#regular_medicinedrp").html(result);
+           
             $('select').selectpicker();
      
         }, 
