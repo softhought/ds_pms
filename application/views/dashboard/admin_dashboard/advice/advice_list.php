@@ -2,7 +2,7 @@
     
 </style>
 
-<script src="<?php echo(base_url());?>assets/js/adm_scripts/medicine.js"></script>
+<script src="<?php echo(base_url());?>assets/js/adm_scripts/advice.js"></script>
 <section class="content">
         <div class="container-fluid">
            
@@ -12,8 +12,8 @@
                     <div class="card">
                         <div class="header">
                             <h2 class="head_title">
-                                List of medicine(s)
-                                <a href="<?php echo base_url(); ?>medicine/addMedicine" class="">
+                                List of Advice(s)
+                                <a href="<?php echo base_url(); ?>advice/addAdvice" class="">
                                 <button type="button" class="btn bg-deep-purple waves-effect" style="float: right;">Add</button></a>
                             </h2>
 
@@ -25,12 +25,12 @@
                                     <table  class="table table-bordered table-striped dataTables display"  style="border-collapse: collapse !important;">
                                     <thead>
                                         <th style="width: 3%">Sl.No</th>
-                                        <th style="width:15%"> Medicine</th>
-                                        <th style="width:5%"> Category</th>
-                                        <th style="width:10%"> Type</th>
-                                        <th style="width:60%"> Medicine Instruction</th>
+                                        <th style="width:40%"> Advice</th>
+                                        <th style="width:10%"> Advice Type</th>
+                                        <th style="width:5%"> Type Sl</th>
+                                        <th style="width:20%"> Options</th>
                                   
-                                        <th style="width: 10%"> Status</th>
+                                        <th style="width: 5%"> Status</th>
                                         <th style="width: 5%"> Action</th>
                                     </thead>
                                    
@@ -40,31 +40,46 @@
                                         
                                       <?php
                                         $i = 1;$sl=1;
-                                      foreach ($bodycontent['medicineList'] as $key => $value) 
+                                      foreach ($bodycontent['adviceList'] as $key => $value) 
                                       {
 
                                          $status = "";
                     if($value->is_active=="Y")
                     {
-                      $status = '<div class="status_dv "><span class="btn btn-xs bg-light-green waves-effect medstatus" data-setstatus="N" data-medicineid="'.$value->medicine_id.'"><span class="glyphicon glyphicon-ok"></span> Active&nbsp;&nbsp;</span></div>';
+                      $status = '<div class="status_dv "><span class="btn btn-xs bg-light-green waves-effect advstatus" data-setstatus="N" data-adviceid="'.$value->advice_id.'"><span class="glyphicon glyphicon-ok"></span> Active&nbsp;&nbsp;</span></div>';
                     }
                     else
                     {
-                      $status = '<div class="status_dv"><span class=" btn btn-xs bg-red waves-effect medstatus" data-setstatus="Y" 
-                      data-medicineid="'.$value->medicine_id.'"><span class="glyphicon glyphicon-remove"></span> Inactive</span></div>';
+                      $status = '<div class="status_dv"><span class=" btn btn-xs bg-red waves-effect advstatus" data-setstatus="Y" 
+                      data-adviceid="'.$value->advice_id.'"><span class="glyphicon glyphicon-remove"></span> Inactive</span></div>';
                     }
                                       ?>  
                                     <tr id="row_<?php echo $i;?>">
                                             <td ><?php echo $sl++;?></td>
-                                            <td ><?php echo $value->medicine_name;?></td>
-                                            <td ><?php echo $value->category;?></td>
+                                            <td ><?php echo $value->advice;?></td>
                                           
-                                            <td ><?php echo $value->medicine_type;?></td>
-                                            <td ><?php echo $value->instruction;?></td>
+                                            <td ><?php 
+
+                                            if($value->advice_type=="I"){
+                                                echo 'I-General';
+                                            }else if($value->advice_type=="III"){
+                                                echo 'III-Optional';
+                                            }else{
+                                                echo $value->advice_type;
+                                            }
+                                           
+                                            ?></td>
+                                            <td ><?php echo $value->sl_no;?></td>
+                                            <td ><?php 
+                                            
+                                           // echo $value->advice_options;
+                                            echo str_replace(",","/",$value->advice_options);
+                                            
+                                            ?></td>
                                           
                                             <td><?php echo $status;?></td>
                                             <td>
-                                        <a href="<?php echo base_url(); ?>medicine/addMedicine/<?php echo $value->medicine_id; ?>" class="btn btn-primary btn-xs" data-title="Edit">
+                                        <a href="<?php echo base_url(); ?>advice/addAdvice/<?php echo $value->advice_id; ?>" class="btn btn-primary btn-xs" data-title="Edit">
                                             <span class="glyphicon glyphicon-pencil"></span>
                                           </a>
                                             </td>

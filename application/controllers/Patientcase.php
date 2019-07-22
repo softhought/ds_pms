@@ -498,6 +498,7 @@ class Patientcase extends CI_Controller {
                     $result['regularMedicineList']=$this->patientcasemodel->getRegularMedecineDetails($caseID);
 
                     $result['pallor'] = array('Nil','Mild','Mod','Severe' );
+                    $result['oedema'] = array('Nil','Mild','Mod','Severe' );
                     $result['icterus'] = array('Nil','Present');
                     $result['ntscanrisk'] = array("Down's",'Edward','Patan');
 
@@ -505,6 +506,7 @@ class Patientcase extends CI_Controller {
                     
                     $result['examinationAllData']=$this->patientcasemodel->getAllExaminationLatestByCase($caseID);
                     $result['investigationLatestData']=$this->patientcasemodel->getInvestigationLatestByCase($caseID);
+                   
 
                     $result['clinicList']=$this->commondatamodel->getAllDropdownData('clinic_master');// need to be removed
 
@@ -532,14 +534,54 @@ class Patientcase extends CI_Controller {
                     $result['prescriptionInvestigationList']=[];
                    }
 
+                  // pre($result['prescriptionMedicineList']);exit;
+
                    $result['prescriptioAllData']=$this->patientcasemodel->getAllPrescriptionByCase($caseID);
                    $result['clinicalExaminationData']=$this->patientcasemodel->getClinicalExaminationDetails($caseID);
+                 
 
                    $where_medicine_type=[];
                    $orderby='medicine_type.medicine_type';
                    
                    $result['medicineTypeList']=$this->commondatamodel->getAllRecordWhereOrderBy('medicine_type',$where_medicine_type,$orderby);
+                   $orderbyCat='medicine_category.category';
+                   $result['medicineCategoryList']=$this->commondatamodel->getAllRecordWhereOrderBy('medicine_category',[],$orderbyCat);
+       
+                   $result['presentation'] = array('Cephalic','Breech','Transverse lie','Oblique lie');
+                   $result['liquor'] = array('Adequate','Inadequate','more than adequate');
 
+
+                   $result['adviceMasterData']=$this->patientcasemodel-> getAdviceMasterData();
+
+
+                   $result['adviceDetailsLatestData']=$this->patientcasemodel->getAdviceDetailsData($caseID);
+
+                   $result['medicineCategoryList']=$this->commondatamodel->getAllDropdownData('medicine_category');
+
+
+                //    pre($result['adviceDetailsLatestData']);
+
+                //    exit;
+
+
+                  
+
+                //    foreach ($result['adviceMasterData'] as $value) {
+                      
+                //      //  pre($value['advType']);
+                //      echo $value['advType']->advice_type;
+                //      echo "<br>";
+                //      foreach ($value['adviceList'] as $advlistrow) {
+                //         pre($advlistrow);
+                //      }
+                //    }
+
+
+                //    exit;
+
+
+
+                  // pre($result['investigationLatestData']);exit;
                    
                   // $arrd=explode(",",'.$test.');
                   //                     pre($arrd);
@@ -754,6 +796,8 @@ class Patientcase extends CI_Controller {
              $menstrual_flow = $dataArry['menstrual_flow'];
              $menstrual_duration_days = $dataArry['menstrual_duration_days'];
              $menstrual_cycle_days = $dataArry['menstrual_cycle_days'];
+             $cycle_days_pm = $dataArry['cycle_days_pm'];
+             $cycle_plusminusdays = $dataArry['cycle_plusminusdays'];
 
              $sel_diseasesValues = $dataArry['sel_diseasesValues'];
              $isOtherDiseases = $dataArry['isOtherDiseases'];
@@ -782,16 +826,40 @@ class Patientcase extends CI_Controller {
 
 
 
-               if ($dataArry['tt_taken_on_tobe_taken_on']!='') {
-                $tt_taken_on_tobe_taken_on = date('Y-m-d', strtotime($dataArry['tt_taken_on_tobe_taken_on']));
+               if ($dataArry['tt1_taken_on']!='') {
+                $tt1_taken_on = date('Y-m-d', strtotime($dataArry['tt1_taken_on']));
                }else{
-                    $tt_taken_on_tobe_taken_on = NULL; 
+                    $tt1_taken_on = NULL; 
                }
 
-                if ($dataArry['tdap_taken_on_tobe_taken_on']!='') {
-                    $tdap_taken_on_tobe_taken_on = date('Y-m-d', strtotime($dataArry['tdap_taken_on_tobe_taken_on']));
+               if ($dataArry['tt1_tobe_taken_on']!='') {
+                $tt1_tobe_taken_on = date('Y-m-d', strtotime($dataArry['tt1_tobe_taken_on']));
+               }else{
+                    $tt1_tobe_taken_on = NULL; 
+               }
+
+               if ($dataArry['tt2_taken_on']!='') {
+                $tt2_taken_on = date('Y-m-d', strtotime($dataArry['tt2_taken_on']));
+               }else{
+                    $tt2_taken_on = NULL; 
+               }
+
+               if ($dataArry['tt2_tobe_taken_on']!='') {
+                $tt2_tobe_taken_on = date('Y-m-d', strtotime($dataArry['tt2_tobe_taken_on']));
+               }else{
+                    $tt2_tobe_taken_on = NULL; 
+               }
+
+                if ($dataArry['tdap_taken_on']!='') {
+                    $tdap_taken_on = date('Y-m-d', strtotime($dataArry['tdap_taken_on']));
                 }else{
-                        $tdap_taken_on_tobe_taken_on = NULL; 
+                        $tdap_taken_on = NULL; 
+                }
+
+                if ($dataArry['tdap_tobe_taken_on']!='') {
+                    $tdap_tobe_taken_on = date('Y-m-d', strtotime($dataArry['tdap_tobe_taken_on']));
+                }else{
+                        $tdap_tobe_taken_on = NULL; 
                 }
 
      $familycomponent = $dataArry['familycomponent'];
@@ -819,7 +887,7 @@ class Patientcase extends CI_Controller {
       $exam_icterus = $dataArry['exam_icterus'];
       $exam_thyroid = $dataArry['exam_thyroid'];
       $exam_teeth = $dataArry['exam_teeth'];
-      $exam_cus = $dataArry['exam_cus'];
+      $exam_cvs = $dataArry['exam_cvs'];
       $exam_chest = $dataArry['exam_chest'];
       $ischangeExamination = $dataArry['ischangeExamination'];
 
@@ -850,7 +918,7 @@ $deleteTodayInvestigation=$this->commondatamodel->deleteTableData('examination_m
                                      'exam_icterus' => $exam_icterus,                                  
                                      'exam_thyroid' => $exam_thyroid,                                  
                                      'exam_teeth' => $exam_teeth,                                  
-                                     'exam_cus' => $exam_cus,                                  
+                                     'exam_cvs' => $exam_cvs,                                  
                                      'exam_chest' => $exam_chest,                                  
                                      'created_on' => date('Y-m-d'), 
                                      );
@@ -961,8 +1029,32 @@ $deleteTodayInvestigation=$this->commondatamodel->deleteTableData('examination_m
       $nt_scan_date = date("Y-m-d", strtotime($dataArry['nt_scan_date']));
       }else{ $nt_scan_date=NULL; }
 
-      $nt_scan_lowerrisk = $dataArry['nt_scan_lowerrisk'];
-      $nt_scan_highrisk = $dataArry['nt_scan_highrisk'];
+    //  $nt_scan_lowerrisk = $dataArry['nt_scan_lowerrisk'];
+
+      if (isset($dataArry['nt_scan_lowerrisk'])) {
+        $nt_scan_lowerrisk = '';
+        foreach ($dataArry['nt_scan_lowerrisk'] as  $value) {
+          $nt_scan_lowerrisk.=$value.',';
+        }
+        $nt_scan_lowerrisk = substr($nt_scan_lowerrisk, 0, -1);
+        
+         }else{
+         $nt_scan_lowerrisk = '';
+       }
+    //  $nt_scan_highrisk = $dataArry['nt_scan_highrisk'];
+
+      if (isset($dataArry['nt_scan_highrisk'])) {
+        $nt_scan_highrisk = '';
+        foreach ($dataArry['nt_scan_highrisk'] as  $value) {
+          $nt_scan_highrisk.=$value.',';
+        }
+        $nt_scan_highrisk = substr($nt_scan_highrisk, 0, -1);
+        
+         }else{
+         $nt_scan_highrisk = '';
+       }
+
+
 
       if ($dataArry['anomaly_scan_date']!='') {
       $anomaly_scan_date = date("Y-m-d", strtotime($dataArry['anomaly_scan_date']));
@@ -996,6 +1088,41 @@ $deleteTodayInvestigation=$this->commondatamodel->deleteTableData('examination_m
       }else{ $growth_date=NULL; }
       $growth_slf_week = $dataArry['growth_slf_week'];
       $growth_slf_day = $dataArry['growth_slf_day'];
+      $growth_presentation = $dataArry['growth_presentation'];
+      $growth_afi = $dataArry['growth_afi'];
+      $growth_liquor = $dataArry['growth_liquor'];
+
+      if ($dataArry['doppler_scan_date']!='') {
+        $doppler_scan_date = date("Y-m-d", strtotime($dataArry['doppler_scan_date']));
+        }else{ $doppler_scan_date=NULL; }
+      $doppler_slf_week = $dataArry['doppler_slf_week'];
+      $doppler_slf_day = $dataArry['doppler_slf_day'];
+      $doppler_presentation = $dataArry['doppler_presentation'];
+      $doppler_afi = $dataArry['doppler_afi'];
+      $doppler_liquor = $dataArry['doppler_liquor'];
+
+        if(isset($dataArry['doppler_checkbox'])){
+            $doppler_checkbox = $dataArry['doppler_checkbox'];
+        }else{
+            $doppler_checkbox=null;  
+        }
+
+     $umbilical_artery_pi = $dataArry['umbilical_artery_pi'];
+     $mca_pi = $dataArry['mca_pi'];
+     $cp_ratio = $dataArry['cp_ratio'];
+     $doppler_parameters_others = $dataArry['doppler_parameters_others'];
+     $others_investigation = $dataArry['others_investigation'];
+
+     if ($dataArry['others_investigation_date']!='') {
+        $others_investigation_date = date("Y-m-d", strtotime($dataArry['others_investigation_date']));
+        }else{ $others_investigation_date=NULL; }
+
+
+
+
+
+
+
 
 
  
@@ -1067,6 +1194,22 @@ $investigation_record_array = array(
                                     'growth_date' => $growth_date, 
                                     'growth_slf_week' => $growth_slf_week, 
                                     'growth_slf_day' => $growth_slf_day, 
+                                    'growth_presentation' => $growth_presentation, 
+                                    'growth_afi' => $growth_afi, 
+                                    'growth_liquor' => $growth_liquor,
+                                    'doppler_scan_date' => $doppler_scan_date,
+                                    'doppler_slf_week' => $doppler_slf_week,
+                                    'doppler_slf_day' => $doppler_slf_day,
+                                    'doppler_presentation' => $doppler_presentation,
+                                    'doppler_afi' => $doppler_afi,
+                                    'doppler_liquor' => $doppler_liquor,
+                                    'doppler_checkbox' => $doppler_checkbox,
+                                    'umbilical_artery_pi' => $umbilical_artery_pi,
+                                    'mca_pi' => $mca_pi,
+                                    'cp_ratio' => $cp_ratio,
+                                    'doppler_parameters_others' => $doppler_parameters_others,
+                                    'others_investigation' => $others_investigation,
+                                    'others_investigation_date' => $others_investigation_date,
                                     );
 
 $insertInvestigation=$this->commondatamodel->insertSingleTableData('investigation_record_master',$investigation_record_array);
@@ -1144,6 +1287,7 @@ $deleteTodayPrescription=$this->commondatamodel->deleteTableData('prescription_m
     $presdosage = $dataArry['presdosage'];
     $presfrequency = $dataArry['presfrequency'];
     $presdays = $dataArry['presdays'];
+    $presInstruction = $dataArry['presInstruction'];
 
     for ($i=0; $i <count($dataArry['presMedID']) ; $i++) { 
      
@@ -1154,6 +1298,7 @@ $deleteTodayPrescription=$this->commondatamodel->deleteTableData('prescription_m
                               'dosage' => $presdosage[$i], 
                               'frequency' => $presfrequency[$i], 
                               'days' => $presdays[$i],
+                              'med_instruction' => $presInstruction[$i],
                               'created_on' => date('Y-m-d'), 
                             );
 
@@ -1180,6 +1325,45 @@ $deleteTodayPrescription=$this->commondatamodel->deleteTableData('prescription_m
      
 
    }
+
+
+
+   /* Advice dta */
+
+
+
+
+if(isset($dataArry['advice'])) {
+
+    $where_adv_dtl = array(
+        'case_master_id' => $caseID,
+        'created_on' => date('Y-m-d')
+      );
+
+/* delete today data data*/
+$deleteTodayAdvice=$this->commondatamodel->deleteTableData('advice_details',$where_adv_dtl);
+
+$advice = $dataArry['advice'];
+$advice_type = $dataArry['advice_type'];
+$is_advice_option = $dataArry['is_advice_option'];
+$advice_options = $dataArry['advice_options'];
+
+    for ($i=0; $i < count($dataArry['advice']); $i++) { 
+       
+        $advice_array = array(
+                                'case_master_id' => $caseID,
+                                'created_on' => date('Y-m-d'),
+                                'advice_type' => $advice_type[$i],
+                                'advice' => $advice[$i],
+                                'is_advice_option' => $is_advice_option[$i],
+                                'advice_options' => $advice_options[$i],
+                             );
+        $insertAdvice=$this->commondatamodel->insertSingleTableData('advice_details',$advice_array);
+    }
+
+ 
+
+}
 
 
 
@@ -1465,6 +1649,8 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
                                           'menstrual_flow' => $menstrual_flow,       
                                           'menstrual_duration_days' => $menstrual_duration_days,       
                                           'menstrual_cycle_days' => $menstrual_cycle_days,       
+                                          'cycle_days_pm' => $cycle_days_pm,       
+                                          'cycle_plusminusdays' => $cycle_plusminusdays,       
                                           'diseases_ids' => $sel_diseasesValues,       
                                           'is_other_diseases' => $isOtherDiseases,       
                                           'other_diseases' => $other_diseases,       
@@ -1473,8 +1659,12 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
                                           'highrisk_ids' => $highriskValues,       
                                           'is_highrisk_others' => $isOtherHighrisk,       
                                           'highrisk_others' => $highrisk_others,       
-                                          'tt_taken_on_tobe_taken_on' => $tt_taken_on_tobe_taken_on,  
-                                          'tdap_taken_on_tobe_taken_on' => $tdap_taken_on_tobe_taken_on,        
+                                          'tt1_taken_on' => $tt1_taken_on,  
+                                          'tt2_taken_on' => $tt2_taken_on,  
+                                          'tt1_tobe_taken_on' => $tt1_tobe_taken_on,  
+                                          'tt2_tobe_taken_on' => $tt2_tobe_taken_on,  
+                                          'tdap_taken_on' => $tdap_taken_on,        
+                                          'tdap_tobe_taken_on' => $tdap_tobe_taken_on,        
                                      );
                      $upd_where = array('antenantal_master.antenantal_id' => $antenantalID);
 
@@ -1551,7 +1741,9 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
                                           'menstrual_cycle_type' => $menstrual_cycle_type,       
                                           'menstrual_flow' => $menstrual_flow,       
                                           'menstrual_duration_days' => $menstrual_duration_days,       
-                                          'menstrual_cycle_days' => $menstrual_cycle_days,       
+                                          'menstrual_cycle_days' => $menstrual_cycle_days, 
+                                          'cycle_days_pm' => $cycle_days_pm,       
+                                          'cycle_plusminusdays' => $cycle_plusminusdays,          
                                           'diseases_ids' => $sel_diseasesValues,       
                                           'is_other_diseases' => $isOtherDiseases,       
                                           'other_diseases' => $other_diseases,       
@@ -1560,8 +1752,12 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
                                           'highrisk_ids' => $highriskValues,       
                                           'is_highrisk_others' => $isOtherHighrisk,       
                                           'highrisk_others' => $highrisk_others, 
-                                          'tt_taken_on_tobe_taken_on' => $tt_taken_on_tobe_taken_on,  
-                                          'tdap_taken_on_tobe_taken_on' => $tdap_taken_on_tobe_taken_on,        
+                                          'tt1_taken_on' => $tt1_taken_on, 
+                                          'tt2_taken_on' => $tt2_taken_on,  
+                                          'tt1_tobe_taken_on' => $tt1_tobe_taken_on,  
+                                          'tt2_tobe_taken_on' => $tt2_tobe_taken_on,  
+                                          'tdap_taken_on' => $tdap_taken_on,        
+                                          'tdap_tobe_taken_on' => $tdap_tobe_taken_on,        
                                                 
                                          );
 
@@ -1718,6 +1914,7 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
             $data['cliexmrowno'] = $row_no;
             $data['DaysList']=$this->commondatamodel->getAllDropdownData('day_master');
             $data['pallor'] = array('Nil','Mild','Mod','Severe' );
+            $data['oedema'] = array('Nil','Mild','Mod','Severe' );
             
            
              $page = 'dashboard/admin_dashboard/case/clinical_examination_partial_view';
@@ -1941,16 +2138,25 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
 
 
              $where_medicine= array('medicine_id' => $medicineID );
-                       $medicineData = $this->commondatamodel->getSingleRowByWhereCls('medicine_master',$where_medicine);
-                      // pre($medicineData);exit;
+             $medicineData = $this->commondatamodel->getSingleRowByWhereCls('medicine_master',$where_medicine);
+             // pre($medicineData);exit;
+             $medicine_category_id=$medicineData->category_id;
+             $where_catagory = array('medicine_category.med_cat_id' => $medicine_category_id );
 
-
+            $categoryData = $this->commondatamodel->getSingleRowByWhereCls('medicine_category',$where_catagory);
+            if($categoryData){
+                $data['category']=$categoryData ->category;
+            }else{
+                $data['category']=''; 
+            }
+           
             $data['rowno'] = $row_no;
             $data['medicineID'] = $medicineID;
             $data['medicine'] = $medicineData->medicine_name;
             $data['dosage'] = $this->input->post('dosage');
             $data['frequency'] = $this->input->post('frequency');
             $data['days'] = $this->input->post('days');
+            $data['medinstruction'] = $this->input->post('medinstruction');
             $data['DaysList']=$this->commondatamodel->getAllDropdownData('day_master');
             
             $page = 'dashboard/admin_dashboard/case/add_prescription_medicine_partial_view';
@@ -2087,8 +2293,14 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
           $parity_issue=0;
           $result['slfbldgrp']='';
           $result['husbldgrp']='';
-          $result['tt_taken']='';
+          $result['tt1_taken']='';
+          $result['tt1_tobetaken']='';
+          $result['tt2_taken']='';
+          $result['tt2_tobetaken']='';
           $result['tdap_taken']='';
+          $result['tdap_tobetaken']='';
+
+          $result['drRegNo']='12345';
 
         
          
@@ -2157,11 +2369,23 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
                      $parity_issue=$result['antenantalCaseData']->parity_issue;
                   }
 
-                  if($result['antenantalCaseData']->tt_taken_on_tobe_taken_on!=''){
-                    $result['tt_taken']= date('d-m-Y', strtotime($result['antenantalCaseData']->tt_taken_on_tobe_taken_on));}
+                  if($result['antenantalCaseData']->tt1_taken_on!=''){
+                    $result['tt1_taken']= date('d-m-Y', strtotime($result['antenantalCaseData']->tt1_taken_on));}
 
-                 if($result['antenantalCaseData']->tdap_taken_on_tobe_taken_on!=''){
-                        $result['tdap_taken']= date('d-m-Y', strtotime($result['antenantalCaseData']->tdap_taken_on_tobe_taken_on));}
+                  if($result['antenantalCaseData']->tt1_tobe_taken_on!=''){
+                    $result['tt1_tobetaken']= date('d-m-Y', strtotime($result['antenantalCaseData']->tt1_tobe_taken_on));}
+
+                  if($result['antenantalCaseData']->tt2_taken_on!=''){
+                    $result['tt2_taken']= date('d-m-Y', strtotime($result['antenantalCaseData']->tt2_taken_on));}
+
+                  if($result['antenantalCaseData']->tt2_tobe_taken_on!=''){
+                    $result['tt2_tobetaken']= date('d-m-Y', strtotime($result['antenantalCaseData']->tt2_tobe_taken_on));}
+
+                 if($result['antenantalCaseData']->tdap_taken_on!=''){
+                    $result['tdap_taken']= date('d-m-Y', strtotime($result['antenantalCaseData']->tdap_taken_on));}
+
+                if($result['antenantalCaseData']->tdap_tobe_taken_on!=''){
+                    $result['tdap_tobetaken']= date('d-m-Y', strtotime($result['antenantalCaseData']->tdap_tobe_taken_on));}
 
                  
                  
@@ -2169,7 +2393,7 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
 
                 
 
-                 $result['total_parity'] =($parity_term_delivery+$parity_preterm+$parity_abortion+$parity_issue);
+                 $result['total_parity'] =($parity_term_delivery+$parity_preterm+$parity_abortion+1);
 
                  $result['total_cesarean'] = $this->patientcasemodel->getTotalCesareanByCase($caseID);
                  $result['lastchildBirth'] = $this->patientcasemodel->getLastChildBirthByCase($caseID);
@@ -2226,6 +2450,9 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
 
 
                 $result['familyComponentList']=$this->patientcasemodel->getFamilyComponentDetails($caseID);
+
+              
+                
 
 
 
@@ -2444,6 +2671,77 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
                           </select> 
         <?php
 
+
+      }
+      else
+      {
+          redirect('login','refresh');
+      }
+  }
+
+
+  public function resetAdviceData()
+  {
+      if($this->session->userdata('user_data'))
+      {
+      
+       
+        $data['adviceMasterData']=$this->patientcasemodel-> getAdviceMasterData();
+       
+        $page = 'dashboard/admin_dashboard/case/advice_master_data_pertial_view';
+        $viewTemp = $this->load->view($page,$data,TRUE);
+        echo $viewTemp;
+       
+      }
+      else
+      {
+          redirect('login','refresh');
+      }
+  }
+
+
+  public function resetPresMedicineDropdownByCategory()
+  {
+      if($this->session->userdata('user_data'))
+      {
+        $medicine_category = $this->input->post("medicine_category");
+        $result['medicineList']=$this->medicinecmodel->getAllMedicineListbyCategory($medicine_category);
+        ?>
+         <select name="prescription_medicine" id="prescription_medicine" class="form-control selpres show-tick"  data-live-search="true" tabindex="-98">
+                         <option value="0"> &nbsp; </option>
+                         <?php 
+
+                         foreach ($result['medicineList'] as $medicinelist) {  ?>
+                         <option value="<?php echo $medicinelist->medicine_id;?>"
+
+                          ><?php echo $medicinelist->medicine_name;?></option>
+                          <?php     } ?>
+                                                   
+                          </select> 
+        <?php
+
+
+      }
+      else
+      {
+          redirect('login','refresh');
+      }
+  }
+
+
+  public function getMedicineInstruction()
+  {
+      if($this->session->userdata('user_data'))
+      {
+        $medicineID= $this->input->post("prescription_medicine");
+      
+        if($medicineID!=0){
+            $where_medicine= array('medicine_id' => $medicineID );
+            echo $instruction = $this->commondatamodel->getSingleRowByWhereCls('medicine_master',$where_medicine)->instruction;
+        }else{
+            echo "";
+        }
+       
 
       }
       else

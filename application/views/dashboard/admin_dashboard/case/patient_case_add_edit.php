@@ -1314,7 +1314,7 @@ border-bottom: 1px solid #f0c7f9;
                       <div class="col-sm-3">
                          <div class="input-group termdeliveryerr" id="termdeliveryerr">
                          <label>Term Delivery</label>
-                         <select name="termdelivery" id="termdelivery" class="form-control show-tick"  data-live-search="true" tabindex="-98">
+                         <select name="termdelivery" id="termdelivery" class="form-control show-tick obsthist"  data-live-search="true" tabindex="-98">
                          <option value=""> &nbsp; </option>
                          <?php 
 
@@ -1336,7 +1336,7 @@ border-bottom: 1px solid #f0c7f9;
                        <div class="col-sm-2">
                          <div class="input-group paritypretermerr" id="paritypretermerr">
                          <label>Preterm</label>
-                         <select name="paritypreterm" id="paritypreterm" class="form-control show-tick"  data-live-search="true" tabindex="-98">
+                         <select name="paritypreterm" id="paritypreterm" class="form-control show-tick obsthist"  data-live-search="true" tabindex="-98">
                          <option value=""> &nbsp; </option>
                          <?php 
 
@@ -1358,7 +1358,7 @@ border-bottom: 1px solid #f0c7f9;
                     <div class="col-sm-2">
                          <div class="input-group " id="parityabortionerr">
                          <label>Abortion</label>
-                         <select name="parityabortion" id="parityabortion" class="form-control show-tick"  data-live-search="true" tabindex="-98">
+                         <select name="parityabortion" id="parityabortion" class="form-control show-tick obsthist"  data-live-search="true" tabindex="-98">
                          <option value=""> &nbsp; </option>
                          <?php 
 
@@ -1379,7 +1379,7 @@ border-bottom: 1px solid #f0c7f9;
 
                   <div class="col-sm-2">
                          <div class="input-group " id="parityissueerr">
-                         <label>Issue</label>
+                         <label>Living Issue</label>
                          <select name="parityissue" id="parityissue" class="form-control show-tick"  data-live-search="true" tabindex="-98">
                          <option value=""> &nbsp; </option>
                          <?php 
@@ -1408,28 +1408,18 @@ border-bottom: 1px solid #f0c7f9;
                        <div class="col-sm-2"></div>
 
                        <div class="col-sm-3">
-                        <div class="input-group " id="parityissueerr">
-                         <label>Gravida</label>
-                         <select name="gravida_parity" id="gravida_parity" class="form-control show-tick"  data-live-search="true" tabindex="-98">
-                         <option value=""> &nbsp; </option>
-                         <?php 
+                        <div class="form-group form-float" >
+                         <div class="form-line">
+                            <input type="text" class="form-control" name="gravida_parity" id="gravida_parity" autocomplete="off" 
+                            value="<?php if($bodycontent['antenantalmode']=="EDIT"){echo $bodycontent['antenantalCaseEditdata']->gravida_parity;}?>" readonly >
+                               <label class="form-label">Gravida</label>
+                            </div>
 
-                         foreach ($bodycontent['OnetoTenDropDown'] as $gravidarow) {  ?>
-                         <option value="<?php echo $gravidarow;?>"
-
-                         <?php if(($bodycontent['antenantalmode']=="EDIT") && $gravidarow==$bodycontent['antenantalCaseEditdata']->gravida_parity){echo "selected";}else{echo "";} ?>
-                                                        
-                                                      
-
-                          ><?php echo $gravidarow;?></option>
-                          <?php     } ?>
-                                                   
-                          </select>   
                            </div>
                          
                        </div>
 
-                       <div class="col-sm-4">
+                       <div class="col-sm-3">
                          <div class="form-group form-float">
                            <div class="form-line">
                             <input type="text" class="form-control" name="spontaneous_abortion" id="spontaneous_abortion" autocomplete="off" value="<?php if($bodycontent['antenantalmode']=="EDIT"){echo $bodycontent['antenantalCaseEditdata']->spontaneous_abortion;}?>" >
@@ -1515,8 +1505,29 @@ border-bottom: 1px solid #f0c7f9;
                       <div class="col-sm-2">
                          <div class="form-group form-float">
                            <div class="form-line">
-                            <input type="text" class="form-control txtsamelevel" name="menstrual_cycle_days" id="menstrual_cycle_days" autocomplete="off" value="<?php if($bodycontent['antenantalmode']=="EDIT"){echo $bodycontent['antenantalCaseEditdata']->menstrual_cycle_days;}?>" >
+                            <input type="text" class="form-control txtsamelevel" name="menstrual_cycle_days" id="menstrual_cycle_days" autocomplete="off" value="30" >
                                <label class="form-label">Cycle Days</label>
+                            </div>
+                          </div>
+                     </div>
+
+                     <div class="col-sm-1">
+                      <div class="input-group " id="menstrual_floweerr">
+                        <label>plus/minus</label>
+                        <select name="cycle_days_pm" id="cycle_days_pm" class="form-control show-tick"  data-live-search="true" tabindex="-98">
+                        <option value="P"
+                        <?php if(($bodycontent['antenantalmode']=="EDIT") && 'P'==$bodycontent['antenantalCaseEditdata']->cycle_days_pm){echo "selected";}else{echo "";} ?>
+                        > +</option>
+                        <option value="M"  <?php if(($bodycontent['antenantalmode']=="EDIT") && 'M'==$bodycontent['antenantalCaseEditdata']->cycle_days_pm){echo "selected";}else{echo "";} ?>> -</option>                           
+                        </select>   
+                     </div>
+                      </div>
+
+                      <div class="col-sm-1">
+                         <div class="form-group form-float">
+                           <div class="form-line">
+                            <input type="text" class="form-control txtsamelevel" name="cycle_plusminusdays" id="cycle_plusminusdays" autocomplete="off" value="<?php if($bodycontent['antenantalmode']=="EDIT"){echo $bodycontent['antenantalCaseEditdata']->cycle_plusminusdays;}?>" >
+                               <label class="form-label">Days</label>
                             </div>
                           </div>
                      </div>
@@ -1646,7 +1657,7 @@ border-bottom: 1px solid #f0c7f9;
                  $disp_surgery_name="display: none;";
           }
           ?>
-            <div class="col-sm-2" style="<?php echo $disp_surgery_name;?>">
+            <div class="col-sm-3" style="<?php echo $disp_surgery_name;?>">
                   <div class="input-group" >
                    
                          <div class="form-line">
@@ -1734,11 +1745,11 @@ border-bottom: 1px solid #f0c7f9;
                 <div class="col-sm-2"></div>
 
                   <div class="col-sm-3">
-                          <div class="form-group"> <label class="form-label">TT Taken on/To be Taken on</label>
+                          <div class="form-group"> <label class="form-label">TT1 Taken on</label>
                           <div class="form-line input-group">
-                                        <input type="text" class="datepicker"  name="tt_taken_on_tobe_taken_on" id="tt_taken_on_tobe_taken_on" placeholder="select Date" autocomplete="off" value="<?php 
-                                        if($bodycontent['antenantalmode']=="EDIT" && $bodycontent['antenantalCaseEditdata']->tt_taken_on_tobe_taken_on!=''){
-                                        echo date('l d M Y', strtotime($bodycontent['antenantalCaseEditdata']->tt_taken_on_tobe_taken_on));}
+                                        <input type="text" class="datepicker"  name="tt1_taken_on" id="tt1_taken_on" placeholder="select Date" autocomplete="off" value="<?php 
+                                        if($bodycontent['antenantalmode']=="EDIT" && $bodycontent['antenantalCaseEditdata']->tt1_taken_on!=''){
+                                        echo date('l d M Y', strtotime($bodycontent['antenantalCaseEditdata']->tt1_taken_on));}
 
                                         ?>" 
                                         >
@@ -1748,11 +1759,11 @@ border-bottom: 1px solid #f0c7f9;
                   </div>
 
                   <div class="col-sm-3">
-                          <div class="form-group"> <label class="form-label">Tdap Taken on/To be Taken on</label>
+                          <div class="form-group"> <label class="form-label">TT1 To be Taken on</label>
                           <div class="form-line input-group">
-                                        <input type="text" class="datepicker"  name="tdap_taken_on_tobe_taken_on" id="tdap_taken_on_tobe_taken_on" placeholder="select Date" autocomplete="off" value="<?php 
-                                        if($bodycontent['antenantalmode']=="EDIT" && $bodycontent['antenantalCaseEditdata']->tdap_taken_on_tobe_taken_on!=''){
-                                        echo date('l d M Y', strtotime($bodycontent['antenantalCaseEditdata']->tdap_taken_on_tobe_taken_on));}
+                                        <input type="text" class="datepicker"  name="tt1_tobe_taken_on" id="tt1_tobe_taken_on" placeholder="select Date" autocomplete="off" value="<?php 
+                                        if($bodycontent['antenantalmode']=="EDIT" && $bodycontent['antenantalCaseEditdata']->tt1_tobe_taken_on!=''){
+                                        echo date('l d M Y', strtotime($bodycontent['antenantalCaseEditdata']->tt1_tobe_taken_on));}
 
                                         ?>" 
                                         >
@@ -1760,8 +1771,78 @@ border-bottom: 1px solid #f0c7f9;
                             </div>
                             </div>
                   </div>
-					 
-                </div><br>
+
+                </div>
+
+                <div class="row clearfix">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-3">
+                          <div class="form-group"> <label class="form-label">TT2 Taken on</label>
+                          <div class="form-line input-group">
+                                        <input type="text" class="datepicker"  name="tt2_taken_on" id="tt2_taken_on" placeholder="select Date" autocomplete="off" value="<?php 
+                                        if($bodycontent['antenantalmode']=="EDIT" && $bodycontent['antenantalCaseEditdata']->tt2_taken_on!=''){
+                                        echo date('l d M Y', strtotime($bodycontent['antenantalCaseEditdata']->tt2_taken_on));}
+
+                                        ?>" 
+                                        >
+                                        
+                            </div>
+                            </div>
+                  </div>
+                  <div class="col-sm-3">
+                          <div class="form-group"> <label class="form-label">TT2 To be Taken on</label>
+                          <div class="form-line input-group">
+                                        <input type="text" class="datepicker"  name="tt2_tobe_taken_on" id="tt2_tobe_taken_on" placeholder="select Date" autocomplete="off" value="<?php 
+                                        if($bodycontent['antenantalmode']=="EDIT" && $bodycontent['antenantalCaseEditdata']->tt2_tobe_taken_on!=''){
+                                        echo date('l d M Y', strtotime($bodycontent['antenantalCaseEditdata']->tt2_tobe_taken_on));}
+
+                                        ?>" 
+                                        >
+                                        
+                            </div>
+                            </div>
+                  </div>
+                </div>
+
+
+
+
+                <div class="row clearfix">
+                <div class="col-sm-2"></div>
+
+                <div class="col-sm-3">
+                          <div class="form-group"> <label class="form-label">Tdap Taken on</label>
+                          <div class="form-line input-group">
+                                        <input type="text" class="datepicker"  name="tdap_taken_on" id="tdap_taken_on" placeholder="select Date" autocomplete="off" value="<?php 
+                                        if($bodycontent['antenantalmode']=="EDIT" && $bodycontent['antenantalCaseEditdata']->tdap_taken_on!=''){
+                                        echo date('l d M Y', strtotime($bodycontent['antenantalCaseEditdata']->tdap_taken_on));}
+
+                                        ?>" 
+                                        >
+                                        
+                            </div>
+                            </div>
+                  </div>
+                  <div class="col-sm-3">
+                          <div class="form-group"> <label class="form-label">Tdap Taken on</label>
+                          <div class="form-line input-group">
+                                        <input type="text" class="datepicker"  name="tdap_tobe_taken_on" id="tdap_tobe_taken_on" placeholder="select Date" autocomplete="off" value="<?php 
+                                        if($bodycontent['antenantalmode']=="EDIT" && $bodycontent['antenantalCaseEditdata']->tdap_tobe_taken_on!=''){
+                                        echo date('l d M Y', strtotime($bodycontent['antenantalCaseEditdata']->tdap_tobe_taken_on));}
+
+                                        ?>" 
+                                        >
+                                        
+                            </div>
+                            </div>
+                  </div>
+
+                </div>
+
+
+                
+                
+                <br>
 
                  
     
@@ -2292,6 +2373,7 @@ border-bottom: 1px solid #f0c7f9;
                                    ?>
                                      <option value="<?php echo $pallor;?>"
                                       <?php
+                                      if($pallor =='Mild'){  echo "selected";}
                                       if($isDataExam=='Y'){
                                         if ($bodycontent['examinationLatestData']->exam_pallor==$pallor) {
                                          echo "selected";
@@ -2317,6 +2399,7 @@ border-bottom: 1px solid #f0c7f9;
                                    ?>
                                      <option value="<?php echo $icterus;?>"
                                        <?php
+                                        if($icterus =='Nil'){  echo "selected";}
                                       if($isDataExam=='Y'){
                                         if ($bodycontent['examinationLatestData']->exam_icterus==$icterus) {
                                          echo "selected";
@@ -2355,10 +2438,10 @@ border-bottom: 1px solid #f0c7f9;
                       <div class="row clearfix">
  
                     <div class="col-sm-4">
-                          <div class="form-group form-float"> <label class="form-label">Cus</label>
+                          <div class="form-group form-float"> <label class="form-label">CVS</label>
                            <div class="form-line">
-                            <input type="text" class="form-control inpexam" name="exam_cus" id="exam_cus" autocomplete="off" placeholder="" value="<?php
-                             if($isDataExam=='Y'){echo $bodycontent['examinationLatestData']->exam_cus;}else{echo 'Normal';}?>" >
+                            <input type="text" class="form-control inpexam" name="exam_cvs" id="exam_cvs" autocomplete="off" placeholder="" value="<?php
+                             if($isDataExam=='Y'){echo $bodycontent['examinationLatestData']->exam_cvs;}else{echo 'Normal';}?>" >
                             
                            </div>
                            </div>
@@ -2435,7 +2518,7 @@ border-bottom: 1px solid #f0c7f9;
                               <td><?php echo $allexamdatarow->exam_icterus;?></td>
                               <td><?php echo $allexamdatarow->exam_thyroid;?></td>
                               <td><?php echo $allexamdatarow->exam_teeth;?></td>
-                              <td><?php echo $allexamdatarow->exam_cus;?></td>
+                              <td><?php echo $allexamdatarow->exam_cvs;?></td>
                               <td><?php echo $allexamdatarow->exam_chest;?></td>
                             
                             </tr>
@@ -2996,14 +3079,19 @@ border-bottom: 1px solid #f0c7f9;
                      <div class="col-sm-2">
                          <div class="input-group " id="usg_slf_dayerr">
                          <label class="form-label upText">NT scan low risk for</label>
-                         <select name="nt_scan_lowerrisk" id="nt_scan_lowerrisk" class="form-control selinve show-tick"  data-live-search="true" tabindex="-98">
+                         <select name="nt_scan_lowerrisk[]" id="nt_scan_lowerrisk" class="form-control selinve show-tick"  data-live-search="true" tabindex="-98"  multiple data-selected-text-format="count">
                          <option value="0"> &nbsp; </option>
                          <?php 
 
                          foreach ($bodycontent['ntscanrisk'] as $ntscanrisk) {  ?>
                          <option value="<?php echo $ntscanrisk;?>"
 
-                         <?php if(($isDatainvestigation=='Y') && $ntscanrisk==$bodycontent['investigationLatestData']->nt_scan_lowerrisk){echo "selected";}else{echo "";} ?>
+                         <?php if(($isDatainvestigation=='Y'))
+                         {
+                          $selected_lowrisk=explode(",",(string)$bodycontent['investigationLatestData']->nt_scan_lowerrisk);          
+                          if (in_array($ntscanrisk, $selected_lowrisk)) { echo 'selected';}
+  
+                         } ?>
                                                         
                                                       
 
@@ -3018,14 +3106,19 @@ border-bottom: 1px solid #f0c7f9;
                         <div class="col-sm-2">
                          <div class="input-group " id="nt_scan_highriskerr">
                          <label class="form-label upText">NT scan high risk for</label>
-                         <select name="nt_scan_highrisk" id="nt_scan_highrisk" class="form-control show-tick selinve"  data-live-search="true" tabindex="-98">
+                         <select name="nt_scan_highrisk[]" id="nt_scan_highrisk" class="form-control show-tick selinve"  data-live-search="true" tabindex="-98" multiple data-selected-text-format="count">
                          <option value="0"> &nbsp; </option>
                          <?php 
 
                          foreach ($bodycontent['ntscanrisk'] as $ntscanrisk) {  ?>
                          <option value="<?php echo $ntscanrisk;?>"
 
-                         <?php if(($isDatainvestigation=='Y') && $ntscanrisk==$bodycontent['investigationLatestData']->nt_scan_highrisk){echo "selected";}else{echo "";} ?>
+                        <?php if(($isDatainvestigation=='Y'))
+                         {
+                          $selected_highrisk=explode(",",(string)$bodycontent['investigationLatestData']->nt_scan_highrisk);          
+                          if (in_array($ntscanrisk, $selected_highrisk)) { echo 'selected';}
+  
+                         } ?>
                                                         
                                                       
 
@@ -3274,8 +3367,264 @@ border-bottom: 1px solid #f0c7f9;
                            </div>
                         
                     </div> 
+
+
+                    <div class="col-sm-2">
+                         <div class="input-group " >
+                         <label class="form-label upText">Presentation</label>
+                         <select name="growth_presentation" id="growth_presentation" class="form-control selinve show-tick"  data-live-search="true" tabindex="-98">
+                         <option value=""> &nbsp; </option>
+                         <?php 
+
+                         foreach ($bodycontent['presentation'] as $presentationrow) {  ?>
+                         <option value="<?php echo $presentationrow;?>"
+                         <?php if(($isDatainvestigation=='Y') && $presentationrow==$bodycontent['investigationLatestData']->growth_presentation){echo "selected";}else{echo "";} ?>
+                          ><?php echo $presentationrow;?></option>
+                          <?php     } ?>                                                  
+                          </select>   
+                          </div>                       
+                    </div> 
+
+                    <div class="col-sm-2">
+                         <div class="input-group " >
+                         <label class="form-label upText">AFI</label>
+                         <select name="growth_afi" id="growth_afi" class="form-control selinve show-tick"  data-live-search="true" tabindex="-98">
+                         <!-- <option value=""> &nbsp; </option> -->
+                         <?php 
+                         for ($groafi=0; $groafi <=30 ; $groafi++) { 
+                            ?>
+                         <option value="<?php echo $groafi;?>"
+                         <?php if(($isDatainvestigation=='Y') && $groafi==$bodycontent['investigationLatestData']->growth_afi){echo "selected";}else{echo "";} ?>
+                          ><?php echo $groafi;?></option>
+                          <?php     } ?>                                                   
+                          </select>                           
+                           </div>                       
+                    </div> 
+
+                    <div class="col-sm-2">
+                         <div class="input-group " >
+                         <label class="form-label upText">Liquor</label>
+                         <select name="growth_liquor" id="growth_liquor" class="form-control selinve show-tick"  data-live-search="true" tabindex="-98">
+                         <option value=""> &nbsp; </option>
+                         <?php 
+
+                         foreach ($bodycontent['liquor'] as $liquorrow) {  ?>
+                         <option value="<?php echo $liquorrow;?>"
+                         <?php if(($isDatainvestigation=='Y') && $liquorrow==$bodycontent['investigationLatestData']->growth_liquor){echo "selected";}else{echo "";} ?>
+                          ><?php echo $liquorrow;?></option>
+                          <?php     } ?>                                                  
+                          </select>   
+                          </div>                       
+                    </div>
                   
                 </div>
+
+
+                
+                <div class="row clearfix">
+                   <div class="col-sm-2">
+                      <div class="form-group">
+                        <label class="form-label upText">Doppler scan Date</label>
+                      <div class="form-line">
+
+                        <input type="text" class="form-control selinve datepicker2" placeholder="" name="doppler_scan_date" id="doppler_scan_date" autocomplete="off" value="<?php 
+                         if($isDatainvestigation=='Y' && $bodycontent['investigationLatestData']->doppler_scan_date!=''){
+                           echo date('d-m-Y', strtotime($bodycontent['investigationLatestData']->doppler_scan_date));}
+
+                           ?>" 
+                           >        
+                         </div>
+                         </div>
+                  </div>
+
+                  <div class="col-sm-2">
+                         <div class="input-group " >
+                         <label class="form-label upText">Doppler SLF of Week</label>
+                         <select name="doppler_slf_week" id="doppler_slf_week" class="form-control selinve show-tick"  data-live-search="true" tabindex="-98">
+                         <option value="0"> &nbsp; </option>
+                         <?php 
+
+                         foreach ($bodycontent['seventeentotwentyfourDropDown'] as $seventeentotwentyfour) {  ?>
+                         <option value="<?php echo $seventeentotwentyfour;?>"
+
+                         <?php if(($isDatainvestigation=='Y') && $seventeentotwentyfour==$bodycontent['investigationLatestData']->doppler_slf_week){echo "selected";}else{echo "";} ?>
+                                                        
+                                                      
+
+                          ><?php echo $seventeentotwentyfour;?></option>
+                          <?php     } ?>
+                                                   
+                          </select>          
+                           </div>  
+                    </div>
+
+
+                    <div class="col-sm-2">
+                         <div class="input-group " >
+                         <label class="form-label upText">Doppler SLF of Day</label>
+                         <select name="doppler_slf_day" id="doppler_slf_day" class="form-control selinve show-tick"  data-live-search="true" tabindex="-98">
+                         <option value="0"> &nbsp; </option>
+                         <?php 
+
+                         foreach ($bodycontent['zerotoSevenDropDown'] as $zerotosevenrow) {  ?>
+                         <option value="<?php echo $zerotosevenrow;?>"
+
+                         <?php if(($isDatainvestigation=='Y') && $zerotosevenrow==$bodycontent['investigationLatestData']->doppler_slf_day){echo "selected";}else{echo "";} ?>
+                                                        
+                                                      
+
+                          ><?php echo $zerotosevenrow;?></option>
+                          <?php     } ?>
+                                                   
+                          </select> 
+                           
+                           </div>
+                        
+                    </div> 
+
+                    <div class="col-sm-2">
+                         <div class="input-group " >
+                         <label class="form-label upText">Presentation</label>
+                         <select name="doppler_presentation" id="doppler_presentation" class="form-control selinve show-tick"  data-live-search="true" tabindex="-98">
+                         <option value=""> &nbsp; </option>
+                         <?php 
+
+                         foreach ($bodycontent['presentation'] as $presentationrow) {  ?>
+                         <option value="<?php echo $presentationrow;?>"
+                         <?php if(($isDatainvestigation=='Y') && $presentationrow==$bodycontent['investigationLatestData']->doppler_presentation){echo "selected";}else{echo "";} ?>
+                          ><?php echo $presentationrow;?></option>
+                          <?php     } ?>                                                  
+                          </select>   
+                          </div>                       
+                    </div> 
+
+                    <div class="col-sm-2">
+                         <div class="input-group " >
+                         <label class="form-label upText">AFI</label>
+                         <select name="doppler_afi" id="doppler_afi" class="form-control selinve show-tick"  data-live-search="true" tabindex="-98">
+                         <!-- <option value=""> &nbsp; </option> -->
+                         <?php 
+                         for ($dropafi=0; $dropafi <=30 ; $dropafi++) { 
+                            ?>
+                         <option value="<?php echo $dropafi;?>"
+                         <?php if(($isDatainvestigation=='Y') && $dropafi==$bodycontent['investigationLatestData']->doppler_afi){echo "selected";}else{echo "";} ?>
+                          ><?php echo $dropafi;?></option>
+                          <?php     } ?>                                                   
+                          </select>                           
+                           </div>                       
+                    </div> 
+
+                    <div class="col-sm-2">
+                         <div class="input-group " >
+                         <label class="form-label upText">Liquor</label>
+                         <select name="doppler_liquor" id="doppler_liquor" class="form-control selinve show-tick"  data-live-search="true" tabindex="-98">
+                         <option value=""> &nbsp; </option>
+                         <?php 
+
+                         foreach ($bodycontent['liquor'] as $liquorrow) {  ?>
+                         <option value="<?php echo $liquorrow;?>"
+                         <?php if(($isDatainvestigation=='Y') && $liquorrow==$bodycontent['investigationLatestData']->doppler_liquor){echo "selected";}else{echo "";} ?>
+                          ><?php echo $liquorrow;?></option>
+                          <?php     } ?>                                                  
+                          </select>   
+                          </div>                       
+                    </div>
+
+
+                  </div>
+                    <br>
+                  <div class="row clearfix">
+                  <label class="form-label">&nbsp;&nbsp;&nbsp;&nbsp;Doppler parameters </label>
+                  <br>
+                  <div class="col-sm-2">
+                  <div class="form-group form-group"> <label class="form-label upText">&nbsp;</label>
+                     <div class="input-group" >
+                       
+                         <input type="checkbox" name="doppler_checkbox" id="doppler_checkbox" class="filled-in chk-col-deep-purple selinve " value="Normal" 
+                         <?php 
+                         
+                         if ($isDatainvestigation=='Y') {
+                         if($bodycontent['investigationLatestData']->doppler_checkbox=='Normal'){ echo "checked";} }
+                         ?> 
+                          > <label for="doppler_checkbox">Within normal limit</label> &nbsp;&nbsp;
+
+                        
+
+                      </div>  
+                      </div>
+                  </div>
+
+                  <div class="col-sm-2">
+                          <div class="form-group"><label class="form-label upText">Umbilical artery PI</label>
+                           <div class="form-line ">
+                            <input type="text" class="form-control inpinve" name="umbilical_artery_pi" id="umbilical_artery_pi" autocomplete="off" placeholder="" value="<?php
+                             if($isDatainvestigation=='Y'){echo $bodycontent['investigationLatestData']->umbilical_artery_pi;}?>" onKeyUp="numericFilter(this);" >
+                           
+                           </div>
+                           </div>
+                  </div>
+
+                  <div class="col-sm-2">
+                          <div class="form-group"><label class="form-label upText">MCA PI</label>
+                           <div class="form-line ">
+                            <input type="text" class="form-control inpinve" name="mca_pi" id="mca_pi" autocomplete="off" placeholder="" value="<?php
+                             if($isDatainvestigation=='Y'){echo $bodycontent['investigationLatestData']->mca_pi;}?>" onKeyUp="numericFilter(this);" >
+                           
+                           </div>
+                           </div>
+                  </div>
+
+                  <div class="col-sm-2">
+                          <div class="form-group"><label class="form-label upText">CP Ratio</label>
+                           <div class="form-line ">
+                            <input type="text" class="form-control inpinve" name="cp_ratio" id="cp_ratio" autocomplete="off" placeholder="" value="<?php
+                             if($isDatainvestigation=='Y'){echo $bodycontent['investigationLatestData']->cp_ratio;}?>" onKeyUp="numericFilter(this);" >
+                           
+                           </div>
+                           </div>
+                  </div>
+
+                  <div class="col-sm-2">
+                          <div class="form-group"><label class="form-label upText">Others</label>
+                           <div class="form-line ">
+                            <input type="text" class="form-control inpinve" name="doppler_parameters_others" id="doppler_parameters_others" autocomplete="off" placeholder="" value="<?php
+                             if($isDatainvestigation=='Y'){echo $bodycontent['investigationLatestData']->doppler_parameters_others;}?>" onKeyUp="numericFilter(this);" >
+                           
+                           </div>
+                           </div>
+                  </div>
+
+                  </div>
+                  <br>
+
+                  <div class="row clearfix">
+
+                  <div class="col-sm-2">
+                          <div class="form-group"><label class="form-label upText">Others Investigation</label>
+                           <div class="form-line ">
+                            <input type="text" class="form-control inpinve" name="others_investigation" id="others_investigation" autocomplete="off" placeholder="" value="<?php
+                             if($isDatainvestigation=='Y'){echo $bodycontent['investigationLatestData']->others_investigation;}?>" >
+                           
+                           </div>
+                           </div>
+                  </div>
+
+                  <div class="col-sm-2">
+                      <div class="form-group">
+                        <label class="form-label upText">Others Investigation Date</label>
+                      <div class="form-line">
+
+                        <input type="text" class="form-control selinve datepicker2" placeholder="" name="others_investigation_date" id="others_investigation_date" autocomplete="off" value="<?php 
+                         if($isDatainvestigation=='Y' && $bodycontent['investigationLatestData']->others_investigation_date!=''){
+                           echo date('d-m-Y', strtotime($bodycontent['investigationLatestData']->others_investigation_date));}
+
+                           ?>" 
+                           >        
+                         </div>
+                         </div>
+                  </div>
+                  
+                  </div>
 
 
 
@@ -3374,7 +3723,114 @@ border-bottom: 1px solid #f0c7f9;
                            <!-- ======= start of antenantal_left_tab_menu_7_section ============ -->
                             <section class="antenantalDataSection" id="antenantal_left_tab_menu_7_section">
 
-          			     	<center><h3>Prescription</h3></center>
+                       <center><h3>Prescription</h3></center>
+                       
+                       <h3><u>Advice</u>:</h3>
+
+                       <div class="row clearfix">
+ 
+                      <div class="col-sm-1" style="float: right;"> 
+                        <button type="button" class="btn btn-block btn-xs btn-danger  waves-effect" name="resetAdvice" id="resetAdvice"><i class="material-icons">cached</i> </button>
+                      </div>
+                     </div>
+                       <!--   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ START OF ADVICE ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  -->
+                              <?php
+                             $cntAdvLatestData= count($bodycontent['adviceDetailsLatestData']);
+
+                               if($cntAdvLatestData!=0){
+                                  $adviceData=$bodycontent['adviceDetailsLatestData'];
+                                  $adneedsl='N';
+                               }else{
+                                 $adviceData=$bodycontent['adviceMasterData'];
+                                 $adneedsl='Y';
+                               }
+
+                             
+                              ?>
+                  <div class="advice_area">
+
+                  
+                        <?php
+                          
+                           foreach ($adviceData as $value) {
+                             
+                            $advsl=1;
+                            
+                        ?>
+                       <label class="form-label upText"><?php 
+                      
+                          if($value['advType']->advice_type=="I"){
+                              echo 'I-General';
+                          }else if($value['advType']->advice_type=="III"){
+                              echo 'III-Optional';
+                          }else{
+                              echo $value['advType']->advice_type;
+                          }
+                       
+                       ?>:</label>
+                       <?php
+
+                        foreach ($value['adviceList'] as $advlistrow) {
+                       ?>
+                       
+                              <div class="row clearfix" >
+                             
+                              <div class="col-sm-1"></div>
+                                    <div class="col-sm-10">
+                                                    <div class="form-group form-float">
+                                                        <div class="form-line">    
+                                                        <!-- <input type="text" class="form-control selpres" name="gen_advice[]" id="gen_advice" autocomplete="off" placeholder="" value="" >        -->
+                                    <textarea   name="advice[]"  class="form-control no-resize auto-growth"  style="width:100%" autocomplete="off"
+                                          ><?php if($adneedsl=='Y'){echo $advsl++.". ";}
+                                          echo $advlistrow->advice;?></textarea>  
+                                                      </div>
+                                                    </div>
+                                      </div>  
+                                      
+                                </div>
+
+                                <input type="hidden" id="advice_type[]" name="advice_type[]" value="<?php echo $advlistrow->advice_type;?>">
+                                <input type="hidden" id="is_advice_option[]" name="is_advice_option[]" value="<?php echo $advlistrow->is_advice_option;?>">
+
+                           
+                        <?php if($advlistrow->is_advice_option=="Y"){?>
+                            <div class="row clearfix" >
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10" style="margin-bottom: 0px;">
+                                  <div class="form-group demo-tagsinput-area">
+                                    <div class="form-line">
+                                        <input class="advoptiontag" style="overflow: hidden;" type="text" name="advice_options[]" class="form-control" data-role="tagsinput" value="<?php echo $advlistrow->advice_options;?>">
+                                    </div>
+                                </div>
+
+                                  </div>
+                            </div>
+                        
+                        <?php }else{?>
+                          <input type="hidden" class="advoptiontag" name="advice_options[]"  value="<?php echo $advlistrow->advice_options;?>">
+                        <?php
+                              }
+
+                                   }
+                               }
+                        ?>
+                   
+                        
+
+               </div><!-- end of advice div -->
+
+
+
+
+
+
+
+
+                       <!--   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^eND OF ADVICE ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  -->
+
+
+                       <br>
+                       <hr>
                      <br>
 
                        <?php
@@ -3387,36 +3843,70 @@ border-bottom: 1px solid #f0c7f9;
                       ?>
                        <div class="row clearfix">
  
-              <div class="col-sm-6" >
+              <div class="col-sm-12" >
                  <label class="form-label newMedAdd " style="text-decoration: underline;cursor: pointer;" data-callfrom="prescription"  data-toggle="modal" data-target="#prescription_newmedmodel"  data-backdrop="static" data-keyboard="false">Add Medicine</label>
                  <!-- <button type="button" class="btn btn-default waves-effect" data-toggle="modal" data-target="#prescription_newmedmodel">Add Medicine</button> -->
                   
                  <div class="row clearfix" style="#border: 1px solid red;">
-                         <div class="col-sm-4">
-                         <div class="input-group " id="prescription_medicineerr">
-                         <label class="form-label upText">Medicine</label>
-                         <div id="prescription_medicinedrp">
-                         <select name="prescription_medicine" id="prescription_medicine" class="form-control selpres show-tick"  data-live-search="true" tabindex="-98">
-                         <option value="0"> &nbsp; </option>
-                         <?php 
+                 <div class="col-sm-2">
+                              <div class="input-group " >
+                              <label class="form-label upText">Medicine Category</label>
+                            
+                              <select name="medicine_category" id="medicine_category" class="form-control selpres show-tick"  data-live-search="true" tabindex="-98">
+                              <option value="0"> &nbsp; </option>
+                              <?php 
 
-                         foreach ($bodycontent['medicineList'] as $medicinelist) {  ?>
-                         <option value="<?php echo $medicinelist->medicine_id;?>"
+                              foreach ($bodycontent['medicineCategoryList'] as $medicinecat) {  ?>
+                              <option value="<?php echo $medicinecat->med_cat_id;?>"
 
-                          ><?php echo $medicinelist->medicine_name;?></option>
-                          <?php     } ?>
-                                                   
-                          </select> 
-                          </div>
-                           
-                           </div>
+                                ><?php echo $medicinecat->category;?></option>
+                                <?php     } ?>
+                                                        
+                                </select> 
+                                
+                                
+                                </div>
+                        
+                 </div>
+
+                        
+                         <div class="col-sm-2">
+                              <div class="input-group " id="prescription_medicineerr">
+                              <label class="form-label upText">Medicine</label>
+                              <div id="prescription_medicinedrp">
+                              <select name="prescription_medicine" id="prescription_medicine" class="form-control selpres show-tick"  data-live-search="true" tabindex="-98">
+                              <option value="0"> &nbsp; </option>
+                              <?php 
+
+                              foreach ($bodycontent['medicineList'] as $medicinelist) {  ?>
+                              <option value="<?php echo $medicinelist->medicine_id;?>"
+
+                                ><?php echo $medicinelist->medicine_name;?></option>
+                                <?php     } ?>
+                                                        
+                                </select> 
+                                </div>
+                                
+                                </div>
                         
                         </div>
-                        <div class="col-sm-2">
+
+                        <div class="col-sm-4">
+                          <div class="form-group"><label class="form-label upText">Instruction</label>
+                           <div class="form-line ">
+                            <input type="text" class="form-control selpres" name="medinstruction" id="medinstruction" autocomplete="off" placeholder="" value="" >
+                           
+                           </div>
+                           </div>
+                           
+                      </div>
+
+
+                        <div class="col-sm-1">
                          <div class="input-group " >
                          <label class="form-label upText">Dosage</label>
                          <select name="pres_medicine_dosage" id="pres_medicine_dosage" class="form-control selpres show-tick"  data-live-search="true" tabindex="-98">
-                         <option value="0"> &nbsp; </option>
+                         <option value=""> &nbsp; </option>
                          <?php 
 
                          foreach ($bodycontent['dosageList'] as $dosagelist) {  ?>
@@ -3431,11 +3921,11 @@ border-bottom: 1px solid #f0c7f9;
                         
                         </div>
 
-                        <div class="col-sm-2">
+                        <div class="col-sm-1">
                          <div class="input-group " >
                          <label class="form-label upText">Frequency</label>
                          <select name="pres_medicine_frequency" id="pres_medicine_frequency" class="form-control selpres show-tick"  data-live-search="true" tabindex="-98">
-                         <option value="0"> &nbsp; </option>
+                         <option value=""> &nbsp; </option>
                          <?php 
 
                          foreach ($bodycontent['frequencyList'] as $frequencylist) {  ?>
@@ -3449,7 +3939,7 @@ border-bottom: 1px solid #f0c7f9;
                            </div>
                         
                         </div>
-                      <div class="col-sm-2">
+                      <div class="col-sm-1">
                           <div class="form-group"><label class="form-label upText">Days</label>
                            <div class="form-line ">
                             <input type="text" class="form-control selpres" name="pres_medicine_days" id="pres_medicine_days" autocomplete="off" placeholder="" value="" >
@@ -3458,11 +3948,13 @@ border-bottom: 1px solid #f0c7f9;
                            </div>
                       </div>
 
-                      <div class="col-sm-2">
+                     
+
+                      <div class="col-sm-1">
                           <div class="form-group"><label class="form-label upText">Action</label>
                            <div class="icon-button-demo">
-                            <button type="button" class="btn bg-purple btn-circle waves-effect waves-circle waves-float" id="addPresMedicine">
-                                    <i class="material-icons">add_circle</i>
+                            <button type="button" class="btn btn-xs bg-light-green" id="addPresMedicine">
+                            <span class="glyphicon glyphicon-plus" style="margin-top: 0px;"></span>
                                 </button>
                            
                            </div>
@@ -3471,10 +3963,12 @@ border-bottom: 1px solid #f0c7f9;
                           
                   </div>
 
+                  
+
                 <br>
                   <!-- 333333333333333333333333333333333333333333333333333-->
-                     <div id="detail_presmed" style="#border: 1px solid #e49e9e;">
-                    <div class="table-responsive">
+                     <div id="detail_presmed" >
+                    <div class="table-responsive" >
                            <?php
                           $presmedrow=0;
                           $detailPresMedCount = 0;
@@ -3495,47 +3989,69 @@ border-bottom: 1px solid #f0c7f9;
                         ?>
 
                     
-                    <table  class="table  no-footer" style="<?php echo $style_varmed; ?>">
+                    <table  class="table  no-footer display" id="pres_med_table" style="<?php echo $style_varmed; ?>" >
                         <thead>
-                        
-                           
+                          <tr>
+                          <th style="width:10%">Category</th>
+                          <th style="width:10%">Medicine</th>
+                          <th style="width:45%;text-align: center;">Instruction</th>
+                          <th style="width:5%;text-align: center;">Dos.</th>
+                          <th style="width:5%;text-align: center;">Freq.</th>
+                          <th style="width:5%;text-align: center;">Days</th>
+                         
+                          <th style="width:5%;align: right;">&nbsp;</th>
+                        </tr>
+                  
                         </thead>
                         <tbody>
                             <?php
 
                             foreach ($bodycontent['prescriptionMedicineList'] as $key => $prescriptionmedicine) {?>
 
-                           <tr id="rowPrescriptionMedicine_<?php echo $presmedrow; ?>" class="row clearfix">
+                           <tr id="rowPrescriptionMedicine_<?php echo $presmedrow; ?>" >
 
                           
+         <td  class="presmedTd"> 
+                    
+                   <?php echo $prescriptionmedicine->category;?>       
+                      
+          </td>
 
-
-                                <td style="width:36%;text-align: left;"> 
+           <td  class="presmedTd"> 
                    <input type="hidden" name="presMedID[]" id="presMedID_<?php echo $presmedrow; ?>" value="<?php echo $prescriptionmedicine->medicine_id;?>">   
                    <?php echo $prescriptionmedicine->medicine_name;?>       
                       
             </td>
+
+            <td  class="presmedTd"> 
+             
+             <input type="hidden" name="presInstruction[]" id="presInstruction_<?php echo $rowno; ?>" value="<?php echo $prescriptionmedicine->med_instruction;?>">   
+             <?php echo $prescriptionmedicine->med_instruction;?>               
+      
+             </td>
             
-            <td style="width:18%;text-align: center;"> 
+            <td class="presmedTd" style="text-align: center;"> 
              
                <input type="hidden" name="presdosage[]" id="presdosage_<?php echo $presmedrow; ?>" value="<?php echo $prescriptionmedicine->dosage;?>">   
                    <?php echo $prescriptionmedicine->dosage;?>                
 
             </td> 
-              <td style="width:18%;text-align: center;"> 
+              <td style="text-align: center;" class="presmedTd"> 
              
                <input type="hidden" name="presfrequency[]" id="presfrequency_<?php echo $presmedrow; ?>" value="<?php echo $prescriptionmedicine->frequency;?>">   
                    <?php echo $prescriptionmedicine->frequency;?>                
 
             </td> 
-             <td style="width:20%;text-align: center;"> 
+             <td style="text-align: center;" class="presmedTd"> 
              
                <input type="hidden" name="presdays[]" id="presdays_<?php echo $presmedrow; ?>" value="<?php echo $prescriptionmedicine->days;?>">   
                    <?php echo $prescriptionmedicine->days;?>                
 
             </td>
 
-            <td style="width:10%;vertical-align: middle;">
+           
+
+            <td style="vertical-align: middle;text-align: right;" class="presmedTd">
               
       <a href="javascript:;" class="delPresMed" id="delDocRow_<?php echo $presmedrow; ?>" title="Delete">
           <i class="material-icons" style="color: red;">clear</i>
@@ -3563,6 +4079,8 @@ border-bottom: 1px solid #f0c7f9;
                    <!-- end of detail_timeslot -->
                   <!-- 333333333333333333333333333333333333333333333333333-->
                       </div>
+                      </div>
+                      <div class="row clearfix">
                       
                         <div class="col-sm-6" >
                            <!-- <label class="form-label " style="text-decoration: underline;">Add Test</label> -->
@@ -3587,11 +4105,23 @@ border-bottom: 1px solid #f0c7f9;
                            </div>
                         
                         </div>
-                          <div class="col-sm-1">
+                          <!-- <div class="col-sm-1">
                           <div class="form-group"><label class="form-label upText">Action</label>
                            <div class="icon-button-demo">
                             <button type="button" class="btn bg-purple btn-circle waves-effect waves-circle waves-float selpres" id="addPresTest">
                                     <i class="material-icons">add_circle</i>
+                                </button>
+                           
+                           </div>
+                           </div>
+                         </div> -->
+
+
+                         <div class="col-sm-1">
+                          <div class="form-group"><label class="form-label upText">Action</label>
+                           <div class="icon-button-demo">
+                            <button type="button" class="btn btn-xs bg-light-green" id="addPresTest">
+                            <span class="glyphicon glyphicon-plus" style="margin-top: 0px;"></span>
                                 </button>
                            
                            </div>
@@ -3631,13 +4161,13 @@ border-bottom: 1px solid #f0c7f9;
                         </thead>
                         <tbody>
                           <?php
-                                  foreach ($bodycontent['prescriptionInvestigationList'] as $key => $prescriptionInvestigation) {
+                           foreach ($bodycontent['prescriptionInvestigationList'] as $key => $prescriptionInvestigation) {
                                     ?>
                            <tr id="rowPrescriptionInvestigation_<?php echo $presTestrow; ?>" class="row clearfix">
 
                             
                                   
-                      <td style="width:90%;text-align: left;"> 
+             <td style="width:90%;text-align: left;padding: 1px;"> 
                    <input type="hidden" name="presinvestigationID[]" id="presinvestigationID_<?php echo $presTestrow; ?>" value="<?php echo $prescriptionInvestigation->investigation_comp_id?>">   
                    <?php echo $prescriptionInvestigation->inv_component_name;?>       
                       
@@ -3647,7 +4177,7 @@ border-bottom: 1px solid #f0c7f9;
         
         
 
-      <td style="width:10%;vertical-align: middle;">
+      <td style="width:10%;vertical-align: middle;padding: 1px;">
             
       <a href="javascript:;" class="delPresInvestigation" id="delDocRow_<?php echo $presTestrow; ?>" title="Delete">
           <i class="material-icons" style="color: red;">clear</i>
@@ -3998,12 +4528,18 @@ border-bottom: 1px solid #f0c7f9;
 
      <td> 
                <b>Oedema</b>
-               <div class="input-group " id="cliexm_oedemaerr_<?php echo $cliexmrowno; ?>">
-              
-               <div class="form-line">
-                <input type="text" name="cliexm_oedema[]" id="cliexm_oedema_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" value="<?php echo $value->cliexm_oedema; ?>" >
-                 </div>
-                </div>
+               <select name="cliexm_oedema[]" id="cliexm_oedema_<?php echo $cliexmrowno; ?>" class="form-control"   data-live-search="true" tabindex="-98" placeholder="test"
+                    >              <option value="">&nbsp;</option>
+                                  <?php
+                                      foreach ($bodycontent['oedema'] as $oedema) { 
+                                   ?>
+                                     <option value="<?php echo $oedema;?>"
+                                     <?php if($value->cliexm_oedema==$oedema){ echo "selected";}?>
+                                      ><?php echo $oedema;?></option>
+                                   <?php
+                                    }
+                                   ?>
+                               </select> 
                                       
      </td>
 
@@ -4245,7 +4781,7 @@ border-bottom: 1px solid #f0c7f9;
 
 
             <!-- Small Size -->
-            <div class="modal fade" id="prescription_newmedmodel" tabindex="-1" role="dialog" style="margin-top:150px;">
+            <div class="modal fade" id="prescription_newmedmodel" tabindex="-1" role="dialog" style="margin-top:120px;">
                 <div class="modal-dialog modal-sm" role="document" data-keyboard="false" data-backdrop="static">
                     <div class="modal-content">
                     <form class="form-area" name="medicineForm" id="medicineForm">
@@ -4276,6 +4812,29 @@ border-bottom: 1px solid #f0c7f9;
                                         <div class="col-sm-12">
                                             <div class="form-group form-float">
                                                 <div class="input-group">
+                                                <select name="medicine_category" id="medicine_category" class="form-control show-tick" data-live-search="true" tabindex="-98">
+                                <option value="0"> Select Category</option>
+                                 <?php 
+
+                                 foreach ($bodycontent['medicineCategoryList'] as $value) {  ?>
+                                   <option value="<?php echo $value->med_cat_id;?>"
+                                        
+                                      
+
+                                        ><?php echo $value->category?></option>
+                                 <?php     } ?>
+                                   
+                               </select> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                   </div>
+                                   <br>
+
+                                   <div class="row clearfix">
+                                        <div class="col-sm-12">
+                                            <div class="form-group form-float">
+                                                <div class="input-group">
                                                 <select name="medicine_type" id="medicine_type" class="form-control show-tick" data-live-search="true" tabindex="-98">
                                
                                  <?php 
@@ -4291,6 +4850,21 @@ border-bottom: 1px solid #f0c7f9;
                                             </div>
                                         </div>
                                    </div>
+                                   <br>
+
+                                   <div class="row clearfix">
+
+                                    <div class="col-sm-12">
+                                                  <div class="form-group form-float">
+                                                      <div class="form-line">
+                                                          <textarea rows="1" name="instruction" id="instruction" class="form-control no-resize auto-growth"  style="overflow: hidden; overflow-wrap: break-word; height: 32px;" autocomplete="off"
+                                                            ></textarea>
+                                                          <label class="form-label">Medicine Instruction</label>
+                                                      </div>
+                                                  </div>
+                                              </div>
+
+                                    </div>
 
                                       
                                      

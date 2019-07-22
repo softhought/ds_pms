@@ -1,12 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class Medicine extends CI_Controller {
+class Advice extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
         $this->load->library('session');
         $this->load->model('commondatamodel','commondatamodel',TRUE);
         $this->load->model('Medicinecmodel','medicinecmodel',TRUE);
+        $this->load->model('Advicemodel','advicemodel',TRUE);
     }
 
 
@@ -16,10 +17,10 @@ class Medicine extends CI_Controller {
         if($this->session->userdata('user_data'))
         {
             $session = $this->session->userdata('user_data');      
-            $page = 'dashboard/admin_dashboard/medicine/medicine_list.php';
+            $page = 'dashboard/admin_dashboard/advice/advice_list.php';
             
             
-            $result['medicineList']=$this->medicinecmodel->getAllMedicineList();
+            $result['adviceList']=$this->advicemodel->getAllAdviceList();
             //pre( $result['DaysList']);
             $header = "";
             createbody_method($result, $page, $header, $session);
@@ -29,7 +30,7 @@ class Medicine extends CI_Controller {
     }
 
 
-    public function addMedicine()
+    public function addAdvice()
     {
         $session = $this->session->userdata('user_data');
         if($this->session->userdata('user_data'))
@@ -39,8 +40,8 @@ class Medicine extends CI_Controller {
                 $result['mode'] = "ADD";
                 $result['btnText'] = "Save";
                 $result['btnTextLoader'] = "Saving...";
-                $medicineID = 0;
-                $result['medicineEditdata'] = [];
+                $adviceID = 0;
+                $result['adviceEditdata'] = [];
                 
                 //getAllRecordWhereOrderBy($table,$where,$orderby)
                 
@@ -52,37 +53,35 @@ class Medicine extends CI_Controller {
                 $result['mode'] = "EDIT";
                 $result['btnText'] = "Update";
                 $result['btnTextLoader'] = "Updating...";
-                $medicineID = $this->uri->segment(3);
+                $adviceID = $this->uri->segment(3);
                 
             
-                $where_medicine_master = [
-                    'medicine_master.medicine_id' => $medicineID
+                $where_advice_master = [
+                    'advice_master.advice_id' => $adviceID
                 ];
 
                 // getSingleRowByWhereCls(tablename,where params)
-                 $result['medicineEditdata'] = $this->commondatamodel->getSingleRowByWhereCls('medicine_master',$where_medicine_master); 
+                 $result['adviceEditdata'] = $this->commondatamodel->getSingleRowByWhereCls('advice_master',$where_advice_master); 
 
               
 
-                //  pre($result['medicineEditdata']);exit;
+                //  pre($result['adviceEditdata']);exit;
   
             }
 
-            $result['medicineID']=$medicineID;
+            $result['adviceID']=$adviceID;
 
             $header = "";
-            $where_medicine_type=[];
-            $orderby='medicine_type.medicine_type';
-            
-            $result['medicineTypeList']=$this->commondatamodel->getAllRecordWhereOrderBy('medicine_type',$where_medicine_type,$orderby);
+            $result['adviceType'] = array(
+                                            'I' => 'I-General',
+                                            'II' => 'II',
+                                            'III' => 'III-Optional'
+                                         );
 
-            $orderbyCat='medicine_category.category';
-            $result['medicineCategoryList']=$this->commondatamodel->getAllRecordWhereOrderBy('medicine_category',[],$orderbyCat);
-
-         // pre($result['medicineCategoryList']);
+         //   pre($result['adviceType']);
          
             
-             $page = 'dashboard/admin_dashboard/medicine/medicine_add_edit';
+             $page = 'dashboard/admin_dashboard/advice/advice_add_edit';
             createbody_method($result, $page, $header,$session);
         }
         else
@@ -93,7 +92,7 @@ class Medicine extends CI_Controller {
 
 
 
-        public function medicine_action() {
+     public function advice_action() {
 
         $session = $this->session->userdata('user_data');
         if($this->session->userdata('user_data'))
@@ -103,39 +102,58 @@ class Medicine extends CI_Controller {
             parse_str($formData, $dataArry);
             
         
-            $medicineID = trim(htmlspecialchars($dataArry['medicineID']));
+            $adviceID = trim(htmlspecialchars($dataArry['adviceID']));
             $mode = trim(htmlspecialchars($dataArry['mode']));
-            $medicinename = trim(htmlspecialchars($dataArry['medicinename']));
-            $medicine_type = trim(htmlspecialchars($dataArry['medicine_type']));
-            $instruction = trim(htmlspecialchars($dataArry['instruction']));
-            $medicine_category = trim(htmlspecialchars($dataArry['medicine_category']));
-        
-            
-            
+            $advice = trim(htmlspecialchars($dataArry['advice']));
+            $advice_type = trim(htmlspecialchars($dataArry['advice_type']));
+            $advice_options = trim(htmlspecialchars($dataArry['advice_options']));
+            $old_advice_type = trim(htmlspecialchars($dataArry['old_advice_type']));
+
+            if(isset($dataArry['need_adv_opt'])){
+                $need_adv_opt = $dataArry['need_adv_opt'];
+            }else{
+                $need_adv_opt='N'; 
+                $advice_options='';
+            }
 
 
-            if($medicine_type!="")
-            {
-    
-                
-                
-                if($medicineID>0 && $mode=="EDIT")
+            
+
+           
+ 
+                if($adviceID>0 && $mode=="EDIT")
                 {
                     /*  EDIT MODE
                      *  -----------------
                     */
 
                      $upd_array = array(
-                                        'medicine_name' => $medicinename,
-                                        'medicine_type' => $medicine_type,
-                                        'instruction' => $instruction,
-                                        'category_id' => $medicine_category
-                                      
-                                        
+                                        'advice' => $advice,        
+                                        'is_advice_option' => $need_adv_opt,        
+                                        'advice_options' => $advice_options,        
+                                        'created_on' => date('Y-m-d'), 
                                      );
-                      $upd_where = array('medicine_master.medicine_id' => $medicineID);
 
-                     $update = $this->commondatamodel->updateSingleTableData('medicine_master',$upd_array,$upd_where);
+                    if($old_advice_type!=$advice_type){
+
+                        $lastslno = $this->advicemodel->getLastSlByType($advice_type);
+                        $nextslno=$lastslno+1;
+
+                        $upd_array = array(
+                            'sl_no' => $nextslno,
+                            'advice_type' => $advice_type,        
+                            'advice' => $advice,        
+                            'is_advice_option' => $need_adv_opt,        
+                            'advice_options' => $advice_options,        
+                            'created_on' => date('Y-m-d'), 
+                         );
+
+
+
+                    }
+                      $upd_where = array('advice_master.advice_id' => $adviceID);
+
+                     $update = $this->commondatamodel->updateSingleTableData('advice_master',$upd_array,$upd_where);
                     
                     
                     if($update)
@@ -163,15 +181,20 @@ class Medicine extends CI_Controller {
                      *  -----------------
                     */
 
-            
+                    $lastslno = $this->advicemodel->getLastSlByType($advice_type);
+                    $nextslno=$lastslno+1;
+
                       $med_array = array(
-                                          'medicine_name' => $medicinename,
-                                          'medicine_type' => $medicine_type, 
-                                          'instruction' => $instruction,   
-                                          'category_id' => $medicine_category    
+                                          'sl_no' => $nextslno,
+                                          'advice_type' => $advice_type,        
+                                          'advice' => $advice,        
+                                          'is_advice_option' => $need_adv_opt,
+                                          'advice_options' => $advice_options,         
+                                          'created_on' => date('Y-m-d'),        
+                                          'is_active' => 'Y',        
                                          );
 
-                         $insertData = $this->commondatamodel->insertSingleTableData('medicine_master',$med_array);
+                         $insertData = $this->commondatamodel->insertSingleTableData('advice_master',$med_array);
 
                     
 
@@ -194,18 +217,6 @@ class Medicine extends CI_Controller {
                 } // end add mode ELSE PART
 
 
-
-
-                
-
-            }
-            else
-            {
-                $json_response = array(
-                        "msg_status" =>0,
-                        "msg_data" => "All fields are required"
-                    );
-            }
 
             header('Content-Type: application/json');
             echo json_encode( $json_response );
@@ -236,12 +247,12 @@ class Medicine extends CI_Controller {
                 );
                 
             $where = array(
-                "medicine_master.medicine_id" => $updID
+                "advice_master.advice_id" => $updID
                 );
             
             
         
-            $update = $this->commondatamodel->updateSingleTableData('medicine_master',$update_array,$where);
+            $update = $this->commondatamodel->updateSingleTableData('advice_master',$update_array,$where);
             if($update)
             {
                 $json_response = array(

@@ -1,4 +1,43 @@
 $(document).ready(function(){
+
+
+    var groupColumn = 2;
+    var table = $('#examplegroup').DataTable({
+        "columnDefs": [
+            { "visible": false, "targets": groupColumn }
+        ],
+        "order": [[ groupColumn, 'asc' ]],
+        paging: false,
+        bFilter: false,
+        ordering: false,
+        searching: false,
+        "drawCallback": function ( settings ) {
+            var api = this.api();
+            var rows = api.rows( {page:'current'} ).nodes();
+            var last=null;
+ 
+            api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
+                if ( last !== group ) {
+                    $(rows).eq( i ).before(
+                        '<tr class="group"><td colspan="5">'+group+'</td></tr>'
+                    );
+ 
+                    last = group;
+                }
+            } );
+        }
+    } );
+ 
+    // Order by the grouping
+    $('#example tbody').on( 'click', 'tr.group', function () {
+        var currentOrder = table.order()[0];
+        if ( currentOrder[0] === groupColumn && currentOrder[1] === 'asc' ) {
+            table.order( [ groupColumn, 'desc' ] ).draw();
+        }
+        else {
+            table.order( [ groupColumn, 'asc' ] ).draw();
+        }
+    } );
     var basepath = $("#basepath").val();
     var rowNoUpload = 0;
 
@@ -1132,7 +1171,9 @@ $(document).on('change','.otheranomalyckbx',function(event){
 /* add prescription medicine*/
 
  
-    $(document).on('click','#addPresMedicine',function(){
+    $(document).on('click','#addPresMedicine',function(event){
+
+        event.stopImmediatePropagation();
 
           // rowNoUpload++;
 
@@ -1141,7 +1182,8 @@ $(document).on('change','.otheranomalyckbx',function(event){
           var dosage=  $("#pres_medicine_dosage").val();
           var frequency=  $("#pres_medicine_frequency").val();
           var days=  $("#pres_medicine_days").val();
-
+          var medinstruction=  $("#medinstruction").val();
+         console.log('medicine:'+medicine);
            $("#prescription_medicineerr").removeClass("bordererror");
 
           if (medicine!='0') {
@@ -1151,7 +1193,7 @@ $(document).on('change','.otheranomalyckbx',function(event){
             type: "POST",
             url: basepath+'patientcase/addPrescriptionMedicineDetails',
             dataType: "html",
-            data: {rowNo:rowno,medicine:medicine,dosage:dosage,frequency:frequency,days:days},
+            data: {rowNo:rowno,medicine:medicine,dosage:dosage,frequency:frequency,days:days,medinstruction:medinstruction},
             success: function (result) {
                 $("#presmedrow").val(rowno);
                 $("#detail_presmed table").css("display","block"); 
@@ -1161,9 +1203,11 @@ $(document).on('change','.otheranomalyckbx',function(event){
                 var $demoMaskedInput = $('.demo-masked-input');
                
                 $('#pres_medicine_days').val('');
+                $('#medinstruction').val('');
                 $('#prescription_medicine').val(0).change();
                 $('#pres_medicine_dosage').val(0).change();
                 $('#pres_medicine_frequency').val(0).change();
+                $("#prescription_medicine").prop("checked", false);
 
             //Time
 
@@ -1173,6 +1217,9 @@ $(document).on('change','.otheranomalyckbx',function(event){
                 shortTime: true,
                 format: 'hh:mm a'
             });
+        
+
+            
          
             }, 
             error: function (jqXHR, exception) {
@@ -1401,6 +1448,182 @@ $(document).on('change','.otheranomalyckbx',function(event){
 
         
     });
+
+
+    $(document).on('change','.selectYear',function(event){
+        event.stopImmediatePropagation();
+        console.log("gfhgh");
+        var selectYearId = $(this).attr('id');
+        var rowDtlNo = selectYearId.split('_');
+
+       
+        console.log(rowDtlNo[1]);
+        var selectYear = $(this).val();
+        console.log(selectYear);
+
+       var currentYear= new Date().getFullYear();
+       if(selectYear!=''){
+        var age = parseInt(currentYear)-parseInt(selectYear);
+        $("#babyage_"+rowDtlNo[1]).val(age);
+       }else{
+        $("#babyage_"+rowDtlNo[1]).val(''); 
+       }
+      
+
+
+    });
+
+
+
+    $(document).on('change','.obsthist',function(){
+     //  console.log('Obstetrics History');
+
+     var A = parseInt($("#termdelivery").val() || 0);
+     var B = parseInt($("#paritypreterm").val() || 0);
+     var C = parseInt($("#parityabortion").val() || 0);
+
+     var gravida =(A+B+C+1);
+
+     $("#gravida_parity").val(gravida);
+     $("#gravida_parity").focus();
+     console.log(gravida);
+ 
+    });
+
+    // load fresh master advice data
+    $(document).on('click','#resetAdvice',function(event){
+
+       console.log("Reset Advice");
+       var callfrom="Reset Advice";
+       $(".advice_area").html("");
+
+       $.ajax({
+        type: "POST",
+        url: basepath+'patientcase/resetAdviceData',
+        dataType: "html",
+        data: {callfrom:callfrom},
+        success: function (result) {
+            
+           
+            
+            $(".advice_area").html(result);
+            $("input.advoptiontag").tagsinput('items');
+            $('.form-line').addClass('focused');
+            $("textarea").css({'overflow':'hidden'});
+     
+        }, 
+        error: function (jqXHR, exception) {
+          var msg = '';
+            if (jqXHR.status === 0) {
+                msg = 'Not connect.\n Verify Network.';
+            } else if (jqXHR.status == 404) {
+                msg = 'Requested page not found. [404]';
+            } else if (jqXHR.status == 500) {
+                msg = 'Internal Server Error [500].';
+            } else if (exception === 'parsererror') {
+                msg = 'Requested JSON parse failed.';
+            } else if (exception === 'timeout') {
+                msg = 'Time out error.';
+            } else if (exception === 'abort') {
+                msg = 'Ajax request aborted.';
+            } else {
+                msg = 'Uncaught Error.\n' + jqXHR.responseText;
+            }
+           // alert(msg);  
+        }
+        }); /*end ajax call*/
+        
+      });
+
+  $(document).on('change','#medicine_category',function(event){
+        event.preventDefault();
+   
+        var medicine_category = $(this).val();
+
+        var callfrom='prescriptionmedicine';
+
+        $.ajax({
+            type: "POST",
+            url: basepath+'patientcase/resetPresMedicineDropdownByCategory',
+            dataType: "html",
+            data: {callfrom:callfrom,medicine_category:medicine_category},
+            success: function (result) {
+                
+                $("#prescription_medicinedrp").html(result);
+               
+                $('select').selectpicker();
+         
+            }, 
+            error: function (jqXHR, exception) {
+              var msg = '';
+                if (jqXHR.status === 0) {
+                    msg = 'Not connect.\n Verify Network.';
+                } else if (jqXHR.status == 404) {
+                    msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status == 500) {
+                    msg = 'Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
+                    msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                    msg = 'Time out error.';
+                } else if (exception === 'abort') {
+                    msg = 'Ajax request aborted.';
+                } else {
+                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                }
+               // alert(msg);  
+            }
+            }); /*end ajax call*/
+
+
+
+   });
+
+
+   $(document).on('change','#prescription_medicine',function(event){
+    event.preventDefault();
+
+    var prescription_medicine = $(this).val();
+
+    var callfrom='medicineInstruction';
+    $("#medinstruction").val("");
+
+    $.ajax({
+        type: "POST",
+        url: basepath+'patientcase/getMedicineInstruction',
+        dataType: "html",
+        data: {callfrom:callfrom,prescription_medicine:prescription_medicine},
+        success: function (result) {
+            
+            $("#medinstruction").val(result);
+           
+            
+     
+        }, 
+        error: function (jqXHR, exception) {
+          var msg = '';
+            if (jqXHR.status === 0) {
+                msg = 'Not connect.\n Verify Network.';
+            } else if (jqXHR.status == 404) {
+                msg = 'Requested page not found. [404]';
+            } else if (jqXHR.status == 500) {
+                msg = 'Internal Server Error [500].';
+            } else if (exception === 'parsererror') {
+                msg = 'Requested JSON parse failed.';
+            } else if (exception === 'timeout') {
+                msg = 'Time out error.';
+            } else if (exception === 'abort') {
+                msg = 'Ajax request aborted.';
+            } else {
+                msg = 'Uncaught Error.\n' + jqXHR.responseText;
+            }
+           // alert(msg);  
+        }
+        }); /*end ajax call*/
+
+
+
+});
 
 
 }); // end of document ready
@@ -1789,8 +2012,25 @@ function format(callback, id, basepath) {
 
                 tbody += '<tr>';
                 tbody += '<td>Growth scan</td>';
-                tbody += '<td>SLF of '+CheckNull(datas.growth_slf_week)+' week '+CheckNull(datas.growth_slf_day)+' day'+'</td>';
+                tbody += '<td>SLF of '+CheckNull(datas.growth_slf_week)+' week '+CheckNull(datas.growth_slf_day)+' day <br>Presentation:'+CheckNull(datas.growth_presentation)+'<br>AFI:'+CheckNull(datas.growth_afi)+'<br>Liquor:'+CheckNull(datas.growth_liquor)+'</td>';
                 tbody += '<td>'+dateFormat(datas.growth_date)+'</td>';
+                tbody += '</tr>';
+
+                tbody += '<tr>';
+                tbody += '<td>Dopple scan</td>';
+                tbody += '<td>SLF of '+CheckNull(datas.doppler_slf_week)+' week '+CheckNull(datas.doppler_slf_day)+' day <br>Presentation:'+CheckNull(datas.doppler_presentation)+'<br>AFI:'+CheckNull(datas.doppler_afi)+'<br>Liquor:'+CheckNull(datas.doppler_liquor)+'</td>';
+                tbody += '<td>'+dateFormat(datas.doppler_scan_date)+'</td>';
+                tbody += '</tr>';
+                
+                tbody += '<tr>';
+                tbody += '<td>Doppler parameters </td>';
+                tbody += '<td colspan="2">'+CheckDopplerLimit(datas.doppler_checkbox)+'Umbilical artery PI: '+CheckNull(datas.umbilical_artery_pi)+'<br>MCA PI :'+CheckNull(datas.mca_pi)+'<br>CP Ratio:'+CheckNull(datas.cp_ratio)+'</td>';
+                tbody += '</tr>';
+
+                tbody += '<tr>';
+                tbody += '<td>Others Investigation</td>';
+                tbody += '<td>'+CheckNull(datas.others_investigation)+'</td>';
+                tbody += '<td>'+dateFormat(datas.others_investigation_date)+'</td>';
                 tbody += '</tr>';
 
 
@@ -1822,7 +2062,7 @@ function formatPrescription(callback, id, basepath) {
            // console.log(data['medicine']);
 
             // console.log(response);
-            var thead = '<tr class="expandrowDetails"><th style="width:10%;">Medicine</th><th style="width:10%;">Dosage</th><th style="width:5%;">Frequency</th><th style="width:5%;">Days</th></tr>';
+            var thead = '<tr class="expandrowDetails"><th style="width:10%;">Medicine</th><th style="width:30%;">Instruction</th><th style="width:10%;">Dosage</th><th style="width:5%;">Frequency</th><th style="width:5%;">Days</th></tr>';
             tbody = '';
 
             $.each(data['medicine'], function(i, datas) {
@@ -1831,6 +2071,7 @@ function formatPrescription(callback, id, basepath) {
 
                 tbody += '<tr>';
                 tbody += '<td>'+CheckNull(datas.medicine_name)+'</td>';
+                tbody += '<td>'+CheckNull(datas.med_instruction)+'</td>';
                 tbody += '<td>'+CheckNull(datas.dosage)+'</td>';
                 tbody += '<td>'+CheckNull(datas.frequency)+'</td>';
                 tbody += '<td>'+CheckNull(datas.days)+'</td>';
@@ -1841,8 +2082,8 @@ function formatPrescription(callback, id, basepath) {
 
             });
 
-             tbody += '<tr><td colspan="4">&nbsp;</td></tr>';
-            var thead2 = '<tr class="expandrowDetails"><th colspan="4" style="width:10%;">Investigation</th></tr>';
+             tbody += '<tr><td colspan="5">&nbsp;</td></tr>';
+            var thead2 = '<tr class="expandrowDetails"><th colspan="5" style="width:10%;">Investigation</th></tr>';
             tbody2 = '';
 
               $.each(data['investigation'], function(i, datasin) {
@@ -1850,7 +2091,7 @@ function formatPrescription(callback, id, basepath) {
                 //console.log(datasin);
 
                 tbody2 += '<tr>';
-                tbody2 += '<td colspan="4">'+CheckNull(datasin.inv_component_name)+'</td>';
+                tbody2 += '<td colspan="5">'+CheckNull(datasin.inv_component_name)+'</td>';
               
                 tbody2 += '</tr>';
 
@@ -1895,6 +2136,17 @@ function CheckNull(result){
         return '';
     }else{
         return result;
+    }
+
+}
+
+function CheckDopplerLimit(result){
+
+
+    if (result=='Normal') {
+        return 'Within Normal Limit.<br>';
+    }else{
+        return '';
     }
 
 }

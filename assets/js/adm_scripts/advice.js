@@ -2,16 +2,26 @@ $(document).ready(function(){
     var basepath = $("#basepath").val();
     var rowNoUpload = 0;
      var mode = $("#mode").val();
-    $('.dataTables').DataTable();
-   
+   $('.dataTables').DataTable();
+
+   if(mode=="EDIT"){
+    var chk_option = $("#chk_option").val();
+
+    if(chk_option=="Y"){
+        $(".optionrow").css('display', 'block');
+    }else{
+        $(".optionrow").css('display', 'none');
+    }
+
+   }
      
 
 
-   $(document).on("click", ".medstatus", function() {
+   $(document).on("click", ".advstatus", function() {
         
-        var uid = $(this).data("medicineid");
+        var uid = $(this).data("adviceid");
         var status = $(this).data("setstatus");
-        var url = basepath + 'medicine/setStatus';
+        var url = basepath + 'advice/setStatus';
         setActiveStatus(uid, status, url);
 
     });
@@ -20,13 +30,13 @@ $(document).ready(function(){
    /* add edit medicine */
 
 
-    $(document).on('submit','#medicineForm',function(event)
+    $(document).on('submit','#adviceForm',function(event)
     {
         event.preventDefault();
-        if(validatemedicine())
+        if(validateAdvice())
         {   
 
-            var formDataserialize = $("#medicineForm").serialize();
+            var formDataserialize = $("#adviceForm").serialize();
             formDataserialize = decodeURI(formDataserialize);
             console.log(formDataserialize);
 
@@ -40,7 +50,7 @@ $(document).ready(function(){
     
         $.ajax({
                 type: "POST",
-                url: basepath+'medicine/medicine_action',
+                url: basepath+'advice/advice_action',
                 dataType: "json",
                 contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                 data: formData,
@@ -54,8 +64,8 @@ $(document).ready(function(){
                             "keyboard": true,
                             "show": true
                         });
-                        var addurl = basepath + "medicine/addMedicine";
-                        var listurl = basepath + "medicine";
+                        var addurl = basepath + "advice/addAdvice";
+                        var listurl = basepath + "advice";
                         $("#responsemsg").text(result.msg_data);
                         $("#response_add_more").attr("href", addurl);
                         $("#response_list_view").attr("href", listurl);
@@ -103,23 +113,46 @@ $(document).ready(function(){
         
     });
 
+
+    $(document).on('change','#need_adv_opt',function(event)
+    {
+        event.preventDefault();
+        // From the other examples
+        if (this.checked) {
+            $(".optionrow").css('display', 'block');
+        }else{
+            $(".optionrow").css('display', 'none');
+        }
+    });
+
 }); // end of document ready
 
 
 
 
-function validatemedicine()
+function validateAdvice()
 {
-    var medicinename = $("#medicinename").val();
+    var advice = $("#advice").val();
+    advice = advice.trim();
+    var advice_type = $("#advice_type").val();
   
+    $("#advicemsg").text("").css("dispaly", "none").removeClass("form_error");
 
-    $("#medicinemsg").text("").css("dispaly", "none").removeClass("form_error");
+    if(advice=="")
+    { 
+        $("#advice").focus();
+        $("#advicemsg")
+        .text("Error : Enter advice note .")
+        .addClass("form_error")
+        .css("display", "block");
+        return false;
+    }
 
-    if(medicinename=="")
-    {
-        $("#medicinename").focus();
-        $("#medicinemsg")
-        .text("Error : Enter medicine name .")
+    if(advice_type=="0")
+    { 
+        $("#advice_type").focus();
+        $("#advicemsg")
+        .text("Error : Select advice type .")
         .addClass("form_error")
         .css("display", "block");
         return false;

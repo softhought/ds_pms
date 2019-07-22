@@ -539,9 +539,10 @@ class Patientcasemodel extends CI_Model{
       $where = [
                 "prescription_medicine_dtl.prescription_mst_id" => $prescription_id
             ];
-            $query = $this->db->select("prescription_medicine_dtl.*,medicine_master.medicine_name")
+            $query = $this->db->select("prescription_medicine_dtl.*,medicine_master.medicine_name,medicine_category.category,medicine_category.med_cat_id")
                     ->from('prescription_medicine_dtl')
                     ->join('medicine_master','medicine_master.medicine_id = prescription_medicine_dtl.medicine_id','LEFT')
+                    ->join('medicine_category','medicine_category.med_cat_id=medicine_master.category_id','LEFT')
                     ->where($where)
                     ->get();
                 
@@ -891,6 +892,134 @@ class Patientcasemodel extends CI_Model{
         {
             return $data;
         }
+    }
+
+
+    public function getAdviceMasterData()
+    {
+     $data = [];
+
+            $query = $this->db->select("*")
+                    ->from('advice_master')
+                    ->group_by("advice_type")
+                    ->get();
+                
+                if($query->num_rows()> 0)
+                {
+                  
+                 foreach ($query->result() as $rows)
+                    {
+                       // $data[] = $rows;
+                        $data[]=[
+                            "advType"=>$rows,
+                            "adviceList"=>$this->getAdvideMasterDataBYType($rows->advice_type)
+  
+                          ];
+                    }
+                  
+                     
+                }
+                
+                return $data;
+    
+    }
+
+
+    
+    public function getAdvideMasterDataBYType($advice_type)
+    {
+     $data = [];
+     $where = array('advice_master.advice_type' => $advice_type );
+
+            $query = $this->db->select("*")
+                    ->from('advice_master')
+                    ->where($where)
+                    ->order_by("sl_no")
+                    ->get();
+                #q();
+                if($query->num_rows()> 0)
+                {
+                  
+                       
+                    foreach ($query->result() as $rows)
+                    {
+                        $data[] = $rows;
+                    }
+                    return $data;
+                  
+                     
+                }
+                
+                return $data;
+    
+    }
+
+
+
+    public function getAdviceDetailsData($case_master_id)
+    {
+     $data = [];
+            $where = array('advice_details.case_master_id' => $case_master_id);
+            $query = $this->db->select(" MAX(advice_details.created_on) AS created_on,advice_type")
+                    ->from('advice_details')
+                    ->where($where)
+                    ->group_by("advice_type")
+                    ->order_by("advice_details.created_on","desc")
+                 
+                    ->get();
+                    #q();
+                
+                if($query->num_rows()> 0)
+                {
+                  
+                 foreach ($query->result() as $rows)
+                    {
+                       // $data[] = $rows;
+                        $data[]=[
+                            "advType"=>$rows,
+                            "adviceList"=>$this->getAdviceDetailsLatestDataByType($rows->advice_type,$rows->created_on,$case_master_id)
+  
+                          ];
+                    }
+                  
+                     
+                }
+                
+                return $data;
+    
+    }
+
+
+    public function getAdviceDetailsLatestDataByType($advice_type,$created_on,$case_master_id)
+    {
+     $data = [];
+     $where = array(
+                    'advice_details.advice_type' => $advice_type,
+                    'advice_details.created_on' => $created_on,
+                    'advice_details.case_master_id' => $case_master_id,
+                   );
+
+            $query = $this->db->select("*")
+                    ->from('advice_details')
+                    ->where($where)
+                    ->order_by("advice_details.advice_details_id")
+                    ->get();
+                #q();
+                if($query->num_rows()> 0)
+                {
+                  
+                       
+                    foreach ($query->result() as $rows)
+                    {
+                        $data[] = $rows;
+                    }
+                    return $data;
+                  
+                     
+                }
+                
+                return $data;
+    
     }
 
 

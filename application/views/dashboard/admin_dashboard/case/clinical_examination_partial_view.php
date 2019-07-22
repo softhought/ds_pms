@@ -112,12 +112,18 @@
 
      <td> 
                <b>Oedema</b>
-               <div class="input-group " id="cliexm_oedemaerr_<?php echo $cliexmrowno; ?>">
-              
-               <div class="form-line">
-                <input type="text" name="cliexm_oedema[]" id="cliexm_oedema_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" >
-                 </div>
-                </div>
+               <select name="cliexm_oedema[]" id="cliexm_oedema_<?php echo $cliexmrowno; ?>" class="form-control"   data-live-search="true" tabindex="-98" placeholder="test"
+                    >              <option value="">&nbsp;</option>
+                                  <?php
+                                      foreach ($oedema as $oedema) { 
+                                   ?>
+                                     <option value="<?php echo $oedema;?>"
+                                      ><?php echo $oedema;?></option>
+                                   <?php
+                                    }
+                                   ?>
+                               </select> 
+               
                                       
      </td>
 

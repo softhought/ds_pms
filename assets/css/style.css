@@ -8422,7 +8422,7 @@ color: #d58585;
   width: 200px;
 }
 #spontaneous_abortion{
-  margin-top: 18px;
+  #margin-top: 18px;
 }
 
 
@@ -8466,4 +8466,13 @@ label {
 
 #selmens_medicinedrp,#regular_medicinedrp .bootstrap-select{
   z-index: 99;
+}
+
+#prescription_medicinedrp .bootstrap-select{
+  z-index: 11;
+}
+
+
+.presmedTd{
+  padding: 1px !important;
 }

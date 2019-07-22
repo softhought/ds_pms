@@ -1,34 +1,49 @@
 
     
 
-		<tr id="rowPrescriptionMedicine_<?php echo $rowno; ?>" class="row clearfix" >
+		<tr id="rowPrescriptionMedicine_<?php echo $rowno; ?>"  >
+		
+		     <td  class="presmedTd"> 
+						       
+                   <?php echo $category;?>       
+							        
+				</td>
 
-						<td style="width:36%;text-align: left;"> 
+				<td  class="presmedTd"> 
 						       <input type="hidden" name="presMedID[]" id="presMedID_<?php echo $rowno; ?>" value="<?php echo $medicineID?>">   
                    <?php echo $medicine;?>       
 							        
-						</td>
+				</td>
+
+				<td  class="presmedTd"> 
+             
+			 <input type="hidden" name="presInstruction[]" id="presInstruction_<?php echo $rowno; ?>" value="<?php echo $medinstruction?>">   
+				 <?php echo $medinstruction;?>                
+
+			 </td>
 						
-						<td style="width:18%;text-align: center;"> 
+				<td  class="presmedTd" style="text-align: center;"> 
 						 
                <input type="hidden" name="presdosage[]" id="presdosage_<?php echo $rowno; ?>" value="<?php echo $dosage?>">   
                    <?php echo $dosage;?>                
 
-						</td>	
-						  <td style="width:18%;text-align: center;"> 
+				</td>	
+				<td  class="presmedTd" style="text-align: center;"> 
              
                <input type="hidden" name="presfrequency[]" id="presfrequency_<?php echo $rowno; ?>" value="<?php echo $frequency?>">   
                    <?php echo $frequency;?>                
 
-            </td> 
-						 <td style="width:20%;text-align: center;"> 
+               </td> 
+			   <td  class="presmedTd" style="text-align: center;"> 
              
                <input type="hidden" name="presdays[]" id="presdays_<?php echo $rowno; ?>" value="<?php echo $days?>">   
                    <?php echo $days;?>                
 
-            </td>
+			   </td>
+			   
+		
 
-						<td style="width:10%;vertical-align: middle;">
+				<td style="vertical-align: middle;text-align: right;" class="presmedTd">
 							<?php 
                   if ($rowno!=0) {
                   
