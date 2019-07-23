@@ -442,6 +442,63 @@ div.footer {
                 <?php }?>
 
 
+        <table width="100%"   class="demo_font" style="margin-left: 40px;margin-top: 10px;" >
+            <?php 
+            if($antenantalCaseData){
+                if($highrisk!=''){
+            ?>
+            <tr>
+                <td><span>&#9744;&nbsp;&nbsp;</span>High risk for : <?php 
+                echo $highrisk;
+                ?></td>
+                <td>  </td>
+            </tr>
+            <?php
+            }}
+            ?>
+             <?php if ($regularMedicineList) {?>
+             <tr>
+                <td><span>&#9744;&nbsp;&nbsp;</span>On medication : </td>
+                <td>  </td>
+            </tr>
+             <?php } ?>
+
+        </table>
+
+        <?php if ($regularMedicineList) {?>
+        <table style="margin-left: 180px;width: 80%;font-size: 12px;margin-top:-20px;" cellspacing="2"  >
+                        
+                            <tr>
+                                <th width="15%" align="left">Medicine </th>
+                                <th width="5%" align="left">Dose </th>
+                                <th width="15%" align="left">for last(year)</th>
+                                <th width="15%" align="left">for last(month)</th>
+                              
+                            </tr>
+                            
+                                <?php
+                                foreach ($regularMedicineList as $regularmedicinerow) {
+
+                                ?>
+                            <tr>
+                                 <td><?php echo $regularmedicinerow->medicine_name;?></td>
+                                 <td><?php echo $regularmedicinerow->medicine_dose;?></td>
+                                 <td><?php echo $regularmedicinerow->for_year;?></td>
+                                 <td><?php echo $regularmedicinerow->for_month;?></td>
+
+                               
+                            </tr>
+                            <?php
+                              
+                                 }
+
+                            ?>
+                            
+                        
+                    </table>
+                <?php }?>
+
+
 
     </div>
 
@@ -487,64 +544,6 @@ div.footer {
     <hr>
 
 <div style="padding:3px 0;height:23.5cm;" >
-    <table width="100%"   class="demo_font" style="margin-left: 40px;margin-top: 10px;" >
-            <?php 
-            if($antenantalCaseData){
-                if($highrisk!=''){
-            ?>
-            <tr>
-                <td><span>&#9744;&nbsp;&nbsp;</span>High risk for : <?php 
-                echo $highrisk;
-                ?></td>
-                <td>  </td>
-            </tr>
-            <?php
-            }}
-            ?>
-
-             <tr>
-                <td><span>&#9744;&nbsp;&nbsp;</span>On medication : </td>
-                <td>  </td>
-            </tr> 
-        </table>
-
-
-                <?php
-                if ($regularMedicineList) {
-                    
-
-?>
-        <table style="margin-left: 180px;width: 80%;font-size: 12px;margin-top:-20px;" cellspacing="2"  >
-                        
-                            <tr>
-                                <th width="15%" align="left">Medicine </th>
-                                <th width="5%" align="left">Dose </th>
-                                <th width="15%" align="left">for last(year)</th>
-                                <th width="15%" align="left">for last(month)</th>
-                              
-                            </tr>
-                            
-                                <?php
-                                foreach ($regularMedicineList as $regularmedicinerow) {
-
-                                ?>
-                            <tr>
-                                 <td><?php echo $regularmedicinerow->medicine_name;?></td>
-                                 <td><?php echo $regularmedicinerow->medicine_dose;?></td>
-                                 <td><?php echo $regularmedicinerow->for_year;?></td>
-                                 <td><?php echo $regularmedicinerow->for_month;?></td>
-
-                               
-                            </tr>
-                            <?php
-                              
-                                 }
-
-                            ?>
-                            
-                        
-                    </table>
-                <?php }?>
 
 
 
@@ -597,12 +596,33 @@ div.footer {
 
                         <?php if($inveltdata->usg_slf_week!=''){ echo "USG dating scan : "; echo 'SLF of '.$inveltdata->usg_slf_week.' week '.$inveltdata->usg_slf_day.' day    |   '; } ?>
 
-                        <?php if($inveltdata->nt_scan_lowerrisk!=''){ echo "NT scan + Double marker : "; echo 'Low risk for <b>'.$inveltdata->nt_scan_lowerrisk.'</b>  High risk for <b>'.$inveltdata->nt_scan_highrisk.'</b>   |   '; } ?>
+                        <?php if($inveltdata->nt_scan_lowerrisk!=''){ echo "NT scan + Double marker : "; echo 'Low risk for '.$inveltdata->nt_scan_lowerrisk.'  High risk for '.$inveltdata->nt_scan_highrisk.'   |   '; } ?>
                    
 
                         <?php if($inveltdata->anomaly_slf_week!=''){ echo "Anomaly scan : "; echo 'SLF of '.$inveltdata->anomaly_slf_week.' week '.$inveltdata->anomaly_slf_day.' day    |   '; } ?>
 
-                        <?php if($inveltdata->thalassemia_result!=''){ echo "Growth scan : "; echo 'SLF of '.$inveltdata->growth_slf_week.' week '.$inveltdata->growth_slf_day.' day    |   '; } ?>
+                        <?php if($inveltdata->growth_slf_week!=''){ echo "Growth scan : "; echo 'SLF of '.$inveltdata->growth_slf_week.' week '.$inveltdata->growth_slf_day.' day       '; } ?>
+
+                        <?php if($inveltdata->growth_presentation!=''){?> Presentation(<?php echo $inveltdata->growth_presentation;?>) <?php } ?>
+
+                        <?php if($inveltdata->growth_afi!=''){?>, AFI(<?php echo $inveltdata->growth_afi;?>) <?php } ?>
+
+                        <?php if($inveltdata->growth_liquor!=''){?>, Liquor(<?php echo $inveltdata->growth_liquor;?>) <?php } echo "|";?>
+
+                        <?php if($inveltdata->doppler_slf_week!=''){ echo "Doppler scan : "; echo 'SLF of '.$inveltdata->doppler_slf_week.' week '.$inveltdata->doppler_slf_day.' day       '; } ?>
+                        <?php if($inveltdata->doppler_presentation!=''){?> Presentation(<?php echo $inveltdata->doppler_presentation;?>) <?php } ?>
+                        <?php if($inveltdata->doppler_afi!=''){?>, AFI(<?php echo $inveltdata->doppler_afi;?>) <?php } ?>
+                        <?php if($inveltdata->doppler_liquor!=''){?>, Liquor(<?php echo $inveltdata->doppler_liquor;?>) <?php } echo "|";?>
+
+                        <?php if($inveltdata->doppler_checkbox!='' && $inveltdata->doppler_checkbox=='Normal'){?> Doppler parameters within normal limit <?php echo "|"; } ?>
+
+                    <?php if($inveltdata->umbilical_artery_pi!=""){?> <?php echo " Umbilical artery PI:".$inveltdata->umbilical_artery_pi; }?>
+                    <?php if($inveltdata->mca_pi!=""){?> <?php echo " MCA PI:".$inveltdata->mca_pi; }?>
+                    <?php if($inveltdata->cp_ratio!=""){?> <?php echo " CP Ratio:".$inveltdata->cp_ratio; }?>
+                    <?php if($inveltdata->doppler_parameters_others!=""){?> <?php echo " Doppler Others:".$inveltdata->doppler_parameters_others; }?>
+
+                    <?php if($inveltdata->others_investigation!=""){?> <?php echo "Others Investigation:".$inveltdata->others_investigation; }?>
+
                         </div>
 
                       
@@ -633,14 +653,14 @@ div.footer {
         <table style="width: 90%;font-size: 12px;margin-left:60px;" cellspacing="6"  >
                         
                             <tr>
-                                <th  align="left">Date  </th>
-                                <th  align="left">weeks by LMP</th>
-                                <th  align="left">Days by LMP</th>
-                                <th  align="left">weeks by USG</th>
-                                <th  align="left">Days by USG</th>
-                                <th  align="left">Weight</th>
-                                <th  align="left">BP(S) </th>
-                                <th  align="left">BP(D)</th>
+                                <td  align="left">Date  </td>
+                                <td  align="left">Wks. by LMP</td>
+                                <td  align="left">Days by LMP</td>
+                                <td  align="left">Wks. by USG</td>
+                                <td  align="left">Days by USG</td>
+                                <td  align="center">Weight</td>
+                                <td  align="left">BP(S) </td>
+                                <td  align="left">BP(D)</td>
                               
                               
                             </tr>
@@ -661,17 +681,15 @@ div.footer {
                                
                             </tr>
 
-                            <tr>
-                                <td colspan="8">&nbsp;</td>
-                            </tr>
+                           
                               <tr>
                                 
-                                <th  align="left">Pallor </th>
-                                <th  align="left">Oedema </th>
-                                <th  align="left">Fundal Height</th>
-                                <th  align="left">SFH(cm)</th>
-                                <th  align="left">FSH(/min)</th>
-                                <th  align="left">Appointment</th>
+                                <td  align="left">Pallor </td>
+                                <td  align="left">Oedema </td>
+                                <td  align="left">Fundal Height</td>
+                                <td  align="left">SFH(cm)</td>
+                                <td  align="left">FSH(/min)</td>
+                                <td  align="left" colspan="2">Appointment</td>
                               
                             </tr>
                             <tr>
@@ -681,11 +699,12 @@ div.footer {
                                  <td><?php echo $clinicalExaminationLatestData->fundal_height;?></td>
                                  <td><?php echo $clinicalExaminationLatestData->cliexm_sfh;?></td>
                                  <td><?php echo $clinicalExaminationLatestData->cliexm_fsh;?></td>
-                                 <td><?php 
+                                 <td colspan="2"><?php 
 
                                         if($clinicalExaminationLatestData->cliexm_appointment_date!=''){
                                             echo date('d-m-Y', strtotime($clinicalExaminationLatestData->cliexm_appointment_date));
                                         }else{
+                                             echo "after ";
                                                 if($clinicalExaminationLatestData->cliexm_after_week!=''){
                                                     echo $clinicalExaminationLatestData->cliexm_after_week.' weeks ';
                                                 }
@@ -709,12 +728,13 @@ div.footer {
           
 
 ?>
-<table style="margin-left: 180px;width: 80%;font-size: 12px;" cellspacing="6"  >
+<table style="margin-left: 150px;width: 100%;font-size: 12px;margin-top:-20px;" cellspacing="6"  >
               
                   <tr>
                       <th width="15%" align="left">Medicine </th>
-                      <th width="5%" align="left">Dosage </th>
-                      <th width="15%" align="left">Frequency</th>
+                      <th width="35%" align="left">Instruction </th>
+                      <th width="8%" align="left">Dos.</th>
+                      <th width="15%" align="left">Freq.</th>
                       <th width="15%" align="left">Days</th>
                     
                   </tr>
@@ -725,8 +745,19 @@ div.footer {
                       ?>
                    <tr>
                        <td><?php echo $prescriptionmedicinerow->medicine_name;?></td>
+                       <td><?php echo $prescriptionmedicinerow->med_instruction;?></td>
                        <td><?php echo $prescriptionmedicinerow->dosage;?></td>
-                       <td><?php echo $prescriptionmedicinerow->frequency;?></td>
+                       <td><?php    if($prescriptionmedicinerow->frequency=="OD"){
+                                     echo "once a day";
+                                    }else if($prescriptionmedicinerow->frequency=="BD"){
+                                     echo "twice a day";
+                                    }else if($prescriptionmedicinerow->frequency=="TDS"){
+                                     echo "thrice a day";
+                                    }else if($prescriptionmedicinerow->frequency=="HS"){
+                                       echo"at bedtime";
+                                    }
+                                    
+                       ?></td>
                        <td><?php echo $prescriptionmedicinerow->days;?></td>
 
                   </tr>
@@ -743,11 +774,15 @@ div.footer {
 
 
 <br>
-<span>Doctor Note :</span><p><?php  if ($prescriptionMedicineList) {echo $prescriptionLatestData->doctor_note;}?></p><br><br>
-<span >Next Checkup Date :</span><?php 
+<span></span><p><?php  if ($prescriptionMedicineList) {
+    if($prescriptionLatestData->doctor_note!=''){
+        echo "Doctor Note :".$prescriptionLatestData->doctor_note."<br>";
+    }
+    }?></p>
+<?php 
 if ($prescriptionMedicineList) {
 if ($prescriptionLatestData->next_checkup_dt!='') {
-                       echo date('l d M Y', strtotime($prescriptionLatestData->next_checkup_dt));
+                       echo "<span >Next Checkup Date :</span>".date('l d M Y', strtotime($prescriptionLatestData->next_checkup_dt));
                      }
 
               }
@@ -770,8 +805,7 @@ if ($prescriptionLatestData->next_checkup_dt!='') {
                                               ?>
 
 <br><br>
-<span class="spanhead">Review :</span><br><br>
-<span class="spanhead">Diagnosis Summary :</span><br>
+
 
      
 

@@ -1205,9 +1205,9 @@ $(document).on('change','.otheranomalyckbx',function(event){
                 $('#pres_medicine_days').val('');
                 $('#medinstruction').val('');
                 $('#prescription_medicine').val(0).change();
-                $('#pres_medicine_dosage').val(0).change();
-                $('#pres_medicine_frequency').val(0).change();
-                $("#prescription_medicine").prop("checked", false);
+                $('#pres_medicine_dosage').val('').change();
+                $('#pres_medicine_frequency').val('').change();
+               
 
             //Time
 

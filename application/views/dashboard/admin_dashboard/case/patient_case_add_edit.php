@@ -4167,7 +4167,7 @@ border-bottom: 1px solid #f0c7f9;
 
                             
                                   
-             <td style="width:90%;text-align: left;padding: 1px;"> 
+             <td style="width:90%;text-align: left;"> 
                    <input type="hidden" name="presinvestigationID[]" id="presinvestigationID_<?php echo $presTestrow; ?>" value="<?php echo $prescriptionInvestigation->investigation_comp_id?>">   
                    <?php echo $prescriptionInvestigation->inv_component_name;?>       
                       
@@ -4177,7 +4177,7 @@ border-bottom: 1px solid #f0c7f9;
         
         
 
-      <td style="width:10%;vertical-align: middle;padding: 1px;">
+      <td style="width:10%;vertical-align: middle;">
             
       <a href="javascript:;" class="delPresInvestigation" id="delDocRow_<?php echo $presTestrow; ?>" title="Delete">
           <i class="material-icons" style="color: red;">clear</i>

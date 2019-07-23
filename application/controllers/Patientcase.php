@@ -2300,10 +2300,10 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
           $result['tdap_taken']='';
           $result['tdap_tobetaken']='';
 
-          $result['drRegNo']='12345';
+          $where_dr = array('doctor_master.doctor_id' =>$session['doctor_id']);
+          $result['drRegNo']=$this->commondatamodel->getSingleRowByWhereCls('doctor_master',$where_dr)->dr_reg_no;
 
-        
-         
+       
 
           if($this->uri->rsegment(3) == NULL)
             {
@@ -2478,6 +2478,8 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
 
               //investigation Latest Data
               $result['inveltdata']=$this->patientcasemodel->getInvestigationLatestByCase($caseID);
+
+            //  pre($result['inveltdata']);exit;
               
            $result['examinationFirstData']=$this->patientcasemodel->getFirstExaminationDataByCase($caseID);
            $result['examinationLatestData']=$this->patientcasemodel->getExaminationLatestByCase($caseID);
