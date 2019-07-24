@@ -319,6 +319,9 @@
         </ul> 
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Call Search -->
+                    <li><a href="javascript:;" class="js-search" data-close="true">
+                        <!-- <i class="material-icons">search</i> -->
+                       <b> Dr. Sutapa Sen </b></a></li>
                     <li><a href="<?php echo base_url(); ?>logout" class="js-search" data-close="true">
                         <!-- <i class="material-icons">search</i> -->
                     Logout</a></li>

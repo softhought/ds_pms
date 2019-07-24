@@ -557,18 +557,23 @@ border-bottom: 1px solid #f0c7f9;
                   <div class="col-sm-2">	
 
 
-              
-
-             
                       <div class="form-group form-float demo-radio-button">
                        	 <input name="procedure_concieve" type="radio" class="with-gap" id="procedure_concieve_1" value="IUI" 
-                          <?php if($bodycontent['antenantalCaseEditdata']->procedure_concieve=='IUI'){echo "checked";} ?>>
+                          <?php
+                          if($bodycontent['antenantalCaseEditdata']){
+                          if($bodycontent['antenantalCaseEditdata']->procedure_concieve=='IUI'){echo "checked";} }
+                           ?>>
                        <label for="procedure_concieve_1">IUI</label>
                         <input name="procedure_concieve" type="radio" class="with-gap" id="procedure_concieve_2" value="IVF->FET" 
-                        <?php if($bodycontent['antenantalCaseEditdata']->procedure_concieve=='IVF->FET'){echo "checked";} ?>>
+                        <?php 
+                        if($bodycontent['antenantalCaseEditdata']){
+                        if($bodycontent['antenantalCaseEditdata']->procedure_concieve=='IVF->FET'){echo "checked";} }
+                        ?>>
                         <label for="procedure_concieve_2">IVF->FET</label>
                       	<input name="procedure_concieve" type="radio" class="with-gap" id="procedure_concieve_3" value="ET" 
-                        <?php if($bodycontent['antenantalCaseEditdata']->procedure_concieve=='ET'){echo "checked";} ?>>
+                        <?php
+                        if($bodycontent['antenantalCaseEditdata']){
+                         if($bodycontent['antenantalCaseEditdata']->procedure_concieve=='ET'){echo "checked";}} ?>>
                         <label for="procedure_concieve_3">ET</label>
                                               
                          </div>

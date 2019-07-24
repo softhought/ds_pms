@@ -46,7 +46,7 @@
                         </div>
                         <div class="content">
                             <div class="text">BABY BORN</div>
-                            <div class="number count-to" data-from="0" data-to="05" data-speed="1000" data-fresh-interval="20"></div>
+                            <div class="number count-to" data-from="0" data-to="00" data-speed="1000" data-fresh-interval="20"></div>
                         </div>
                     </div>
                 </div>

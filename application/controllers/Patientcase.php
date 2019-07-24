@@ -2286,7 +2286,7 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
           $result['prescriptionMedicineList']=[];
           $result['prescriptionInvestigationList']=[];
           $result['total_parity']='';
-          $result['total_cesarean']=[];
+          $result['total_cesarean']='';
           $parity_term_delivery=0;
           $parity_preterm=0;
           $parity_abortion=0;
@@ -2299,6 +2299,8 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
           $result['tt2_tobetaken']='';
           $result['tdap_taken']='';
           $result['tdap_tobetaken']='';
+          $result['clinicalExaminationLatestData']=[];
+          $result['familyCompData']='N';
 
           $where_dr = array('doctor_master.doctor_id' =>$session['doctor_id']);
           $result['drRegNo']=$this->commondatamodel->getSingleRowByWhereCls('doctor_master',$where_dr)->dr_reg_no;
@@ -2405,7 +2407,7 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
                   $complications='';
                   $medicalproblem='';
                   
-                 
+               
                   $complicationids = explode (",", $previouschild->complication);
                  
                   $complicationData=$this->patientcasemodel->getComplicationsByIds($complicationids);
@@ -2450,9 +2452,17 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
 
 
                 $result['familyComponentList']=$this->patientcasemodel->getFamilyComponentDetails($caseID);
+               
 
-              
-                
+                foreach ($result['familyComponentList'] as $familycomponentrow) {
+
+                    if ($familycomponentrow->is_father=='Y' || $familycomponentrow->is_mother=='Y') {
+                        $result['familyCompData']='Y';
+                    }
+
+                }
+
+            
 
 
 

@@ -49,7 +49,7 @@
 	}
         .demo_font{
             font-family:Verdana, Geneva, sans-serif;
-		font-size:11px;	
+		font-size:10px;	
         }
 
         .spanhead{
@@ -119,18 +119,29 @@ div.footer {
             </span></td>
         </tr>
         <tr style="font-size: 10px;">
-        	<td>Reg No: <?php echo $drRegNo;?> </td>
-        	<td>Visiting Dt:<?php if ($prescriptionLatestData->created_on!='') {
-                       echo date('d-m-Y', strtotime($prescriptionLatestData->created_on));
-                     }?></td>
+            <td style="color: gray;">Reg No: <?php echo $drRegNo;?> </td>
+            <td>Print Dt:<?php  echo date('d-m-Y');?></td>
+          
+                
         </tr>
     </table>
  </div>
 
     <hr>
  
-    
-    <div class="custom-page-start" style="padding:3px 0;height:23.5cm;#border:1px solid gray;  ">
+    <div style="text-align:right;font-size:12px;"><span >Case No:<?php
+                            if($patientCaseData){
+                                    echo $patientCaseData->case_no;
+                                    
+                            }
+
+                            if($prescriptionLatestData){
+                                if ($prescriptionLatestData->created_on!='') {
+                                    echo "<br>Visiting Dt:";
+                                   echo date('d-m-Y', strtotime($prescriptionLatestData->created_on));
+                                 } }
+    ?></span></div>
+    <div class="custom-page-start" style="padding:3px 0;height:22.5cm;#border:1px solid gray;  ">
     	
     	<span class="spanhead">Patient Particulars</span>
         <?php
@@ -142,7 +153,7 @@ div.footer {
     		<tr>
     			<td width="7%">Name : </td>
     			<td width="35%"><?php echo $patientmasterData->patientname;?></td>
-    			<td width="40%">Age : <?php echo $patientmasterData->patientage;?>
+    			<td width="40%">Age : <?php echo $patientmasterData->patientage." years";?>
     				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gender : <?php echo $patientmasterData->gender;?>
     			</td>
     			
@@ -217,8 +228,10 @@ div.footer {
 		<br>
     	<span class="spanhead">History Summary</span>
     	<table width="100%"   class="demo_font" style="margin-left: 40px;margin-top: 10px;" >
-    		<tr>
-    			<td colspan="2"><span>&#9744;&nbsp;&nbsp;</span>GN : <?php if($antenantalCaseData){echo $total_parity;}?>&nbsp;
+            
+            <?php ?>
+            <tr>
+    			<td colspan="2"><span>&#9744;&nbsp;&nbsp;</span> <?php if($antenantalCaseData){echo "GN :".$total_parity;}?>&nbsp;
     				<!-- [<span>P</span><sub>A+B+C+D</sub>] -->
     				<!-- [ Term Delivery : <?php if($antenantalCaseData){echo $antenantalCaseData->parity_term_delivery;}?>, 
     				Preterm : <?php if($antenantalCaseData){ echo $antenantalCaseData->parity_preterm;}?>, 
@@ -244,22 +257,28 @@ div.footer {
     		</tr>
     		<?php
              }
-    		?>
+            ?>
+            
+            <?php if($antenantalCaseData){
+
+                if($antenantalCaseData->procedure_concieve!=''){
+                ?>
     		<tr>
     			<td><span>&#9744;&nbsp;&nbsp;</span>Concieved after infertility treatment :  <?php
 
-    			if($antenantalCaseData){
+    			
     			 echo $antenantalCaseData->procedure_concieve;
 
     				if ($antenantalCaseData->procedure_date!='') {
     					echo '  on '.date('d-m-Y', strtotime($antenantalCaseData->procedure_date));
     				}
 
-    			}
+                }
 
     			?></td>
     			<td> </td>
-    		</tr>
+            </tr>
+            <?php }?>
 
             <?php 
             if($antenantalCaseData){
@@ -269,22 +288,23 @@ div.footer {
     			<td><span>&#9744;&nbsp;&nbsp;</span>Number of spontaneous abortion:  <?php echo $antenantalCaseData->spontaneous_abortion;?></td>
     			<td> </td>
     		</tr>
-            <?php }}?>
+            <?php }}
+            
+            if ($previousChildHistory) {
+            ?>
 
     		<tr>
-    			<td colspan="2"><span>&#9744;&nbsp;&nbsp;</span>With Previous History of:  
-    				
-    				
-    			</td>
+    			<td colspan="2"><span>&#9744;&nbsp;&nbsp;</span>With Previous History of: 	</td>
     			
-    		</tr>
+            </tr>
+            <?php } ?>
 
     	</table>
 <?php
 
 
 
-		if ($previousChild) {
+		if ($previousChildHistory) {
 					
 
 ?>
@@ -360,6 +380,8 @@ div.footer {
           
           <?php 
            if($antenantalCaseData){
+
+            if($antenantalCaseData->any_allergy!=''){
           ?>
             <tr>
                 <td><span>&#9744;&nbsp;&nbsp;</span>With allergy of : <?php 
@@ -370,20 +392,23 @@ div.footer {
                 <td>  </td>
             </tr>
             <?php 
-                }
+                } }
 
+
+                if ($familyCompData=='Y') {
 
             ?>
             <tr>
                 <td colspan="2"><span>&#9744;&nbsp;&nbsp;</span>With Family History of:   
                 </td>
                 
-            </tr>    
+            </tr>  
+                <?php } ?>  
         </table>
 
 
         <?php
-                if ($familyComponentList) {
+                if ($familyCompData=='Y') {
                     
 
 ?>
@@ -534,10 +559,8 @@ div.footer {
             </span></td>
         </tr>
            <tr style="font-size: 10px;">
-        	<td>Reg No: <?php echo $drRegNo;?>  </td>
-        	<td>Visiting Dt:<?php if ($prescriptionLatestData->created_on!='') {
-                       echo date('d-m-Y', strtotime($prescriptionLatestData->created_on));
-                     }?></td>
+        	<td style="color: gray;">Reg No: <?php echo $drRegNo;?>  </td>
+            <td>Print Dt:<?php  echo date('d-m-Y');?></td>
         </tr>
     </table>
  </div>
@@ -633,15 +656,17 @@ div.footer {
                 <?php }?>
 
               <table width="100%"   class="demo_font" style="margin-left: 150px;margin-top: 10px;" >
+              <?php if ($examinationLatestData) {?>
             <tr>
                 <td><span>&#9744;&nbsp;&nbsp;</span>BMI : <?php  if ($examinationLatestData) {echo $examinationFirstData->exam_bmi;}?></td>
                <td><span>&#9744;&nbsp;&nbsp;</span>Weight : <?php  if ($examinationLatestData) {echo $examinationFirstData->exam_weight;}?></td>
             </tr>
+                    <?php }?>
 
             
         </table><br>
 
-        <span class="spanhead">Clinical  Examination :</span>
+       
 
 
 
@@ -650,6 +675,7 @@ div.footer {
                     
 
 ?>
+ <span class="spanhead">Clinical  Examination :</span>
         <table style="width: 90%;font-size: 12px;margin-left:60px;" cellspacing="6"  >
                         
                             <tr>
@@ -721,13 +747,14 @@ div.footer {
                 <?php }?>
 
 
-                <span class="spanhead">Prescription :</span>
+               
 
 <?php
       if ($prescriptionMedicineList) {
           
 
 ?>
+ <span class="spanhead">Prescription :</span>
 <table style="margin-left: 150px;width: 100%;font-size: 12px;margin-top:-20px;" cellspacing="6"  >
               
                   <tr>
@@ -792,9 +819,9 @@ if ($prescriptionLatestData->next_checkup_dt!='') {
 
 
 <br><br>
-
+<?php  if ($prescriptionMedicineList) {?>
 <span class="spanhead">Suggested Investigation : </span>&nbsp;     <?php
-                                             if ($prescriptionMedicineList) {
+                                            
                                                  $chkcoma=0;
                                               foreach ($prescriptionInvestigationList as $prescriptionInvestigation) {
                                                   if($chkcoma!=0){echo ",";}
