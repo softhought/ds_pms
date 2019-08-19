@@ -127,6 +127,7 @@ class Patientcase extends CI_Controller {
 
 
                        $clinic_id = $session['clinic_id'];
+                       $doctor_id = $session['doctor_id'];
                        $serial_type = 'NEWCASE';
                        $currentYear = date('Y');
                        $serial= $this->patientcasemodel->getLatestSerialNumberClinic($serial_type,$currentYear,$clinic_id);
@@ -163,6 +164,7 @@ class Patientcase extends CI_Controller {
                                                      'major_group' => $majorgroup,
                                                      'patient_reg_type' => $patient_reg_type,
                                                      'created_on' => date('Y-m-d'),
+                                                     'doctor_id' => $doctor_id,
                                                       );
 
                           $case_master_id = $this->commondatamodel->insertSingleTableData('case_master',$case_master_array);
@@ -294,6 +296,7 @@ class Patientcase extends CI_Controller {
 
 
                        $clinic_id = $session['clinic_id'];
+                       $doctor_id = $session['doctor_id'];
                        $serial_type = 'NEWCASE';
                        $currentYear = date('Y');
                        $serial= $this->patientcasemodel->getLatestSerialNumberClinic($serial_type,$currentYear,$clinic_id);
@@ -316,6 +319,7 @@ class Patientcase extends CI_Controller {
                                                      'patient_reg_type' => $patient_reg_type,
                                                      'previous_case_id' => $previous_case_id,
                                                      'created_on' => date('Y-m-d'),
+                                                     'doctor_id' => $doctor_id,
                                                       );
 
                           $case_master_id = $this->commondatamodel->insertSingleTableData('case_master',$case_master_array);
@@ -1932,9 +1936,19 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
     {
         if($this->session->userdata('user_data'))
         {
-              $lmpdate = $this->input->post('lmpdate');
+             $lmpdate = $this->input->post('lmpdate');
+              $selectMonth = date('M', strtotime($lmpdate));
+             
 
-             echo $next_due_date = date('l d M Y', strtotime($lmpdate. ' +280 days'));
+              if($selectMonth=='Jan' || $selectMonth=='Feb' || $selectMonth=='Mar'){
+
+                $this->janToMarEDDCalculation($lmpdate);
+
+              }else{
+                 $this->aprToDecEDDCalculation($lmpdate);
+              }
+          // echo "<br>";
+          //   echo $next_due_date = date('l d M Y', strtotime($lmpdate. ' +280 days'));
         }
         else
         {
@@ -2760,6 +2774,40 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
       {
           redirect('login','refresh');
       }
+  }
+
+
+
+  public function janToMarEDDCalculation($lmpdate){
+    // echo "Jan-Mar";
+    // echo "<br>";
+    $add9month = date('d-m-Y', strtotime($lmpdate.'+9 months'));
+
+   echo $add7month = date('l d M Y', strtotime($add9month.'+7 days'));
+
+    $lmpdate;
+  }
+
+  public function aprToDecEDDCalculation($lmpdate){
+     //echo "Apr-Dec";
+     // echo "<br>";
+     // echo $sub3month = date('d-m-Y', strtotime($lmpdate.'+-3 months'));
+     // echo "<br>";
+     // echo $add7month = date('d-m-Y', strtotime($sub3month.'+7 days'));
+
+     // echo "<br>";
+     // echo $add1year = date('l d M Y', strtotime($add7month.'+1 years'));
+
+
+      $add7days = date('d-m-Y', strtotime($lmpdate.'+7 days'));
+     $sub3month = date('d-m-Y', strtotime($add7days.'+-3 months'));
+     echo $add1year = date('l d M Y', strtotime($sub3month.'+1 years'));
+
+
+
+
+
+      $lmpdate;
   }
 
 }// end of class

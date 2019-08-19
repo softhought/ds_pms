@@ -87,7 +87,7 @@ border-bottom: 1px solid #f0c7f9;
                                             	<input name="patient_type" class="with-gap" type="radio"  id="patient_type_1" value="New">
                                             	<label for="patient_type_1">New Patient</label>
                                             	<input name="patient_type" class="with-gap" type="radio"  id="patient_type_2" value="Existing">
-                                            	<label for="patient_type_2">Existing Patient</label>
+                                            	<label for="patient_type_2">Old Patient</label>
                                             	
                                             	
                                               
