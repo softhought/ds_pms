@@ -54,7 +54,10 @@
             <!-- #END# Widgets -->
          
          
-
+<div class="jumbotron" style="text-align: center;">
+ 
+  <p style="color: #f44336;">Clinic: <?php echo $bodycontent['clinicName'];?></p>
+</div>
        
         </div>
     </section>

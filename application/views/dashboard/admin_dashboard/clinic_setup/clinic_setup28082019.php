@@ -1,25 +1,7 @@
 
 <script src="<?php echo(base_url());?>assets/js/adm_scripts/clinic_setup.js"></script>
-  
 
 <style>
-  .inputWrapper {
-    height: 32px;
-    overflow: hidden;
-    position: relative;
-    cursor: pointer;
-    /*Using a background color, but you can use a background image to represent a button*/
-    background-color: #DDF;
-}
-.fileInput {
-    cursor: pointer;
-    height: 100%;
-    position:absolute;
-    top: 0;
-    z-index: 99;
-    /*This makes the button huge. If you want a bigger button, increase the font size*/
-    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0)
-}
 .width18{
     width: 23% !important;
 
@@ -40,30 +22,6 @@ border-bottom: 1px solid #f0c7f9;
         overflow: visible;
     }
 }
-
-.btn-file {
-    position: relative;
-    overflow: hidden;
-
-}
-.btn-file input[type=file] {
-    position: absolute;
-    top: 0;
-    right: 0;
-    min-width: 100%;
-    min-height: 100%;
-    font-size: 100px;
-    text-align: right;
-    filter: alpha(opacity=0);
-    #opacity: 0;
-    outline: none;
-    background: white;
-    cursor: inherit;
-    display: block;
-}
-
-
-
 
 
 </style>
@@ -96,13 +54,8 @@ border-bottom: 1px solid #f0c7f9;
                             </div>
                             <div class="body">   
                                 <div class="demo-masked-input">
-
-                               <div class="row clearfix">
-
-                              <div class="col-sm-8">
-                                <div class="row clearfix">
-                                  
-                                  <div class="col-sm-12">
+                                    <div class="row clearfix">
+                                        <div class="col-sm-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
                                                     <input type="text" class="form-control" name="clinicname" id="clinicname" autocomplete="off" value="<?php if($bodycontent['mode']=="EDIT"){echo $bodycontent['clinicEditdata']->clinic_name;}?>" >
@@ -110,11 +63,7 @@ border-bottom: 1px solid #f0c7f9;
                                                 </div>
                                             </div>
                                         </div>
-
-                                </div> 
-                                <div class="row clearfix">
-
-                                    <div class="col-sm-6">
+                                        <div class="col-sm-3">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
                                                     <input type="text" class="form-control" name="contactno" id="contactno" autocomplete="off" onKeyUp="numericFilter(this);" 
@@ -122,9 +71,8 @@ border-bottom: 1px solid #f0c7f9;
                                                     <label class="form-label">Contact Number</label>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                  <div class="col-sm-6">
+                                        </div>     
+                                         <div class="col-sm-3">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
                                                     <input type="text" class="form-control" name="cliniccode" id="cliniccode" autocomplete="off" 
@@ -132,13 +80,8 @@ border-bottom: 1px solid #f0c7f9;
                                                     <label class="form-label">Clinic Code </label>
                                                 </div>
                                             </div>
-                                        </div>           
-                                  
-                                </div>
-
-                                <div class="row clearfix">
-
-                                     <div class="col-sm-12">
+                                        </div>                                    
+                                        <div class="col-sm-12">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
                                                     <textarea rows="1" name="address" id="address" class="form-control no-resize auto-growth"  style="overflow: hidden; overflow-wrap: break-word; height: 32px;" autocomplete="off"
@@ -146,76 +89,12 @@ border-bottom: 1px solid #f0c7f9;
                                                     <label class="form-label">Clinic Address</label>
                                                 </div>
                                             </div>
-                                             
-                                        </div>
-                                  
-                                </div>  
-
-                              </div>  
-
-
-
-                              <div class="col-sm-4">
-                                 <div class="row clearfix">
-
-                                    <div class="col-sm-10">
-                                            <div class="form-group" style="">
-                                              <label class="form-label" style="margin-left: 27px;">Clinic Logo Upload</label><br>
-                                              <?php if($bodycontent['mode']=="EDIT"){ ?>
-
-                                                <img src="<?php echo base_url();?>assets/documentation/clinic_logo/<?php echo $bodycontent['clinicEditdata']->logo; ?> " id="showimage" style="width: 100px;height:100px;border: 2px solid #6d78cb;margin-left:40px;margin-bottom:13px; ">
-
-                                              <?php } else{ ?>
-
-                                               <img src="" id="showimage" style="width: 100px;height:100px;border: 2px solid #6d78cb;margin-left:40px;margin-bottom:13px; ">
-
-                                             <?php } ?>
-                                               
-                                    <div class="inputWrapper" style="border: 1px solid #673ab7;width: 68px;margin-left: 60px;">
-
-                                                    <label class="btn bg-deep-purple btn-file">
-                                             Browse 
-                                             <input class="fileInput "  type='file' custom-file-input name='imagefile' id="imagefile" size='20' onchange="readURL(this);" style="display: none;" accept="image/*">
-                                                </label>
-
-                                              
-
-                                                <input type='hidden' name='islogo' id="islogo" value="N">
-
-                                              </div>
-                                            </div>
-                                          </div>
-
-
-
-                                  </div>    
-
-
-                              </div>       
-
-
-
-
-                                        
-                                           
-                                                                        
-                                      
-                                                                             
+                                        </div>                                        
                                     </div>
 
-                             <!--  <div class="row">
-                             
 
-                      <div class="col-md-offset-8 col-md-4 col-sm-12 col-xs-12">
-
-                          
-
-                            <input type='file' name='imagefile' id="imagefile" size='20'>
-                            <input type='hidden' name='islogo' id="islogo" value="N">
-
-                        </div>
-                        </div> -->
              
+
 
                         <div  style="padding: 5px;">
                 <!-- ---------------------------------start add time slot ------------------------------------- -->

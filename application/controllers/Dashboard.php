@@ -26,6 +26,14 @@ class Dashboard extends CI_Controller {
        $prescriptionData=$this->commondatamodel-> getAllRecordWhere('prescription_master',$where_prescription);
 
       $result['todayVisit']=count($prescriptionData);
+
+
+
+      
+      $where_clinic = array('clinic_master.clinic_id' => $session['clinic_id'] );
+
+      $result['clinicName']=$this->commondatamodel->getSingleRowByWhereCls('clinic_master',$where_clinic)->clinic_name;
+      
     
 
       createbody_method($result, $page, $header, $session);

@@ -58,7 +58,7 @@
     <!-- JQuery DataTable Css -->
     <link href="<?php echo(base_url());?>assets/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
     
-    <link href="<?php echo(base_url());?>assets/css/design.css" rel="stylesheet">
+
 
         <!-- Jquery Core Js -->
     <script src="<?php echo(base_url());?>assets/plugins/jquery/jquery.min.js"></script>
@@ -559,30 +559,6 @@
     <!-- /modal -->
 
 <script type="text/javascript">
-
-    $(document).ready(function(){
-        $(".bootstrap-tagsinput > input").attr("placeholder","Write Here");
-    });
-
-    // $(document).on("click",".panel",function(){
-    //     console.log(this);
-    //     $(this).prev(".panel-collapse").find(".in").css("background","red");
-    // });
-
-
-// $(".panel-collapse.in").each(function(){
-//         	$(this).prev(".panel-heading").find(".glyphicon").addClass("glyphicon-minus").removeClass("glyphicon-plus");
-
-
-           
-//         });
-        
-        // Toggle plus minus icon on show hide of collapse element
-    //  $(".panel-collapse").on('in.panel-collapse', function(){
-    //     	$(this).prev(".panel-heading").find(".glyphicon").removeClass("glyphicon-plus").addClass("glyphicon-minus");
-    //     }).on('.collapse', function(){
-    //     	$(this).prev(".panel-heading").find(".glyphicon").removeClass("glyphicon-minus").addClass("glyphicon-plus");
-    //     });
 
  function numericFilter(txb) {
    txb.value = txb.value.replace(/[^\0-9]/ig, "");

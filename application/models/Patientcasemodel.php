@@ -79,6 +79,33 @@ class Patientcasemodel extends CI_Model{
     
     }
 
+    public function getAllCaseDetailsByClinic($clinic_id)
+    {
+     $data = [];
+     $where = array('case_master.clinic_id' => $clinic_id );
+
+            $query = $this->db->select("*")
+                    ->from('case_master')
+                    ->join('patient_master','patient_master.patient_id=case_master.patient_id','INNER')
+                    ->where($where)
+                    ->get();
+                
+                if($query->num_rows()> 0)
+                {
+                  
+                 foreach ($query->result() as $rows)
+                    {
+                        $data[] = $rows;
+                    }
+                  
+                     
+                }
+                
+                return $data;
+    
+    }
+
+
 
         public function getLatestSerialNumberClinic($type,$year,$clinic_id){
         $lastnumber = (int)(0);
@@ -1003,6 +1030,96 @@ class Patientcasemodel extends CI_Model{
                     ->from('advice_details')
                     ->where($where)
                     ->order_by("advice_details.advice_details_id")
+                    ->get();
+                #q();
+                if($query->num_rows()> 0)
+                {
+                  
+                       
+                    foreach ($query->result() as $rows)
+                    {
+                        $data[] = $rows;
+                    }
+                    return $data;
+                  
+                     
+                }
+                
+                return $data;
+    
+    }
+
+
+    public function getAdviceDetailsDataByDate($case_master_id,$created_on)
+    {
+     $data = [];
+            $where = array(
+                            'advice_details.case_master_id' => $case_master_id,
+                            'advice_details.created_on' => $created_on
+                           );
+
+            $query = $this->db->select("*")
+                    ->from('advice_details')
+                    ->where($where)
+                    ->group_by("advice_type")
+                    ->order_by("advice_details.created_on","desc")
+                 
+                    ->get();
+                    #q();
+                
+                if($query->num_rows()> 0)
+                {
+                  
+                 foreach ($query->result() as $rows)
+                    {
+                       // $data[] = $rows;
+                        $data[]=[
+                            "advType"=>$rows,
+                            "adviceList"=>$this->getAdviceDetailsLatestDataByType($rows->advice_type,$rows->created_on,$case_master_id)
+  
+                          ];
+                    }
+                  
+                     
+                }
+                
+                return $data;
+    
+    }
+
+
+    public function getInvestigationComponentWhereNotIn($ignorarray)
+    {  
+        $data = array();
+        $this->db->select("*")
+                ->from('investigation_component')
+                ->where_not_in('investigation_comp_id',$ignorarray);
+        $query = $this->db->get();
+        #echo $this->db->last_query();
+
+        if($query->num_rows()> 0)
+        {
+            foreach ($query->result() as $rows)
+            {
+                $data[] = $rows;
+            }
+            return $data;
+             
+        }
+        else
+        {
+             return $data;
+         }
+    }
+
+
+    public function getPlacentaByIds($ids)
+    {
+     $data = [];
+
+            $query = $this->db->select("*")
+                    ->from('placenta_master')
+                    ->where_in('placenta_id', $ids )
                     ->get();
                 #q();
                 if($query->num_rows()> 0)

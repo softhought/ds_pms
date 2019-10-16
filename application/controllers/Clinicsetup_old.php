@@ -7,7 +7,6 @@ class Clinicsetup extends CI_Controller {
         $this->load->library('session');
         $this->load->model('commondatamodel','commondatamodel',TRUE);
          $this->load->model('Clinicmodel','clinicmodel',TRUE);
-         
     }
 
 
@@ -136,75 +135,29 @@ public function addVisitingDaydetail()
         $session = $this->session->userdata('user_data');
         if($this->session->userdata('user_data'))
         {
-
-        //echo  $dir = APPPATH . 'ds_pms/assets/documentation/clinic_logo';
-
-         $dir = $_SERVER['DOCUMENT_ROOT'].'/ds_pms/assets/documentation/clinic_logo';  //server
-          $is_logo = trim(htmlspecialchars($this->input->post('islogo')));
-            $imagefile="";
-          if($is_logo == 'Y'){
-
-          
-
-                $config = array(
-                    'upload_path' => $dir,
-                    'allowed_types' => 'gif|jpg|png|jpeg',
-                    //allowed max file size. 0 means unlimited file size
-                    'max_size' => '0',
-                    //max file name size
-                    'max_filename' => '255',
-                    //whether file name should be encrypted or not
-                    'encrypt_name' => TRUE
-                        //store image info once uploaded
-                );
-                
-             $this->load->library('upload', $config);
-
-          //   $this->upload->initialize($config);
-             
-              if ($this->upload->do_upload('imagefile')) {
-
-                $file_detail = $this->upload->data();
-                //pre($file_detail);exit; 
-                $imagefile = $file_detail['file_name'];
-                }
-                else{
-                     $json_response = array(
-                            "msg_status" => 0,
-                            "msg_data" => "Image Uploading Problem.."
-                        );
-         
-                }
-
-               // echo $this->upload->display_errors();exit;
-        }
-        else{
-            $json_response = array(
-                            "msg_status" => 0,
-                            "msg_data" => "Image File is Empty"
-                        );
-        }
-
-
-            $clinicID = trim(htmlspecialchars($this->input->post('clinicID')));
-            $mode = trim(htmlspecialchars($this->input->post('mode')));
-
-            $clinicname = trim(htmlspecialchars($this->input->post('clinicname')));
-            $contactno = trim(htmlspecialchars($this->input->post('contactno')));
-            $cliniccode = strtoupper(trim(htmlspecialchars($this->input->post('cliniccode')))) ;
-            $address = trim(htmlspecialchars($this->input->post('address')));
-
-             
-
+            $json_response = array();
+            $formData = $this->input->post('formDatas');
+            parse_str($formData, $dataArry);
+            
+          // pre($dataArry);
         
+     
+            $clinicID = trim(htmlspecialchars($dataArry['clinicID']));
+            $mode = trim(htmlspecialchars($dataArry['mode']));
+            $clinicname = trim(htmlspecialchars($dataArry['clinicname']));
+            $contactno = trim(htmlspecialchars($dataArry['contactno']));
+            $cliniccode = trim(htmlspecialchars($dataArry['cliniccode']));
+            $address = trim(htmlspecialchars($dataArry['address']));
+           
 
-            $selectDay = $this->input->post('selectDay');
-            $byAppointment = $this->input->post('byAppoint');
-            $timefrom = $this->input->post('timefrom');
-            $timeto = $this->input->post('timeto');
+
+            $selectDay = $dataArry['selectDay'];
+            $byAppointment = $dataArry['byAppoint'];
+            $timefrom = $dataArry['timefrom'];
+            $timeto = $dataArry['timeto'];
           
    
-         
+    
                 
                 
                 if($clinicID>0 && $mode=="EDIT")
@@ -212,27 +165,14 @@ public function addVisitingDaydetail()
                     /*  EDIT MODE
                      *  -----------------
                     */
-                       if($is_logo == 'Y'){
 
-                        $upd_mst_array = array(
-                                        'clinic_name' => $clinicname,
-                                        'phno' => $contactno,
-                                        'address' => $address,
-                                        'logo' =>$imagefile,
-                                        'is_logo_uploaded'=>$is_logo,
-                                        
-                                     );
-                       }
-                       else{
-                         $upd_mst_array = array(
+                      $upd_mst_array = array(
                                         'clinic_name' => $clinicname,
                                         'phno' => $contactno,
                                         'address' => $address,
                                         
                                      );
-                       }
-                      
-                     $mst_where = array('clinic_master.clinic_id' => $clinicID );
+                      $mst_where = array('clinic_master.clinic_id' => $clinicID );
 
                      $update_mst = $this->commondatamodel->updateSingleTableData('clinic_master',$upd_mst_array,$mst_where);
 
@@ -303,10 +243,7 @@ public function addVisitingDaydetail()
                                         'cliniccode' => $cliniccode,
                                         'address' => $address,
                                         'is_active' => 'Y',
-                                        'logo' =>$imagefile,
-                                        'is_logo_uploaded'=>$is_logo,
                                      );
-                 
 
                 $insertID = $this->commondatamodel->insertSingleTableData('clinic_master',$insert_array);
 

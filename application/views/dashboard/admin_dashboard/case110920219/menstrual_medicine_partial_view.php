@@ -3,13 +3,13 @@
 
     <tr id="rowMenMedicine_<?php echo $rowno; ?>" class="row clearfix" >
     
-    <td style="width:53%;text-align: left;"> 
+    <td style="width:50%;text-align: left;"> 
 						       <input type="hidden" name="mensumedicine[]" id="mensumedicine_<?php echo $rowno; ?>" value="<?php echo $medicineID?>">   
                    <?php echo $medicine;?>       
 							        
     </td>
 
-    <td style="width:39%;text-align: center;"> 
+    <td style="width:40%;text-align: left;"> 
 						       <input type="hidden" name="mensumedicineduration[]" id="mensumedicineduration_<?php echo $rowno; ?>" value="<?php echo $medicine_duration?>">   
                    <?php echo $medicine_duration;?>       
 							        
@@ -48,7 +48,7 @@
                   
               ?> 
 			<a href="javascript:;" class="delMenMedicine" id="delDocRow_<?php echo $rowno; ?>" title="Delete">
-      <i class="material-icons" style="color: #323232; font-weight:700;">clear</i>
+      <i class="material-icons" style="color: red;">clear</i>
             <?php } ?> 
 
         </a>
@@ -57,5 +57,4 @@
 			</td>				
 				
 		
-    </tr>
-    
+		</tr>

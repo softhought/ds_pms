@@ -51,6 +51,8 @@ $("#antenantalbtn_section").css("display", "block");
 $("#antenantal_left_tab_menu_1").addClass("bg-light-green");
 $("#antenantal_left_tab_menu_1_section").css("display", "block");
 
+CallResetAdviceData(basepath);
+
  // $('#investallTable').DataTable(
  //    {
  //        "bPaginate": false,
@@ -557,6 +559,7 @@ $("#antenantal_left_tab_menu_1_section").css("display", "block");
           var dose =  $("#selregular_dose").val();
           var year =  $("#selregularmed_year").val();
           var month =  $("#selregularmed_month").val();
+          var frequency =  $("#selregular_frequency").val();
 
         console.log(basepath);
         if(medicine!='0'){
@@ -565,7 +568,7 @@ $("#antenantal_left_tab_menu_1_section").css("display", "block");
             type: "POST",
             url: basepath+'patientcase/addRegularMedicinesDetail',
             dataType: "html",
-            data: {rowNo:rowno,medicine:medicine,dose:dose,year:year,month:month},
+            data: {rowNo:rowno,medicine:medicine,dose:dose,year:year,month:month,frequency:frequency},
             success: function (result) {
                 $("#rowno").val(rowno);
                 $("#detail_regularmedicine table").css("display","block"); 
@@ -574,9 +577,10 @@ $("#antenantal_left_tab_menu_1_section").css("display", "block");
               //  $(".demo-masked-input").inputmask();
                 var $demoMaskedInput = $('.demo-masked-input');
 
-                $('#selregular_dose').val('');
-                $('#selregularmed_year').val('');
-                $('#selregularmed_month').val('');
+                $('#selregular_dose').val('').change();
+                $('#selregularmed_year').val('').change();
+                $('#selregularmed_month').val('').change();
+                $('#selregular_frequency').val('').change();
                 $('#selregular_medicine').val(0).change();
 
            
@@ -635,6 +639,7 @@ $("#antenantal_left_tab_menu_1_section").css("display", "block");
            $(document).on('click','.addClicinalExam',function(){
 
             // rowNoUpload++;
+            $(".addClicinalExam").attr("disabled", true);
   
             var rowno=  $("#cliexmrowno").val();
           console.log(basepath);
@@ -646,8 +651,11 @@ $("#antenantal_left_tab_menu_1_section").css("display", "block");
               data: {rowNo:rowno},
               success: function (result) {
                   $("#cliexmrowno").val(rowno);
-                  $("#detail_clinical_exam table").css("display","block"); 
-                  $("#detail_clinical_exam table tbody").append(result);   
+               //   $("#detail_clinical_exam table").css("display","block"); 
+                //  $("#detail_clinical_exam table tbody").append(result);   
+
+                   $("#detail_clinical_exam").append(result);
+
                   $('select').selectpicker();
                   $('.datepicker2').bootstrapMaterialDatePicker({
                     format: 'DD-MM-YYYY',
@@ -664,6 +672,8 @@ $("#antenantal_left_tab_menu_1_section").css("display", "block");
                   shortTime: true,
                   format: 'hh:mm a'
               });
+
+              $(".addClicinalExam").attr("disabled", false);
            
               }, 
               error: function (jqXHR, exception) {
@@ -695,10 +705,12 @@ $("#antenantal_left_tab_menu_1_section").css("display", "block");
         var currRowID = $(this).attr('id');
         var rowDtlNo = currRowID.split('_');
        // console.log(rowDtlNo[1]);
-        console.log(currRowID);
+        console.log("delClinicalExam"+currRowID);
 
         //$("tr#rowDocument_"+rowDtlNo[1]+"_"+rowDtlNo[2]).remove();
-        $("tr#rowClinicalExam_"+rowDtlNo[1]).remove();
+       // $("tr#rowClinicalExam_"+rowDtlNo[1]).remove();
+
+          $("#rowClinicalExam_"+rowDtlNo[1]).empty();
     });
 
 
@@ -724,6 +736,7 @@ $("#antenantal_left_tab_menu_1_section").css("display", "block");
       console.log(lmpdate);
 
       EddDateCalculation(basepath,lmpdate);
+      CallResetAdviceData(basepath);
      
 
 
@@ -790,6 +803,7 @@ $("#antenantal_left_tab_menu_1_section").css("display", "block");
     $(document).on('click','.addPreChildDtl',function(){
 
           // rowNoUpload++;
+          $(".addPreChildDtl").attr("disabled", true);
 
         var rowno=  $("#childdtlrowno").val();
         console.log(basepath);
@@ -811,7 +825,7 @@ $("#antenantal_left_tab_menu_1_section").css("display", "block");
               //  $(".demo-masked-input").inputmask();
                 var $demoMaskedInput = $('.demo-masked-input');
 
-          
+                 $(".addPreChildDtl").attr("disabled", false);
          
             }, 
             error: function (jqXHR, exception) {
@@ -965,6 +979,7 @@ $(document).on('change','.sel_diseases',function(event){
            // console.log("is NOT in array");
             $('#other_diseases_col').css('display','none');
             $("#isOtherDiseases").val('N');
+            $("#other_diseases").val('');
         } 
 
   
@@ -1155,7 +1170,7 @@ $(document).on('change','.noanomalyckbx',function(event){
 
 $(document).on('change','.otheranomalyckbx',function(event){
      event.stopImmediatePropagation();
-
+        $(".other_anomaly_text").val('');
       if($(this).prop('checked')) {
            $("#other_annomaly_div").show();
            $("#is_other_anomaly").val('Y');
@@ -1163,6 +1178,7 @@ $(document).on('change','.otheranomalyckbx',function(event){
         } else {
             $("#other_annomaly_div").hide();
             $("#is_other_anomaly").val('N');
+           
         }
 
 
@@ -1277,12 +1293,14 @@ $(document).on('change','.otheranomalyckbx',function(event){
 
           var rowno=  $("#presTestrow").val();
           var investigation=  $("#prescription_investigation").val();
+
+          var count = $("#prescription_investigation :selected").length;
         
 
-           $("#prescription_investigationerr").removeClass("bordererror");
+          $("#prescription_investigationerr").removeClass("bordererror");
 
-          if (investigation!='0') {
-        console.log(rowno);
+        if (count!='0') {
+       // console.log(rowno);
         rowno++;
         $.ajax({
             type: "POST",
@@ -1290,6 +1308,7 @@ $(document).on('change','.otheranomalyckbx',function(event){
             dataType: "html",
             data: {rowNo:rowno,investigation:investigation},
             success: function (result) {
+                rowno=rowno+count-1;
                 $("#presTestrow").val(rowno);
                 $("#detail_presTest table").css("display","block"); 
                 $("#detail_presTest table tbody").append(result);   
@@ -1297,7 +1316,10 @@ $(document).on('change','.otheranomalyckbx',function(event){
               //  $(".demo-masked-input").inputmask();
                 var $demoMaskedInput = $('.demo-masked-input');
 
-            $('#prescription_investigation').val(0).change();
+          //  $('#prescription_investigation').val(0).change();
+             $('#prescription_investigation').multiSelect('deselect_all');
+            resetInvestigationDropDown(basepath);
+
          
             }, 
             error: function (jqXHR, exception) {
@@ -1343,6 +1365,7 @@ $(document).on('change','.otheranomalyckbx',function(event){
         $("#ischangePrescription").val('Y');
         //$("tr#rowDocument_"+rowDtlNo[1]+"_"+rowDtlNo[2]).remove();
         $("tr#rowPrescriptionInvestigation_"+rowDtlNo[1]).remove();
+        resetInvestigationDropDown(basepath);
     })
 
 
@@ -1497,11 +1520,13 @@ $(document).on('change','.otheranomalyckbx',function(event){
        var callfrom="Reset Advice";
        $(".advice_area").html("");
 
+       var lmp_date = $('#lmp_date').val();
+
        $.ajax({
         type: "POST",
         url: basepath+'patientcase/resetAdviceData',
         dataType: "html",
-        data: {callfrom:callfrom},
+        data: {callfrom:callfrom,lmp_date:lmp_date},
         success: function (result) {
             
            
@@ -1624,6 +1649,75 @@ $(document).on('change','.otheranomalyckbx',function(event){
 
 
 });
+
+
+/* TT1 to be taken on date on select TT2 to be taken on date */
+
+    $('#tt1_tobe_taken_on').on('change', function() {
+
+      // alert(this.value)
+
+      var tt1_tobe_taken_on = this.value;
+      console.log(tt1_tobe_taken_on);
+
+          $.ajax({
+            type: "POST",
+            url: basepath+'patientcase/CalculateTT2tobetakenOnTT1tobetaken',
+            dataType: "html",
+            data: {tt1_tobe_taken_on:tt1_tobe_taken_on},
+            success: function (result) {
+             
+            $("#tt2_tobe_taken_on").val(result);
+         
+            }, 
+            error: function (jqXHR, exception) {
+              var msg = '';
+                if (jqXHR.status === 0) {
+                    msg = 'Not connect.\n Verify Network.';
+                } else if (jqXHR.status == 404) {
+                    msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status == 500) {
+                    msg = 'Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
+                    msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                    msg = 'Time out error.';
+                } else if (exception === 'abort') {
+                    msg = 'Ajax request aborted.';
+                } else {
+                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                }
+               // alert(msg);  
+            }
+            }); /*end ajax call*/
+
+    });
+
+
+    /* BMI Calculation */
+
+ $(document).on('keyup','.hwbmi',function(){
+        
+      var height = parseInt($('#exam_height').val() || 0);
+      height_m= height/100;
+      var weight = parseInt($('#exam_weight').val() || 0);
+
+    
+      if(height_m!=0){
+        var bmi =weight/(height_m*height_m);
+      $('#exam_bmi').val(bmi.toFixed(2))
+      }else{
+       $('#exam_bmi').val('') 
+      }
+      ;
+      $("#exam_bmi").focus();
+      $(this).focus();
+    });
+
+
+     $(document).on('click','.prescription_menu_btn',function(){            
+      resetInvestigationDropDown(basepath);  
+     });
 
 
 }); // end of document ready
@@ -2067,7 +2161,7 @@ function formatPrescription(callback, id, basepath) {
 
             $.each(data['medicine'], function(i, datas) {
 
-                console.log(datas);
+               // console.log(datas);
 
                 tbody += '<tr>';
                 tbody += '<td>'+CheckNull(datas.medicine_name)+'</td>';
@@ -2082,7 +2176,7 @@ function formatPrescription(callback, id, basepath) {
 
             });
 
-             tbody += '<tr><td colspan="5">&nbsp;</td></tr>';
+            tbody += '<tr><td colspan="5">&nbsp;</td></tr>';
             var thead2 = '<tr class="expandrowDetails"><th colspan="5" style="width:10%;">Investigation</th></tr>';
             tbody2 = '';
 
@@ -2095,12 +2189,41 @@ function formatPrescription(callback, id, basepath) {
               
                 tbody2 += '</tr>';
 
+
+            });
+
+
+            tbody += '<tr><td colspan="5">&nbsp;</td></tr>';
+            var thead3 = '<tr class="expandrowDetails"><th colspan="5" style="width:10%;">Advice</th></tr>';
+            tbody3 = '';
+          console.log("advice data");
+
+          var advType="";
+          var advTitle="";
+              $.each(data['advice'], function(i, datasad) {
+
+                console.log(datasad.advType);
+                if (advType!=datasad.advType) {
+                    advTitle=datasad.advType;
+                    advType=datasad.advType;
+                }else{
+                    advTitle="";
+
+                }
+
+                tbody3 += '<tr>';
+                tbody3 += '<td>'+advTitle+'</td>';
+                tbody3 += '<td colspan="4">'+datasad.advicedtl+'</td>';
               
+                tbody3 += '</tr>';
 
 
             });
 
-            callback($('<div class="slider"><table class="table table-striped rowexpandTable" >' + thead + tbody + thead2 + tbody2 +'</table></div>')).show();
+
+
+
+            callback($('<div class="slider"><table class="table table-striped rowexpandTable" >' + thead + tbody + thead2 + tbody2 + thead3 + tbody3 +'</table></div>')).show();
         },
         error: function() {
             console.log("Error Found");
@@ -2213,7 +2336,9 @@ function WeekDaysCalculationByUsg(basepath,cliexmDate,rowID){
     var seleddbyusg_date = $('#seleddbyusg_date').val();
     console.log(seleddbyusg_date);
     console.log(cliexmDate);
-    
+
+     var edd_week = $('#edd_week').val() || 0;
+     var edd_days = $('#edd_days').val() || 0;
 
 
         if(seleddbyusg_date!='' && cliexmDate!=''){
@@ -2221,7 +2346,7 @@ function WeekDaysCalculationByUsg(basepath,cliexmDate,rowID){
            type: "POST",
            url: basepath+'patientcase/weekDaysCalculationByUsg',
            dataType: "html",
-           data: {seleddbyusg_date:seleddbyusg_date,cliexmDate:cliexmDate},
+           data: {seleddbyusg_date:seleddbyusg_date,cliexmDate:cliexmDate,edd_week:edd_week,edd_days:edd_days},
            success: function (result) {
             
          var weeks_days=result;
@@ -2406,5 +2531,114 @@ function resetRegularMedDropdown(basepath){
         }); /*end ajax call*/
 
 
+
+}
+
+
+function resetInvestigationDropDown(basepath){
+    var investigationItem=[];
+
+      $(".presinvestigationIDCls").each(function() { 
+       investigationItem.push($(this).val());
+      });
+
+               console.log(investigationItem);
+
+         $.ajax({
+        type: "POST",
+        url: basepath+'patientcase/resetInvestigationDropdown',
+        dataType: "html",
+        data: {investigationItem:investigationItem},
+        success: function (result) {
+            
+            $("#prescription_investigationdrp").html(result);
+           
+            $('select').selectpicker();
+     
+        }, 
+        error: function (jqXHR, exception) {
+          var msg = '';
+            if (jqXHR.status === 0) {
+                msg = 'Not connect.\n Verify Network.';
+            } else if (jqXHR.status == 404) {
+                msg = 'Requested page not found. [404]';
+            } else if (jqXHR.status == 500) {
+                msg = 'Internal Server Error [500].';
+            } else if (exception === 'parsererror') {
+                msg = 'Requested JSON parse failed.';
+            } else if (exception === 'timeout') {
+                msg = 'Time out error.';
+            } else if (exception === 'abort') {
+                msg = 'Ajax request aborted.';
+            } else {
+                msg = 'Uncaught Error.\n' + jqXHR.responseText;
+            }
+           // alert(msg);  
+        }
+        }); /*end ajax call*/
+}
+
+
+
+function CallResetAdviceData(basepath){
+
+       console.log("Reset Advice");
+       var callfrom="Reset Advice";
+       $(".advice_area").html("");
+
+       var lmp_date = $('#lmp_date').val();
+
+       $.ajax({
+        type: "POST",
+        url: basepath+'patientcase/resetAdviceData',
+        dataType: "html",
+        data: {callfrom:callfrom,lmp_date:lmp_date},
+        success: function (result) {
+            
+           
+            
+            $(".advice_area").html(result);
+            $("input.advoptiontag").tagsinput('items');
+            $('.form-line').addClass('focused');
+            $("textarea").css({'overflow':'hidden'});
+
+                $('.advCntCls').each(function() 
+                {
+                    var adv_id = $(this).attr('id');
+                    var advIDS = adv_id.split("_");
+                    var advVal = $(this).val();
+                    console.log("adv id"+advVal);
+
+                    if (advVal==0) {
+
+                        $('#advice_lebel_'+advIDS[2]).hide();
+
+                    }
+
+                });
+
+
+     
+        }, 
+        error: function (jqXHR, exception) {
+          var msg = '';
+            if (jqXHR.status === 0) {
+                msg = 'Not connect.\n Verify Network.';
+            } else if (jqXHR.status == 404) {
+                msg = 'Requested page not found. [404]';
+            } else if (jqXHR.status == 500) {
+                msg = 'Internal Server Error [500].';
+            } else if (exception === 'parsererror') {
+                msg = 'Requested JSON parse failed.';
+            } else if (exception === 'timeout') {
+                msg = 'Time out error.';
+            } else if (exception === 'abort') {
+                msg = 'Ajax request aborted.';
+            } else {
+                msg = 'Uncaught Error.\n' + jqXHR.responseText;
+            }
+           // alert(msg);  
+        }
+        }); /*end ajax call*/
 
 }

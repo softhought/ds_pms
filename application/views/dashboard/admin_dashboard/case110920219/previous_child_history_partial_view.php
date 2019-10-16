@@ -3,16 +3,17 @@
 
     <tr id="rowChildPreviousBirth_<?php echo $childdtlrowno; ?>" class="row clearfix" >
 
-           <!-- <td> <b>Sl.</b><label class="form-label" style="margin-top: 12px;" > <?php echo $childdtlrowno; ?>.</label></td> -->
+           <td> <b>Sl.</b><label class="form-label" style="margin-top: 12px;" > <?php echo $childdtlrowno; ?>.</label></td>
 
-          <td> 
-               <label>Place</label>
+           <td> 
+               <b>Place</b>
                <div class="input-group birthplaceerr" id="birthplaceerr_<?php echo $childdtlrowno; ?>">
-               <!-- <span class="input-group-addon"><i class="material-icons">place</i> </span> -->
+               <span class="input-group-addon"><i class="material-icons">place</i> </span>
                <div class="form-line">
                 <input type="text" name="birthplace[]" id="birthplace_<?php echo $childdtlrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" >
                  </div>
                 </div>
+                                      
           </td>
 
             <td> 
@@ -70,7 +71,7 @@
 
            <td> 
             <div class="input-group othersproblemerr" id="othersproblemerr_<?php echo $childdtlrowno; ?>" style="display: none">
-              <label>Oth. Prob.</label>
+              <label>Others Problem</label>
                  <div class="form-line">
                  <input type="text" class="form-control" name="othersproblem[]" id="othersproblem_<?php echo $childdtlrowno; ?>" autocomplete="off"  placeholder="Others"> 
                 </div> 
@@ -120,7 +121,7 @@
             </td>
 
              <td> 
-               <label>Age</label>
+               <b>Age</b>
                <div class="input-group babyageerr" id="babyageerr_<?php echo $childdtlrowno; ?>">
                <span class="input-group-addon"><i class="material-icons"></i> </span>
                <div class="form-line">

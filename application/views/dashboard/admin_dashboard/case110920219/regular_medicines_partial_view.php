@@ -107,7 +107,7 @@
                   
               ?> 
 			<a href="javascript:;" class="delRegularMedicine" id="delDocRow_<?php echo $regularmedicinerowno; ?>" title="Delete">
-					<i class="material-icons thmdarkTxtcolor">delete</i>
+					<i class="material-icons">delete</i>
             <?php } ?> 
 
 				</a>

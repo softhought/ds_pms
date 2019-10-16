@@ -24,7 +24,7 @@ table.gridtable
 
      <!-- <td> <b>Sl.</b><label class="form-label" style="margin-top: 12px;" > <?php echo $cliexmrowno; ?>.</label></td> -->
      <td style="width: 10%;"> 
-               <label>Date</label>
+               <b>Date</b>
                <div class="input-group examination_dateerr" id="examination_dateerr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
@@ -34,7 +34,7 @@ table.gridtable
                                       
      </td>
      <td> 
-               <label>LMP(Weeks)</label>
+               <b>LMP(Weeks)</b>
                <div class="input-group weeks_by_lmperr" id="weeks_by_lmperr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
@@ -44,7 +44,7 @@ table.gridtable
                                       
      </td>
      <td> 
-               <label>LMP(Days)</label>
+               <b>LMP(Days)</b>
                <div class="input-group days_by_lmperr" id="days_by_lmperr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
@@ -57,7 +57,7 @@ table.gridtable
 
 
      <td> 
-               <label>USG(Weeks)</label>
+               <b>USG(Weeks)</b>
                <div class="input-group weeks_by_usgerr" id="weeks_by_usgerr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
@@ -67,7 +67,7 @@ table.gridtable
                                       
      </td>
      <td> 
-               <label>USG(Days)</label>
+               <b>USG(Days)</b>
                <div class="input-group days_by_usgerr" id="days_by_usgerr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
@@ -80,7 +80,7 @@ table.gridtable
 
 
      <td> 
-               <label>Weight</label>
+               <b>Weight</b>
                <div class="input-group cliexm_weighterr" id="cliexm_weighterr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
@@ -91,7 +91,7 @@ table.gridtable
      </td>
 
      <td> 
-               <label>BP(S)</label>
+               <b>BP(S)</b>
                <div class="input-group " id="cliexm_bp_serr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
@@ -102,7 +102,7 @@ table.gridtable
      </td>
 
      <td> 
-               <label>BP(D)</label>
+               <b>BP(D)</b>
                <div class="input-group " id="cliexm_bp_derr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
@@ -113,10 +113,10 @@ table.gridtable
      </td>
      <td></td>
      </tr>
-     <tr style="border-bottom: 0px solid #ff9600;">
+     <tr style="border-bottom: 3px solid #ff9600;">
 
      <td> 
-               <label>Pallor</label>
+               <b>Pallor</b>
                <select name="cliexm_pallor[]" id="cliexm_pallor_<?php echo $cliexmrowno; ?>" class="form-control"   data-live-search="true" tabindex="-98" placeholder="test"
                     >              <option value="">&nbsp;</option>
                                   <?php
@@ -132,7 +132,7 @@ table.gridtable
      </td>
 
      <td> 
-               <label>Oedema</label>
+               <b>Oedema</b>
                <select name="cliexm_oedema[]" id="cliexm_oedema_<?php echo $cliexmrowno; ?>" class="form-control"   data-live-search="true" tabindex="-98" placeholder="test"
                     >              <option value="">&nbsp;</option>
                                   <?php
@@ -148,7 +148,7 @@ table.gridtable
                                       
      </td>
 
-     <td style="width: 11%;"> 
+     <td style="width: 9%;"> 
               <div class="input-group " id="fundal_heighterr_<?php echo $cliexmrowno; ?>">
               <label>Fundal Height</label>
                                <select name="fundal_height[]" id="fundal_height_<?php echo $cliexmrowno; ?>" class="form-control show-tick  selectYear" data-live-search="true" tabindex="-98">
@@ -168,7 +168,7 @@ table.gridtable
 
             
      <td> 
-               <label>SFH(cm)</label>
+               <b>SFH(cm)</b>
                <div class="input-group " id="cliexm_sfherr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
@@ -179,7 +179,7 @@ table.gridtable
      </td>
 
      <td> 
-               <label>FHS(/min)</label>
+               <b>FHS(/min)</b>
                <div class="input-group " id="cliexm_fsherr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
@@ -190,7 +190,7 @@ table.gridtable
      </td>
 
      <td style="width: 10%;"> 
-               <label>Appointment</label>
+               <b>Appointment</b>
                <div class="input-group " id="cliexm_appointment_dateerr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
@@ -201,7 +201,7 @@ table.gridtable
      </td>
 
      <td> 
-               <label>After(Weeks)</label>
+               <b>After(Weeks)</b>
                <div class="input-group " id="cliexm_after_weekerr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
@@ -212,7 +212,7 @@ table.gridtable
      </td>
 
      <td> 
-               <label>After(Days)</label>
+               <b>After(Days)</b>
                <div class="input-group " id="cliexm_after_dayserr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
@@ -231,7 +231,7 @@ table.gridtable
                   
               ?> 
 			<a href="javascript:;" class="delClinicalExam" id="delDocRow_<?php echo $cliexmrowno; ?>" title="Delete">
-					<i class="material-icons thmdarkTxtcolor">delete</i>
+					<i class="material-icons">delete</i>
             <?php } ?> 
 
 				</a>

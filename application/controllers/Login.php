@@ -53,7 +53,7 @@ class Login extends CI_Controller {
                     "userid"=>$user->user_id,
                     "username"=>$user->username, 
                     "doctor_id"=>$user->doctor_id, 
-                    "clinic_id"=>$user->clinic_id 
+                    "clinic_id"=>$clinic_id 
                     
                 ];
                  $this->setSessionData($user_session);

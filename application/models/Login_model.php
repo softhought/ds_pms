@@ -8,7 +8,6 @@ class Login_model extends CI_Model{
         $userId="";
         $where_arr =["username"=>$this->db->escape_str($user_name),
                      "password"   =>md5($password),
-                     "clinic_id"   =>$this->db->escape_str($clinic_id),
                      "is_active"=>'Y'
             ];
        $query= $this->db->select("user_master.*")

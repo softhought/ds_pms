@@ -1,54 +1,81 @@
 $(document).ready(function(){
-    var basepath = $("#basepath").val();
-    var rowNoUpload = 0;
-     var mode = $("#mode").val();
-   $('.dataTables').DataTable();
 
-   if(mode=="EDIT"){
-    var chk_option = $("#chk_option").val();
-    var week_chk_option = $("#week_chk_option").val();
+ var basepath = $("#basepath").val();
+ var rowNoUpload = 0;
+ var mode = $("#mode").val();
+ $('.dataTables').DataTable();
 
-    if(chk_option=="Y"){
-        $(".optionrow").css('display', 'block');
-    }else{
-        $(".optionrow").css('display', 'none');
-    }
-
-    if(week_chk_option=="Y"){
-        $(".wkminmax").css('display', 'block');
-    }else{
-        $(".wkminmax").css('display', 'none');
-    }
-
-   }
-     
-
-
-   $(document).on("click", ".advstatus", function() {
+ $(document).on("click", ".edustatus", function() {
         
-        var uid = $(this).data("adviceid");
+        var uid = $(this).data("educationid");
         var status = $(this).data("setstatus");
-        var url = basepath + 'advice/setStatus';
+        var url = basepath + 'education/setStatus';
         setActiveStatus(uid, status, url);
 
     });
+$("#educationname").on('keyup',function(){
+
+   if(mode == 'ADD'){
+    $("#educationmsg").css("display","none");
+    $("#occupationsavebtn").attr("disabled", false);
+    var education = this.value;
+    
+    $.ajax({
+        type: "POST",
+        url: basepath+'education/education_check',
+        data:{education:education},
+        dataType: 'json',
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        success:function(result){
+            
+            if (result.msg_status == 1) {
+
+                $("#educationsavebtn").attr("disabled", true);
+
+             $("#educationmsg")
+                .text(result.msg_data)
+                .addClass("form_error")
+                .css("display", "block");
+                return false;
+            }
+        },
+        error: function (jqXHR, exception) {
+                var msg = '';
+                if (jqXHR.status === 0) {
+                    msg = 'Not connect.\n Verify Network.';
+                } else if (jqXHR.status == 404) {
+                    msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status == 500) {
+                    msg = 'Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
+                    msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                    msg = 'Time out error.';
+                } else if (exception === 'abort') {
+                    msg = 'Ajax request aborted.';
+                } else {
+                        msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                    }
+                //alert(msg);  
+                }
 
 
-   /* add edit medicine */
+    });
+ }
+})
 
-
-    $(document).on('submit','#adviceForm',function(event)
+ $(document).on('submit','#educationForm',function(event)
     {
-        event.preventDefault();
-        if(validateAdvice())
+    	event.preventDefault();
+        if(validateeducation())
         {   
 
-            var formDataserialize = $("#adviceForm").serialize();
+            var formDataserialize = $("#educationForm").serialize();
             formDataserialize = decodeURI(formDataserialize);
             console.log(formDataserialize);
 
             var formData = { formDatas: formDataserialize };
-            $("#advicesavebtn").css('display', 'none');
+            $("#educationsavebtn").css('display', 'none');
             $("#loaderbtn").css('display', 'block');
         
 
@@ -57,7 +84,7 @@ $(document).ready(function(){
     
         $.ajax({
                 type: "POST",
-                url: basepath+'advice/advice_action',
+                url: basepath+'education/education_action',
                 dataType: "json",
                 contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                 data: formData,
@@ -71,8 +98,8 @@ $(document).ready(function(){
                             "keyboard": true,
                             "show": true
                         });
-                        var addurl = basepath + "advice/addAdvice";
-                        var listurl = basepath + "advice";
+                        var addurl = basepath + "education/addEducation";
+                        var listurl = basepath + "education";
                         $("#responsemsg").text(result.msg_data);
                         $("#response_add_more").attr("href", addurl);
                         $("#response_list_view").attr("href", listurl);
@@ -84,7 +111,7 @@ $(document).ready(function(){
                     
                     $("#loaderbtn").css('display', 'none');
                     
-                    $("#advicesavebtn").css({
+                    $("#educationsavebtn").css({
                         "display": "block",
                         "margin": "0 auto"
                     });
@@ -120,57 +147,24 @@ $(document).ready(function(){
         
     });
 
-
-    $(document).on('change','#need_adv_opt',function(event)
-    {
-        event.preventDefault();
-        // From the other examples
-        if (this.checked) {
-            $(".optionrow").css('display', 'block');
-        }else{
-            $(".optionrow").css('display', 'none');
-        }
-    });
-
-   $(document).on('change','#need_week_opt',function(event)
-    {
-        event.preventDefault();
-        // From the other examples
-        if (this.checked) {
-            $(".wkminmax").css('display', 'block');
-        }else{
-            $(".wkminmax").css('display', 'none');
-        }
-    });
-
 }); // end of document ready
 
 
 
 
-function validateAdvice()
+function validateeducation()
 {
-    var advice = $("#advice").val();
-    advice = advice.trim();
-    var advice_type = $("#advice_type").val();
   
-    $("#advicemsg").text("").css("dispaly", "none").removeClass("form_error");
+    var educationname = $("#educationname").val();
+   
 
-    if(advice=="")
-    { 
-        $("#advice").focus();
-        $("#advicemsg")
-        .text("Error : Enter advice note .")
-        .addClass("form_error")
-        .css("display", "block");
-        return false;
-    }
+    $("#educationmsg").text("").css("dispaly", "none").removeClass("form_error");
 
-    if(advice_type=="0")
-    { 
-        $("#advice_type").focus();
-        $("#advicemsg")
-        .text("Error : Select advice type .")
+    if(educationname=="")
+    {
+        $("#educationname").focus();
+        $("#educationmsg")
+        .text("Error : Enter education name .")
         .addClass("form_error")
         .css("display", "block");
         return false;
@@ -178,3 +172,4 @@ function validateAdvice()
  
     return true;
 }
+

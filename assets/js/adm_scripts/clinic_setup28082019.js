@@ -141,7 +141,6 @@ $(document).ready(function(){
 
 
 
-
      $(document).on('submit','#ClinicForm',function(event)
     {
         event.preventDefault();
@@ -150,13 +149,12 @@ $(document).ready(function(){
         
         	if (detailValidation()) {
        
-           
-            // var formDataserialize = $("#ClinicForm").serialize();
-            // formDataserialize = decodeURI(formDataserialize);
-            // var formData = { formDatas: formDataserialize };
-           
-            var formData = new FormData($(this)[0]);
-            
+      
+            var formDataserialize = $("#ClinicForm").serialize();
+            formDataserialize = decodeURI(formDataserialize);
+            console.log(formDataserialize);
+
+            var formData = { formDatas: formDataserialize };
             $("#clinicsavebtn").css('display', 'none');
             $("#loaderbtn").css('display', 'block');
         
@@ -168,13 +166,10 @@ $(document).ready(function(){
                 type: "POST",
                 url: basepath+'clinicsetup/clinic_action',
                 dataType: "json",
-                processData: false,
-                contentType: false,
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                 data: formData,
                 
                 success: function (result) {
-
-                    console.log(result);
                     
                     if (result.msg_status == 1) {
                             
@@ -377,39 +372,15 @@ function addVisitingDayDetailsFirstRow(basepath,rowNoUpload){
 }
 
 
-// $("#imagefile").on('change',function(){
 
-function readURL(input){
-
-  $("#islogo").val('Y');
- 
-
-   if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                $('#showimage')
-                    .attr('src', e.target.result)
-                    .width(100)
-                    .height(100);
-            };
-
-            reader.readAsDataURL(input.files[0]);
-        }
- 
-  
-}
 
 
 function validateClinic()
 {
     var clinicname = $("#clinicname").val();
     var contactno = $("#contactno").val();
-    var cliniccode = $("#cliniccode").val();
-    var islogo = $("#islogo").val();
     var address = $("#address").val();
-    var mode =$("#mode").val();
-   
+   // alert(clinicname);
 
   
 
@@ -434,28 +405,6 @@ function validateClinic()
         .css("display", "block");
         return false;
     }
-    if(cliniccode=="")
-    {
-        $("#cliniccode").focus();
-        $("#clinicmsg")
-        .text("Error : Enter clinic code .")
-        .addClass("form_error")
-        .css("display", "block");
-        return false;
-    }
-   
-  if(mode == 'ADD'){
-   
-    if(islogo == "N")
-    {
-        $("#imagefile").focus();
-        $("#clinicmsg")
-        .text("Error : Please Select Logo..")
-        .addClass("form_error")
-        .css("display", "block");
-        return false;
-    }
-  }
 
     if(address=="")
     {

@@ -57,9 +57,42 @@ border-bottom: 1px solid #f0c7f9;
                                         </div>  
                             </div>
 
+                             <div class="row clearfix">
+                               <div class="col-sm-4">        
+                                <div class="form-group form-group">                                  
+                                    <div class="input-group">
+                                            <input type="checkbox" name="need_week_opt" id="need_week_opt" class="filled-in chk-col-deep-purple" value="Y" 
+                                            <?php if($bodycontent['mode']=="EDIT" && $bodycontent['adviceEditdata']->is_week_check=="Y"){echo "checked";}?> >
+                                            <label for="need_week_opt">If advice depends on week</label> &nbsp;&nbsp;
+                                        <input type="hidden" id="week_chk_option" value="<?php if($bodycontent['mode']=="EDIT"){echo  $bodycontent['adviceEditdata']->is_week_check;}else{ echo "N";}?>">
+                                     </div>  
+                                 </div>
+                               </div>
+                               <div class="col-sm-4 wkminmax" style="display:none">
+                                <div class="form-group form-float">
+                                 <div class="form-line">
+                                                  
+                                 <label class="form-label">Min Week</label>
+                                   <input type="text" class="form-control" name="min_week" id="min_week" autocomplete="off" value="<?php if($bodycontent['mode']=="EDIT"){echo $bodycontent['adviceEditdata']->min_week;}?>" >
+                                </div>
+                               </div>
+                              </div>
+
+                              <div class="col-sm-4 wkminmax" style="display:none">
+                                <div class="form-group form-float">
+                                 <div class="form-line">
+                                                  
+                                 <label class="form-label">Max Week</label>
+                                   <input type="text" class="form-control" name="max_week" id="max_week" autocomplete="off" value="<?php if($bodycontent['mode']=="EDIT"){echo $bodycontent['adviceEditdata']->max_week;}?>" >
+                                </div>
+                               </div>
+                              </div>
+                                 
+                             </div><!--  week row -->
+
 
                              <div class="row clearfix">
-                              <div class="col-sm-6">
+                              <div class="col-sm-8">
                               <div class="form-group form-float">
                               <div class="input-group medtypeerr" id="medtypeerr">
                                 <!--    <label class="form-label">Medicine Type</label> -->

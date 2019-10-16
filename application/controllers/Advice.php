@@ -108,12 +108,22 @@ class Advice extends CI_Controller {
             $advice_type = trim(htmlspecialchars($dataArry['advice_type']));
             $advice_options = trim(htmlspecialchars($dataArry['advice_options']));
             $old_advice_type = trim(htmlspecialchars($dataArry['old_advice_type']));
+            $min_week = trim(htmlspecialchars($dataArry['min_week']));
+            $max_week = trim(htmlspecialchars($dataArry['max_week']));
 
             if(isset($dataArry['need_adv_opt'])){
                 $need_adv_opt = $dataArry['need_adv_opt'];
             }else{
                 $need_adv_opt='N'; 
                 $advice_options='';
+            }
+
+            if(isset($dataArry['need_week_opt'])){
+                $need_week_opt = $dataArry['need_week_opt'];
+            }else{
+                $need_week_opt='N'; 
+                $min_week=NULL;
+                $max_week=NULL;
             }
 
 
@@ -131,6 +141,9 @@ class Advice extends CI_Controller {
                                         'advice' => $advice,        
                                         'is_advice_option' => $need_adv_opt,        
                                         'advice_options' => $advice_options,        
+                                        'is_week_check' => $need_week_opt,        
+                                        'min_week' => $min_week,        
+                                        'max_week' => $max_week,        
                                         'created_on' => date('Y-m-d'), 
                                      );
 
@@ -144,7 +157,10 @@ class Advice extends CI_Controller {
                             'advice_type' => $advice_type,        
                             'advice' => $advice,        
                             'is_advice_option' => $need_adv_opt,        
-                            'advice_options' => $advice_options,        
+                            'advice_options' => $advice_options,
+                            'is_week_check' => $need_week_opt,        
+                            'min_week' => $min_week,        
+                            'max_week' => $max_week,         
                             'created_on' => date('Y-m-d'), 
                          );
 
@@ -189,7 +205,10 @@ class Advice extends CI_Controller {
                                           'advice_type' => $advice_type,        
                                           'advice' => $advice,        
                                           'is_advice_option' => $need_adv_opt,
-                                          'advice_options' => $advice_options,         
+                                          'advice_options' => $advice_options, 
+                                          'is_week_check' => $need_week_opt,        
+                                          'min_week' => $min_week,        
+                                          'max_week' => $max_week,         
                                           'created_on' => date('Y-m-d'),        
                                           'is_active' => 'Y',        
                                          );

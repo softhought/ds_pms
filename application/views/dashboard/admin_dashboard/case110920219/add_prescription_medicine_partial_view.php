@@ -43,13 +43,13 @@
 			   
 		
 
-				<td style="vertical-align: middle;text-align: center;" class="presmedTd">
+				<td style="vertical-align: middle;text-align: right;" class="presmedTd">
 							<?php 
                   if ($rowno!=0) {
                   
               ?> 
 			<a href="javascript:;" class="delPresMed" id="delDocRow_<?php echo $rowno; ?>" title="Delete">
-				<i class="material-icons thmdarkTxtcolor">delete</i>
+					<i class="material-icons" style="color: red;">clear</i>
             <?php } ?> 
 
 				</a>
