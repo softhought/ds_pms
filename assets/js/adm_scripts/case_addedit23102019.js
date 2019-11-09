@@ -1774,7 +1774,7 @@ $(document).on('change','.otheranomalyckbx',function(event){
 
 
      $(document).on('click','.prescription_menu_btn',function(){            
-      resetInvestigationDropDown(basepath);  
+      //resetInvestigationDropDown(basepath);  
       //create new investigationpanel by anil 23-09-2019
       resetInvestigationpanelDropDown(basepath);  
      });
@@ -1789,7 +1789,7 @@ $(document).on('change','.otheranomalyckbx',function(event){
         console.log(currRowID);
         $("#ischangePrescription").val('Y');
         //$("tr#rowDocument_"+rowDtlNo[1]+"_"+rowDtlNo[2]).remove();
-        $("tr#rowPrescriptionInvestigationpanel_"+rowDtlNo[1]).remove();
+        $("tr#rowPrescriptionInvestigation_"+rowDtlNo[1]).remove();
         resetInvestigationpanelDropDown(basepath);
     });
 
@@ -1800,7 +1800,7 @@ $(document).on('change','.otheranomalyckbx',function(event){
  
           // rowNoUpload++;
           // $("#addPresPanelTest").attr("disabled","true");
-          var rowno=  $("#presTestrowpanel").val();
+          var rowno=  $("#presTestrow").val();
 
           var panel=  $("#prescription_investigationpanel").val();
 
@@ -1821,7 +1821,7 @@ $(document).on('change','.otheranomalyckbx',function(event){
             success: function (result) {
                 //console.log(result);
                 rowno=rowno+count-1;
-                $("#presTestrowpanel").val(rowno);
+                $("#presTestrow").val(rowno);
                 //$("#detail_presTestpanel table").css("display","block"); 
                 $("#detail_presTestpanel table tbody").append(result);
 
@@ -1860,7 +1860,7 @@ $(document).on('change','.otheranomalyckbx',function(event){
     }else{      
 
             $("#prescription_investigationpanel").focus();
-            $("#prescription_investigationpanel").addClass("bordererror");
+            $("#prescription_investigationerr").addClass("bordererror");
           
 
     }
@@ -2327,18 +2327,17 @@ function formatPrescription(callback, id, basepath) {
             tbody += '<tr><td colspan="5">&nbsp;</td></tr>';
 
             tbody2 = '';
-
           
              // comment for new create investigation panel by anil 23-09-2019
              
-              // $.each(data['investigation'], function(i, datasin) {
+             /* $.each(data['investigation'], function(i, datasin) {
 
-              //   //console.log(datasin);
+                //console.log(datasin);
 
-              //   tbody2 += '<tr>';
-              //   tbody2 += '<td colspan="5">'+CheckNull(datasin.inv_component_name)+'</td>';
+                tbody2 += '<tr>';
+                tbody2 += '<td colspan="5">'+CheckNull(datasin.inv_component_name)+'</td>';
               
-              //   tbody2 += '</tr>'; 
+                tbody2 += '</tr>'; */
 
               
                  $.each(data['investigationpanel'], function(i, datasin) {
@@ -2357,7 +2356,7 @@ function formatPrescription(callback, id, basepath) {
             tbody += '<tr><td colspan="5">&nbsp;</td></tr>';
 
             if(data['investigationpanel'].length > 0){
-            var thead2 = '<tr class="expandrowDetails"><th colspan="5" style="width:10%;">Investigation Panel</th></tr>';
+            var thead2 = '<tr class="expandrowDetails"><th colspan="5" style="width:10%;">Investigation</th></tr>';
               } else{
             var thead2 = '';
              tbody2 = '';
@@ -2388,34 +2387,11 @@ function formatPrescription(callback, id, basepath) {
 
 
             });
-         
-          if(data['investigation'].length > 0){
-            var thead4 = '<tr class="expandrowDetails"><th colspan="5" style="width:10%;">Investigation</th></tr>'; 
-          }else{
-            var tbody4 = '';
-           }
-            $.each(data['investigation'], function(i, datas) {
-
-               // console.log(datas);
-
-                tbody4 += '<tr>';
-                tbody4 += '<td colspan="5">'+datas.inv_component_name+'</td>';
-                
-                tbody4 += '</tr>';
-
-            });
-
-             
-           
-
-
-
-             
 
 
 
 
-            callback($('<div class="slider"><table class="table table-striped rowexpandTable" >' + thead + tbody + thead2 + tbody2 + thead4 + tbody4 + thead3 + tbody3 + '</table></div>')).show();
+            callback($('<div class="slider"><table class="table table-striped rowexpandTable" >' + thead + tbody + thead2 + tbody2 + thead3 + tbody3 +'</table></div>')).show();
         },
         error: function() {
             console.log("Error Found");
@@ -2776,7 +2752,7 @@ function resetInvestigationpanelDropDown(basepath){
    //alert();
     var investigationpanelItem=[];
     
-      $(".presinvestigationIDPanelCls").each(function() { 
+      $(".presinvestigationIDCls").each(function() { 
        investigationpanelItem.push($(this).val());
       });
 

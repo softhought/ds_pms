@@ -586,12 +586,14 @@ label{
     z-index: 6 !important;
 } */
 
-#antenantal_left_tab_menu_2_section .bootstrap-select{
+/* --------comment by anil 17-10-2019----- */
+
+/*#antenantal_left_tab_menu_2_section .bootstrap-select{
     z-index: 999 !important;
 }
 #antenantal_left_tab_menu_2_section .bootstrap-select.form-control.input-group-btn {
     z-index: 1 !important;
-}
+}*/
 .zindex2{
     z-index:2 !important;
 }

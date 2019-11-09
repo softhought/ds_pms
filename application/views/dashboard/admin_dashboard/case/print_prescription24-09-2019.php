@@ -110,7 +110,7 @@ div.footer {
             <td width="10%" rowspan="2">
                 <?php
                     if ($clinicData->logo!='') {
-                    
+                  
                 ?>
                 <img src="<?php echo base_url();?>assets/documentation/clinic_logo/<?php
             echo $clinicData->logo;?>" width="70" height="60" class="logo_pic" alt="">
@@ -255,40 +255,12 @@ div.footer {
     			
     		</tr>
 
-             <?php if($antenantalCaseData->lmp_date!=""){ ?>    
-            <tr>
-                <td><span>&#9744;&nbsp;&nbsp;</span>LMP Date :  <?php echo date('d-m-Y',strtotime($antenantalCaseData->lmp_date)); ?></td>
-                <td> </td>
-            </tr>
-            <?php } ?>
-
-            <?php if($antenantalCaseData->edd_date!=""){ ?>    
-            <tr>
-                <td><span>&#9744;&nbsp;&nbsp;</span>EDD Date :  <?php echo date('d-m-Y',strtotime($antenantalCaseData->edd_date)); ?></td>
-                <td> </td>
-            </tr>
-            <?php } ?>
-
-            <?php if($antenantalCaseData->usg_date!=""){ ?>    
-            <tr>
-                <td><span>&#9744;&nbsp;&nbsp;</span>EDD BY USG :  <?php echo date('d-m-Y',strtotime($antenantalCaseData->usg_date)); ?></td>
-                <td> </td>
-            </tr>
-            <?php } ?>
-
             <?php if($total_cesarean!=0){ ?>    
     		<tr>
     			<td><span>&#9744;&nbsp;&nbsp;</span>Having previous LUCS :  <?php echo $total_cesarean;?></td>
     			<td> </td>
     		</tr>
             <?php } 
-
-             if($total_suction!=0){ ?>    
-            <tr>
-                <td><span>&#9744;&nbsp;&nbsp;</span>Having previous MTP :  <?php echo $total_suction;?></td>
-                <td> </td>
-            </tr>
-            <?php }
             
              if($lastchildBirth){
             
@@ -582,23 +554,23 @@ div.footer {
                         <div style="margin-left:120px;word-wrap: break-word;font-size: 10px;margin-top: -15px;">
                         
                         <?php if($inveltdata->hb_result!=''){                          
-                          echo "Hb : "; echo $inveltdata->hb_result.' gm/dl'.$CI->dateDMY($inveltdata->hb_date)." | ";       
+                          echo "Hb : "; echo $inveltdata->hb_result.$CI->dateDMY($inveltdata->hb_date)." | ";       
                         }
 
                         if($inveltdata->tc_result!=''){ 
-                            echo "TC : "; echo $inveltdata->tc_result.' mcl of blood'.$CI->dateDMY($inveltdata->tc_date)." | ";
+                            echo "TC : "; echo $inveltdata->tc_result.$CI->dateDMY($inveltdata->tc_date)." | ";
                         }
 
                         if($inveltdata->dc_result!=''){ 
-                            echo "DC : "; echo $inveltdata->dc_result.' mcl of blood'.$CI->dateDMY($inveltdata->dc_date)." | ";
+                            echo "DC : "; echo $inveltdata->dc_result.$CI->dateDMY($inveltdata->dc_date)." | ";
                         }
 
                         if($inveltdata->fbs_result!=''){ 
-                            echo "FBS : "; echo $inveltdata->fbs_result.' gm/dl'.$CI->dateDMY($inveltdata->fbs_date)." | ";
+                            echo "FBS : "; echo $inveltdata->fbs_result.$CI->dateDMY($inveltdata->fbs_date)." | ";
                         } 
 
                         if($inveltdata->ppbs_result!=''){
-                         echo "PPBS : "; echo $inveltdata->ppbs_result.' gm/dl'.$CI->dateDMY($inveltdata->ppbs_date)." | ";
+                         echo "PPBS : "; echo $inveltdata->ppbs_result.$CI->dateDMY($inveltdata->ppbs_date)." | ";
                         } 
 
                         if($inveltdata->vdrl_result!=''){ 
@@ -630,7 +602,7 @@ div.footer {
                         } 
 
                         if($inveltdata->stsh_result!=''){ 
-                            echo "STSH : "; echo $inveltdata->stsh_result.' mIU/ml'.$CI->dateDMY($inveltdata->stsh_date)." | ";
+                            echo "STSH : "; echo $inveltdata->stsh_result.$CI->dateDMY($inveltdata->stsh_date)." | ";
                         } 
 
                         if($inveltdata->s_urea_result!=''){
@@ -1044,65 +1016,19 @@ div.footer {
 
 
 <br>
-<?php  if ($prescriptionInvestigationpanel || $prescriptionInvestigationList) { ?>
-<span class="spanhead">Suggested Investigation :</span>&nbsp;
-
-<table style="margin-top: -17px;">
-       <tr>
-           <td style="font-size: 10px;margin-left: 100px; padding-left: 175px;"> <?php 
-                                                $chkcoma=0;
-                                                //created by anil 23-09-2019 
-                                                 foreach ($prescriptionInvestigationpanel as $prescriptionInvestigationpanel) {
-                                                  if($chkcoma!=0){echo ",";}
-                                                  echo $prescriptionInvestigationpanel->panel_investigation_details;
-                                                  $chkcoma++;
-
-                                                
-                                              } 
-                                              if($chkcoma != 0){
-                                               echo "<br>";
-                                              }
-                                               $chkcoma2 = 0;
-                                              foreach ($prescriptionInvestigationList as $prescriptionInvestigation) {
-                                                  if($chkcoma2!=0){echo ",";}
-                                                  echo $prescriptionInvestigation->inv_component_name;
-                                                  $chkcoma2++;
-                                              }
-
-                                              
-                                             
-
-
-                                              ?></td>
-       </tr>
-    </table> 
-
- <?php } ?>
-
-  
-
-            
-<!--  <span style="font-size:10px; border: 1px solid red;word-wrap: b"><?php
+<?php  if ($prescriptionMedicineList) {?>
+<span class="spanhead">Suggested Investigation :</span>&nbsp; <span style="font-size:10px;">    <?php
                                             
                                                  $chkcoma=0;
-                                                //created by anil 23-09-2019 
-                                                 foreach ($prescriptionInvestigationpanel as $prescriptionInvestigationpanel) {
-                                                  if($chkcoma!=0){echo ",";}
-                                                  echo $prescriptionInvestigationpanel->panel_investigation_details;
-                                                  $chkcoma++;
-                                              }
-                                             // echo "<br>";
                                               foreach ($prescriptionInvestigationList as $prescriptionInvestigation) {
                                                   if($chkcoma!=0){echo ",";}
                                                   echo $prescriptionInvestigation->inv_component_name;
                                                   $chkcoma++;
                                               }
-
-                                              
-                                             
+                                             }
                                               ?>
                                               </span>  
- -->
+
 <br>
 
 <?php 

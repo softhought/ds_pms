@@ -144,6 +144,7 @@ function validateform(){
   var panelname =$("#panelname").val();
   // var chk_option =$("#chk_option").val();
   var investigation =$("#investigation").val();
+  var case_type =$("#case_type").val();
 
 
   $("#investigationpanelmsg").text("").css("dispaly", "none").removeClass("form_error");
@@ -158,11 +159,21 @@ function validateform(){
         isvalid = false;
     } 
     
-    if(investigation==null)
+    else if(investigation==null)
     {
         
         $("#investigationpanelmsg")
         .text("Error : Select investigation name .")
+        .addClass("form_error")
+        .css("display", "block");
+        isvalid = false;
+    }
+
+    else if(case_type =="")
+    {
+         $("#case_type").focus();
+        $("#investigationpanelmsg")
+        .text("Error : Select Case Type .")
         .addClass("form_error")
         .css("display", "block");
         isvalid = false;

@@ -12,7 +12,7 @@
 border-bottom: 1px solid #f0c7f9;
 }
 
-@media (max-width: 767px) {
+/*@media (max-width: 767px) {
     .table-responsive .dropdown-menu {
         position: static !important;
     }
@@ -22,7 +22,7 @@ border-bottom: 1px solid #f0c7f9;
         overflow: visible;
     }
 }
-
+*/
 .addinstructbtn{
     float: right;
 }
@@ -31,7 +31,7 @@ border-bottom: 1px solid #f0c7f9;
     margin-top: -24px;
     cursor: pointer;
 }
-.btn-default{
+.demo .btn-default{
     display: none !important;
 }
 
@@ -74,6 +74,8 @@ border-bottom: 1px solid #f0c7f9;
                                                                              
                              </div>
 
+
+
                              <div class="row clearfix">
                               <div class="col-sm-12">
                                <div class="form-group form-float">
@@ -112,6 +114,47 @@ border-bottom: 1px solid #f0c7f9;
                             </div>
                              </div>
                          </div>
+                            <div class="row clearfix">
+                              <div class="col-sm-12">
+                               <div class="form-group form-float">
+                             
+                                <label>Case Type</label>
+
+                             
+                           
+                            <select name="case_type" id="case_type" class="form-control show-tick" data-live-search="true" tabindex="-98">
+                                <option value=""> Select Case Type</option>
+                                 <?php 
+
+                                 foreach ($bodycontent['caseType'] as $key => $caseType) {
+                                    
+                               ?>
+                                   <option value="<?php echo $key;?>"
+                                        
+                                        <?php if($bodycontent['mode']=="EDIT"){
+                                            
+                                        if($bodycontent['investpanelEditdata']->case_type == $key){
+                                               echo "selected";
+                                           }
+                                    
+                                         }
+                                            ?>
+
+                                        ><?php echo $caseType; ?></option>
+                                 <?php     } ?>
+                                   
+                               </select> 
+                            
+                           
+                            </div>
+                             </div>
+                         </div>
+                            
+                            
+                            
+
+
+                        
                              <!--  <div class="row clearfix">
                              
                              <div class="col-sm-4">      
@@ -170,7 +213,8 @@ border-bottom: 1px solid #f0c7f9;
                             </div>
                              </div>
                                  
-                            </div> -->                                               
+                            </div> -->  
+
                                            
                                      <p id="investigationpanelmsg" class="form_error"></p>
 

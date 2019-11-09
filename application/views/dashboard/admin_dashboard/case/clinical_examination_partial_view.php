@@ -95,7 +95,7 @@ table.gridtable
                <div class="input-group " id="cliexm_bp_serr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
-                <input type="text" name="cliexm_bp_s[]" id="cliexm_bp_s_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" >
+                <input type="text" name="cliexm_bp_s[]" id="cliexm_bp_s_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" onKeyUp="numericFilter(this);">
                  </div>
                 </div>
                                       
@@ -106,7 +106,7 @@ table.gridtable
                <div class="input-group " id="cliexm_bp_derr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
-                <input type="text" name="cliexm_bp_d[]" id="cliexm_bp_d_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" >
+                <input type="text" name="cliexm_bp_d[]" id="cliexm_bp_d_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" onKeyUp="numericFilter(this);">
                  </div>
                 </div>
                                       
@@ -205,7 +205,7 @@ table.gridtable
                <div class="input-group " id="cliexm_after_weekerr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
-                <input type="text" name="cliexm_after_week[]" id="cliexm_after_week_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" >
+                <input type="text" name="cliexm_after_week[]" id="cliexm_after_week_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" onKeyUp="numericFilter(this);">
                  </div>
                 </div>
                                       
@@ -216,7 +216,7 @@ table.gridtable
                <div class="input-group " id="cliexm_after_dayserr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
-                <input type="text" name="cliexm_after_days[]" id="cliexm_after_days_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" >
+                <input type="text" name="cliexm_after_days[]" id="cliexm_after_days_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" onKeyUp="numericFilter(this);">
                  </div>
                 </div>
                                       

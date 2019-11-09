@@ -29,7 +29,7 @@
                   if ($invDatarow['rowno']!=0) {
                   
               ?> 
-			<a href="javascript:;" class="delPresInvestigationpanel" id="delDocRow_<?php echo $invDatarow['rowno']; ?>" title="Delete">
+			<a href="javascript:;" class="delPresGynInvestigationpanel" id="delDocRow_<?php echo $invDatarow['rowno']; ?>" title="Delete">
 					<i class="material-icons thmdarkTxtcolor" style="color: red;">delete</i>
             <?php } ?> 
 

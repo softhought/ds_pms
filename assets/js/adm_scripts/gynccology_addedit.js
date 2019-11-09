@@ -4,7 +4,7 @@ $(document).ready(function(){
 
 resetprevioussurgery(basepath);
 resetPlannedSurgery(basepath);
-
+resetgynInvestigationpanelDropDown(basepath);
 Activechiefcomplaintform();
 
 $("#gynccology_section").css("display", "block");
@@ -290,10 +290,10 @@ $(document).on('submit','#GynccologyBasicRecordForm',function(event)
                 data: formData,
                 
                 success: function (result) {
-                     console.log(result);
+                     //console.log(result);
                     
                     if (result.msg_status == 1) {
-
+                        imageupload(basepath);  
                       
         	           $(".gynccologysavebtn").removeClass("btn-danger");
         	           $(".gynccologysavebtn").addClass("btn-primary");
@@ -309,6 +309,10 @@ $(document).on('submit','#GynccologyBasicRecordForm',function(event)
                         } 
                       
                       $("#paininsertedID").val(result.pain_lower_lastID);   
+                      $("#examination_master_id").val(result.examination_master_id);   
+                      $("#gyn_investigation_id").val(result.gyninvestigationId); 
+
+                     
                   
                     } 
                     else {
@@ -599,12 +603,14 @@ $("#period_rel_pain").on('change',function(){
 	if(value == 'Yes'){
 
 	  $("#painDrp").css("display",'block');
+    $("#othersdesign").css("display",'block');
 
 	  $("#isPeriodrelPain").val('Y');
 	  	
 	}
 	else{
 		 $("#painDrp").css("display",'none');
+     $("#othersdesign").css("display",'none');
 		 $("#sel_period_pain").val('').change();
 		 $("#other_pain  ").val('');
 		  $("#isPeriodrelPain").val('N');
@@ -710,6 +716,139 @@ $(document).on('change','.treatmentmedicine',function(event){
   
 
     });
+
+/* wants termination in unwanyed pregnancy */
+
+$(document).on('change','.wantsterminationchange',function(event){
+     event.stopImmediatePropagation();
+       // alert();
+        var currRowID = $(this).attr('id');
+        console.log('currow : '+currRowID);
+        var rowDtlNo = currRowID.split('_');
+       // console.log(rowDtlNo[1]);
+       
+       var selectvalue = this.value; 
+    //   console.log(selectvalue);
+
+        var wantermintaion = [];
+
+        $.each($("#wants_termination option:selected"), function(){            
+
+            wantermintaion.push($(this).val());
+
+        });
+    
+        console.log(wantermintaion);
+
+        console.log(wantermintaion.toString());
+        $("#WantsterminationValues").val(wantermintaion.toString());
+
+        if(jQuery.inArray("Others", wantermintaion) != -1) {
+           // console.log("is in array");
+             $('#terminationOther').css('display','block'); 
+             $("#isWantOthers").val('Y');
+        } else {
+           // console.log("is NOT in array");
+            $('#terminationOther').css('display','none');
+            $("#isWantOthers").val('N');
+            $("#wantterminationOther").val('');
+        } 
+
+
+    });
+
+/* end unwanted pregnancy*/
+
+/* Urinary Inconsistany */
+
+$(document).on('change','#urinary_episode',function(){
+  //alert();
+
+  var value = $(this).val();
+
+   if(value == 'Recurrent'){
+
+     $(".recurrentyermon").css("display","block");
+     $("#isurinaryepisode").val('Y');
+      $("#episode_years").val("");
+      $("#episode_months").val("");
+   }
+   else if(value == 'Continous'){
+
+     $(".recurrentyermon").css("display","block");
+      $("#isurinaryepisode").val('Y');
+      $("#episode_years").val("");
+      $("#episode_months").val("");
+   }else{
+
+    $(".recurrentyermon").css("display","none");
+     $("#isurinaryepisode").val('N');
+      $("#episode_years").val("");
+      $("#episode_months").val("");
+   }
+
+  // alert();
+
+  });
+
+
+/* Post Menopausal Bleeding */
+
+
+$("#stopbleedingby").on('change',function(){
+
+var value = $(this).val();
+
+if(value == 'On Medication'){
+
+  $("#stopbleedingmed").css("display","block");
+  $("#isStopBleeding").val('Y');
+
+}
+else{
+
+  $("#stopbleedingmed").css("display","none");
+  $("#isStopBleeding").val('N');
+  $("#stopbleedingmedValues").val('');
+
+}
+
+
+});
+
+
+
+
+
+$(document).on('change','.medicineforstop',function(event){
+     event.stopImmediatePropagation();
+       // alert();
+        var currRowID = $(this).attr('id');
+        console.log('currow : '+currRowID);
+        var rowDtlNo = currRowID.split('_');
+       // console.log(rowDtlNo[1]);
+       
+       var selectvalue = this.value; 
+    //   console.log(selectvalue);
+
+        var medicine = [];
+
+        $.each($("#bleedig_stop_medicine option:selected"), function(){            
+
+            medicine.push($(this).val());
+
+        });
+    
+        console.log(medicine);
+
+        console.log(medicine.toString());
+        $("#stopbleedingmedValues").val(medicine.toString());
+
+      
+    });
+
+
+/*End Post Menopausal Bleeding*/
 
 
   $('.paindata').on('keyup',function(){
@@ -827,7 +966,350 @@ $(document).on('change','.treatmentmedicine',function(event){
    
    });
 
+
+/* Year Months Carray Forward from Chief complaint to details  */
+
+$(".yearvalueCarryforward").on("change",function(){
+
+  var value = $(this).val();
+  var id = $(this).attr("id").split('_');
+ 
+  var checkid = ['1','12','14','15','17'];
+
+  //alert(idse);
+
+  if(jQuery.inArray(id[1],checkid) != -1){
+
+    //alert("");
+
+  $(".dtl_years_"+id[1]).val(value); 
+
+  }
+  
+ 
+
 });
+$(".monthvalueCarryforward").on("change",function(){
+
+  var value = $(this).val();
+  var id = $(this).attr("id").split('_');
+
+  var checkid = ['1','8','12','14','15','17','18'];
+
+  if(jQuery.inArray(id[1],checkid) != -1){
+
+   $(".dtl_months_"+id[1]).val(value); 
+
+  }
+
+});
+
+$(".dayvalueCarryforward").on("keyup",function(){
+
+  var value = $(this).val();
+  var id = $(this).attr("id").split('_');
+
+  var checkid = ['1','8','14','15','17','18'];
+
+  if(jQuery.inArray(id[1],checkid) != -1){
+
+       $(".dtl_days_"+id[1]).val(value);
+
+    } 
+
+ 
+
+});
+
+
+// start General Examination requried
+
+//comman for other tag using 
+
+$(".dispOther").change(function(event){
+
+  event.stopImmediatePropagation();
+
+var id = $(this).attr("id");
+
+ var value = $(this).val();
+
+ //alert("#"+id+"_other");
+
+ if(value == 'Other'){
+
+    $("#"+id+"_other").css("display","block");
+ }else{
+
+   $("#"+id+"_other").css("display","none");
+ }
+
+
+});
+
+
+//bmi calaculation 
+
+$(document).on('keyup','.genbmi',function(){
+        
+      var height = parseInt($('#exam_height').val() || 0);
+      height_m= height/100;
+      var weight = parseInt($('#exam_weight').val() || 0);
+
+    
+      if(height_m!=0){
+        var bmi =weight/(height_m*height_m);
+      $('#gen_exam_bmi').val(bmi.toFixed(2))
+      }else{
+       $('#gen_exam_bmi').val('') 
+      }
+      ;
+      $("#gen_exam_bmi").focus();
+      $(this).focus();
+    });
+
+
+$(document).on("change keyup",".isChangeGenExam",function(){
+
+
+  $("#isGeneralDataChange").val('Y');
+
+});
+
+$(".reset_btn").click(function(){
+
+$(".isChangeGenExam").val("");
+
+$(".isChangeGenExam").val("").change();
+
+
+});
+
+//Abdominal Examination 
+
+
+$(document).on('click','.tenderdatafill',function(){
+
+  var id = $(this).attr('id');
+  var value = $(this).val();
+
+  if(value == 'N'){
+     $("#"+id).prop('checked', true);
+     $("#"+id).val('Y');
+        
+  }
+  else{
+     $("#"+id).prop('checked', false);
+     $("#"+id).val('N');
+
+       
+  }
+
+});
+
+
+
+$("#abdominal_exam").change(function(){
+
+  var value = $(this).val();
+  
+
+  if(value == "Tender"){
+
+     $("#ascitesdata").css("display","none");
+    $("#lumpdata").css("display","none");
+    $(".tenderdata").css("display","block");
+    $(".alllumpValue").val("").change();
+    $(".ascitesvalue").val("").change();
+
+  }else if (value == "Lump") 
+  {
+       $("#ascitesdata").css("display","none");
+      $(".tenderdata").css("display","none");
+     $("#lumpdata").css("display","block");
+     $(".alltedval").val("N");
+     $(".alltedval").prop("checked",false);
+      $(".ascitesvalue").val("").change();
+  } else if(value == "Ascites"){
+
+      $(".tenderdata").css("display","none");
+    $("#lumpdata").css("display","none");
+    $("#ascitesdata").css("display","block");
+     $(".alltedval").val("N");
+     $(".alltedval").prop("checked",false);
+     $(".alllumpValue").val("").change();
+  }
+  else{
+      $("#ascitesdata").css("display","none");
+    $(".tenderdata").css("display","none");
+    $("#lumpdata").css("display","none");
+    $(".alltedval").prop("checked",false);
+     $(".alltedval").val("N");
+    $(".alllumpValue").val("").change();
+    $(".ascitesvalue").val("").change();
+  }
+
+
+});
+
+
+$(document).on('change keyup click','.isAnyChangeexam',function(){
+
+  $("#isChangeExamdata").val('Y');
+
+});
+
+$("#per_speculam_exam").change(function(){
+
+  var value = $(this).val();
+if(value == 'Growth Seen'){
+
+   $("#polyprespect").css("display","none"); 
+  $("#growthrespect").css("display","block");
+   $("#polyprespect").val("").change();
+
+}else if(value == 'Polyp Seen'){
+
+  $("#growthrespect").css("display","none");
+  $("#polyprespect").css("display","block");
+  $("#speculam_growth_seen").val("").change();
+}else{
+      $("#polyprespect").css("display","none"); 
+      $("#growthrespect").css("display","none");
+       $("#polyprespect").val("").change();
+       $("#speculam_growth_seen").val("").change();
+}
+
+ 
+})
+
+$("#vulva_exam").change(function(){
+
+var value = $(this).val();
+
+if(value == 'Growth Seen'){
+
+  $("#vulavagrowth").css("display","block");
+
+}
+else{
+
+   $("#vulavagrowth").css("display","none");
+   $("#vulva_growth_notes").val("");
+}
+
+
+});
+
+// End General Examination requried
+
+
+//Start Gynaecology Investigation
+
+$(document).on("change keyup",".isChangeinv",function(event){
+   
+   event.stopImmediatePropagation();
+
+   $("#isChangeInvestigation").val("Y");
+});
+
+/* add prescription panel by anil 23-09-2019*/
+
+     $(document).on('click','#addPresGynPanelTest',function(){
+ 
+          // rowNoUpload++;
+          // $("#addPresPanelTest").attr("disabled","true");
+          var rowno=  $("#presTestrowpanel").val();
+
+          var panel=  $("#prescription_investigationpanel").val();
+
+          var count = $("#prescription_investigationpanel :selected").length;
+        
+        
+          $("#prescription_investigationerr").removeClass("bordererror");
+
+        if (count!='0') {
+       //console.log(investigation);
+        rowno++;
+       
+        $.ajax({
+            type: "POST",
+            url: basepath+'gynccology/addPrescriptionTestDetailspanel',
+            dataType: "html",
+            data: {rowNo:rowno,panel:panel},
+            success: function (result) {
+                //console.log(result);
+                rowno=rowno+count-1;
+                $("#presTestrowpanel").val(rowno);
+                //$("#detail_presTestpanel table").css("display","block"); 
+                $("#detail_presTestpanel table tbody").append(result);
+
+                $('select').selectpicker();
+              //  $(".demo-masked-input").inputmask();
+                var $demoMaskedInput = $('.demo-masked-input');
+
+          //  $('#prescription_investigation').val(0).change();
+             $('#prescription_investigationpanel').multiSelect('deselect_all');
+            resetgynInvestigationpanelDropDown(basepath);
+
+
+         
+            }, 
+            error: function (jqXHR, exception) {
+              var msg = '';
+                if (jqXHR.status === 0) {
+                    msg = 'Not connect.\n Verify Network.';
+                } else if (jqXHR.status == 404) {
+                    msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status == 500) {
+                    msg = 'Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
+                    msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                    msg = 'Time out error.';
+                } else if (exception === 'abort') {
+                    msg = 'Ajax request aborted.';
+                } else {
+                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                }
+               // alert(msg);  
+            }
+            }); /*end ajax call*/
+
+    }else{      
+
+            $("#prescription_investigationpanel").focus();
+            $("#prescription_investigationpanel").addClass("bordererror");
+          
+
+    }
+  
+    });// End prescription panel
+//dellete gynaecology investigation panel
+
+
+$(document).on('click','.delPresGynInvestigationpanel',function(event){
+
+        event.preventDefault();
+       
+        var currRowID = $(this).attr('id');
+        var rowDtlNo = currRowID.split('_');
+       // console.log(rowDtlNo[1]);
+        console.log(currRowID);
+        $("#ischangePrescription").val('Y');
+        //$("tr#rowDocument_"+rowDtlNo[1]+"_"+rowDtlNo[2]).remove();
+        $("tr#rowPrescriptionInvestigationpanel_"+rowDtlNo[1]).remove();
+
+        resetgynInvestigationpanelDropDown(basepath);
+    });
+
+
+//End Gynaecology Investigation
+
+
+
+});
+
 
 
 //created for previous surgery drp anil 02-10-2019
@@ -1008,5 +1490,100 @@ function Activechiefcomplaintform(){
 
   });
   
+}
+
+function resetgynInvestigationpanelDropDown(basepath){
+    
+    var investigationpanelItem=[];
+    
+      $(".presinvestigationIDPanelCls").each(function() { 
+       investigationpanelItem.push($(this).val());
+      });
+
+      //console.log(investigationpanelItem);
+
+         $.ajax({
+        type: "POST",
+        url: basepath+'gynccology/resetGynInvestigationpanelDropdown',
+        dataType: "html",
+        data: {investigationpanelItem:investigationpanelItem},
+        success: function (result) {
+            //console.log(result);
+            $("#prescription_investigationpaneldrp").html(result);
+           
+            $('select').selectpicker();
+     
+        }, 
+        error: function (jqXHR, exception) {
+          var msg = '';
+            if (jqXHR.status === 0) {
+                msg = 'Not connect.\n Verify Network.';
+            } else if (jqXHR.status == 404) {
+                msg = 'Requested page not found. [404]';
+            } else if (jqXHR.status == 500) {
+                msg = 'Internal Server Error [500].';
+            } else if (exception === 'parsererror') {
+                msg = 'Requested JSON parse failed.';
+            } else if (exception === 'timeout') {
+                msg = 'Time out error.';
+            } else if (exception === 'abort') {
+                msg = 'Ajax request aborted.';
+            } else {
+                msg = 'Uncaught Error.\n' + jqXHR.responseText;
+            }
+           // alert(msg);  
+        }
+        }); /*end ajax call*/
+}
+
+function imageupload(basepath){
+
+      //alert(basepath);
+            var formData = new FormData($("#GynccologyBasicRecordForm")[0]);
+            $("#gynpatientbasicsavebtn").css('display', 'none');
+            $("#gynpatientloaderbtn").css('display', 'block');
+        
+
+            //console.log(formData);
+            
+    
+        $.ajax({
+                type: "POST",
+                url: basepath+'gynccology/imageupload',
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                data: formData,
+                
+                success: function (result) {
+                    //console.log(result);
+                    if(result.msg_status == 1){
+                      $("#info_leaflet").val("");
+                      $("#consent_form").val("");
+                    }
+                                      
+                  
+                }, 
+                error: function (jqXHR, exception) {
+                  var msg = '';
+                    if (jqXHR.status === 0) {
+                        msg = 'Not connect.\n Verify Network.';
+                    } else if (jqXHR.status == 404) {
+                        msg = 'Requested page not found. [404]';
+                    } else if (jqXHR.status == 500) {
+                        msg = 'Internal Server Error [500].';
+                    } else if (exception === 'parsererror') {
+                        msg = 'Requested JSON parse failed.';
+                    } else if (exception === 'timeout') {
+                        msg = 'Time out error.';
+                    } else if (exception === 'abort') {
+                        msg = 'Ajax request aborted.';
+                    } else {
+                        msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                    }
+                   // alert(msg);  
+                }
+            }); /*end ajax call*/
+
 }
 

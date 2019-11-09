@@ -59,7 +59,8 @@ $(document).on('submit','#gynnewcaseForm',function(event)
             //console.log(formDataserialize);
 
             var formData = { formDatas: formDataserialize };
-            $("#gyncaseregsavebtn").css('display', 'none');
+           $("#gyncaseregsavebtn").css('display', 'none');
+            $("#gyncaseregsavebtn").prop('disabled', true);
             $("#gynloaderbtn").css('display', 'block');
         
 
@@ -131,6 +132,8 @@ $(document).on('keyup paste ', '#gynselfmobile', function () {
     var majorgroup = $("#majorgroup").val();
     $("#gyncaseregsavebtn").attr('disabled',false);
     $("#gyncaseregmsg").text("").css("dispaly", "none").removeClass("form_error");
+    //alert(selfmobile.length);
+    if(selfmobile.length == 10){
 
     var type = "POST"; 
                 var urlpath = basepath + 'patientcase/checkPatientMobile';
@@ -158,7 +161,7 @@ $(document).on('keyup paste ', '#gynselfmobile', function () {
                 });
 
 
-    
+    }
 
 });
 

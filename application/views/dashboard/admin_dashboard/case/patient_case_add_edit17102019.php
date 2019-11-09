@@ -1042,8 +1042,8 @@ border-bottom: 0px solid #fff !important;
                       <input type="text" class="form-control" name="edd_week" id="edd_week" placeholder="no of week" autocomplete="off" 
                       value="<?php if($bodycontent['antenantalmode']=="EDIT"){
                                   echo $bodycontent['antenantalCaseEditdata']->usg_week;} ?>" 
-                                 onKeyup="numericFilter(this);" >
-                        <label class="form-label zindex2">No. of weeks</label>          
+                                  >
+                        <label class="form-label zindex2">No. of week</label>          
                     </div>
                   </div>
                 </div>
@@ -1051,9 +1051,9 @@ border-bottom: 0px solid #fff !important;
                   <div class="col-sm-2">
                       <div class="form-group form-float"> 
                           <div class="form-line input-group">
-                                <input type="text" class="form-control" name="edd_days" id="edd_days" placeholder="no of day" autocomplete="off" value="<?php if($bodycontent['antenantalmode']=="EDIT" ){
-                                    echo $bodycontent['antenantalCaseEditdata']->usg_days;} ?>" onKeyup="numericFilter(this);" >
-                              <label class="form-label zindex2">No of days</label>
+                                <input type="text" class="form-control" name="edd_days" id="edd_days" placeholder="no of day" autocomplete="off" value="<?php if($bodycontent['antenantalmode']=="EDIT"){
+                                    echo $bodycontent['antenantalCaseEditdata']->usg_days;} ?>"  >
+                              <label class="form-label zindex2">No of day</label>
                           </div>
                       </div>
                   </div>
@@ -1144,7 +1144,7 @@ border-bottom: 0px solid #fff !important;
 
              <div class="col-sm-12">
               <div id="detail_childHistory" class="customeTblDesign1">
-                    <div class="table-responsive" style="min-height: 400px;">
+                    <div class="table-responsive">
                            <?php
                           $childdtlrowno=0;
                           $detailCountchilddtl = 0;
@@ -1638,7 +1638,7 @@ border-bottom: 0px solid #fff !important;
                     <div class="col-sm-2">
                          <div class="form-group form-float">
                            <div class="form-line">
-                            <input type="text" class="form-control txtsamelevel nomarginTop" name="menstrual_duration_days" id="menstrual_duration_days" autocomplete="off" value="<?php if($bodycontent['antenantalmode']=="EDIT"){echo $bodycontent['antenantalCaseEditdata']->menstrual_duration_days;}?>" onKeyUp="numericFilter(this);">
+                            <input type="text" class="form-control txtsamelevel nomarginTop" name="menstrual_duration_days" id="menstrual_duration_days" autocomplete="off" value="<?php if($bodycontent['antenantalmode']=="EDIT"){echo $bodycontent['antenantalCaseEditdata']->menstrual_duration_days;}?>" >
                                <label class="form-label">Duration Days</label>
                             </div>
                           </div>
@@ -1647,7 +1647,7 @@ border-bottom: 0px solid #fff !important;
                       <div class="col-sm-2">
                          <div class="form-group form-float">
                            <div class="form-line">
-                            <input type="text" class="form-control txtsamelevel nomarginTop" name="menstrual_cycle_days" id="menstrual_cycle_days" autocomplete="off" value="30" onKeyUp="numericFilter(this);">
+                            <input type="text" class="form-control txtsamelevel nomarginTop" name="menstrual_cycle_days" id="menstrual_cycle_days" autocomplete="off" value="30" >
                                <label class="form-label">Cycle Days</label>
                             </div>
                           </div>
@@ -1670,7 +1670,7 @@ border-bottom: 0px solid #fff !important;
                       <div class="col-sm-1">
                          <div class="form-group form-float">
                            <div class="form-line">
-                            <input type="text" class="form-control txtsamelevel nomarginTop" name="cycle_plusminusdays" id="cycle_plusminusdays" autocomplete="off" value="<?php if($bodycontent['antenantalmode']=="EDIT"){echo $bodycontent['antenantalCaseEditdata']->cycle_plusminusdays;}?>" onKeyUp="numericFilter(this);">
+                            <input type="text" class="form-control txtsamelevel nomarginTop" name="cycle_plusminusdays" id="cycle_plusminusdays" autocomplete="off" value="<?php if($bodycontent['antenantalmode']=="EDIT"){echo $bodycontent['antenantalCaseEditdata']->cycle_plusminusdays;}?>" >
                                <label class="form-label">Days</label>
                             </div>
                           </div>
@@ -1707,7 +1707,7 @@ border-bottom: 0px solid #fff !important;
                       <div class="form-group form-float">
                         <div class="input-group" id="sel_diseaseserr">
                           <label class="form-label selectlabel zindex3">Diseases</label>
-                          <select name="sel_diseases" id="sel_diseases" class="form-control show-tick sel_diseases"  data-live-search="true" tabindex="-98" multiple data-selected-text-format="count" >
+                          <select name="sel_diseases" id="sel_diseases" class="form-control show-tick sel_diseases"  data-live-search="true" tabindex="-98" multiple  data-selected-text-format="count">
                           <!--  <option value="0"> &nbsp; </option> -->
                           <?php 
 
@@ -2899,27 +2899,12 @@ border-bottom: 0px solid #fff !important;
                     </div>
 
                     <div class="col-sm-3">
-                          <div class="input-group form-float">
-                          <!--  comment by anil at 30-10-2019 and create option select -->
-                              <!-- <input type="text" class="form-control  inpinve" name="vdrl_result" id="vdrl_result" autocomplete="off" placeholder="" value="<?php
-                              if($isDatainvestigation=='Y'){echo $bodycontent['investigationLatestData']->vdrl_result;}?>" > -->    
-
-                  <label class="form-label upText selectlabel">VDRL</label>
-                         <select name="vdrl_result" id="vdrl_result" class="form-control show-tick selinve "  data-live-search="true" tabindex="-98">
-                       <option value=""> &nbsp; </option> 
-                         <?php 
-
-                         foreach ($bodycontent['reactivenonrective'] as $reactivenonrective) {  ?>
-                         <option value="<?php echo $reactivenonrective;?>"
-
-                             <?php if(($isDatainvestigation=='Y') && $reactivenonrective==$bodycontent['investigationLatestData']->vdrl_result){echo "selected";}else{echo "";} ?>                            
-                                                      
-
-                          ><?php echo $reactivenonrective;?></option>
-                          <?php     } ?>
-                                                   
-                          </select> 
-                            
+                          <div class="form-group form-float">
+                            <div class="form-line">
+                              <input type="text" class="form-control  inpinve" name="vdrl_result" id="vdrl_result" autocomplete="off" placeholder="" value="<?php
+                              if($isDatainvestigation=='Y'){echo $bodycontent['investigationLatestData']->vdrl_result;}?>" >
+                              <label class="form-label upText">VDRL(Reactive/Nonreactive)</label>
+                            </div>
                           </div>
                     </div>
 
@@ -2941,27 +2926,12 @@ border-bottom: 0px solid #fff !important;
 
                   <div class="row clearfix formrowgap">
                     <div class="col-sm-3">
-                          <div class="input-group form-float">
-                           
-                           <!--  <input type="text" class="form-control  inpinve" name="hiv_one_result" id="hiv_one_result" autocomplete="off" placeholder="" value="<?php
-                             if($isDatainvestigation=='Y'){echo $bodycontent['investigationLatestData']->hiv_one_result;}?>" > -->
-                            <label class="form-label upText selectlabel">HIV 1</label>
-
-                             <select name="hiv_one_result" id="hiv_one_result" class="form-control show-tick selinve "  data-live-search="true" tabindex="-98">
-                                 <option value=""> &nbsp; </option> 
-                         <?php 
-
-                         foreach ($bodycontent['reactivenonrective'] as $reactivenonrective) {  ?>
-                         <option value="<?php echo $reactivenonrective;?>"
-
-                             <?php if(($isDatainvestigation=='Y') && $reactivenonrective==$bodycontent['investigationLatestData']->hiv_one_result){echo "selected";}else{echo "";} ?>                            
-                                                      
-
-                          ><?php echo $reactivenonrective;?></option>
-                          <?php     } ?>
-                                                   
-                          </select> 
-                           
+                          <div class="form-group form-float">
+                           <div class="form-line">
+                            <input type="text" class="form-control  inpinve" name="hiv_one_result" id="hiv_one_result" autocomplete="off" placeholder="" value="<?php
+                             if($isDatainvestigation=='Y'){echo $bodycontent['investigationLatestData']->hiv_one_result;}?>" >
+                            <label class="form-label upText">HIV 1(Reactive/Nonreactive)</label>
+                           </div>
                            </div>
                     </div>
 
@@ -2981,27 +2951,12 @@ border-bottom: 0px solid #fff !important;
                     </div>
 
                      <div class="col-sm-3">
-                          <div class="input-group form-float">
-                          
-                            <!-- <input type="text" class="form-control inpinve" name="hiv_two_result" id="hiv_two_result" autocomplete="off" placeholder="" value="<?php
-                             if($isDatainvestigation=='Y'){echo $bodycontent['investigationLatestData']->hiv_two_result;}?>" > -->
-                            <label class="form-label upText selectlabel">HIV 2</label>
-                            <select name="hiv_two_result" id="hiv_two_result" class="form-control show-tick selinve "  data-live-search="true" tabindex="-98">
-                                 <option value=""> &nbsp; </option> 
-                         <?php 
-
-                         foreach ($bodycontent['reactivenonrective'] as $reactivenonrective) {  ?>
-                         <option value="<?php echo $reactivenonrective;?>"
-
-                             <?php if(($isDatainvestigation=='Y') && $reactivenonrective==$bodycontent['investigationLatestData']->hiv_two_result){echo "selected";}else{echo "";} ?>                            
-                                                      
-
-                          ><?php echo $reactivenonrective;?></option>
-                          <?php     } ?>
-                                                   
-                          </select> 
-
-                           
+                          <div class="form-group form-float">
+                           <div class="form-line ">
+                            <input type="text" class="form-control inpinve" name="hiv_two_result" id="hiv_two_result" autocomplete="off" placeholder="" value="<?php
+                             if($isDatainvestigation=='Y'){echo $bodycontent['investigationLatestData']->hiv_two_result;}?>" >
+                            <label class="form-label upText">HIV 2(Reactive/Nonreactive)</label>
+                           </div>
                            </div>
                     </div>
                     <div class="col-sm-3">
@@ -3014,8 +2969,7 @@ border-bottom: 0px solid #fff !important;
 
                             ?>" 
                             >
-                            <label class="form-label upText">HIV 2 Test Date</label> 
-
+                            <label class="form-label upText">HIV 2 Test Date</label>        
                         </div>
                       </div>
                     </div>
@@ -3026,28 +2980,12 @@ border-bottom: 0px solid #fff !important;
                   <div class="row clearfix formrowgap">
 
                     <div class="col-sm-3">
-                          <div class="input-group form-float">
-                          
-                            <!-- <input type="text" class="form-control inpinve" name="hbsag_result" id="hbsag_result" autocomplete="off" placeholder="" value="<?php
-                             if($isDatainvestigation=='Y'){echo $bodycontent['investigationLatestData']->hbsag_result;}?>" > -->
-
-                             <label class="form-label upText selectlabel zindex3">Hbs Ag</label>
-
-                              <select name="hbsag_result" id="hbsag_result" class="form-control show-tick selinve "  data-live-search="true" tabindex="-98">
-                                 <option value=""> &nbsp; </option> 
-                         <?php 
-
-                         foreach ($bodycontent['reactivenonrective'] as $reactivenonrective) {  ?>
-                         <option value="<?php echo $reactivenonrective;?>"
-
-                             <?php if(($isDatainvestigation=='Y') && $reactivenonrective==$bodycontent['investigationLatestData']->hbsag_result){echo "selected";}else{echo "";} ?>                            
-                                                      
-
-                          ><?php echo $reactivenonrective;?></option>
-                          <?php     } ?>
-                                                   
-                          </select> 
-                           
+                          <div class="form-group form-float">
+                           <div class="form-line ">
+                            <input type="text" class="form-control inpinve" name="hbsag_result" id="hbsag_result" autocomplete="off" placeholder="" value="<?php
+                             if($isDatainvestigation=='Y'){echo $bodycontent['investigationLatestData']->hbsag_result;}?>" >
+                             <label class="form-label upText">Hbs Ag(Reactive/Nonreactive)</label>
+                            </div>
                            </div>
                     </div>
 
@@ -3061,33 +2999,17 @@ border-bottom: 0px solid #fff !important;
 
                            ?>" 
                            >  
-                           <label class="form-label upText">Hbs Ag Test Date</label>
-
+                           <label class="form-label upText">Hbs Ag Test Date</label>      
                          </div>
                          </div>
                     </div>
                      <div class="col-sm-3">
-                          <div class="input-group form-float">
-                          <!-- 
+                          <div class="form-group form-float">
+                           <div class="form-line ">
                             <input type="text" class="form-control inpinve" name="antihcv_result" id="antihcv_result" autocomplete="off" placeholder="" value="<?php
-                             if($isDatainvestigation=='Y'){echo $bodycontent['investigationLatestData']->antihcv_result;}?>" > -->
-
-                            <label class="form-label upText selectlabel">Anti HCV</label>
-                            <select name="antihcv_result" id="antihcv_result" class="form-control show-tick selinve "  data-live-search="true" tabindex="-98">
-                                 <option value=""> &nbsp; </option> 
-                         <?php 
-
-                         foreach ($bodycontent['reactivenonrective'] as $reactivenonrective) {  ?>
-                         <option value="<?php echo $reactivenonrective;?>"
-
-                             <?php if(($isDatainvestigation=='Y') && $reactivenonrective==$bodycontent['investigationLatestData']->antihcv_result){echo "selected";}else{echo "";} ?>                            
-                                                      
-
-                          ><?php echo $reactivenonrective;?></option>
-                          <?php     } ?>
-                                                   
-                          </select>
-                           
+                             if($isDatainvestigation=='Y'){echo $bodycontent['investigationLatestData']->antihcv_result;}?>" >
+                            <label class="form-label upText">Anti HCV(Reactive/Nonreactive)</label>
+                           </div>
                           </div>
                     </div>
                     <div class="col-sm-3">
@@ -3359,43 +3281,20 @@ border-bottom: 0px solid #fff !important;
 
                <div class="row clearfix formrowgap">
 
-                 <div class="col-sm-3">
-                      <div class="form-group form-float">
-                        <div class="form-line">
-                            <input type="text" class="form-control selinve" placeholder="" name="nt_scan" id="nt_scan" autocomplete="off" value="<?php 
-                            if($isDatainvestigation=='Y'){ echo $bodycontent['investigationLatestData']->nt_scan; } ?>" onKeyUp="numericFilter(this);">
-                            <label class="form-label upText">NT scan (in cm)</label>        
-                        </div>
-                      </div>
-                  </div>
-
-                   <div class="col-sm-3">
+                <div class="col-sm-3">
                       <div class="form-group form-float">
                         <div class="form-line">
                             <input type="text" class="form-control selinve datepicker2" placeholder="" name="nt_scan_date" id="nt_scan_date" autocomplete="off" value="<?php 
                             if($isDatainvestigation=='Y' && $bodycontent['investigationLatestData']->nt_scan_date!=''){
                             echo date('d-m-Y', strtotime($bodycontent['investigationLatestData']->nt_scan_date));} ?>" >
-                            <label class="form-label upText">NT scan Date</label>        
+                            <label class="form-label upText">NT scan + Double marker Date</label>        
                         </div>
                       </div>
                   </div>
 
-                <div class="col-sm-3">
-                      <div class="form-group form-float">
-                        <div class="form-line">
-                            <input type="text" class="form-control selinve datepicker2" placeholder="" name="double_marker_date" id="double_marker_date" autocomplete="off" value="<?php 
-                            if($isDatainvestigation=='Y' && $bodycontent['investigationLatestData']->double_marker_date!=''){
-                            echo date('d-m-Y', strtotime($bodycontent['investigationLatestData']->double_marker_date));} ?>" >
-                            <label class="form-label upText">Double marker Date</label>        
-                        </div>
-                      </div>
-                  </div>
-                </div>
-                <div class="row clearfix">
-
-                     <div class="col-sm-4">
+                     <div class="col-sm-3">
                          <div class="input-group form-float" id="usg_slf_dayerr">
-                          <label class="form-label upText selectlabel">1st Trimester Screening Low Risk For</label>
+                          <label class="form-label upText selectlabel">NT scan low risk for</label>
                           <select name="nt_scan_lowerrisk[]" id="nt_scan_lowerrisk" class="form-control selinve show-tick"  data-live-search="true" tabindex="-98"  multiple data-selected-text-format="count">
                           <!--  <option value=""> &nbsp; </option> -->
                           <?php 
@@ -3419,9 +3318,9 @@ border-bottom: 0px solid #fff !important;
                           </div>
                         
                     </div> 
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                          <div class="input-group form-float" id="nt_scan_highriskerr">
-                         <label class="form-label upText selectlabel">1st Trimester Screening High Risk For</label>
+                         <label class="form-label upText selectlabel">NT scan high risk for</label>
                          <select name="nt_scan_highrisk[]" id="nt_scan_highrisk" class="form-control show-tick selinve"  data-live-search="true" tabindex="-98" multiple data-selected-text-format="count">
                         <!--  <option value=""> &nbsp; </option> -->
                          <?php 
@@ -3572,7 +3471,7 @@ border-bottom: 0px solid #fff !important;
 
                    <div class="col-sm-2">       
         
-              <div class="form-group form-float"> 
+              <div class="form-group form-group"> <label class="form-label upText">&nbsp;</label>
                      <div class="input-group" >
                          &nbsp;&nbsp; <input type="checkbox" name="other_anomaly" id="other_anomaly" class="filled-in chk-col-deep-purple selinve otheranomalyckbx" value="Y" 
                          <?php 
@@ -3931,7 +3830,7 @@ border-bottom: 0px solid #fff !important;
 
 
 
-                    <input type="hidden" name="ischangeInvestigation" id="ischangeInvestigation" value="N">    
+                    <input type="text" name="ischangeInvestigation" id="ischangeInvestigation" value="N">    
                       <br>
 
                
@@ -4398,17 +4297,41 @@ border-bottom: 0px solid #fff !important;
                   <!-- 333333333333333333333333333333333333333333333333333-->
                       </div>
                       </div>
+                      <div class="row clearfix">
                       
+                        <div class="col-sm-6" >
+                           <!-- <label class="form-label " style="text-decoration: underline;">Add Test</label> -->
+                          <label class="form-label " style="text-decoration: underline;"></label>
+                          <div class="row clearfix">
 
-                      <!-- creted for panel investigation 23-09-2019 by anil -->
-                         
-                         <div class="row clearfix">
+                          <div class="col-sm-10">
 
-                          <div class="col-sm-5">
+                            <!-- comment new modification for panel investigation 23-09-2019 by anil -->
 
+                          <!-- <div class="form-group form-float">
+                              <div class="input-group" id="prescription_investigationerr">
+                                  <label class="form-label upText selectlabel zindex3">Investigation</label>
+                                  <div id="prescription_investigationdrp">
+                                  <select name="prescription_investigation[]" id="prescription_investigation" class="form-control selpres show-tick"  data-live-search="true" tabindex="-98"  multiple data-selected-text-format="count">
+                                  
+                                  <?php 
+
+                                  foreach ($bodycontent['testList'] as $testlist) {  ?>
+                                  <option value="<?php echo $testlist->investigation_comp_id;?>"
+
+                                    ><?php echo $testlist->inv_component_name;?></option>
+                                    <?php     } ?>
+                                                            
+                                    </select> 
+                                    </div>
+                                </div>
+                          </div> -->
+
+                          <!-- creted for panel investigation 23-09-2019 by anil -->
+                          
                           <div class="form-group form-float">
                               <div class="input-group" id="prescription_investigationerr">
-                                  <label class="form-label upText selectlabel zindex3">Investigation Panel</label>
+                                  <label class="form-label upText selectlabel zindex3">Investigation</label>
                                   <div id="prescription_investigationpaneldrp">
                                   <select name="prescription_investigationpanel[]" id="prescription_investigationpanel" class="form-control selpres show-tick"  data-live-search="true" tabindex="-98"  multiple data-selected-text-format="count">
                                   
@@ -4438,12 +4361,15 @@ border-bottom: 0px solid #fff !important;
                          </div> -->
 
 
-                        
-
-                           <div class="col-sm-7">
+                         <div class="col-sm-2">
                           <div class="form-group">
                             <!-- <label class="form-label upText">Action</label> -->
                            <div class="icon-button-demo">
+                            <!--  comment by anil 23-09-2019 -->
+                            <!-- <button type="button" class="btn bg-pink waves-effect" id="addPresTest">
+                              <span class="glyphicon glyphicon-plus" style="margin-top: 0px;"></span>
+                            </button> -->
+
                            <!-- create investigation panel add button 23-09-2019 -->
                             <button type="button" class="btn bg-pink waves-effect" id="addPresPanelTest">
                               <span class="glyphicon glyphicon-plus" style="margin-top: 0px;"></span>
@@ -4458,127 +4384,10 @@ border-bottom: 0px solid #fff !important;
 
                           </div>
 
-                     <div class="row clearfix">
-                      <div class="col-sm-12">
-
-
-                     <!--Created by anil new investigation panel 23-09-2019 -->   
-
-                    <div id="detail_presTestpanel">
-                    <div class="table-responsive" style="overflow: hidden;">
-                           <?php
-                          $presTestrowpanel=0;
-                          $detailCountPresInv = 0;
-                          
-                        ?>
-
-                    <div class="customeTblDesign1"> 
-                    <table class="table  no-footer">
-                        <thead>
-                        
-                           
-                        </thead>
-
-                        <tbody>
-                      <?php
-                          
-                           foreach ($bodycontent['prescriptionInvestigationpanel'] as $key => $prescriptionInvestigationpanel) {
-                         
-                                    ?>
-
-                                  <tr id="rowPrescriptionInvestigationpanel_<?php echo $presTestrowpanel; ?>" class="row clearfix">
-                                      <td style="width: 10%;font-size: 16px;"> 
-                                    <input type="hidden" class="presinvestigationIDPanelCls" name="presinvestigationPanelID[]" id="presinvestigationPanelID_<?php echo $presTestrowpanel; ?>" value="<?php echo $prescriptionInvestigationpanel->master_panel_id?>">
-
-                                     <span><b><?php  echo $prescriptionInvestigationpanel->panel_name; ?></b></span>
-                                </td>
-                                <td>
-                                     <textarea class="form-control no-resize auto-growth" rows="4" id="presinvestigationpanel_<?php echo $presTestrowpanel; ?>" name = "presinvestigationpanel[]"><?php  echo $prescriptionInvestigationpanel->panel_investigation_details; ?>
-                                     </textarea>       
-                                  </td>
-                                          
-                                     <td style="width: 6%;text-align: center;">
-                                    
-                                    <a href="javascript:;" class="delPresInvestigationpanel" id="delDocRow_<?php echo $presTestrowpanel; ?>" title="Delete">
-                                        <i class="material-icons thmdarkTxtcolor" style="color: red;">delete</i>
-                                         
-
-                                      </a>
-                                    </td>       
-                                      
-                                  
-                                  </tr>  
-                               
-                       <?php
-                               $presTestrowpanel++;   } 
-                            ?>
-
-                    <input type="hidden" name="presTestrowpanel" id="presTestrowpanel" value="<?php echo $presTestrowpanel;?>"> 
-
-                        </tbody>
-                    </table>
-                    </div>
-                        
-                    </div>
-                  
-                    
-                  </div>
-
-                        
-                      </div>
-                       
-
-                     </div>
-                  <!-- End Investigation Panel -->
-
-                   <div class="row clearfix">
-                      
-                        <div class="col-sm-6" >
-                           <!-- <label class="form-label " style="text-decoration: underline;">Add Test</label> -->
-                          <label class="form-label " style="text-decoration: underline;"></label>
-                          <div class="row clearfix">
-
-                          <div class="col-sm-10">
-
-                            <!-- comment new modification for panel investigation 23-09-2019 by anil -->
-
-                          <div class="form-group form-float">
-                              <div class="input-group" id="prescription_investigationerr">
-                                  <label class="form-label upText selectlabel zindex3">Investigation</label>
-                                  <div id="prescription_investigationdrp">
-                                  <select name="prescription_investigation[]" id="prescription_investigation" class="form-control selpres show-tick"  data-live-search="true" tabindex="-98"  multiple data-selected-text-format="count">
-                                  
-                                  <?php 
-
-                                  foreach ($bodycontent['testList'] as $testlist) {  ?>
-                                  <option value="<?php echo $testlist->investigation_comp_id;?>"
-
-                                    ><?php echo $testlist->inv_component_name;?></option>
-                                    <?php     } ?>
-                                                            
-                                    </select> 
-                                    </div>
-                                </div>
-                          </div>
-                        </div>
-
-                         <div class="col-sm-2">
-                          <div class="form-group">
-                            <!-- <label class="form-label upText">Action</label> -->
-                           <div class="icon-button-demo">
-                            <!--  comment by anil 23-09-2019 -->
-                            <button type="button" class="btn bg-pink waves-effect" id="addPresTest">
-                              <span class="glyphicon glyphicon-plus" style="margin-top: 0px;"></span>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      </div>
-                     
-                     <div class="row clearfix">
-                      <div class="col-sm-12">
-                      <div id="detail_presTest" >
-                    <div class="table-responsive" style="overflow: hidden;">
+                             <!-- 333333333333333333333333333333333333333333333333333-->
+                      <!-- comment by anil for investigation panel view appear  23-09-19 -->      
+                    <!--  <div id="detail_presTest" style="#border: 1px solid #e49e9e;margin-top: -20px;">
+                    <div class="table-responsive">
                            <?php
                           $presTestrow=0;
                           $detailCountPresInv = 0;
@@ -4648,13 +4457,7 @@ border-bottom: 0px solid #fff !important;
                     </div>
                   
                     
-                  </div>
-                </div>
-              </div>
-
-                        
-                  
-                     
+                  </div> -->
 
 
 
@@ -4664,6 +4467,78 @@ border-bottom: 0px solid #fff !important;
                         </div>
 
 
+
+                     </div>
+
+                     <div class="row clearfix">
+                      <div class="col-sm-12">
+
+
+                     <!--Created by anil new investigation panel 23-09-2019 -->   
+
+                    <div id="detail_presTestpanel">
+                    <div class="table-responsive" style="overflow: hidden;">
+                           <?php
+                          $presTestrow=0;
+                          $detailCountPresInv = 0;
+                          
+                        ?>
+
+                    <div class="customeTblDesign1"> 
+                    <table class="table  no-footer">
+                        <thead>
+                        
+                           
+                        </thead>
+
+                        <tbody>
+                      <?php
+                          
+                           foreach ($bodycontent['prescriptionInvestigationpanel'] as $key => $prescriptionInvestigationpanel) {
+                         
+                                    ?>
+
+                                  <tr id="rowPrescriptionInvestigation_<?php echo $presTestrow; ?>" class="row clearfix">
+                                      <td style="width: 10%;font-size: 16px;"> 
+                                    <input type="hidden" class="presinvestigationIDCls" name="presinvestigationID[]" id="presinvestigationID_<?php echo $presTestrow; ?>" value="<?php echo $prescriptionInvestigationpanel->master_panel_id?>">
+
+                                     <span><b><?php  echo $prescriptionInvestigationpanel->panel_name; ?></b></span>
+                                </td>
+                                <td>
+                                     <textarea class="form-control no-resize auto-growth" rows="4" id="presinvestigationpanel_<?php echo $presTestrow; ?>" name = "presinvestigationpanel[]"><?php  echo $prescriptionInvestigationpanel->panel_investigation_details; ?>
+                                     </textarea>       
+                                  </td>
+                                          
+                                     <td style="width: 6%;text-align: center;">
+                                    
+                                    <a href="javascript:;" class="delPresInvestigationpanel" id="delDocRow_<?php echo $presTestrow; ?>" title="Delete">
+                                        <i class="material-icons thmdarkTxtcolor" style="color: red;">delete</i>
+                                         
+
+                                      </a>
+                                    </td>       
+                                      
+                                  
+                                  </tr>  
+                               
+                       <?php
+                               $presTestrow++;   } 
+                            ?>
+
+                    <input type="hidden" name="presTestrow" id="presTestrow" value="<?php echo $presTestrow;?>"> 
+
+                        </tbody>
+                    </table>
+                    </div>
+                        
+                    </div>
+                  
+                    
+                  </div>
+
+                        
+                      </div>
+                       
 
                      </div>
 
@@ -4988,7 +4863,7 @@ border-bottom: 0px solid #fff !important;
                <div class="input-group " id="cliexm_bp_serr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
-                <input type="text" name="cliexm_bp_s[]" id="cliexm_bp_s_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" value="<?php echo $value->cliexm_bp_s; ?>" onKeyUp="numericFilter(this);">
+                <input type="text" name="cliexm_bp_s[]" id="cliexm_bp_s_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" value="<?php echo $value->cliexm_bp_s; ?>" >
                  </div>
                 </div>
                                       
@@ -4999,7 +4874,7 @@ border-bottom: 0px solid #fff !important;
                <div class="input-group " id="cliexm_bp_derr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
-                <input type="text" name="cliexm_bp_d[]" id="cliexm_bp_d_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" value="<?php echo $value->cliexm_bp_d; ?>" onKeyUp="numericFilter(this);">
+                <input type="text" name="cliexm_bp_d[]" id="cliexm_bp_d_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" value="<?php echo $value->cliexm_bp_d; ?>" >
                  </div>
                 </div>
                                       
@@ -5101,7 +4976,7 @@ border-bottom: 0px solid #fff !important;
                <div class="input-group " id="cliexm_after_weekerr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
-                <input type="text" name="cliexm_after_week[]" id="cliexm_after_week_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" value="<?php echo $value->cliexm_after_week; ?>" onKeyUp="numericFilter(this);">
+                <input type="text" name="cliexm_after_week[]" id="cliexm_after_week_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" value="<?php echo $value->cliexm_after_week; ?>" >
                  </div>
                 </div>
                                       
@@ -5112,7 +4987,7 @@ border-bottom: 0px solid #fff !important;
                <div class="input-group " id="cliexm_after_dayserr_<?php echo $cliexmrowno; ?>">
               
                <div class="form-line">
-                <input type="text" name="cliexm_after_days[]" id="cliexm_after_days_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" value="<?php echo $value->cliexm_after_days; ?>" onKeyUp="numericFilter(this);">
+                <input type="text" name="cliexm_after_days[]" id="cliexm_after_days_<?php echo $cliexmrowno; ?>" class="form-control" placeholder="" style="margin-top: 5px;" value="<?php echo $value->cliexm_after_days; ?>" >
                  </div>
                 </div>
                                       

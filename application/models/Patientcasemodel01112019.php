@@ -1210,7 +1210,9 @@ class Patientcasemodel extends CI_Model{
 public function getInvestigationpanelComponentWhereNotIn($ignorarray)
     {  
         $data = array();
-         $where_panel_inv = array('case_type'=>'OB');
+        
+       $where_panel_inv = array('case_type'=>'OB');
+
         $this->db->select("*")
                 ->from('investigation_panel')
                 ->where($where_panel_inv)

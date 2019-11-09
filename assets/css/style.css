@@ -8480,15 +8480,19 @@ label {
 #gynccolgy_case_div,#gyn_new_patient_div,#gyn_existing_patient_div,.gynnewundertreatsec{
   display: none;
 }
+
+.shadowUnset{
+ box-shadow: unset !important; 
+}
+
 @media(max-width: 1200px){
  
-#collapseNine_19  .col-sm-3,.col-sm-4{
+#accgyn_19  .col-sm-3,.col-sm-4,.col-sm-2,.col-sm-1{
   width:50%;
 }
-#collapseTwo_19 .col-sm-3{
-   width:50%;
-}
-#collapseTwo_19 .col-sm-5{
+
+
+#accgyn_19 .col-sm-5{
    width:100%;
 }
 
@@ -8496,16 +8500,81 @@ label {
 
 @media(max-width: 800px){
  
-#collapseNine_19 .col-sm-3{
+#accgyn_19 .col-sm-3,.col-sm-4,.col-sm-2,.col-sm-1{
   width:100%;
 }
-#collapseTwo_19 .col-sm-3{
-   width:100%;
-}
-#collapseTwo_19 .col-sm-5{
+
+#accgyn_19 .col-sm-5{
    width:100%;
 }
 
+
 }
 
+ .xrowtable {
+    padding: unset !important;
+    font-size: 17px;
+    border: none !important;
+    
+  }
+
+#curves .divcla {
+    width: 100px;
+    height: 140px;
+    border: 1px solid black;
+}
+
+#curves.width .divcla {
+    border-color: transparent transparent transparent black;
+}
+
+#curves.color .divcla {
+    border-width: 0 0 0 1px;
+}
+
+#curves.all .divcla {
+    border-width: 1px;
+    border-color: black;
+}
+
+#curve1 {
+    -moz-border-radius: 35px 0 0 35px;
+     border-radius: 35px 0 0 35px;
+    
+  
+}
+
+.securve{
+
+    transform: rotate(0deg);
+    transform-origin: 60% 60%;
+    margin-top: -112px;
+    margin-left: 176px;
+}
+
+.nocurve{
+  width: 167px;
+  height: 46px;
+  border: 1px solid black;
+  margin-top: -94px;
+  margin-left: 33px;
+  border-color: transparent transparent transparent black;
+  border-color: black;
+  border-left: hidden;
+  border-right: hidden;
+
+}
+
+.curvever{
+
+  width: 41px;
+  height: 121px;;
+  border: 1px solid black;
+  margin-top: -83px;
+  margin-left: 100px;
+  border-color: transparent transparent transparent black;
+  border-color: black;
+  border-top: hidden;
+  border-bottom: hidden;
+}
 

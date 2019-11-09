@@ -565,12 +565,9 @@ class Patientcase extends CI_Controller {
                     $result['frequencyList'] = array('OD','BD','TDS','HS');
                      $result['testList']=$this->commondatamodel->getAllDropdownData('investigation_component');
 
-
                       $where_panel_inv = array('case_type'=>'OB');
 
                       $result['paneltestList']=$this->commondatamodel->getAllRecordWhere('investigation_panel',$where_panel_inv);
-
-                      // $result['paneltestList']=$this->commondatamodel->getAllDropdownData('investigation_panel');
 
                       //print_r( $result['paneltestList']);exit;
 
@@ -2431,7 +2428,7 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
            
             $result['investigationRowData'] = $this->patientcasemodel->getInvestigationDetailsByPrescriptionId($inv_record_id);
             //pre($result['investigationRowData']);exit;
-            //create new investigation panel by anil 23-09-2019
+      //create new investigation panel by anil 23-09-2019
       
           $result['investigationpanelRowData'] = $this->patientcasemodel->getInvestigationpanelDetailsByPrescriptionId($inv_record_id);
 
@@ -2615,7 +2612,7 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
                 // getSingleRowByWhereCls(tablename,where params)
                  $result['antenantalCaseData'] = $this->commondatamodel->getSingleRowByWhereCls('antenantal_master',$where_antenatel_master);
 
-
+                
                 if ($result['antenantalCaseData']) {
 
                 $result['slfbldgrp']=$this->patientcasemodel->getBloodGroupById($result['antenantalCaseData']->wife_bloodgroup);

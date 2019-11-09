@@ -70,7 +70,8 @@ class Investigationpanel extends CI_Controller {
             $result['inpanelID']=$inpanelID;
             $header = "";
              
-            $result['investigation'] = $this->Investigationpanelmodel->getAllInvestioncomp();                
+            $result['investigation'] = $this->Investigationpanelmodel->getAllInvestioncomp();
+            $result['caseType'] = array('OB'=>'Obstetrics','GY'=>'Gynaecology','IN'=>'Infertility');                
           
               //print_r($result['investigation']);   
             $page = 'dashboard/admin_dashboard/investigation_panel/investigationpanel_add_edit';
@@ -95,6 +96,7 @@ class Investigationpanel extends CI_Controller {
             $inpanelID = trim(htmlspecialchars($dataArry['inpanelID']));
             $mode = trim(htmlspecialchars($dataArry['mode']));
             $panelname = trim(htmlspecialchars($dataArry['panelname']));
+            $caseType = trim(htmlspecialchars($dataArry['case_type']));
 
            
             
@@ -154,8 +156,9 @@ class Investigationpanel extends CI_Controller {
                                       
                      //                 );
                       $upd_array = array(
-                                        'panel_name' => $panelname,
-                                           'investigation' => $investigationdata
+                                           'panel_name' => $panelname,
+                                           'investigation' => $investigationdata,
+                                           'case_type'=>$caseType
                                       
                                      );
                       $upd_where = array('investigation_panel.id' => $inpanelID);
@@ -197,7 +200,8 @@ class Investigationpanel extends CI_Controller {
                       //                    );
                       $investi_panel_array = array(
                                           'panel_name' => $panelname,
-                                           'investigation' => $investigationdata
+                                           'investigation' => $investigationdata,
+                                           'case_type'=>$caseType
                                            
                                          );
                        //pre($occu_array);exit();

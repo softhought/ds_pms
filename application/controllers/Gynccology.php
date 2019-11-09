@@ -48,7 +48,7 @@ class Gynccology extends CI_Controller {
                  $where_patient_master = [
                     'patient_master.patient_id' =>  $result['patientCaseEditdata']->patient_id
                 ];
-
+                 
                 // getSingleRowByWhereCls(tablename,where params)
                  $result['patientmasterEditdata'] = $this->commondatamodel->getSingleRowByWhereCls('patient_master',$where_patient_master); 
                    
@@ -89,20 +89,44 @@ class Gynccology extends CI_Controller {
                 $result['severitydropdown'] = array('Mild','Moderate','Severe','Occassional','Cyclical','Off And On');
                 $result['paindropdown'] = array('Mid Cycle Pain','Before And After Period','During Period','After Period','Others');
                 $result['painCharacterdropdown'] = array('Dull Aching','Colicky','Mild','Off And On');
-                $result['dischargeAssociteDrp'] = array('Itching','Bad Smell','Profuse Flow','Fever Yes','Fever No','Pain Abdomen Yes','Pain Abdomen No');
+                $result['dischargeAssociteDrp'] = array('Itching','Bad Smell','Profuse Flow','With Fever','Without Fever','Pain Abdomen Yes','Pain Abdomen No');
                 $result['dischargePreviousEpisodeDrp'] = array('Once','Twice','Few Times','Recurrent');
 
                 $result['unwantedPregnancyTermination'] = array('Contraception','Medical Problem','Others');
                 $result['unwantedPregnancyTerminationBY'] = array('Medical Method','Surgical Method');
                 $result['AllsurgicalMethod'] = array('With IUCD','With Ligation','Without IUCD','Without Ligation');
-                $result['stichlineOprationName'] = array('LUCS','TLH','TAH','BSO','PTO');
+                $result['stichlineOprationName'] = array('LUCS','TLH','TAH + BSO','Lap Ovarian Cystectomy Right','Lap Ovarian Cystectomy Left','Lap Ovarian Cystectomy Both','Lap Ovariectomy Right','Lap Ovariectomy Left','Lap Ovariectomy Both','Open Ovarian Cystectomy Right','Open Ovarian Cystectomy Left','Open Ovarian Cystectomy Both','Open Ovariectomy Right','Open Ovariectomy Left','Open Ovariectomy Both');
                 $result['stichlineProblemCommDrp'] = array('Right','Left','Both');
                 $result['postMenopausalAllEpisode'] = array('First Episode','Second Episode','Recurrent');
+                $result['UrinaryIncosistancyAllEpisode'] = array('First Episode','Second Episode','Recurrent','Continous');
                 $result['postMenopausalbleeding'] = array('Spotting','Scanty Bleeding','Profuse Bleeding');
-                $result['urinaryinDrpDown'] = array('Stress','Huge','Mixed');
+                $result['urinaryinDrpDown'] = array('Stress','Urge','Mixed');
                 $result['genderdrpdown'] = array('Male','Female');
                 $result['familyplanningtemporary'] = array('OCP','ICUD CUT','ICUD Mirena','DMPA','Sevista');
 
+                $result['poststopbleedingdrp'] = array('Of Its Own','On Medication');
+                $result['pallor'] = array('Mild','Mod','Severe');
+                $result['oeadema'] = array('M'=>'-','P'=>'+','PP'=>'++');
+                $result['examChest'] = array('B/L Clear','Other');
+                $result['examCVS'] = array('S1 S2 Normal','Other');
+                $result['abdominalDrpdown'] = array('Soft Non Tenders No Organomegaly','Tender','Lump','Ascites');
+                $result['abdominallumpDrpdown'] = array('12','14','16','18','20','24','28','30','32','34','36');
+                $result['ConsistancyDrpdown'] = array('Cystic','Firm','Hard');
+                $result['MobilityDrpdown'] = array('Mobile From Side To Side','Not Mobile');
+                $result['AscitesDrpdown'] = array('Mild','Moderate','Tense');
+                $result['pervaginalDrpdown'] = array('Normal Size','Uterus Size','Bullky','10 Weeks','12 Weeks','14 Weeks','16 Weeks','18 Weeks','20 Weeks','22 Weeks','24 Weeks','26 Weeks','28 Weeks','30 Weeks','32 Weeks','34 Weeks','36 Weeks');
+                $result['prevaginalMobiltydrp'] = array('Mobile','Adherent');
+                $result['prevaginalPositiondrp'] = array('Anteverted','Retroverted','Midposition');
+                $result['prespeculamCervixdrp'] = array('Healthy','Unhealthy','Erosion +','Erosion ++','Erosion +++','Growth Seen','Polyp Seen');
+              $result['speculamgrowthseendrp'] = array('Bleeds To Touch','No Bleeding To Touching');
+              $result['speculamPolpyseendrp'] = array('Proternding From OS','Hanging From Lip');
+              $result['speculamwhitedischargedrp1'] = array('Watery','Thick Curdy');
+              $result['speculamwhitedischargedrp2'] = array('With Foul Smell','Without Foul Smell');
+              $result['vaginadrpdown'] = array('Healthy looking','Reddish');
+              $result['vulvadrpdown'] = array('Lesions','Growth Seen','Normal');
+              $result['Urinetestdrpdown'] = array('+ve','-ve','Faintly +ve');
+               $result['reactivenonrective'] = array('Reactive','Nonreactive');
+               $result['Usgbreast'] = array('Right','Left','Right & Left');
 
 
 
@@ -116,6 +140,9 @@ class Gynccology extends CI_Controller {
               $result['dosageList'] = array('0.5','1','1.5','2','2.5','5','7.5','10');
               $result['frequencyList'] = array('OD','BD','TDS','HS');
               $result['regularMedicineList']=$this->patientcasemodel->getRegularMedecineDetails($caseID);
+             // pre($result['regularMedicineList']);exit;
+               $orderbyCat='medicine_category.category';
+                   $result['medicineCategoryList']=$this->commondatamodel->getAllRecordWhereOrderBy('medicine_category',[],$orderbyCat);
 
               if(empty($result['regularMedicineList'])){
                 $result['regularMedicineEditdata'] = 'N';
@@ -168,7 +195,46 @@ class Gynccology extends CI_Controller {
 
                $result['AllpainInbreastData'] = $this->commondatamodel->getSingleRowByWhereCls('pain_in_breast',$where_case_id);
 
-               //pre($result['chiefcomplaintsdetails']);exit;
+               $result['GeneralExamination'] = $this->gynccologymodel->getGynogenralExamination($caseID);
+
+               $result['AllExaminationdata'] = $this->commondatamodel->getSingleRowByWhereCls('gynaecology_examination_master',$where_case_id);
+
+               $result['AllGynInvestigation'] = $this->commondatamodel->getSingleRowByWhereCls('gynaaecology_investigation',$where_case_id);
+
+                $where_panel_inv = array('case_type'=>'GY');
+
+               $result['paneltestList']=$this->commondatamodel->getAllRecordWhere('investigation_panel',$where_panel_inv);
+
+                // $result['prescriptionInvestigationpanel'] = $this->gynccologymodel->getInvestigationpanelDetails($caseID);
+
+                 $result['testList']=$this->commondatamodel->getAllDropdownData('investigation_component');
+
+                 // $result['prescriptionInvestigationList']=$this->gynccologymodel->getInvestigationDetails($caseID);
+
+                 // $result['prescriptionLatestData']=$this->gynccologymodel->getPrescriptionLatestByCase($caseID);
+                 $result['prescriptionMedicineList'] ="";
+                 $result['prescriptionInvestigationList'] ="";
+                 $result['prescriptionInvestigationpanel'] ="";
+
+                  $result['prescriptionLatestData']=$this->patientcasemodel->getPrescriptionLatestByCase($caseID);
+
+                   if (!empty($result['prescriptionLatestData'])) {
+
+                   
+                     $prescriptionID=$result['prescriptionLatestData']->prescription_id;
+
+                      $result['prescriptionMedicineList']=$this->patientcasemodel->getMedicineDetailsByPrescriptionId($prescriptionID);
+
+                     $result['prescriptionInvestigationList']=$this->patientcasemodel->getInvestigationDetailsByPrescriptionId($prescriptionID);
+                     // created by anil 24-09-2019
+                    $result['prescriptionInvestigationpanel'] = $this->patientcasemodel->getInvestigationpanelDetailsByPrescriptionId($prescriptionID);
+
+                    }
+                   
+                 
+
+                  
+              // pre($result['prescriptionLatestData']);exit;
 
              
                
@@ -496,6 +562,52 @@ $surgeryplannid = implode(',',$dataArry['surgeryplaID']);
              }
 /* End Previous Diease */
 
+/* Start Vaccinattion History */
+
+  if ($dataArry['tt_taken_on']!='') {
+                $tt_taken_on = date('Y-m-d', strtotime($dataArry['tt_taken_on']));
+               }else{
+                    $tt_taken_on = NULL; 
+               }
+ if ($dataArry['tt_tobe_taken_on']!='') {
+                $tt_tobe_taken_on = date('Y-m-d', strtotime($dataArry['tt_tobe_taken_on']));
+               }else{
+                    $tt_tobe_taken_on = NULL; 
+               }
+ if ($dataArry['hpv_taken_on']!='') {
+                $hpv_taken_on = date('Y-m-d', strtotime($dataArry['hpv_taken_on']));
+               }else{
+                    $hpv_taken_on = NULL; 
+               }
+   if ($dataArry['hpv_tobe_taken_on']!='') {
+                $hpv_tobe_taken_on = date('Y-m-d', strtotime($dataArry['hpv_tobe_taken_on']));
+               }else{
+                    $hpv_tobe_taken_on = NULL; 
+               }
+   if ($dataArry['mmr_taken_on']!='') {
+                $mmr_taken_on = date('Y-m-d', strtotime($dataArry['mmr_taken_on']));
+               }else{
+                    $mmr_taken_on = NULL; 
+               }
+   if ($dataArry['mmr_tobe_taken_on']!='') {
+                $mmr_tobe_taken_on = date('Y-m-d', strtotime($dataArry['mmr_tobe_taken_on']));
+               }else{
+                    $mmr_tobe_taken_on = NULL; 
+               }
+   if ($dataArry['chickenpox_taken_on']!='') {
+                $chickenpox_taken_on = date('Y-m-d', strtotime($dataArry['chickenpox_taken_on']));
+               }else{
+                    $chickenpox_taken_on = NULL; 
+               }                                                    
+  if ($dataArry['chickenpox_tobe_taken_on']!='') {
+                $chickenpox_tobe_taken_on = date('Y-m-d', strtotime($dataArry['chickenpox_tobe_taken_on']));
+               }else{
+                    $chickenpox_tobe_taken_on = NULL; 
+               }
+/* End Vaccinattion History */
+
+
+
     $gynccology_master = array(
                                'case_master_id'=>$caseID,
                                'menstrual_cycle_type1'=>$menstrual_cycle_type1,
@@ -540,9 +652,19 @@ $surgeryplannid = implode(',',$dataArry['surgeryplaID']);
                                'planned_surgery_date'=>$surgery_planned_date,
                                'previous_disease_id'=>$sel_diseasesValues,
                                'previous_other_disease'=>$other_diseases,
-                               'is_other_dieases'=>$isOtherDiseases
+                               'is_other_dieases'=>$isOtherDiseases,
+                               'tt_taken_on'=>$tt_taken_on,
+                               'tt_tobe_taken_on'=>$tt_tobe_taken_on,
+                               'hpv_taken_on'=>$hpv_taken_on,
+                               'hpv_tobe_taken_on'=>$hpv_tobe_taken_on,
+                               'mmr_taken_on'=>$mmr_taken_on,
+                               'mmr_tobe_taken_on'=>$mmr_tobe_taken_on,
+                               'chickenpox_taken_on'=>$chickenpox_taken_on,
+                               'chickenpox_tobe_taken_on'=>$chickenpox_tobe_taken_on
 
                               );
+
+
     //pre($gynccology_master);exit;
 
        if($gynccologyID == 0){
@@ -562,6 +684,746 @@ $surgeryplannid = implode(',',$dataArry['surgeryplaID']);
 
 //pre($gynccology_master);exit;
 
+//Start Examination data 
+
+ // Start General Examination
+
+ $isGeneralDataChange = trim($dataArry['isGeneralDataChange']);         
+
+if($dataArry['gen_exe_date'] != ""){
+    $gen_exem_date = date('Y-m-d',strtotime($dataArry['gen_exe_date']));
+}else{
+    $gen_exem_date = NULL;
+}
+
+
+
+ $gen_exam_pluse = trim($dataArry['gen_exam_pluse']);
+ $gen_exam_pallor = trim($dataArry['gen_exam_pallor']);
+ $gen_exam_bp_systolic = trim($dataArry['gen_exam_bp_systolic']);
+ $gen_exam_bp_diastolic = trim($dataArry['gen_exam_bp_diastolic']);
+ $exam_oeadema = trim($dataArry['exam_oeadema']);
+ $exam_weight = trim($dataArry['exam_weight']);
+ $exam_height = trim($dataArry['exam_height']);
+ $gen_exam_bmi = trim($dataArry['gen_exam_bmi']);
+ $exam_chest = trim($dataArry['exam_chest']);
+ $exam_chest_other = trim($dataArry['exam_chest_other']);
+ $exam_cvs = trim($dataArry['exam_cvs']);
+ $exam_cvs_other = trim($dataArry['exam_cvs_other']);
+ $gen_exe_notes = trim($dataArry['gen_exe_notes']);
+
+
+ $general_examination = array(
+                               'case_master_id'=>$caseID,
+                               'gen_exam_date'=>$gen_exem_date,
+                               'gen_exam_pulse'=>$gen_exam_pluse,
+                               'gen_exam_pallor'=>$gen_exam_pallor,
+                               'gen_exam_sbp'=>$gen_exam_bp_systolic,
+                               'gen_exam_dbp'=>$gen_exam_bp_diastolic,
+                               'gen_exam_oeadema'=>$exam_oeadema,
+                               'weight'=>$exam_weight,
+                               'height'=>$exam_height,
+                               'gen_exam_bmi'=>$gen_exam_bmi,
+                               'chest'=>$exam_chest,
+                               'chest_other'=>$exam_chest_other,
+                               'gen_exam_cvs'=>$exam_cvs,
+                               'gen_exam_cvs_other'=>$exam_cvs_other,
+                               'gen_exam_notes'=>$gen_exe_notes,
+                                );
+
+$where_gen_exam = array('case_master_id'=>$caseID,'gen_exam_date'=>$gen_exem_date);
+
+$getExistsdata = $this->commondatamodel->getSingleRowByWhereCls('gynaecology_genral_examination',$where_gen_exam); 
+
+
+if($isGeneralDataChange == 'Y'){
+
+  if(empty($getExistsdata)){
+
+   $examination= $this->commondatamodel->insertSingleTableData('gynaecology_genral_examination',$general_examination);
+   }
+   else{
+
+      $updategyncoology= $this->commondatamodel->updateSingleTableData('gynaecology_genral_examination',$general_examination,$where_gen_exam);
+
+   }
+
+}
+
+
+//End General Examintaion   
+
+//start abdominal Examination
+
+
+
+$exam_master_id = trim($dataArry['examination_master_id']);
+$isChangeExamdata = trim($dataArry['isChangeExamdata']);
+
+$abdominal_exam = trim($dataArry['abdominal_exam']);
+ $abdominal_ascites = trim($dataArry['abdominal_ascites']);
+//pre($dataArry);
+
+ // for($i=1;$i<=9;$i++){
+
+ //  if(isset($dataArry['tender_'.$i])){
+ //    $tender_.$i = trim($dataArry['tender_'.$i]);
+ //   }else{
+ //    $tender_.$i = 'N';
+ //    }
+ // }
+
+ if(isset($dataArry['tender_1'])){
+  $tender_1 = trim($dataArry['tender_1']);
+}else{
+ $tender_1 = 'N';
+}
+if(isset($dataArry['tender_2'])){
+  $tender_2= trim($dataArry['tender_2']);
+}else{
+   $tender_2 = 'N';
+}
+if(isset($dataArry['tender_3'])){
+  $tender_3 = trim($dataArry['tender_3']);
+}else{
+  $tender_3 = 'N';
+}
+if(isset($dataArry['tender_4'])){
+  $tender_4 = trim($dataArry['tender_4']);
+}else{
+  $tender_4 = 'N';
+}
+if(isset($dataArry['tender_5'])){
+  $tender_5 = trim($dataArry['tender_5']);
+}else{
+  $tender_5 = 'N';
+}
+if(isset($dataArry['tender_6'])){
+  $tender_6 = trim($dataArry['tender_6']);
+}else{
+  $tender_6 = 'N';
+}
+if(isset($dataArry['tender_7'])){
+  $tender_7 = trim($dataArry['tender_7']);
+}else{
+  $tender_7 = 'N';
+}
+
+if(isset($dataArry['tender_8'])){
+  $tender_8 = trim($dataArry['tender_8']);
+}else{
+  $tender_8= 'N';
+}
+if(isset($dataArry['tender_9'])){
+  $tender_9 = trim($dataArry['tender_9']);
+}else{
+  $tender_9 = 'N';
+}
+
+
+ $abdominal_lump_size = trim($dataArry['abdominal_lump_size']);
+ $abdominal_consistancy = trim($dataArry['abdominal_consistancy']);
+ $abdominal_mobility = trim($dataArry['abdominal_mobility']);
+
+
+ //start prevaginal examination
+
+$pervaginal_exam = trim($dataArry['pervaginal_exam']);
+ $prevaginal_mobility = trim($dataArry['prevaginal_mobility']);
+ $prevaginal_position = trim($dataArry['prevaginal_position']);
+
+
+//Start Pre Speculum Examination
+
+ $per_speculam_exam = trim($dataArry['per_speculam_exam']);
+ $speculam_growth_seen = trim($dataArry['speculam_growth_seen']);
+ $speculam_polyp = trim($dataArry['speculam_polyp']);
+ $speculam_white_discharge = trim($dataArry['speculam_white_discharge']);
+ $white_discharge_synonyms = trim($dataArry['white_discharge_synonyms']);
+
+//vagina Examination
+ $vagina_exam = trim($dataArry['vagina_exam']);
+
+ //vulva Examination
+$vulva_exam = trim($dataArry['vulva_exam']);
+$vulva_growth_notes = trim($dataArry['vulva_growth_notes']);
+$vulva_notes = trim($dataArry['vulva_notes']);
+
+
+
+
+ $gynaecology_exam_master = array(
+                                   'case_master_id'=>$caseID,
+                                   'abdominal_exam'=>$abdominal_exam,
+                                   'tender_one'=>$tender_1,
+                                   'tender_two'=>$tender_2,
+                                   'tender_three'=>$tender_3,
+                                   'tender_four'=>$tender_4,
+                                   'tender_five'=>$tender_5,
+                                   'tender_six'=>$tender_6,
+                                   'tender_seven'=>$tender_7,
+                                   'tender_eight'=>$tender_8,
+                                   'tender_nine'=>$tender_9,
+                                   'lump_size'=>$abdominal_lump_size,
+                                   'lump_consistancy'=>$abdominal_consistancy,
+                                   'lump_mobility'=>$abdominal_mobility,
+                                   'abdominal_ascites'=>$abdominal_ascites,
+                                   'pervaginal_exam'=>$pervaginal_exam,
+                                   'prevaginal_mobility'=>$prevaginal_mobility,
+                                   'prevaginal_position'=>$prevaginal_position,
+                                   'per_speculam_exam'=>$per_speculam_exam,
+                                   'speculam_growth_seen'=>$speculam_growth_seen,
+                                   'speculam_polyp'=>$speculam_polyp,
+                                   'speculam_white_discharge'=>$speculam_white_discharge,
+                                   'white_discharge_synonyms'=>$white_discharge_synonyms,
+                                   'vagina_exam'=>$vagina_exam,
+                                   'vulva_exam'=>$vulva_exam,
+                                   'vulva_growth_notes'=>$vulva_growth_notes,
+                                   'vulva_notes'=>$vulva_notes,
+                                   );
+
+//pre($gynaecology_exam_master);exit;
+
+if($isChangeExamdata == 'Y'){
+
+if($exam_master_id == '0'){
+
+ $examinationId= $this->commondatamodel->insertSingleTableData('gynaecology_examination_master',$gynaecology_exam_master);
+
+ $exam_master_id = $examinationId;
+
+}else{
+
+  $where_gyn_exam = array('case_master_id'=>$caseID,'id'=>$exam_master_id);
+
+   $updategyncoology= $this->commondatamodel->updateSingleTableData('gynaecology_examination_master',$gynaecology_exam_master,$where_gyn_exam);
+
+}
+
+}
+ 
+
+//End Examination data  
+
+
+//Start Investigation  
+
+$isChangeInvestigation = trim($dataArry['isChangeInvestigation']);
+$investigationId = trim($dataArry['gyn_investigation_id']);
+
+if($dataArry['inv_urine_test_date'] != ""){
+    $inv_urine_test_date = date('Y-m-d',strtotime($dataArry['inv_urine_test_date']));
+}else{
+    $inv_urine_test_date = NULL;
+}
+
+$inv_urine_test = trim($dataArry['inv_urine_test']);
+
+$inve_hb = trim($dataArry['inve_hb']);
+if($dataArry['inve_hb_date'] != ""){
+    $inve_hb_date = date('Y-m-d',strtotime($dataArry['inve_hb_date']));
+}else{
+    $inve_hb_date = NULL;
+}
+
+$inve_tc = trim($dataArry['inve_tc']);
+if($dataArry['inve_tc_date'] != ""){
+    $inve_tc_date = date('Y-m-d',strtotime($dataArry['inve_tc_date']));
+}else{
+    $inve_tc_date = NULL;
+}
+
+$inve_dc = trim($dataArry['inve_dc']);
+if($dataArry['inve_dc_date'] != ""){
+    $inve_dc_date = date('Y-m-d',strtotime($dataArry['inve_dc_date']));
+}else{
+    $inve_dc_date = NULL;
+}
+
+$inve_fbs = trim($dataArry['inve_fbs']);
+if($dataArry['inve_fbs_date'] != ""){
+    $inve_fbs_date = date('Y-m-d',strtotime($dataArry['inve_fbs_date']));
+}else{
+    $inve_fbs_date = NULL;
+}
+
+$inve_esr = trim($dataArry['inve_esr']);
+if($dataArry['inve_esr_date'] != ""){
+    $inve_esr_date = date('Y-m-d',strtotime($dataArry['inve_esr_date']));
+}else{
+    $inve_esr_date = NULL;
+}
+
+$inve_abo_rh = trim($dataArry['inve_abo_rh']);
+if($dataArry['inve_abo_rh_date'] != ""){
+    $inve_abo_rh_date = date('Y-m-d',strtotime($dataArry['inve_abo_rh_date']));
+}else{
+    $inve_abo_rh_date = NULL;
+}
+
+$ppbs_result = trim($dataArry['ppbs_result']);
+if($dataArry['ppbs_date'] != ""){
+    $ppbs_date = date('Y-m-d',strtotime($dataArry['ppbs_date']));
+}else{
+    $ppbs_date = NULL;
+}
+
+$ppbs_result = trim($dataArry['ppbs_result']);
+if($dataArry['ppbs_date'] != ""){
+    $ppbs_date = date('Y-m-d',strtotime($dataArry['ppbs_date']));
+}else{
+    $ppbs_date = NULL;
+}
+
+$vdrl_result = trim($dataArry['vdrl_result']);
+
+if($dataArry['vdrl_date'] != ""){
+    $vdrl_date = date('Y-m-d',strtotime($dataArry['vdrl_date']));
+}else{
+    $vdrl_date = NULL;
+}
+
+$hiv_one_result = trim($dataArry['hiv_one_result']);
+
+if($dataArry['hiv_one_date'] != ""){
+    $hiv_one_date = date('Y-m-d',strtotime($dataArry['hiv_one_date']));
+}else{
+    $hiv_one_date = NULL;
+}
+
+$hiv_two_result = trim($dataArry['hiv_two_result']);
+
+if($dataArry['hiv_two_date'] != ""){
+    $hiv_two_date = date('Y-m-d',strtotime($dataArry['hiv_two_date']));
+}else{
+    $hiv_two_date = NULL;
+}
+
+$hbsag_result = trim($dataArry['hbsag_result']);
+
+if($dataArry['hbsag_date'] != ""){
+    $hbsag_date = date('Y-m-d',strtotime($dataArry['hbsag_date']));
+}else{
+    $hbsag_date = NULL;
+}
+
+$antihcv_result = trim($dataArry['antihcv_result']);
+
+if($dataArry['antihcv_date'] != ""){
+    $antihcv_date = date('Y-m-d',strtotime($dataArry['antihcv_date']));
+}else{
+    $antihcv_date = NULL;
+}
+
+$urine_re_result = trim($dataArry['urine_re_result']);
+$urine_re_notes = trim($dataArry['urine_re_notes']);
+
+if($dataArry['urine_re_date'] != ""){
+    $urine_re_date = date('Y-m-d',strtotime($dataArry['urine_re_date']));
+}else{
+    $urine_re_date = NULL;
+}
+
+$inve_hba1c = trim($dataArry['inve_hba1c']);
+
+if($dataArry['inve_hba1c_date'] != ""){
+    $inve_hba1c_date = date('Y-m-d',strtotime($dataArry['inve_hba1c_date']));
+}else{
+    $inve_hba1c_date = NULL;
+}
+
+$inve_lft = trim($dataArry['inve_lft']);
+
+if($dataArry['inve_lft_date'] != ""){
+    $inve_lft_date = date('Y-m-d',strtotime($dataArry['inve_lft_date']));
+}else{
+    $inve_lft_date = NULL;
+}
+
+$stsh_result = trim($dataArry['stsh_result']);
+
+if($dataArry['stsh_date'] != ""){
+    $stsh_date = date('Y-m-d',strtotime($dataArry['stsh_date']));
+}else{
+    $stsh_date = NULL;
+}
+
+$s_urea_result = trim($dataArry['s_urea_result']);
+
+if($dataArry['s_urea_date'] != ""){
+    $s_urea_date = date('Y-m-d',strtotime($dataArry['s_urea_date']));
+}else{
+    $s_urea_date = NULL;
+}
+
+
+$s_creatinine_result = trim($dataArry['s_creatinine_result']);
+
+if($dataArry['s_creatinine_date'] != ""){
+    $s_creatinine_date = date('Y-m-d',strtotime($dataArry['s_creatinine_date']));
+}else{
+    $s_creatinine_date = NULL;
+}
+
+
+$pt_result = trim($dataArry['pt_result']);
+
+if($dataArry['pt_date'] != ""){
+    $pt_date = date('Y-m-d',strtotime($dataArry['pt_date']));
+}else{
+    $pt_date = NULL;
+}
+
+$inr_result = trim($dataArry['inr_result']);
+
+if($dataArry['inr_date'] != ""){
+    $inr_date = date('Y-m-d',strtotime($dataArry['inr_date']));
+}else{
+    $inr_date = NULL;
+}
+
+$aptt_result = trim($dataArry['aptt_result']);
+
+if($dataArry['aptt_date'] != ""){
+    $aptt_date = date('Y-m-d',strtotime($dataArry['aptt_date']));
+}else{
+    $aptt_date = NULL;
+}
+
+$ecg_result = trim($dataArry['ecg_result']);
+
+if($dataArry['ecg_date'] != ""){
+    $ecg_date = date('Y-m-d',strtotime($dataArry['ecg_date']));
+}else{
+    $ecg_date = NULL;
+}
+
+$chest_xray_result = trim($dataArry['chest_xray_result']);
+
+if($dataArry['chest_xray_date'] != ""){
+    $chest_xray_date = date('Y-m-d',strtotime($dataArry['chest_xray_date']));
+}else{
+    $chest_xray_date = NULL;
+}
+
+$echocardiography_result = trim($dataArry['echocardiography_result']);
+
+if($dataArry['echocardiography_date'] != ""){
+    $echocardiography_date = date('Y-m-d',strtotime($dataArry['echocardiography_date']));
+}else{
+    $echocardiography_date = NULL;
+}
+
+$serum_ca_result = trim($dataArry['serum_ca_result']);
+
+if($dataArry['serum_ca_date'] != ""){
+    $serum_ca_date = date('Y-m-d',strtotime($dataArry['serum_ca_date']));
+}else{
+    $serum_ca_date = NULL;
+}
+
+$serum_bhch_result = trim($dataArry['serum_bhch_result']);
+
+if($dataArry['serum_bhch_date'] != ""){
+    $serum_bhch_date = date('Y-m-d',strtotime($dataArry['serum_bhch_date']));
+}else{
+    $serum_bhch_date = NULL;
+}
+
+$serum_afp_result = trim($dataArry['serum_afp_result']);
+
+if($dataArry['serum_afp_date'] != ""){
+    $serum_afp_date = date('Y-m-d',strtotime($dataArry['serum_afp_date']));
+}else{
+    $serum_afp_date = NULL;
+}
+
+$usg_abdomen_result = trim($dataArry['usg_abdomen_result']);
+
+if($dataArry['usg_abdomen_date'] != ""){
+    $usg_abdomen_date = date('Y-m-d',strtotime($dataArry['usg_abdomen_date']));
+}else{
+    $usg_abdomen_date = NULL;
+}
+
+$mri_abdomen_result = trim($dataArry['mri_abdomen_result']);
+
+if($dataArry['mri_abdomen_date'] != ""){
+    $mri_abdomen_date = date('Y-m-d',strtotime($dataArry['mri_abdomen_date']));
+}else{
+    $mri_abdomen_date = NULL;
+}
+
+$endometril_result = trim($dataArry['endometril_result']);
+
+if($dataArry['endometril_date'] != ""){
+    $endometril_date = date('Y-m-d',strtotime($dataArry['endometril_date']));
+}else{
+    $endometril_date = NULL;
+}
+
+
+$pap_smear_result = trim($dataArry['pap_smear_result']);
+
+if($dataArry['pap_smear_date'] != ""){
+    $pap_smear_date = date('Y-m-d',strtotime($dataArry['pap_smear_date']));
+}else{
+    $pap_smear_date = NULL;
+}
+
+$usg_breast_result = trim($dataArry['usg_breast_result']);
+
+if($dataArry['usg_breast_date'] != ""){
+    $usg_breast_date = date('Y-m-d',strtotime($dataArry['usg_breast_date']));
+}else{
+    $usg_breast_date = NULL;
+}
+
+$memmography_result = trim($dataArry['memmography_result']);
+
+if($dataArry['memmography_date'] != ""){
+    $memmography_date = date('Y-m-d',strtotime($dataArry['memmography_date']));
+}else{
+    $memmography_date = NULL;
+}
+
+
+
+
+$gyninvestigation = array(
+                        'case_master_id'=>$caseID,
+                        'inv_urine_test_date'=>$inv_urine_test_date,
+                        'inv_urine_test'=>$inv_urine_test,
+                        'hb_result'=>$inve_hb,
+                        'hb_date'=>$inve_hb_date,
+                        'tc_result'=>$inve_tc,
+                        'tc_date'=>$inve_tc_date,
+                        'dc_result'=>$inve_dc,
+                        'dc_date'=>$inve_dc_date,
+                        'fbs_result'=>$inve_fbs,
+                        'fbs_date'=>$inve_fbs_date,
+                        'esr_result'=>$inve_esr,
+                        'esr_date'=>$inve_esr_date,
+                        'abo_rh_result'=>$inve_abo_rh,
+                        'abo_rh_date'=>$inve_abo_rh_date,
+                        'ppbs_result'=>$ppbs_result,
+                        'ppbs_date'=>$ppbs_date,
+                        'vdrl_result'=>$vdrl_result,
+                        'vdrl_date'=>$vdrl_date,
+                        'hiv_one_result'=>$hiv_one_result,
+                        'hiv_one_date'=>$hiv_one_date,
+                        'hiv_two_result'=>$hiv_two_result,
+                        'hiv_two_date'=>$hiv_two_date,
+                        'hbsag_result'=>$hbsag_result,
+                        'hbsag_date'=>$hbsag_date,
+                        'antihcv_result'=>$antihcv_result,
+                        'antihcv_date'=>$antihcv_date,
+                        'urine_re_result'=>$urine_re_result,
+                        'urine_re_date'=>$urine_re_date,
+                        'urine_re_notes'=>$urine_re_notes,
+                        'hba1c_result'=>$inve_hba1c,
+                        'hba1c_date'=>$inve_hba1c_date,
+                        'lft_result'=>$inve_lft,
+                        'lft_date'=>$inve_lft_date,
+                        'stsh_result'=>$stsh_result,
+                        'stsh_date'=>$stsh_date,
+                        's_urea_result'=>$s_urea_result,
+                        's_urea_date'=>$s_urea_date,
+                        's_creatinine_result'=>$s_creatinine_result,
+                        's_creatinine_date'=>$s_creatinine_date,
+                        'pt_result'=>$pt_result,
+                        'pt_date'=>$pt_date,
+                        'inr_result'=>$inr_result,
+                        'inr_date'=>$inr_date,
+                        'aptt_result'=>$aptt_result,
+                        'aptt_date'=>$aptt_date,
+                        'ecg_result'=>$ecg_result,
+                        'ecg_date'=>$ecg_date,
+                        'chest_xray_result'=>$chest_xray_result,
+                        'chest_xray_date'=>$chest_xray_date,
+                        'echocardiography_result'=>$echocardiography_result,
+                        'echocardiography_date'=>$echocardiography_date,
+                        'serum_ca_result'=>$serum_ca_result,
+                        'serum_ca_date'=>$serum_ca_date,
+                        'serum_bhch_result'=>$serum_bhch_result,
+                        'serum_bhch_date'=>$serum_bhch_date,
+                        'serum_afp_result'=>$serum_afp_result,
+                        'serum_afp_date'=>$serum_afp_date,
+                        'usg_abdomen_result'=>$usg_abdomen_result,
+                        'usg_abdomen_date'=>$usg_abdomen_date,
+                        'mri_abdomen_result'=>$mri_abdomen_result,
+                        'mri_abdomen_date'=>$mri_abdomen_date,
+                        'endometril_result'=>$endometril_result,
+                        'endometril_date'=>$endometril_date,
+                        'pap_smear_result'=>$pap_smear_result,
+                        'pap_smear_date'=>$pap_smear_date,
+                        'usg_breast_result'=>$usg_breast_result,
+                        'usg_breast_date'=>$usg_breast_date,
+                        'memmography_result'=>$memmography_result,
+                        'memmography_date'=>$memmography_date,
+                         );
+
+if($isChangeInvestigation == 'Y'){
+
+if($investigationId == '0'){
+
+ $investigationId= $this->commondatamodel->insertSingleTableData('gynaaecology_investigation',$gyninvestigation);
+
+ $investigationId = $investigationId;
+
+}else{
+
+  $where_investigation = array('case_master_id'=>$caseID,'id'=>$investigationId);
+
+   $updategyncoology= $this->commondatamodel->updateSingleTableData('gynaaecology_investigation',$gyninvestigation,$where_investigation);
+
+}
+
+}
+
+
+
+$where_prescription = array(
+                             'case_master_id' => $caseID,
+                             'entry_date' => date('Y-m-d')
+                           );
+
+$isExistPrescription=$this->commondatamodel->duplicateValueCheck('prescription_master',$where_prescription);
+if ($isExistPrescription) {
+
+   $todayPresData=$this->commondatamodel->getSingleRowByWhereCls('prescription_master',$where_prescription);
+
+    $oldPresId=$todayPresData->prescription_id;
+
+    $where_pres_mst = array('prescription_mst_id' => $oldPresId);
+    
+    /* delete data from prescription_medicine_dtl & prescription_investigation_dtl*/
+
+$deleteTodayPresMed=$this->commondatamodel->deleteTableData('prescription_medicine_dtl',$where_pres_mst);
+
+$deleteTodayPresInves=$this->commondatamodel->deleteTableData('prescription_investigation_dtl',$where_pres_mst);
+
+$deleteTodayPrespanelInves=$this->commondatamodel->deleteTableData('prescription_investigation_panel_details',$where_pres_mst);
+
+   
+/* delete master data*/
+$deleteTodayPrescription=$this->commondatamodel->deleteTableData('prescription_master',$where_prescription);
+}
+
+// //investigation panel
+
+// $deleteTodayPrescription=$this->commondatamodel->deleteTableData('gynaecology_investigation_panel_detail',$wherecaseId);
+
+// $deleteTodayPresInves=$this->commondatamodel->deleteTableData('gynaecology_investigation_dtl',$wherecaseId);
+
+
+/* insert into prescription_master */  
+
+$review_after_days = trim($dataArry['review_after_days']);
+$review_after_weeks = trim($dataArry['review_after_weeks']);
+
+$prescription_master = array(
+                                'case_master_id' => $caseID, 
+                                'created_on' => date('Y-m-d H:i:s'),
+                                'doctor_note' => "", 
+                                'next_checkup_dt' => "",
+                                'review_after_days' =>$review_after_days,
+                                'review_after_weeks' =>$review_after_weeks,
+                                'entry_date' => date('Y-m-d'), 
+                               );
+
+
+$insertPrescriptionID=$this->commondatamodel->insertSingleTableData('prescription_master',$prescription_master);
+
+
+ if(isset($dataArry['presMedID'])) {
+
+    $presMedID = $dataArry['presMedID'];
+    $presdosage = $dataArry['presdosage'];
+    $presfrequency = $dataArry['presfrequency'];
+    $presdays = $dataArry['presdays'];
+    $presInstruction = $dataArry['presInstruction'];
+
+    for ($i=0; $i <count($dataArry['presMedID']) ; $i++) { 
+     
+
+        $pres_med_arr = array(
+                              'prescription_mst_id' => $insertPrescriptionID, 
+                              'medicine_id' => $presMedID[$i], 
+                              'dosage' => $presdosage[$i], 
+                              'frequency' => $presfrequency[$i], 
+                              'days' => $presdays[$i],
+                              'med_instruction' => $presInstruction[$i],
+                              'created_on' => date('Y-m-d'), 
+                            );
+
+         $insertPresMedicine=$this->commondatamodel->insertSingleTableData('prescription_medicine_dtl',$pres_med_arr);
+    }
+
+  }
+
+
+
+
+$wherecaseId = array('case_master_id'=>$caseID);
+
+/* Investigation Panel details */
+
+  if(isset($dataArry['presinvestigationPanelID']) ) {
+     $presinvestigationPanelID = $dataArry['presinvestigationPanelID'];
+     $presinvestigationpanel = $dataArry['presinvestigationpanel'];
+
+     for ($i=0; $i < count($dataArry['presinvestigationPanelID']); $i++) { 
+
+
+             //created by anil for prescription investigation panel deatils 23-09-2019
+           
+           $presinvestigationpanel_arr = array(
+                                   'prescription_mst_id' => $insertPrescriptionID,
+                                   'master_panel_id' => $presinvestigationPanelID[$i],
+                                   'panel_investigation_details' => $presinvestigationpanel[$i],
+                                   'created_on' => date('Y-m-d'), 
+                                  );
+
+
+          
+           //created by anil for prescription investigation panel deatils 23-09-2019
+
+            $insertPresInvestigationpanel=$this->commondatamodel->insertSingleTableData('prescription_investigation_panel_details',$presinvestigationpanel_arr);
+
+
+      
+     }
+     
+
+   }
+
+
+//* Investigation Details */
+
+
+
+   if(isset($dataArry['presinvestigationID']) ) {
+     $presinvestigationID = $dataArry['presinvestigationID'];
+    
+     for ($i=0; $i < count($dataArry['presinvestigationID']); $i++) { 
+
+
+           $presinvestigation_arr = array(
+                                   'prescription_mst_id' => $insertPrescriptionID,
+                                   'investigation_comp_id' => $presinvestigationID[$i],
+                                   'created_on' => date('Y-m-d'), 
+                                  ); 
+        $insertPresInvestigation=$this->commondatamodel->insertSingleTableData('prescription_investigation_dtl',$presinvestigation_arr); 
+
+          
+      
+     }
+     
+
+   }
+
+
 
   if($gynccologyID == true || $updategyncoology == true)
                     {
@@ -570,6 +1432,8 @@ $surgeryplannid = implode(',',$dataArry['surgeryplaID']);
                             "msg_data" => "Status Updated",
                             "gynccologyID" =>$gynccologyID,
                             "AllchiefcomplaintId" =>$allLastinsertId,
+                            "examination_master_id" =>$exam_master_id,
+                            "gyninvestigationId" =>$investigationId,
                                                      
                         );
                     }
@@ -904,7 +1768,9 @@ $insert_update['unwanted_pregnancy'] = array(
                        'case_master_id'=>$caseID,
                        'complaint_details_id'=>$insertId,
                        'urine_test_date'=>$testdate,
-                       'wants_termination'=>trim($dataArry['wants_termination']),
+                       'wants_termination'=>trim($dataArry['WantsterminationValues']),
+                       'wantterminationOther'=>trim($dataArry['wantterminationOther']),
+                       'isWantOthers'=>trim($dataArry['isWantOthers']),
                        'termination_by'=>trim($dataArry['termination_by']),
                        'surgical_method'=>trim($dataArry['surgical_method_with']),
                        'isSurgicalMethod'=>trim($dataArry['isSurgicalMethod'])
@@ -934,6 +1800,7 @@ $insert_update['incidental_usg_finding'] = array(
                        'fibroid_no'=>trim($dataArry['fibroid_no']),
                        'fibroid_location'=>trim($dataArry['fibroid_location']),
                        'pcos'=>trim($dataArry['pcosvalues']),
+                       'endometrial_thickness'=>trim($dataArry['endometrial_thickness']),
                        'lt_ovary_size'=>trim($dataArry['lt_ovary_size']),
                        'rt_ovary_size'=>trim($dataArry['rt_ovary_size']),
                        'usg_date'=>$usgdate,
@@ -957,6 +1824,8 @@ if($dataArry['operation_date'] == ""){
      $operdate = date('Y-m-d',strtotime($dataArry['operation_date']));
 }
 
+
+
 $insert_update['stich_line_problem'] = array(
                        'case_master_id'=>$caseID,
                        'complaint_details_id'=>$insertId,
@@ -964,10 +1833,8 @@ $insert_update['stich_line_problem'] = array(
                        'place'=>trim($dataArry['hospital_place']),
                        'operation_name'=>trim($dataArry['operation_name']),
                        'operation_date'=>$operdate,
-                       'lap_ovarian_cystectomy'=>trim($dataArry['lap_ovarian_cystectomy']),
-                       'lap_ovariectomy'=>trim($dataArry['lap_ovariectomy']),
-                       'open_ovarian_cystectomy'=>trim($dataArry['open_ovarian_cystectomy']),
-                       'open_ovariectomy'=>trim($dataArry['open_ovariectomy'])
+                       
+                       'others'=>trim($dataArry['stich_others']),
                                                                      
                        );
 
@@ -985,6 +1852,7 @@ $insert_update['somthing_comming_down'] = array(
                        'duration_months'=>trim($dataArry['somthing_duration_months']),
                        'duration_years'=>trim($dataArry['somthing_duration_years']),
                        'stress_incontinence'=>trim($dataArry['stress_incontinence']),
+                       'diff_in_wination'=>trim($dataArry['diff_in_wination']),
                        'diff_in_defection'=>trim($dataArry['diff_in_defection']),
                        'assoc_with_discharge'=>trim($dataArry['assoc_with_discharge']),
                        'assoc_chronic_cough'=>trim($dataArry['assoc_chronic_cough']),
@@ -1007,6 +1875,9 @@ $insert_update['post_menopausal_bleeding'] = array(
                        'complaint_details_id'=>$insertId,
                        'menopausal_episode'=>trim($dataArry['menopausal_episode']),
                        'bleeding'=>trim($dataArry['bleeding']),
+                       'stop_bleeding_by'=>trim($dataArry['stopbleedingby']),
+                       'isStopBleeding'=>trim($dataArry['isStopBleeding']),
+                       'stop_bleeding_medicine'=>trim($dataArry['stopbleedingmedValues']),
                        'bleeding_continue_days'=>trim($dataArry['bleeding_continue_days']),
                        'bleeding_after_days'=>trim($dataArry['bleeding_after_days']),
                        'post_menopausual_notes'=>trim($dataArry['post_menopausual_notes'])
@@ -1034,10 +1905,9 @@ $insert_update['urinary_incontinence'] = array(
                        'urinary_incontinence_years'=>trim($dataArry['urinary_incontinence_years']),
                        'treated_with_medicine'=>trim($dataArry['treatedmedicine']),
                        'urinary_episode'=>trim($dataArry['urinary_episode']),
+                       'isurinaryepisode'=>trim($dataArry['isurinaryepisode']),
                        'episode_months'=>trim($dataArry['episode_months']),
                        'episode_years'=>trim($dataArry['episode_years']),
-                       'continous_months'=>trim($dataArry['continous_months']),
-                       'continous_years'=>trim($dataArry['continous_years']),
                        'urinary_notes'=>trim($dataArry['urinary_notes']),
                        
                        
@@ -1263,5 +2133,377 @@ public function CheckComplaintRespectiveData(){
     }
 
 
+public function addPrescriptionTestDetailspanel()
+    {
+        if($this->session->userdata('user_data'))
+        {
+            $session = $this->session->userdata('user_data');
+            $data['invData']=[];
+
+            $row_no = $this->input->post('rowNo');
+            $panelID = $this->input->post('panel');
+
+            
+
+             for ($i=0; $i < count($panelID); $i++) { 
+             
+             $where_investigation_panel= array('id' => $panelID[$i] );
+
+             $investigationData = $this->commondatamodel->getSingleRowByWhereCls('investigation_panel',$where_investigation_panel);
+              
+             $inv_component_id=$investigationData->investigation;
+              
+             $inv_id = explode(',', $inv_component_id);
+
+            $investigation_name = $this->patientcasemodel->getInvestigationpanelComponentWhereIn($inv_id);
+             //print_r($investigation_name);exit;
+
+             $investigationpaneldetails[] = array(
+                                          'investigationName' => $investigation_name, 
+                                          'panelID' => $panelID[$i], 
+                                          'panel_name'=>$investigationData->panel_name,
+                                          'rowno' => $row_no++, 
+                                        );
+             
+
+
+             
+           print_r($investigationpaneldetails);
+             
+            }
+             
+            $data['invData']=$investigationpaneldetails;
+          
+
+           // print_r($investigationID);
+          //  $investigationID=1;
+
+
+            
+                      // pre($medicineData);exit;
+
+            // $data['rowno'] = $row_no;
+            // $data['investigationID'] = $investigationID;
+            // $data['investigation'] = $investigationData->inv_component_name;
+        
+           
+            
+      $page = 'dashboard/admin_dashboard/case/gynccology/gynaecology_add_investigation_panel.php';
+      $viewTemp = $this->load->view($page,$data,TRUE);
+      echo $viewTemp;
+        }
+        else
+        {
+            redirect('login','refresh');
+        }
+    }
+
+
+
+    public function resetGynInvestigationpanelDropdown(){
+
+        if($this->session->userdata('user_data'))
+      {
+        
+
+      $investigationpanelItem = $this->input->post('investigationpanelItem');
+      
+       //print_r($investigationpanelItem);
+        // $result['testList']=$this->commondatamodel->getAllDropdownData('investigation_component');
+         $result['paneltestList']=$this->gynccologymodel->getInvestigationpanelComponentWhereNotIn($investigationpanelItem);
+         // print_r($result['paneltestList']);exit;
+        ?>
+        <select name="prescription_investigationpanel[]" id="prescription_investigationpanel" class="form-control selpres show-tick"  data-live-search="true" tabindex="-98"  multiple data-selected-text-format="count">
+                                  
+                                  <?php 
+
+                                  foreach ($result['paneltestList'] as $paneltestList) {  ?>
+                                  <option value="<?php echo $paneltestList->id;?>"
+
+                                    ><?php echo $paneltestList->panel_name;?></option>
+
+                                    <?php     } ?>
+                                                            
+                                    </select> 
+        <?php
+
+
+      }
+      else
+      {
+          redirect('login','refresh');
+      }
+    }
+
+  /* Start Informatio Leaflet */
+
+public function imageupload(){
+
+
+ if($this->session->userdata('user_data'))
+      {
+
+       $caseID = $this->input->post('caseID');
+       $info_leaflet = $_FILES['info_leaflet']['name'];
+       $consent_form = $_FILES['consent_form']['name'];
+
+       $infofilename = "";
+       $cosentfilename = "";
+       $dir = $_SERVER['DOCUMENT_ROOT'] . '/pms/assets/gyn-document';
+
+          $config = array(
+                    'upload_path' => $dir,
+                    'allowed_types' => 'gif|jpg|png|jpeg|docx|pdf|doc|xlsx|xls',
+                    //allowed max file size. 0 means unlimited file size
+                    'max_size' => '0',
+                    //max file name size
+                    'max_filename' => '255',
+                    //whether file name should be encrypted or not
+                    'encrypt_name' => TRUE
+                        //store image info once uploaded
+                );
+                
+             $this->load->library('upload', $config);
+          
+              
+                if ($this->upload->do_upload('info_leaflet')) {
+
+                $file_detail = $this->upload->data();
+               // $error =  $this->upload->display_errors();
+                 $infofilename = $file_detail['file_name'];
+                }
+             
+              if ($this->upload->do_upload('consent_form')) {
+
+                $file_details = $this->upload->data();
+               // $error =  $this->upload->display_errors();
+                 $cosentfilename = $file_details['file_name'];
+                }   
+         $where = array('case_master_id'=>$caseID);
+
+         $infodata = array('infomation_leaflet_fileupload'=> $infofilename);
+         $cosentdata = array('consent_formfile_upload'=>$cosentfilename);
+        if($info_leaflet != ''){
+
+           $updateinfoleaflet= $this->commondatamodel->updateSingleTableData('gynccology_master',$infodata,$where);
+        } 
+        if($consent_form != ''){
+
+          $updateinfoleaflet= $this->commondatamodel->updateSingleTableData('gynccology_master',$cosentdata,$where);
+        }
+           
+
+           $json_response = array(
+                            "msg_status" => 1,
+                            "msg_data" => "Successfully Update",
+                                                                                
+                        );
+                                 
+   
+           header('Content-Type: application/json');
+            echo json_encode( $json_response );
+            exit;
+ 
+
+    }
+      else
+      {
+          redirect('login','refresh');
+      }
+
+}
+
+
+/* End Informatio Leaflet */
+
+
+public function print_prescription(){
+      $session = $this->session->userdata('user_data');
+       if($this->session->userdata('user_data'))
+        {
+          $result=[];
+          $result['patientCaseData']=[];
+          $result['patientmasterData']=[];
+         
+          $where_dr = array('doctor_master.doctor_id' =>$session['doctor_id']);
+          $result['drRegNo']=$this->commondatamodel->getSingleRowByWhereCls('doctor_master',$where_dr)->dr_reg_no;
+
+       
+
+          if($this->uri->rsegment(3) == NULL)
+            {
+                $caseID = 0;
+                 $html="";
+            
+            }
+            else
+            {
+
+                $caseID = $this->uri->segment(3);
+
+
+               // $clinic_id=$session['clinic_id']; //comment by anil 24-09-2019
+              $where_case_master = [
+                    'case_master.case_id' => $caseID
+                ];
+
+                $result['patientCaseData'] = $this->commondatamodel->getSingleRowByWhereCls('case_master',$where_case_master); 
+
+                $clinic_id=$result['patientCaseData']->clinic_id;
+
+                $doctor_id=$session['doctor_id'];
+
+                $where_clinic_master = [
+                    'clinic_master.clinic_id' => $clinic_id
+                ];
+
+                $result['clinicData'] = $this->commondatamodel->getSingleRowByWhereCls('clinic_master',$where_clinic_master);
+                
+              
+                $where_doctor = [
+                    'doctor_master.doctor_id' => $doctor_id
+                ];
+
+                $result['doctorData'] = $this->commondatamodel->getSingleRowByWhereCls('doctor_master',$where_doctor);
+
+                 
+               $result['prescriptionLatestData']=$this->patientcasemodel->getPrescriptionLatestByCase($caseID);
+                $where_caseID = array('case_master_id' =>$caseID); 
+
+                $result['marriedStatus'] ='';
+                $result['marriedYears'] ='';
+                $result['menstrualcycletype1'] ='';
+                $result['cycledayspm'] ='';
+                $result['cycleplusminusdays'] ='';
+                $result['menstrualflow'] ='';
+                $result['menstrualpain'] = '';
+                $result['lumpsize'] = '';
+                $result['lumpconsistancy'] = '';
+                $result['lumpmobility'] = '';
+                $result['prevaginalposition'] = '';
+                $result['perspeculamexam'] = '';
+                $result['speculamgrowthseen'] = '';
+                $result['pervaginalexam'] = '';
+                $result['chiefComplaintdetail'] = [];
+                 $result['plannedsurgeryname'] = [];
+                 $result['prescriptionMedicineList'] = [];
+                 $result['prescriptionInvestigationpanel'] = [];
+                 $result['prescriptionInvestigationList'] = [];
+                 $result['reviewdays'] = '';
+                 $result['reviewweeks'] = '';
+
+                $result['gynccologymasterdetail']=$this->commondatamodel->getSingleRowByWhereCls('gynccology_master',$where_caseID);
+
+                 if(!empty($result['gynccologymasterdetail'])){
+
+                $result['marriedStatus'] = $result['gynccologymasterdetail']->others_married_status;
+                $result['marriedYears'] = $result['gynccologymasterdetail']->married_years;
+                $result['mestruallmp_date'] = $result['gynccologymasterdetail']->menstrual_lmp_date;
+                $result['menstrualcycletype1'] = $result['gynccologymasterdetail']->menstrual_cycle_type1;
+                $result['cycledayspm'] = $result['gynccologymasterdetail']->cycle_days_pm;
+                $result['cycleplusminusdays'] = $result['gynccologymasterdetail']->cycle_plusminusdays;
+                $result['menstrualflow'] = $result['gynccologymasterdetail']->menstrual_flow;
+                $result['menstrualpain'] = $result['gynccologymasterdetail']->menstrual_pain;
+                $result['menstrualpredate1'] = $result['gynccologymasterdetail']->menstrual_cycle_pre_date1;
+                $result['menstrualpredate2'] = $result['gynccologymasterdetail']->menstrual_cycle_pre_date2;
+                $result['menstrualpredate3'] = $result['gynccologymasterdetail']->menstrual_cycle_pre_date3;
+                $result['menstrualpredate4'] = $result['gynccologymasterdetail']->menstrual_cycle_pre_date4;
+                $result['obstermdelivery'] = $result['gynccologymasterdetail']->obstetric_term_delivery;
+                $result['obspreterm'] = $result['gynccologymasterdetail']->obstetric_preterm;
+                $result['obsaboration'] = $result['gynccologymasterdetail']->obstetric_aboration;
+                $result['obslivingissue'] = $result['gynccologymasterdetail']->obstetric_living_issue;
+                $result['obsno_of_lucs'] = $result['gynccologymasterdetail']->obstetric_no_of_lucs;
+                $result['obsno_of_suction'] = $result['gynccologymasterdetail']->obstetric_no_of_suction;
+                $result['plannedsurgeryid'] = explode(',',$result['gynccologymasterdetail']->planned_surgery_id);
+                $result['plannedsurgerydate'] = explode(',',$result['gynccologymasterdetail']->planned_surgery_date);
+                $result['tt_taken_on'] = $result['gynccologymasterdetail']->tt_taken_on;
+                $result['tt_tobe_taken_on'] = $result['gynccologymasterdetail']->tt_tobe_taken_on;
+                $result['hpv_taken_on'] = $result['gynccologymasterdetail']->hpv_taken_on;
+                $result['hpv_tobe_taken_on'] = $result['gynccologymasterdetail']->hpv_tobe_taken_on;
+                $result['mmr_taken_on'] = $result['gynccologymasterdetail']->mmr_taken_on;
+                $result['mmr_tobe_taken_on'] = $result['gynccologymasterdetail']->mmr_tobe_taken_on;
+                $result['chickenpox_taken_on'] = $result['gynccologymasterdetail']->chickenpox_taken_on;
+                $result['chickenpox_tobe_taken_on'] = $result['gynccologymasterdetail']->chickenpox_tobe_taken_on;
+
+                
+
+               }
+               
+                $result['chiefComplaintdetail']=$this->gynccologymodel->getAllChiefComplaintId($caseID);
+               $result['regularmedicinesdetails']=$this->patientcasemodel->getRegularMedecineDetails($caseID);
+               if(!empty( $result['plannedsurgeryid'])){
+               $result['plannedsurgeryname'] = $this->gynccologymodel->getPreviousSurgeryWhereIn($result['plannedsurgeryid']);
+                 }
+               $result['GeneralExamination'] = $this->commondatamodel->getAllRecordWhere('gynaecology_genral_examination',$where_caseID);
+
+               $result['Examinationmasterdata'] = $this->commondatamodel->getSingleRowByWhereCls('gynaecology_examination_master',$where_caseID);
+
+               if(!empty($result['Examinationmasterdata'])){
+                
+                $result['lumpsize'] = $result['Examinationmasterdata']->lump_size; 
+                $result['lumpconsistancy'] = $result['Examinationmasterdata']->lump_consistancy; 
+                $result['lumpmobility'] = $result['Examinationmasterdata']->lump_mobility; 
+                $result['pervaginalexam'] = $result['Examinationmasterdata']->pervaginal_exam; 
+                $result['prevaginalposition'] = $result['Examinationmasterdata']->prevaginal_position; 
+                $result['perspeculamexam'] = $result['Examinationmasterdata']->per_speculam_exam; 
+                $result['speculamgrowthseen'] = $result['Examinationmasterdata']->speculam_growth_seen; 
+
+               }
+
+
+                //investigation Latest Data
+              $result['inveltdata']=$this->commondatamodel->getSingleRowByWhereCls('gynaaecology_investigation',$where_caseID);
+
+               $result['prescriptionLatestData']=$this->patientcasemodel->getPrescriptionLatestByCase($caseID);
+
+                if (!empty($result['prescriptionLatestData'])) {
+
+                  $prescriptionID = $result['prescriptionLatestData']->prescription_id;
+
+                  $result['reviewdays'] = $result['prescriptionLatestData']->review_after_days;
+                  $result['reviewweeks'] = $result['prescriptionLatestData']->review_after_weeks;
+
+                  $result['prescriptionMedicineList']=$this->patientcasemodel->getMedicineDetailsByPrescriptionId($prescriptionID);
+
+                  $result['prescriptionInvestigationpanel'] = $this->patientcasemodel->getInvestigationpanelDetailsByPrescriptionId($prescriptionID);
+
+                   $result['prescriptionInvestigationList']=$this->patientcasemodel->getInvestigationDetailsByPrescriptionId($prescriptionID);
+                }
+           
+                //pre($result['prescriptionMedicineList']);exit;
+
+
+                
+
+                $result['patientmasterData'] = $this->patientcasemodel->getPatientBasicInfo($result['patientCaseData']->patient_id); 
+
+              
+
+
+
+
+                $page = 'dashboard/admin_dashboard/case/gynccology/gynaecology_print_prescription';
+              //  $page = 'dashboard/admin_dashboard/case/testtable';
+               $html = $this->load->view($page, $result, true);
+               //exit;
+                
+            }
+
+                // load library
+                $this->load->library('Pdf');
+                $pdf = $this->pdf->load();
+                ini_set('memory_limit', '256M'); 
+       
+                $pdf->SetHeader('Document Title');
+                // render the view into HTML
+                $pdf->WriteHTML($html); 
+                $output = 'Prescription' . date('Y_m_d_H_i_s') . '_.pdf'; 
+                $pdf->Output("$output", 'I');
+                exit();
+         }
+         else {
+            redirect('login', 'refresh');
+        }
+}
 
 }

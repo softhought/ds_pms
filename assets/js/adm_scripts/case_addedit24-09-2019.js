@@ -1,12 +1,5 @@
 $(document).ready(function(){
 
-$(document).on('click','#antenantal_left_tab_menu_2',function(e){
-     e.preventDefault();
-    $(".removezindex").css('z-index','unset');
-    
-});
-
-
 
     var groupColumn = 2;
     var table = $('#examplegroup').DataTable({
@@ -136,7 +129,7 @@ CallResetAdviceData(basepath);
         }
     });
 
- /* Top Tab button on click */
+ /* Top Tab button on click*/
 
  $(document).on('click','.tabtnnonclck',function(){
 
@@ -342,7 +335,7 @@ $("#tryingfor").on('change',function(){
                 data: formData,
                 
                 success: function (result) {
-                     console.log(result);
+
                      $(".antenatelbasicsavebtn").css('display', 'block');
                     if (result.msg_status == 1) {
 
@@ -1354,7 +1347,7 @@ $(document).on('change','.otheranomalyckbx',function(event){
           $("#prescription_investigationerr").removeClass("bordererror");
 
         if (count!='0') {
-       console.log(investigation);
+       // console.log(rowno);
         rowno++;
         $.ajax({
             type: "POST",
@@ -1408,8 +1401,6 @@ $(document).on('change','.otheranomalyckbx',function(event){
     }); // End Visiting Details
 
 
-
-
      // Delete Table Row of Investigation
 
     $(document).on('click','.delPresInvestigation',function(){
@@ -1423,8 +1414,6 @@ $(document).on('change','.otheranomalyckbx',function(event){
         $("tr#rowPrescriptionInvestigation_"+rowDtlNo[1]).remove();
         resetInvestigationDropDown(basepath);
     })
-
- /
 
 
 
@@ -1775,97 +1764,8 @@ $(document).on('change','.otheranomalyckbx',function(event){
 
      $(document).on('click','.prescription_menu_btn',function(){            
       resetInvestigationDropDown(basepath);  
-      //create new investigationpanel by anil 23-09-2019
-      resetInvestigationpanelDropDown(basepath);  
      });
 
-//investigation panel created for prescription 23-09-2019 by anil
- 
-    $(document).on('click','.delPresInvestigationpanel',function(){
-        
-        var currRowID = $(this).attr('id');
-        var rowDtlNo = currRowID.split('_');
-       // console.log(rowDtlNo[1]);
-        console.log(currRowID);
-        $("#ischangePrescription").val('Y');
-        //$("tr#rowDocument_"+rowDtlNo[1]+"_"+rowDtlNo[2]).remove();
-        $("tr#rowPrescriptionInvestigationpanel_"+rowDtlNo[1]).remove();
-        resetInvestigationpanelDropDown(basepath);
-    });
-
-
-/* add prescription panel by anil 23-09-2019*/
-
-     $(document).on('click','#addPresPanelTest',function(){
- 
-          // rowNoUpload++;
-          // $("#addPresPanelTest").attr("disabled","true");
-          var rowno=  $("#presTestrowpanel").val();
-
-          var panel=  $("#prescription_investigationpanel").val();
-
-          var count = $("#prescription_investigationpanel :selected").length;
-        
-        
-          $("#prescription_investigationerr").removeClass("bordererror");
-
-        if (count!='0') {
-       //console.log(investigation);
-        rowno++;
-       
-        $.ajax({
-            type: "POST",
-            url: basepath+'patientcase/addPrescriptionTestDetailspanel',
-            dataType: "html",
-            data: {rowNo:rowno,panel:panel},
-            success: function (result) {
-                //console.log(result);
-                rowno=rowno+count-1;
-                $("#presTestrowpanel").val(rowno);
-                //$("#detail_presTestpanel table").css("display","block"); 
-                $("#detail_presTestpanel table tbody").append(result);
-
-                $('select').selectpicker();
-              //  $(".demo-masked-input").inputmask();
-                var $demoMaskedInput = $('.demo-masked-input');
-
-          //  $('#prescription_investigation').val(0).change();
-             $('#prescription_investigationpanel').multiSelect('deselect_all');
-            resetInvestigationpanelDropDown(basepath);
-
-
-         
-            }, 
-            error: function (jqXHR, exception) {
-              var msg = '';
-                if (jqXHR.status === 0) {
-                    msg = 'Not connect.\n Verify Network.';
-                } else if (jqXHR.status == 404) {
-                    msg = 'Requested page not found. [404]';
-                } else if (jqXHR.status == 500) {
-                    msg = 'Internal Server Error [500].';
-                } else if (exception === 'parsererror') {
-                    msg = 'Requested JSON parse failed.';
-                } else if (exception === 'timeout') {
-                    msg = 'Time out error.';
-                } else if (exception === 'abort') {
-                    msg = 'Ajax request aborted.';
-                } else {
-                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
-                }
-               // alert(msg);  
-            }
-            }); /*end ajax call*/
-
-    }else{      
-
-            $("#prescription_investigationpanel").focus();
-            $("#prescription_investigationpanel").addClass("bordererror");
-          
-
-    }
-  
-    });// End prescription panel
 
 }); // end of document ready
 
@@ -2323,30 +2223,16 @@ function formatPrescription(callback, id, basepath) {
 
             });
 
-             
             tbody += '<tr><td colspan="5">&nbsp;</td></tr>';
-
+            var thead2 = '<tr class="expandrowDetails"><th colspan="5" style="width:10%;">Investigation</th></tr>';
             tbody2 = '';
 
-          
-             // comment for new create investigation panel by anil 23-09-2019
-             
-              // $.each(data['investigation'], function(i, datasin) {
-
-              //   //console.log(datasin);
-
-              //   tbody2 += '<tr>';
-              //   tbody2 += '<td colspan="5">'+CheckNull(datasin.inv_component_name)+'</td>';
-              
-              //   tbody2 += '</tr>'; 
-
-              
-                 $.each(data['investigationpanel'], function(i, datasin) {
+              $.each(data['investigation'], function(i, datasin) {
 
                 //console.log(datasin);
 
                 tbody2 += '<tr>';
-                tbody2 += '<td colspan="5">'+CheckNull(datasin.panel_investigation_details)+'</td>';
+                tbody2 += '<td colspan="5">'+CheckNull(datasin.inv_component_name)+'</td>';
               
                 tbody2 += '</tr>';
 
@@ -2355,14 +2241,6 @@ function formatPrescription(callback, id, basepath) {
 
 
             tbody += '<tr><td colspan="5">&nbsp;</td></tr>';
-
-            if(data['investigationpanel'].length > 0){
-            var thead2 = '<tr class="expandrowDetails"><th colspan="5" style="width:10%;">Investigation Panel</th></tr>';
-              } else{
-            var thead2 = '';
-             tbody2 = '';
-              }
-
             var thead3 = '<tr class="expandrowDetails"><th colspan="5" style="width:10%;">Advice</th></tr>';
             tbody3 = '';
           console.log("advice data");
@@ -2388,34 +2266,11 @@ function formatPrescription(callback, id, basepath) {
 
 
             });
-         
-          if(data['investigation'].length > 0){
-            var thead4 = '<tr class="expandrowDetails"><th colspan="5" style="width:10%;">Investigation</th></tr>'; 
-          }else{
-            var tbody4 = '';
-           }
-            $.each(data['investigation'], function(i, datas) {
-
-               // console.log(datas);
-
-                tbody4 += '<tr>';
-                tbody4 += '<td colspan="5">'+datas.inv_component_name+'</td>';
-                
-                tbody4 += '</tr>';
-
-            });
-
-             
-           
-
-
-
-             
 
 
 
 
-            callback($('<div class="slider"><table class="table table-striped rowexpandTable" >' + thead + tbody + thead2 + tbody2 + thead4 + tbody4 + thead3 + tbody3 + '</table></div>')).show();
+            callback($('<div class="slider"><table class="table table-striped rowexpandTable" >' + thead + tbody + thead2 + tbody2 + thead3 + tbody3 +'</table></div>')).show();
         },
         error: function() {
             console.log("Error Found");
@@ -2770,51 +2625,6 @@ function resetInvestigationDropDown(basepath){
         }); /*end ajax call*/
 }
 
-//created for investigation panel anil 23-09-2019
-
-function resetInvestigationpanelDropDown(basepath){
-   //alert();
-    var investigationpanelItem=[];
-    
-      $(".presinvestigationIDPanelCls").each(function() { 
-       investigationpanelItem.push($(this).val());
-      });
-
-      console.log(investigationpanelItem);
-
-         $.ajax({
-        type: "POST",
-        url: basepath+'patientcase/resetInvestigationpanelDropdown',
-        dataType: "html",
-        data: {investigationpanelItem:investigationpanelItem},
-        success: function (result) {
-            //console.log(result);
-            $("#prescription_investigationpaneldrp").html(result);
-           
-            $('select').selectpicker();
-     
-        }, 
-        error: function (jqXHR, exception) {
-          var msg = '';
-            if (jqXHR.status === 0) {
-                msg = 'Not connect.\n Verify Network.';
-            } else if (jqXHR.status == 404) {
-                msg = 'Requested page not found. [404]';
-            } else if (jqXHR.status == 500) {
-                msg = 'Internal Server Error [500].';
-            } else if (exception === 'parsererror') {
-                msg = 'Requested JSON parse failed.';
-            } else if (exception === 'timeout') {
-                msg = 'Time out error.';
-            } else if (exception === 'abort') {
-                msg = 'Ajax request aborted.';
-            } else {
-                msg = 'Uncaught Error.\n' + jqXHR.responseText;
-            }
-           // alert(msg);  
-        }
-        }); /*end ajax call*/
-}
 
 
 function CallResetAdviceData(basepath){
