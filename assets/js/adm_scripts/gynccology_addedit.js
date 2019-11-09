@@ -1560,6 +1560,10 @@ function imageupload(basepath){
                     if(result.msg_status == 1){
                       $("#info_leaflet").val("");
                       $("#consent_form").val("");
+
+                     
+                     
+
                     }
                                       
                   

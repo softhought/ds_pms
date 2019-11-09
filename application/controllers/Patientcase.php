@@ -519,18 +519,27 @@ class Patientcase extends CI_Controller {
                 //  pre( $result['OnetoOtherDropDown']);exit;
                   $result['genderList']=$this->commondatamodel->getAllDropdownData('gender_master');
                   $result['bloodGroupList']=$this->commondatamodel->getAllDropdownData('blood_group');  
-                  $result['occupationList']=$this->commondatamodel->getAllDropdownData('occupation_master');  
-                  $result['educationList']=$this->commondatamodel->getAllDropdownData('education_qualification');
+                 // comment by anil for get ascending order data 
+                  // $result['occupationList']=$this->commondatamodel->getAllDropdownData('occupation_master');
+
+                   $result['occupationList']=$this->patientcasemodel->getAlloccupation();  
+                 
+                  // comment by anil for get ascending order data 
+                  // $result['educationList']=$this->commondatamodel->getAllDropdownData('education_qualification');
+
+                   $result['educationList']=$this->patientcasemodel->getAlleducation();
+
                   $result['mensuMedList']=$this->patientcasemodel->getMenstrualLastMedecineDetails($caseID);
                   $result['previousChildBirthList']=$this->patientcasemodel->getPreviousChildBirthDetails($caseID);
                   $result['complicationList']=$this->commondatamodel->getAllDropdownData('complication_master');
                   $result['medicalProblemList']=$this->commondatamodel->getAllDropdownData('medical_problem');
                   $result['genderList']=$this->commondatamodel->getAllDropdownData('gender_master');
 
-                  $result['deliveryType'] = array('CS' => 'CS','ND' => 'ND','SE' => 'S/E',);
+                  $result['deliveryType'] = array('CS' => 'CS','ND' => 'ND','SE' => 'S/E','Spontaneous Expulsion'=>'Spontaneous Expulsion');
 
                   $result['menstrualCycleType'] = array('Regular','Irregular');
                   $result['menstrualCycleFlow'] = array('Average','Moderate','Severe');
+                  $result['thalassemiascreening'] = array('Beta Thalassemia Major','Beta Thalassemia Minor','Normal','Others');
 
                   $result['diseasesList']=$this->commondatamodel->getAllDropdownData('diseases_master');
                 //  $result['surgeryList']=$this->commondatamodel->getAllDropdownData('surgery_master');
@@ -1069,11 +1078,13 @@ $deleteTodayInvestigation=$this->commondatamodel->deleteTableData('examination_m
       $urine_re_notes = $dataArry['urine_re_notes'];//created by anil 24-09-2019
 
       $urine_re_result = $dataArry['urine_re_result'];
+      $urine_re_others = $dataArry['urine_re_others'];
       if ($dataArry['urine_re_date']!='') {
       $urine_re_date = date("Y-m-d", strtotime($dataArry['urine_re_date']));
       }else{ $urine_re_date=NULL; }
 
       $cs_sensitive_to_result = $dataArry['cs_sensitive_to_result'];
+      $cs_sensitive_others = $dataArry['cs_sensitive_others'];
       if ($dataArry['cs_sensitive_date']!='') {
       $cs_sensitive_date = date("Y-m-d", strtotime($dataArry['cs_sensitive_date']));
       }else{ $cs_sensitive_date=NULL; }
@@ -1305,6 +1316,8 @@ $investigation_record_array = array(
                                     'others_investigation_date' => $others_investigation_date,
                                     'urine_re_notes' => $urine_re_notes,
                                     'thalassemia_other' =>$thalassemia_other,
+                                    'urine_re_others' =>$urine_re_others,
+                                    'cs_sensitive_others' =>$cs_sensitive_others,
                                     );
 
   //print_r($investigation_record_array);exit;
@@ -2431,7 +2444,7 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
            
             $result['investigationRowData'] = $this->patientcasemodel->getInvestigationDetailsByPrescriptionId($inv_record_id);
             //pre($result['investigationRowData']);exit;
-            //create new investigation panel by anil 23-09-2019
+      //create new investigation panel by anil 23-09-2019
       
           $result['investigationpanelRowData'] = $this->patientcasemodel->getInvestigationpanelDetailsByPrescriptionId($inv_record_id);
 

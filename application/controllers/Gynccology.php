@@ -2296,6 +2296,7 @@ public function imageupload(){
            $json_response = array(
                             "msg_status" => 1,
                             "msg_data" => "Successfully Update",
+                           
                                                                                 
                         );
                                  

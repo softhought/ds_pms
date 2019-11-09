@@ -142,6 +142,8 @@
     <!-- Bootstrap Datepicker Plugin Js -->
     <script src="<?php echo(base_url());?>assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 
+   
+
     <!-- Custom Js -->
     <script src="<?php echo(base_url());?>assets/js/admin.js"></script>
     <script src="<?php echo(base_url());?>assets/js/pages/forms/form-wizard.js"></script>
@@ -173,7 +175,8 @@
     <script src="<?php echo(base_url());?>assets/js/jquery.dropdown.js"></script>
     <script src="<?php echo(base_url());?>assets/js/mock.js"></script>
 
-    
+  <!-- comman js for comman function are used -->
+     <script src="<?php echo(base_url());?>assets\js\adm_scripts\comman.js"></script>
     
 
     <style>

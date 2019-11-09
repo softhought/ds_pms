@@ -58,6 +58,20 @@ border-bottom: 1px solid #f0c7f9;
                                                                              
                              </div>
 
+                              <div class="row clearfix">
+                                        <div class="col-sm-12">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <input type="text" class="form-control" name="genericname" id="genericname" autocomplete="off" value="<?php if($bodycontent['mode']=="EDIT"){echo $bodycontent['medicineEditdata']->generic;}?>" >
+                                                    <label class="form-label">Generic Name</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                                                 
+                                                                             
+                             </div>
+
                              <div class="row clearfix">
                              <div class="col-sm-6">
                               <div class="form-group form-float">

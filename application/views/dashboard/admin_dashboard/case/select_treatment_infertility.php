@@ -1,97 +1,38 @@
 
-<script src="<?php echo(base_url());?>assets/js/adm_scripts/patientcase.js"></script>
+<script src="<?php echo(base_url());?>assets/js/adm_scripts/infertility.js"></script>
+<!-- <script src="<?php echo(base_url());?>assets/js/admin.js"></script> -->
 
 
 
-<style>
-.width18{
-    width: 23% !important;
-
-}
-.table tbody tr td, .table tbody tr th {
-   
-    border-top: 1px solid #f0c7f9;
-border-bottom: 1px solid #f0c7f9;
-}
-
-@media (max-width: 767px) {
-    .table-responsive .dropdown-menu {
-        position: static !important;
-    }
-}
-@media (min-width: 768px) {
-    .table-responsive {
-        overflow: visible;
-    }
-}
-
-
-</style>
-
-
-                        
-    <section class="content mediumContainerCenter">
-        <div class="container-fluid">
-            <div class="row clearfix">
-                   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="card" >
-
-                        	 <div class="header" id="treatmenthead">
-                                <h2 class="head_title" id="treatmenthead_title">Treatment Details
-                                  <!--  <a href="<?php echo base_url(); ?>clinicsetup/" class="">
-                                <button type="button" class="btn bg-deep-purple waves-effect" style="float: right;">List </button></a> -->
-
-                                </h2>                           
-                           
-                            </div>
-                            <div class="body">
-                                <div class="demo-masked-input">
-                                    <div class="row clearfix">
-                                        <div class="col-sm-12">
-                                            <div class="form-group form-float demo-radio-button" id="treatment_div">
-                                            	 &nbsp; 
-                                            	&nbsp;<input name="treat" type="radio" class="with-gap" id="treat_1" value="Obstetrics">
-                                            	<label for="treat_1">Obstetrics</label>
-                                            	<input name="treat" type="radio" class="with-gap" id="treat_2" value="Gynaccology" >
-                                            	<label for="treat_2">Gynaecology</label>
-                                            	<input name="treat" type="radio" class="with-gap" id="treat_3" value="Infertility">
-                                            	<label for="treat_3">Infertility</label>
-                                              
-                                            </div>
-                                        </div>
-                                      
-                                    </div>
-
-                               <div id="case_div">
                                <div class="row clearfix">
                                 <div class="col-sm-1 "></div>
-                       				 <div class="col-sm-2 topcol">
+                               <div class="col-sm-2 topcol">
 
-                       				 <button type="button" class="btn btn-block btn-md  waves-effect tabbtn" id="newcasebtn">New Case</button> 	
-                       				 </div>
+                               <button type="button" class="btn btn-block btn-md  waves-effect Inftabbtn" id="infertilityCasebtn">New Case</button>  
+                               </div>
 
-                       				 <div class="col-sm-2 topcol">
-                       				 <button type="button" class="btn btn-block btn-md  waves-effect tabbtn tabtnnonclck" id="undtreatbtn">Under Treatment</button> 	
-                       				 </div>
-                       				
-                       			</div><br>
+                               <div class="col-sm-2 topcol">
+                               <button type="button" class="btn btn-block btn-md  waves-effect Inftabbtn infetabtnnonclck" id="Infundtreatbtn">Under Treatment</button>   
+                               </div>
+                              
+                            </div><br>
 
 
-                       		<div id="btn_tab_content">
+                          <div id="btn_tab_content">
 
-                       		 <section class="newundertreatsec" id="newcasebtn_section"><!-- start of new case section -->
+                           <section class="Infnewundertreatsec" id="Infnewcasebtn_section"><!-- start of new case section -->
 
-                       		 	<div class="row clearfix" id="patient_type_div" >
+                            <div class="row clearfix" id="patient_type_div" >
                               <div class="col-sm-1"></div>
                                         <div class="col-sm-10">
                                           <div class="form-group form-float demo-radio-button" id="treatment_div_stage">
-                                            	 &nbsp; 
-                                            	<input name="patient_type" class="with-gap" type="radio"  id="patient_type_1" value="New">
-                                            	<label for="patient_type_1">New Patient</label>
-                                            	<input name="patient_type" class="with-gap" type="radio"  id="patient_type_2" value="Existing">
-                                            	<label for="patient_type_2">Old Patient</label>
-                                            	
-                                            	
+                                               &nbsp; 
+                                              <input name="Inf_patient_type" class="with-gap" type="radio"  id="Inf_patient_type_1" value="New">
+                                              <label for="Inf_patient_type_1">New Patient</label>
+                                              <input name="Inf_patient_type" class="with-gap" type="radio"  id="Inf_patient_type_2" value="Existing">
+                                              <label for="Inf_patient_type_2">Old Patient</label>
+                                              
+                                              
                                               
                                             </div>
                                         </div>
@@ -99,24 +40,24 @@ border-bottom: 1px solid #f0c7f9;
                                     </div>
 
 
-                          <div id="new_patient_div"><!-- start of new Patient new Case-->
+                          <div id="Inf_new_patient_div"><!-- start of new Patient new Case-->
 
 
                     
-   <form class="form-area" name="newcaseForm" id="newcaseForm" >
+   <form class="form-area" name="InfnewcaseForm" id="InfnewcaseForm">
 
-   <input type="hidden" name="majorgroup" id="majorgroup" value="Obstetrics" />
-   <input type="hidden" name="mode" id="mode" value="<?php echo $bodycontent['mode']; ?>" />
+   <input type="hidden" name="majorgroup" id="majorgroup" value="<?php echo $majorgroup ?>" />
+   <input type="hidden" name="mode" id="mode" value="<?php echo $mode; ?>" />
    <input type="hidden" name="patient_reg_type" id="patient_reg_type" value="New" />
 
-   <input type="hidden" name="caseID" id="caseID" value="<?php echo $bodycontent['caseID']; ?>" />
+   <input type="hidden" name="caseID" id="caseID" value="<?php echo $caseID; ?>" />
                             <div class="demo-masked-input">
                              <div class="row clearfix">
-                             	<div class="col-sm-2"></div>
+                              <div class="col-sm-2"></div>
                                         <div class="col-sm-4">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input type="text" class="form-control" name="selfmobile" id="selfmobile" autocomplete="off" value="" onKeyUp="numericFilter(this);" maxlength="10">
+                                                    <input type="text" class="form-control" name="selfmobile" id="gynselfmobile" autocomplete="off" value="" onKeyUp="numericFilter(this);" maxlength="10">
                                                     <label class="form-label"> Self Mobile No</label>
                                                 </div>
                                             </div>
@@ -136,11 +77,11 @@ border-bottom: 1px solid #f0c7f9;
                                 </div>
 
                             <div class="row clearfix">
-                             	<div class="col-sm-2"></div>
+                              <div class="col-sm-2"></div>
                                         <div class="col-sm-4">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input type="text" class="form-control" name="patientname" id="patientname" autocomplete="off" value="" >
+                                                    <input type="text" class="form-control" name="patientname" id="gynpatientname" autocomplete="off" value="" >
                                                     <label class="form-label">Name</label>
                                                 </div>
                                             </div>
@@ -149,7 +90,7 @@ border-bottom: 1px solid #f0c7f9;
                                         <div class="col-sm-4">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input type="text" class="form-control" name="patientage" id="patientage" autocomplete="off" value="" >
+                                                    <input type="text" class="form-control" name="patientage" id="gynpatientage" autocomplete="off" value="" >
                                                     <label class="form-label">Age</label>
                                                 </div>
                                             </div>
@@ -160,7 +101,7 @@ border-bottom: 1px solid #f0c7f9;
                             </div>
 
                            <div class="row clearfix">
-                           	<div class="col-sm-2"></div>
+                            <div class="col-sm-2"></div>
                              <div class="col-sm-4">
                                 <div class="form-group form-float">
                                 <label class="form-label">Gender</label>
@@ -168,7 +109,7 @@ border-bottom: 1px solid #f0c7f9;
                               
                                  <?php 
 
-                                 foreach ($bodycontent['genderList'] as $value) {  ?>
+                                 foreach ($genderList as $value) {  ?>
                                    <option value="<?php echo $value->id;?>"
                                         
                                       <?php if($value->id=='2'){ echo "selected";}?>
@@ -244,18 +185,18 @@ border-bottom: 1px solid #f0c7f9;
                             </div><!-- end of demo-masked-input-->
 
                             <div class="row clearfix">
-                           	<div class="col-sm-2"></div>
+                            <div class="col-sm-2"></div>
                              <div class="col-sm-8">
-                             <p id="caseregmsg" class="form_error"></p>
+                             <p id="gyncaseregmsg" class="form_error"></p>
                              </div>
                              </div>
 
                                     <div class="row clearfix">
                                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="margin-left: 36%;">
                                             
-                                              <button type="submit" class="btn btn-block btn-lg btn-primary waves-effect" id="caseregsavebtn">Save</button> 
+                                              <button type="submit" class="btn btn-block btn-lg btn-primary waves-effect" id="gyncaseregsavebtn">Save</button> 
 
-                                                 <span class="btn btn-block btn-lg btn-primary waves-effect loaderbtn" id="loaderbtn" style="display:none;">Saving...</span>
+                                                 <span class="btn btn-block btn-lg btn-primary waves-effect loaderbtn" id="gynloaderbtn" style="display:none;">Saving...</span>
                                         </div>
 
 
@@ -267,11 +208,11 @@ border-bottom: 1px solid #f0c7f9;
                              
 
                         
-                                    	
+                                      
                             </div><!-- end of new Patient new Case -->
 
-     <div id="existing_patient_div"><!-- start of existing patient new Case -->
-                                    	<!-- existing_patient_div -->
+     <div id="Inf_existing_patient_div"><!-- start of existing patient new Case -->
+                                      <!-- existing_patient_div -->
                                       <br>
 
        <div class="row clearfix">
@@ -279,13 +220,13 @@ border-bottom: 1px solid #f0c7f9;
            <div class="col-sm-2"> </div>
            <div class="col-sm-8"> 
                  <div class="form-group form-float">
-                   <div class="input-group existing_patienterr" id="existing_patienterr">
+                   <div class="input-group existing_patienterr" id="gyn_existing_patienterr">
                       <label class="form-label">Mobile or Case No </label> 
-                <select name="existing_patient_sel_caseno" id="existing_patient_sel_caseno" class="form-control show-tick"  data-live-search="true" tabindex="-98">
+                <select name="existing_patient_sel_caseno" id="gyn_existing_patient_sel_caseno" class="form-control show-tick"  data-live-search="true" tabindex="-98">
                 <option value="0"> &nbsp; </option>
                 <?php 
 
-                foreach ($bodycontent['allCaseList'] as $value) {  ?>
+                foreach ($allCaseList as $value) {  ?>
                 <option value="<?php echo $value->case_id;?>"
 
                  ><?php echo $value->selfmobile.' | '.$value->case_no;?></option>
@@ -304,21 +245,21 @@ border-bottom: 1px solid #f0c7f9;
 
 
 
-   <form class="form-area" name="newcaseExistingPatientForm" id="newcaseExistingPatientForm" >
+   <form class="form-area" name="InfnewcaseExistingPatientForm" id="InfnewcaseExistingPatientForm" >
 
-   <input type="hidden" name="majorgroup" id="majorgroup" value="Obstetrics" />
-   <input type="hidden" name="mode" id="mode" value="<?php echo $bodycontent['mode']; ?>" />
+   <input type="hidden" name="majorgroup" id="majorgroup" value="<?php echo $majorgroup ?>" />
+   <input type="hidden" name="mode" id="mode" value="<?php echo $mode; ?>" />
    <input type="hidden" name="patient_reg_type" id="patient_reg_type" value="Existing" />
    <input type="hidden" name="previous_case_id" id="previous_case_id" value="" />
    <input type="hidden" name="patient_id" id="patient_id" value="" />
-   <input type="hidden" name="caseID" id="caseID" value="<?php echo $bodycontent['caseID']; ?>" />
+   <input type="hidden" name="caseID" id="caseID" value="<?php echo $caseID; ?>" />
                             <div class="demo-masked-input">
                              <div class="row clearfix">
                               <div class="col-sm-2"></div>
                                         <div class="col-sm-4">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input type="text" class="form-control" name="extpselfmobile" id="extpselfmobile" autocomplete="off" value="" onKeyUp="numericFilter(this);" maxlength="10">
+                                                    <input type="text" class="form-control" name="extpselfmobile" id="gyn_extpselfmobile" autocomplete="off" value="" onKeyUp="numericFilter(this);" maxlength="10">
                                                     <label class="form-label"> Self Mobile No</label>
                                                 </div>
                                             </div>
@@ -327,7 +268,7 @@ border-bottom: 1px solid #f0c7f9;
                                         <div class="col-sm-4">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input type="text" class="form-control" name="extpalternate_mobile" id="extpalternate_mobile" autocomplete="off" value="" onKeyUp="numericFilter(this);" maxlength="10">
+                                                    <input type="text" class="form-control" name="extpalternate_mobile" id="gyn_extpalternate_mobile" autocomplete="off" value="" onKeyUp="numericFilter(this);" maxlength="10">
                                                     <label class="form-label">Husband /Guardian Mobile</label>
                                                 </div>
                                             </div>
@@ -342,7 +283,7 @@ border-bottom: 1px solid #f0c7f9;
                                         <div class="col-sm-4">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input type="text" class="form-control" name="extppatientname" id="extppatientname" autocomplete="off" value="" >
+                                                    <input type="text" class="form-control" name="extppatientname" id="gyn_extppatientname" autocomplete="off" value="" >
                                                     <label class="form-label">Name</label>
                                                 </div>
                                             </div>
@@ -351,7 +292,7 @@ border-bottom: 1px solid #f0c7f9;
                                         <div class="col-sm-4">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input type="text" class="form-control" name="extppatientage" id="extppatientage" autocomplete="off" value="" >
+                                                    <input type="text" class="form-control" name="extppatientage" id="gyn_extppatientage" autocomplete="off" value="" >
                                                     <label class="form-label">Age</label>
                                                 </div>
                                             </div>
@@ -366,11 +307,14 @@ border-bottom: 1px solid #f0c7f9;
                              <div class="col-sm-4">
                                 <div class="form-group form-float">
                                 <label class="form-label">Gender</label>
-                               <select name="extpgender" id="extpgender" class="form-control show-tick" data-live-search="true" tabindex="-98">
+                               <select name="extpgender" id="gynextpgender" class="form-control show-tick" data-live-search="true" tabindex="-98">
                               
                                  <?php 
+                                      
+                                 foreach ($genderList as $value) { 
 
-                                 foreach ($bodycontent['genderList'] as $value) {  ?>
+                                  ?>
+
                                    <option value="<?php echo $value->id;?>"
                                         
                                       <?php if($value->id=='2'){ echo "selected";}?>
@@ -384,7 +328,7 @@ border-bottom: 1px solid #f0c7f9;
 
                               <!-- <div class="col-sm-2">
                               <div class="form-group form-float">
-                              <div class="input-group extpbloodgrpeerr" id="extpbloodgrpeerr">
+                              <div class="input-group extpbloodgrpeerr" id="gynextpbloodgrpeerr">
                                    <label class="form-label">Self Blood Group</label> 
                                <select name="extpbloodgroup" id="extpbloodgroup" class="form-control show-tick" data-live-search="true" tabindex="-98">
                                 <option value="0"> Select </option>
@@ -433,7 +377,7 @@ border-bottom: 1px solid #f0c7f9;
                            <div class="col-sm-8">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <textarea rows="1" name="extpaddress" id="extpaddress" class="form-control no-resize auto-growth"  style="overflow: hidden; overflow-wrap: break-word; height: 32px;" autocomplete="off"
+                                                    <textarea rows="1" name="extpaddress" id="gynextpaddress" class="form-control no-resize auto-growth"  style="overflow: hidden; overflow-wrap: break-word; height: 32px;" autocomplete="off"
                                                       ></textarea>
                                                     <label class="form-label">Address</label>
                                                 </div>
@@ -449,16 +393,16 @@ border-bottom: 1px solid #f0c7f9;
                             <div class="row clearfix">
                             <div class="col-sm-2"></div>
                              <div class="col-sm-8">
-                             <p id="extpcaseregmsg" class="form_error"></p>
+                             <p id="infnextpcaseregmsg" class="form_error"></p>
                              </div>
                              </div>
 
                                     <div class="row clearfix">
                                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="margin-left: 36%;">
                                             
-                                              <button type="submit" class="btn btn-block btn-lg btn-primary waves-effect" id="extpcaseregsavebtn">Save</button> 
+                                              <button type="submit" class="btn btn-block btn-lg btn-primary waves-effect" id="infnextpcaseregsavebtn">Save</button> 
 
-                                                 <span class="btn btn-block btn-lg btn-primary waves-effect loaderbtn" id="extploaderbtn" style="display:none;">Saving...</span>
+                                                 <span class="btn btn-block btn-lg btn-primary waves-effect loaderbtn" id="infnextploaderbtn" style="display:none;">Saving...</span>
                                         </div>
 
 
@@ -484,10 +428,10 @@ border-bottom: 1px solid #f0c7f9;
 
 
                               
-        <section class="newundertreatsec" id="undtreatbtn_section"><!-- start of new under treatment section -->
+        <section class="Infnewundertreatsec" id="Infundtreatbtn_section"><!-- start of new under treatment section -->
            <br>
 
-            <form class="form-area" name="viewcaseDetailsForm" id="viewcaseDetailsForm" formtarget="_blank" >
+            <form class="form-area" name="InfviewcaseDetailsForm" id="InfviewcaseDetailsForm">
            <div class="row clearfix">
  
            <div class="col-sm-2"> </div>
@@ -495,11 +439,11 @@ border-bottom: 1px solid #f0c7f9;
                  <div class="form-group form-float">
                    <div class="input-group wifebloodgrpeerr" id="wifebloodgrpeerr">
                       <label class="form-label">Case No</label> 
-                <select name="sel_caseno" id="sel_caseno" class="form-control show-tick"  data-live-search="true" tabindex="-98">
+                <select name="inf_sel_caseno" id="inf_sel_caseno" class="form-control show-tick"  data-live-search="true" tabindex="-98">
                 <option value="0"> Select </option>
                 <?php 
 
-                foreach ($bodycontent['allCaseList'] as $value) {  ?>
+                foreach ($allCaseList as $value) {  ?>
                 <option value="<?php echo $value->case_id;?>"
 
                  ><?php echo $value->case_no.' | '.$value->patientname.' | '.$value->selfmobile;?></option>
@@ -517,7 +461,7 @@ border-bottom: 1px solid #f0c7f9;
                  <div class="col-sm-4"> </div>
               <div class="col-sm-2 col-xs-2">
                                             
-               <button type="submit" class="btn btn-block btn-lg btn-primary waves-effect" id="caseviewbtn">View Details</button> 
+               <button type="submit" class="btn btn-block btn-lg btn-primary waves-effect" id="Infcaseviewbtn">View Details</button> 
 
                 <span class="btn btn-block btn-lg btn-primary waves-effect loaderbtn" id="loaderbtn" style="display:none;">loading...</span>
              </div>
@@ -527,49 +471,3 @@ border-bottom: 1px solid #f0c7f9;
                              </section><!-- start of new under treatment section -->
 
                              </div>
-
-
-                
-
-                             </div><!-- end of case_div --> 
-                             <div id="gynccolgy_case_div">
-                               
-                               
-                             
-                             </div>
-
-
-                             <div id="infatelity_case_div"></div>
-
-
-
-
-
-                            </div><!-- end of demo-masked-input -->
-                           </div><!-- end of body class -->
-
-                            
-
-
-             
-
-
-
-
-
-                   
-
-                               
-
-                             
-
-                               
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-        </section>
-       
-
-

@@ -22,6 +22,7 @@ $("#newcasebtn").addClass("bg-teal");
              
 		     $("#case_div").css("display", "none");
              $("#gynccolgy_case_div").css("display", "none");
+             $("#infatelity_case_div").css("display", "none");
 
 			if (selected_value=='Obstetrics') {
                 $("#case_div").css("display", "block");
@@ -32,6 +33,14 @@ $("#newcasebtn").addClass("bg-teal");
                 $("#majorgroup").val(selected_value);
                 loadViewTreatment(basepath,selected_value);
 			}
+           else if(selected_value=='Infertility'){
+
+
+                $("#infatelity_case_div").css("display", "block");
+                $("#majorgroup").val(selected_value);
+                 loadInfertilityView(basepath,selected_value);
+               
+            }
 
 	});
 
@@ -513,6 +522,24 @@ function loadViewTreatment(basepath,selected_value){
                     success: function(result) {
 
                         $("#gynccolgy_case_div").html(result);
+                        $(".sdf").addClass('focused');
+
+                    },
+                   
+                });
+
+}
+
+function loadInfertilityView(basepath,selected_value){
+  //alert(selected_value);
+    $.ajax({
+                    type: 'POST',
+                    url: basepath+'patientcase/loadInfertilityView',
+                    data: {majorgroup:selected_value},
+                    dataType: "html",
+                    success: function(result) {
+
+                        $("#infatelity_case_div").html(result);
                         $(".sdf").addClass('focused');
 
                     },

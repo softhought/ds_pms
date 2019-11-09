@@ -678,11 +678,11 @@ border-bottom: 0px solid #fff !important;
                         if($bodycontent['antenantalCaseEditdata']->procedure_concieve=='IVF->FET'){echo "checked";} }
                         ?>>
                         <label for="procedure_concieve_2">IVF->FET</label>
-                      	<input name="procedure_concieve" type="radio" class="with-gap" id="procedure_concieve_3" value="ET" 
+                      	<input name="procedure_concieve" type="radio" class="with-gap" id="procedure_concieve_3" value="IVF->ET" 
                         <?php
                         if($bodycontent['antenantalCaseEditdata']){
-                         if($bodycontent['antenantalCaseEditdata']->procedure_concieve=='ET'){echo "checked";}} ?>>
-                        <label for="procedure_concieve_3">ET</label>
+                         if($bodycontent['antenantalCaseEditdata']->procedure_concieve=='IVF->ET'){echo "checked";}} ?>>
+                        <label for="procedure_concieve_3">IVF->ET</label>
                                               
                          </div>
                
@@ -1318,6 +1318,20 @@ border-bottom: 0px solid #fff !important;
                                 </div>                
                             
                   </td>
+
+                 <!-- added by anil baby weight -->
+
+                 <td> 
+                    <div class="input-group babyweight" id="babyweight_<?php echo $childdtlrowno; ?>">
+                    <label>Baby Weight</label>
+                      <div class="form-line">
+                      <input type="text" class="form-control" name="babyweight[]" id="babyweight_<?php echo $childdtlrowno; ?>" autocomplete="off"  placeholder="" value="<?php echo $previouschilsrow->baby_weight;?>"> 
+                      </div> 
+                  </div>               
+                            
+                  </td>
+
+
 
                   <td> 
                     <div class="input-group babygendererr" id="babygendererr_<?php echo $childdtlrowno; ?>">
@@ -3136,6 +3150,16 @@ border-bottom: 0px solid #fff !important;
                           </div>
                      </div>
 
+                      <div class="col-sm-3">
+                          <div class="form-group form-float">
+                           <div class="form-line ">
+                            <input type="text" class="form-control inpinve" name="urine_re_others" id="urine_re_others" autocomplete="off" placeholder="" value="<?php
+                             if($isDatainvestigation=='Y'){echo $bodycontent['investigationLatestData']->urine_re_others;}?>" >
+                            <label class="form-label upText">Urine R/E Others</label>
+                           </div>
+                          </div>
+                     </div>
+
 
                
                </div>
@@ -3162,6 +3186,16 @@ border-bottom: 0px solid #fff !important;
                         </div>
                       </div>
                     </div>
+
+                  <div class="col-sm-3">
+                          <div class="form-group form-float">
+                           <div class="form-line">
+                            <input type="text" class="form-control inpinve" name="cs_sensitive_others" id="cs_sensitive_others" autocomplete="off" placeholder="" value="<?php
+                             if($isDatainvestigation=='Y'){echo $bodycontent['investigationLatestData']->cs_sensitive_others;}?>" >
+                            <label class="form-label upText">Urine C/S Others</label>
+                           </div>
+                           </div>
+                    </div> 
              </div>
 
                <div class="row clearfix formrowgap">
@@ -3194,7 +3228,7 @@ border-bottom: 0px solid #fff !important;
                            <div class="form-line">
                             <input type="text" class="form-control inpinve" name="s_urea_result" id="s_urea_result" autocomplete="off" placeholder="" value="<?php
                              if($isDatainvestigation=='Y'){echo $bodycontent['investigationLatestData']->s_urea_result;}?>" >
-                            <label class="form-label upText">S urea</label>
+                            <label class="form-label upText">S urea(mg/dl)</label>
                            </div>
                           </div>
                     </div>
@@ -3220,7 +3254,7 @@ border-bottom: 0px solid #fff !important;
                             <div class="form-line ">
                               <input type="text" class="form-control inpinve" name="s_creatinine_result" id="s_creatinine_result" autocomplete="off" placeholder="" value="<?php
                               if($isDatainvestigation=='Y'){echo $bodycontent['investigationLatestData']->s_creatinine_result;}?>" >
-                                <label class="form-label upText">S creatinine</label>
+                                <label class="form-label upText">S creatinine(mg/dl)</label>
                             </div>
                           </div>
                   </div>
@@ -3263,7 +3297,7 @@ border-bottom: 0px solid #fff !important;
                </div>
 
                 <div class="row clearfix formrowgap">
-                   <div class="col-sm-4">
+                  <!--  <div class="col-sm-4">
                           <div class="form-group form-float">
                            <div class="form-line">
                             <input type="text" class="form-control inpinve" name="thalassemia_result" id="thalassemia_result" autocomplete="off" placeholder="" value="<?php
@@ -3271,7 +3305,44 @@ border-bottom: 0px solid #fff !important;
                             <label class="form-label upText">Thalassemia HPLC | Electrophoresis</label>
                            </div>
                           </div>
+                    </div> -->
+
+                   <div class="col-sm-3">
+                         <div class="input-group form-float" id="usg_slf_weekerr">
+                         <label class="form-label selectlabel zindex3">Thalassemia Screening</label>
+                         <select name="thalassemia_screening_result" id="thalassemia_screening_result" class="form-control selinve show-tick incother"  data-live-search="true" tabindex="-98" data-match='Others' data-dispid='thalassemiaOther'>
+                         <option value=""> &nbsp; </option>
+                         <?php 
+
+                         foreach ($bodycontent['thalassemiascreening'] as $thalassemiascreening) {  ?>
+                         <option value="<?php echo $thalassemiascreening;?>"
+
+                         <?php if(($isDatainvestigation=='Y') && $thalassemiascreening==$bodycontent['investigationLatestData']->thalassemia_screening_result){echo "selected";}else{echo "";} ?>
+                                                        
+                                                      
+
+                          ><?php echo $thalassemiascreening;?></option>
+                          <?php     } ?>
+                                                   
+                          </select> 
+                           
+                           </div>
+                        
                     </div>
+
+                     <!-- new column added for thalssemia others by anil 24-09-2019 --> 
+
+                   <?php $dispthalother = "display:none;"; ?>
+
+                    <div class="col-sm-3" id="thalassemiaOther" style="<?php echo $dispthalother; ?>">
+                          <div class="form-group form-float">
+                           <div class="form-line ">
+                            <input type="text" class="form-control inpinve" name="thalassemia_other" id="thalassemia_other" autocomplete="off" placeholder="" value="<?php
+                             if($isDatainvestigation=='Y'){echo $bodycontent['investigationLatestData']->thalassemia_other;}?>" >
+                            <label class="form-label upText">Others</label>
+                           </div>
+                          </div>
+                     </div>
 
                     <div class="col-sm-3">
                       <div class="form-group form-float">
@@ -3283,16 +3354,7 @@ border-bottom: 0px solid #fff !important;
                         </div>
                       </div>
                     </div>
-                   <!-- new column added for thalssemia others by anil 24-09-2019 --> 
-                    <div class="col-sm-3">
-                          <div class="form-group form-float">
-                           <div class="form-line ">
-                            <input type="text" class="form-control inpinve" name="thalassemia_other" id="thalassemia_other" autocomplete="off" placeholder="" value="<?php
-                             if($isDatainvestigation=='Y'){echo $bodycontent['investigationLatestData']->thalassemia_other;}?>" >
-                            <label class="form-label upText">Thalassemia Other</label>
-                           </div>
-                          </div>
-               </div>
+                  
                 </div>
                   
                 
@@ -3312,7 +3374,7 @@ border-bottom: 0px solid #fff !important;
 
                    <div class="col-sm-3">
                          <div class="input-group form-float" id="usg_slf_weekerr">
-                         <label class="form-label upText selectlabel">USG SLF of Week</label>
+                         <label class="form-label selectlabel zindex3">USG SLF of Week</label>
                          <select name="usg_slf_week" id="usg_slf_week" class="form-control selinve show-tick"  data-live-search="true" tabindex="-98">
                          <option value=""> &nbsp; </option>
                          <?php 
@@ -3335,7 +3397,7 @@ border-bottom: 0px solid #fff !important;
 
                     <div class="col-sm-3">
                          <div class="input-group form-float" id="usg_slf_dayerr">
-                          <label class="form-label upText selectlabel">USG SLF of Day</label>
+                          <label class="form-label selectlabel zindex3">USG SLF of Day</label>
                           <select name="usg_slf_day" id="usg_slf_day" class="form-control selinve show-tick"  data-live-search="true" tabindex="-98">
                           <option value=""> &nbsp; </option>
                           <?php 
@@ -3463,7 +3525,7 @@ border-bottom: 0px solid #fff !important;
 
                          <div class="col-sm-3">
                          <div class="input-group form-float" id="usg_slf_weekerr">
-                          <label class="form-label upText selectlabel">Anomaly SLF of Week</label>
+                          <label class="form-label selectlabel zindex3">Anomaly SLF of Week</label>
                           <select name="anomaly_slf_week" id="anomaly_slf_week" class="form-control selinve show-tick"  data-live-search="true" tabindex="-98">
                           <option value=""> &nbsp; </option>
                           <?php 
@@ -3486,7 +3548,7 @@ border-bottom: 0px solid #fff !important;
 
                     <div class="col-sm-3">
                          <div class="input-group form-float" id="usg_slf_dayerr">
-                          <label class="form-label upText selectlabel">Anomaly SLF of Day</label>
+                          <label class="form-label selectlabel zindex3">Anomaly SLF of Day</label>
                           <select name="anomaly_slf_day" id="anomaly_slf_day" class="form-control selinve show-tick"  data-live-search="true" tabindex="-98">
                             <option value=""> &nbsp; </option>
                             <?php 
@@ -3545,7 +3607,7 @@ border-bottom: 0px solid #fff !important;
                     // }
                 ?>         
               <div class="form-group form-group"> <label class="form-label upText">&nbsp;</label>
-                     <div class="input-group" >
+                     <div class="input-group" style="margin-top: -9px;" >
                        
                          <input type="checkbox" name="no_anomaly_seen" id="no_anomaly_seen" class="filled-in chk-col-deep-purple selinve noanomalyckbx" value="Y" 
                          <?php 
@@ -3572,8 +3634,8 @@ border-bottom: 0px solid #fff !important;
 
                    <div class="col-sm-2">       
         
-              <div class="form-group form-float"> 
-                     <div class="input-group" >
+              <div class="form-group form-group"> <label class="form-label upText">&nbsp;</label>
+                     <div class="input-group" style="margin-top: -9px;">
                          &nbsp;&nbsp; <input type="checkbox" name="other_anomaly" id="other_anomaly" class="filled-in chk-col-deep-purple selinve otheranomalyckbx" value="Y" 
                          <?php 
                          if ($isDatainvestigation=='Y') {
@@ -3605,15 +3667,28 @@ border-bottom: 0px solid #fff !important;
                           
                           }?>
 
-                <div class="col-sm-3" id="other_annomaly_div" style="<?php echo $disp_other_anomaly;?>">
-                          <div class="form-group">
+
+                  <div class="col-sm-3" id="other_annomaly_div" style="<?php echo $disp_other_anomaly;?>">
+                          <div class="form-group form-float">
+                            <div class="form-line ">
+                               <input type="text" class="form-control selinve inpinve other_anomaly_text" name="other_anomaly" id="other_anomaly" autocomplete="off" placeholder="Others anomaly" value="<?php
+                             if($isDatainvestigation=='Y'){echo $bodycontent['investigationLatestData']->other_anomaly;}?>" >
+                            <label class="form-label upText">Others</label>
+                            </div>
+                          </div>
+                </div>
+
+
+
+               <!--  <div class="col-sm-3" id="other_annomaly_div" style="<?php echo $disp_other_anomaly;?>">
+                          <div class="form-group form-group">
                            <div class="form-line ">
                            &nbsp;&nbsp; <input type="text" class="form-control selinve inpinve other_anomaly_text" name="other_anomaly" id="other_anomaly" autocomplete="off" placeholder="Others anomaly" value="<?php
                              if($isDatainvestigation=='Y'){echo $bodycontent['investigationLatestData']->other_anomaly;}?>" >
                            
                            </div>
                            </div>
-                  </div>
+                  </div> -->
                </div>
 
                 <div class="row clearfix formrowgap">
@@ -3630,7 +3705,7 @@ border-bottom: 0px solid #fff !important;
 
                     <div class="col-sm-3">
                          <div class="input-group form-float">
-                         <label class="form-label upText selectlabel">Growth SLF of Week</label>
+                         <label class="form-label selectlabel zindex3">Growth SLF of Week</label>
                          <select name="growth_slf_week" id="growth_slf_week" class="form-control selinve show-tick"  data-live-search="true" tabindex="-98">
                          <option value=""> &nbsp; </option>
                          <?php 
@@ -3654,7 +3729,7 @@ border-bottom: 0px solid #fff !important;
 
                     <div class="col-sm-3">
                          <div class="input-group form-float">
-                         <label class="form-label upText selectlabel">Growth SLF of Day</label>
+                         <label class="form-label selectlabel zindex3">Growth SLF of Day</label>
                          <select name="growth_slf_day" id="growth_slf_day" class="form-control selinve show-tick"  data-live-search="true" tabindex="-98">
                          <option value=""> &nbsp; </option>
                          <?php 
@@ -3744,7 +3819,7 @@ border-bottom: 0px solid #fff !important;
 
                   <div class="col-sm-3">
                         <div class="input-group form-float">
-                          <label class="form-label upText selectlabel">Doppler SLF of Week</label>
+                          <label class="form-label  selectlabel zindex3">Doppler SLF of Week</label>
                           <select name="doppler_slf_week" id="doppler_slf_week" class="form-control selinve show-tick"  data-live-search="true" tabindex="-98">
                           <option value=""> &nbsp; </option>
                           <?php 
@@ -3766,7 +3841,7 @@ border-bottom: 0px solid #fff !important;
 
                     <div class="col-sm-3">
                          <div class="input-group form-float">
-                         <label class="form-label upText selectlabel">Doppler SLF of Day</label>
+                         <label class="form-label selectlabel zindex3">Doppler SLF of Day</label>
                          <select name="doppler_slf_day" id="doppler_slf_day" class="form-control selinve show-tick"  data-live-search="true" tabindex="-98">
                          <option value=""> &nbsp; </option>
                          <?php 
@@ -3895,7 +3970,7 @@ border-bottom: 0px solid #fff !important;
                           <div class="form-group form-float">
                             <div class="form-line ">
                               <input type="text" class="form-control inpinve" name="doppler_parameters_others" id="doppler_parameters_others" autocomplete="off" placeholder="" value="<?php
-                              if($isDatainvestigation=='Y'){echo $bodycontent['investigationLatestData']->doppler_parameters_others;}?>" onKeyUp="numericFilter(this);" >
+                              if($isDatainvestigation=='Y'){echo $bodycontent['investigationLatestData']->doppler_parameters_others;}?>" >
                             <label class="form-label upText">Others</label>
                             </div>
                           </div>

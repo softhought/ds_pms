@@ -1309,7 +1309,61 @@ public function getInvestigationpanelComponentWhereNotIn($ignorarray)
             return $data;
         }
     }
+
+
+ public function getAlloccupation(){
+
+     $data = [];
+
+     $this->db->select("*")
+                ->from('occupation_master')
+                ->order_by('occupation'); 
+        $query = $this->db->get();
+        
+        //echo $this->db->last_query();
+        
+        if($query->num_rows()> 0)
+        {
+           foreach ($query->result() as $rows)
+                    {
+                        $data[] = $rows;
+                    }
+             return $data;
+        }
+        else
+        {
+            return $data;
+        }
+
+ }   
    
+
+ public function getAlleducation(){
+
+     $data = [];
+
+     $this->db->select("*")
+                ->from('education_qualification')
+                ->order_by('qualification'); 
+        $query = $this->db->get();
+        
+        //echo $this->db->last_query();
+        
+        if($query->num_rows()> 0)
+        {
+           foreach ($query->result() as $rows)
+                    {
+                        $data[] = $rows;
+                    }
+             return $data;
+        }
+        else
+        {
+            return $data;
+        }
+
+ }   
+
      //end by anil
 
 

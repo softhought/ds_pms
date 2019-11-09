@@ -106,6 +106,7 @@ class Medicine extends CI_Controller {
             $medicineID = trim(htmlspecialchars($dataArry['medicineID']));
             $mode = trim(htmlspecialchars($dataArry['mode']));
             $medicinename = trim(htmlspecialchars($dataArry['medicinename']));
+            $genericname = trim(htmlspecialchars($dataArry['genericname']));
             $medicine_type = trim(htmlspecialchars($dataArry['medicine_type']));
             $instruction = trim(htmlspecialchars($dataArry['instruction']));
             $medicine_category = trim(htmlspecialchars($dataArry['medicine_category']));
@@ -127,12 +128,14 @@ class Medicine extends CI_Controller {
 
                      $upd_array = array(
                                         'medicine_name' => $medicinename,
+                                        'generic' => $genericname,
                                         'medicine_type' => $medicine_type,
                                         'instruction' => $instruction,
                                         'category_id' => $medicine_category
                                       
                                         
                                      );
+                    
                       $upd_where = array('medicine_master.medicine_id' => $medicineID);
 
                      $update = $this->commondatamodel->updateSingleTableData('medicine_master',$upd_array,$upd_where);
@@ -166,6 +169,7 @@ class Medicine extends CI_Controller {
             
                       $med_array = array(
                                           'medicine_name' => $medicinename,
+                                          'generic' => $genericname,
                                           'medicine_type' => $medicine_type, 
                                           'instruction' => $instruction,   
                                           'category_id' => $medicine_category    

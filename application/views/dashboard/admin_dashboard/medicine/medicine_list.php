@@ -28,6 +28,7 @@
                                         <th style="width:15%"> Medicine</th>
                                         <th style="width:5%"> Category</th>
                                         <th style="width:10%"> Type</th>
+                                        <th style="width:10%"> Generic</th>
                                         <th style="width:60%"> Medicine Instruction</th>
                                   
                                         <th style="width: 10%"> Status</th>
@@ -60,6 +61,7 @@
                                             <td ><?php echo $value->category;?></td>
                                           
                                             <td ><?php echo $value->medicine_type;?></td>
+                                            <td ><?php echo $value->generic;?></td>
                                             <td ><?php echo $value->instruction;?></td>
                                           
                                             <td><?php echo $status;?></td>

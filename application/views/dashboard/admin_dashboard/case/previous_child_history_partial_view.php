@@ -100,6 +100,16 @@
             </td>
 
             <td> 
+                    <div class="input-group babyweighterr" id="babyweighterr_<?php echo $childdtlrowno; ?>">
+                    <label>Baby Weight</label>
+                      <div class="form-line">
+                      <input type="text" class="form-control" name="babyweight[]" id="babyweight_<?php echo $childdtlrowno; ?>" autocomplete="off"  placeholder="" value=""> 
+                      </div> 
+                  </div>               
+                            
+                  </td>
+
+            <td> 
               <div class="input-group babygendererr" id="babygendererr_<?php echo $childdtlrowno; ?>">
               <label>Gender</label>
                                <select name="babygender[]" id="babygender_<?php echo $childdtlrowno; ?>" class="form-control show-tick"   data-live-search="true" tabindex="-98">                             

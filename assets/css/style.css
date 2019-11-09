@@ -8481,6 +8481,10 @@ label {
   display: none;
 }
 
+#infatelity_case_div,#Inf_new_patient_div,#Inf_existing_patient_div,.Infnewundertreatsec{
+  display: none;
+}
+
 .shadowUnset{
  box-shadow: unset !important; 
 }
