@@ -628,9 +628,9 @@ class Patientcase extends CI_Controller {
                    $result['medicineCategoryList']=$this->commondatamodel->getAllDropdownData('medicine_category');
 
 
-                   // pre($result['adviceDetailsLatestData']);
+                  // pre($result['adviceDetailsLatestData']);
 
-                   // exit;
+                   //exit;
 
 
                   
@@ -1115,7 +1115,7 @@ $deleteTodayInvestigation=$this->commondatamodel->deleteTableData('examination_m
       
       
      $thalassemia_other = $dataArry['thalassemia_other'];
-      $thalassemia_result = $dataArry['thalassemia_result'];
+      $thalassemia_result = $dataArry['thalassemia_screening_result'];
       if ($dataArry['thalassemia_date']!='') {
       $thalassemia_date = date("Y-m-d", strtotime($dataArry['thalassemia_date']));
       }else{ $thalassemia_date=NULL; }
@@ -1278,7 +1278,7 @@ $investigation_record_array = array(
                                     's_urea_date' => $s_urea_date, 
                                     's_creatinine_result' => $s_creatinine_result, 
                                     's_creatinine_date' => $s_creatinine_date, 
-                                    'thalassemia_result' => $thalassemia_result, 
+                                  'thalassemia_screening_result' => $thalassemia_result, 
                                     'thalassemia_date' => $thalassemia_date, 
                                     'usg_scan_date' => $usg_scan_date, 
                                     'usg_slf_week' => $usg_slf_week, 
@@ -1320,7 +1320,7 @@ $investigation_record_array = array(
                                     'cs_sensitive_others' =>$cs_sensitive_others,
                                     );
 
-  //print_r($investigation_record_array);exit;
+  //pre($investigation_record_array);exit;
 
 $insertInvestigation=$this->commondatamodel->insertSingleTableData('investigation_record_master',$investigation_record_array);
 
@@ -1567,6 +1567,7 @@ $advice_options = $dataArry['advice_options'];
                            $medicalproblemValues = $dataArry['medicalproblemValues'];
                            $othersproblem = $dataArry['othersproblem'];
                            $deleveryType = $dataArry['deleveryType'];
+                           $babyweight = $dataArry['babyweight'];
                            $babygender = $dataArry['babygender'];
                            $babyage = $dataArry['babyage'];
                            $isOtherProblem = $dataArry['isOtherProblem'];
@@ -1587,6 +1588,7 @@ $advice_options = $dataArry['advice_options'];
                                                       'is_othermedprob' => $isOtherProblem[$i],
                                                       'medicalproblem_other' => $othersproblem[$i],
                                                       'delevery_type' => $deleveryType[$i],
+                                                      'baby_weight' => $babyweight[$i],
                                                       'babygender' => $babygender[$i],
                                                       'babyage' => $babyage[$i],
                                                       'created_on' => date('Y-m-d H:i:s'), 
@@ -2019,6 +2021,7 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
                                   'CS' => 'CS',
                                   'ND' => 'ND',
                                   'SE' => 'S/E',
+                                  'Spontaneous Expulsion'=>'Spontaneous Expulsion'
                                    );
             
            
@@ -2557,6 +2560,7 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
           $result['total_parity']='';
           $result['total_cesarean']='';
           $result['total_suction']='';
+          $result['total_ND'] = '';
           $parity_term_delivery=0;
           $parity_preterm=0;
           $parity_abortion=0;
@@ -2681,9 +2685,11 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
                  //created by anil 24-10-2019
                  $result['total_suction'] = $this->patientcasemodel->getTotalSuctionByCase($caseID);
 
+                 $result['total_ND'] = $this->patientcasemodel->getTotalNdByCase($caseID);
+
                  $result['lastchildBirth'] = $this->patientcasemodel->getLastChildBirthByCase($caseID);
                  $result['previousChildHistory'] = $this->patientcasemodel->getAllPreviousChildHistory($caseID);
-
+                //pre($result['lastchildBirth']);exit;
 
                  $previousChild = [];
                  foreach ($result['previousChildHistory'] as $key => $previouschild) {
@@ -2714,13 +2720,16 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
                                             'year' => $previouschild->year,
                                             'complications' => $complications,
                                             'med_prob' => $medicalproblem,
-                                            'med_prob_other' => $previouschild->medicalproblem_other
+                                          'med_prob_other' => $previouschild->medicalproblem_other,
+                                            'delevery_type'=>$previouschild->delevery_type,
+                                            'babygender'=>$previouschild->gender,
+                                            'baby_weight'=>$previouschild->baby_weight,
                                              );
                  }
 
                  $result['previousChild']=$previousChild;
 
-                
+               //pre($result['previousChild']);exit;
 
                  $diseases_ids = explode (",", $result['antenantalCaseData']->diseases_ids);
                  $diseasesData=$this->patientcasemodel->getDiseasesByIds($diseases_ids);
@@ -2743,7 +2752,7 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
 
                 $result['familyComponentList']=$this->patientcasemodel->getFamilyComponentDetails($caseID);
 
-
+               //pre($result['familyComponentList']);exit;
 
                
 
@@ -2831,7 +2840,7 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
                       
                       $pres_entry_date= date("Y-m-d", strtotime($prescriptionData->entry_date));
                       $adviceData=$this->patientcasemodel->getAdviceDetailsDataByDate($caseID,$pres_entry_date);
-
+                         //pre($adviceData);
                           $adviceDetails=[];
 
                           foreach ($adviceData as $value) {
@@ -2863,9 +2872,9 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
 
                           $result['adviceDetailsData']=$adviceDetails;
 
-                      // pre($result['adviceDetailsData']);
+                       //pre($result['adviceDetailsData']);
            
-                      // exit;
+                       //exit;
 
 
                    }else{
@@ -3093,7 +3102,7 @@ $insertClinicalExamination=$this->commondatamodel->insertSingleTableData('clinic
 
             $data['weeks']=$weeks;
 
-// echo "weeks".$weeks;
+ //echo "weeks".$weeks;
 // echo "<br>";
        
         $data['adviceMasterData']=$this->patientcasemodel-> getAdviceMasterData();
@@ -3386,6 +3395,60 @@ public function loadTreatmentView(){
       echo $viewTemp;
        
 }
+
+
+public function addusgdatingscan()
+    {
+        if($this->session->userdata('user_data'))
+        {
+              $seleddbyusg_date = $this->input->post('seleddbyusg_date');
+              $edd_week = $this->input->post('edd_week');
+              $edd_days = $this->input->post('edd_days');
+              $caseID = $this->input->post('caseID');
+
+              $where = array('case_master_id'=>$caseID);
+
+              $getinvrecord = $this->commondatamodel->getSingleRowByWhereCls('investigation_record_master',$where);
+
+
+              //$addDays=280  -($edd_week*7+$edd_days);
+
+              $totalDays=($edd_week*7+$edd_days);
+
+         $lmpdate=date('l d M Y', strtotime($seleddbyusg_date. ' +-'.$totalDays.' days'));
+        // echo "<br>";
+
+              $selectMonth = date('M', strtotime($lmpdate));
+
+                if($selectMonth=='Jan' || $selectMonth=='Feb' || $selectMonth=='Mar'){
+
+               $add7days = date('d-m-Y', strtotime($lmpdate.'+7 days'));
+               if(empty($getinvrecord)){
+               echo $add9month = date('l d M Y', strtotime($add7days.'+9 months'));
+                }else{
+                   echo '0'; 
+                }
+
+              }else{
+                  $add7days = date('d-m-Y', strtotime($lmpdate.'+7 days'));
+                  $sub3month = date('d-m-Y', strtotime($add7days.'+-3 months'));
+                  if(empty($getinvrecord)){
+                    echo $add1year = date('l d M Y', strtotime($sub3month.'+1 years'));
+                  }else{
+                   echo '0';
+                  }
+                  
+              }
+           // echo "<br>";
+
+
+           //  echo $next_due_date = date('l d M Y', strtotime($seleddbyusg_date. ' +'.$addDays.' days'));
+        }
+        else
+        {
+            redirect('login','refresh');
+        }
+    }
 
 
 

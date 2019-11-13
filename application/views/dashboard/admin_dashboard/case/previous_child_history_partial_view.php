@@ -5,7 +5,7 @@
 
            <!-- <td> <b>Sl.</b><label class="form-label" style="margin-top: 12px;" > <?php echo $childdtlrowno; ?>.</label></td> -->
 
-          <td> 
+          <td style="width:100px;"> 
                <label>Place</label>
                <div class="input-group birthplaceerr" id="birthplaceerr_<?php echo $childdtlrowno; ?>">
                <!-- <span class="input-group-addon"><i class="material-icons">place</i> </span> -->
@@ -15,7 +15,7 @@
                 </div>
           </td>
 
-            <td> 
+            <td style="width:100px;"> 
               <div class="input-group selectyearerr" id="selectyearerr_<?php echo $childdtlrowno; ?>">
               <label>Year</label>
                                <select name="selectYear[]" id="selectYear_<?php echo $childdtlrowno; ?>" class="form-control show-tick  selectYear" data-live-search="true" tabindex="-98">
@@ -32,7 +32,7 @@
                            </div>                               
             </td>
 
-           <td> 
+           <td style="width:100px;"> 
               <div class="input-group complicationerr" id="complicationerr_<?php echo $childdtlrowno; ?>">
               <label>Complication(s)</label>
                                <select name="complicationChild[]" id="complicationChild_<?php echo $childdtlrowno; ?>" class="form-control show-tick complicationChild" data-live-search="true" tabindex="-98" multiple data-selected-text-format="count">
@@ -50,7 +50,7 @@
               </div>                           
             </td>
 
-        <td> 
+        <td style="width:100px;"> 
               <div class="input-group medicalproblemerr" id="medicalproblemerr_<?php echo $childdtlrowno; ?>">
               <label>Medical Problem(s)</label>
                  <select name="medicalproblem[]" id="medicalproblem_<?php echo $childdtlrowno; ?>" class="form-control show-tick medicalproblem"   data-live-search="true" tabindex="-98"
@@ -68,7 +68,7 @@
                            </div>                      
             </td>
 
-           <td> 
+           <td style="width:100px;"> 
             <div class="input-group othersproblemerr" id="othersproblemerr_<?php echo $childdtlrowno; ?>" style="display: none">
               <label>Oth. Prob.</label>
                  <div class="form-line">
@@ -79,7 +79,7 @@
              <input type="hidden" name="isOtherProblem[]" id="isOtherProblem_<?php echo $childdtlrowno; ?>" value="N">       
             </td>
 
-          <td> 
+          <td style="width:100px;"> 
               <div class="input-group deleveryerr" id="deleveryerr_<?php echo $childdtlrowno; ?>">
               <label>Delivery</label>
                                <select name="deleveryType[]" id="deleveryType_<?php echo $childdtlrowno; ?>" class="form-control show-tick"   data-live-search="true" tabindex="-98">
@@ -99,7 +99,7 @@
                       
             </td>
 
-            <td> 
+            <td style="width:100px;"> 
                     <div class="input-group babyweighterr" id="babyweighterr_<?php echo $childdtlrowno; ?>">
                     <label>Baby Weight</label>
                       <div class="form-line">
@@ -109,7 +109,7 @@
                             
                   </td>
 
-            <td> 
+            <td style="width:100px;"> 
               <div class="input-group babygendererr" id="babygendererr_<?php echo $childdtlrowno; ?>">
               <label>Gender</label>
                                <select name="babygender[]" id="babygender_<?php echo $childdtlrowno; ?>" class="form-control show-tick"   data-live-search="true" tabindex="-98">                             
@@ -129,7 +129,7 @@
                       
             </td>
 
-             <td> 
+             <td style="width:100px;"> 
                <label>Age</label>
                <div class="input-group babyageerr" id="babyageerr_<?php echo $childdtlrowno; ?>">
                <span class="input-group-addon"><i class="material-icons"></i> </span>

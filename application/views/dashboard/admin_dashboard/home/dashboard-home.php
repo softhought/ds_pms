@@ -34,7 +34,7 @@
                             <i class="material-icons">person_add</i>
                         </div>
                         <div class="content">
-                            <div class="text">TODAY VISIT</div>
+                            <div class="text">TODAY'S VISIT</div>
                             <div class="number count-to" data-from="0" data-to="<?php echo $bodycontent['todayVisit']?>" data-speed="1000" data-fresh-interval="20"></div>
                         </div>
                     </div>

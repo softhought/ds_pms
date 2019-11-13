@@ -24,6 +24,9 @@ border-bottom: 1px solid #f0c7f9;
         overflow: visible;
     }
 }
+.inner{
+  max-height: 230px !important;
+}
 
 
 </style>

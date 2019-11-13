@@ -689,11 +689,13 @@ class Patientcasemodel extends CI_Model{
 
         $data = [];
         $where = array(
-                        'previous_child_birth_history.case_master_id' =>$case_master_id                       
+                        'previous_child_birth_history.case_master_id' =>$case_master_id
+
                         );
         $this->db->select("*")
                 ->from('previous_child_birth_history')
                 ->where($where)
+                ->where('previous_child_birth_history.babyage >','0')
                 ->order_by("previous_child_birth_history.child_dtl_id", "DESC")
                 ->limit(1);
         $query = $this->db->get();
@@ -719,8 +721,9 @@ class Patientcasemodel extends CI_Model{
       $where = [
                 "case_master_id" => $case_master_id
             ];
-            $query = $this->db->select("*")
+            $query = $this->db->select("previous_child_birth_history.*,gender_master.*")
                     ->from('previous_child_birth_history')
+                    ->join('gender_master','previous_child_birth_history.babygender = gender_master.id','INEER')
                     ->where($where)
                     ->order_by("previous_child_birth_history.child_dtl_id", "DESC")
                     ->get();
@@ -1060,7 +1063,7 @@ class Patientcasemodel extends CI_Model{
                 }
                 
                 return $data;
-    
+   
     }
 
 
@@ -1309,6 +1312,34 @@ public function getInvestigationpanelComponentWhereNotIn($ignorarray)
             return $data;
         }
     }
+
+ public function getTotalNdByCase($case_master_id)
+    {
+
+        $data = '';
+        $where = array(
+                        'previous_child_birth_history.case_master_id' =>$case_master_id,
+                        'previous_child_birth_history.delevery_type' =>'ND'
+                        );
+        $this->db->select("count(*) as total_nd")
+                ->from('previous_child_birth_history')
+                ->where($where)
+                ->limit(1);
+        $query = $this->db->get();
+        
+        #echo $this->db->last_query();
+        
+        if($query->num_rows()> 0)
+        {
+           $row = $query->row();
+           return $data = $row->total_nd;
+             
+        }
+        else
+        {
+            return $data;
+        }
+    }   
 
 
  public function getAlloccupation(){

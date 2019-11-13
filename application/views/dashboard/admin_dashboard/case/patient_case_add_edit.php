@@ -34,6 +34,22 @@ border-bottom: 0px solid #fff !important;
 
 </style> -->
 
+<style>
+  .inner{
+  max-height: 230px !important;
+}
+.dropdown-menu > li > a {
+
+    white-space: inherit;
+
+}
+.form-control{
+
+  z-index: unset !important;
+
+}
+</style>
+
 
 <div id="patientCaseManagment">
 
@@ -672,16 +688,16 @@ border-bottom: 0px solid #fff !important;
                           if($bodycontent['antenantalCaseEditdata']->procedure_concieve=='IUI'){echo "checked";} }
                            ?>>
                        <label for="procedure_concieve_1">IUI</label>
-                        <input name="procedure_concieve" type="radio" class="with-gap" id="procedure_concieve_2" value="IVF->FET" 
+                        <input name="procedure_concieve" type="radio" class="with-gap" id="procedure_concieve_2" value="IVF-FET" 
                         <?php 
                         if($bodycontent['antenantalCaseEditdata']){
-                        if($bodycontent['antenantalCaseEditdata']->procedure_concieve=='IVF->FET'){echo "checked";} }
+                        if($bodycontent['antenantalCaseEditdata']->procedure_concieve=='IVF-FET'){echo "checked";} }
                         ?>>
                         <label for="procedure_concieve_2">IVF->FET</label>
-                      	<input name="procedure_concieve" type="radio" class="with-gap" id="procedure_concieve_3" value="IVF->ET" 
+                      	<input name="procedure_concieve" type="radio" class="with-gap" id="procedure_concieve_3" value="IVF-ET" 
                         <?php
                         if($bodycontent['antenantalCaseEditdata']){
-                         if($bodycontent['antenantalCaseEditdata']->procedure_concieve=='IVF->ET'){echo "checked";}} ?>>
+                         if($bodycontent['antenantalCaseEditdata']->procedure_concieve=='IVF-ET'){echo "checked";}} ?>>
                         <label for="procedure_concieve_3">IVF->ET</label>
                                               
                          </div>
@@ -988,14 +1004,15 @@ border-bottom: 0px solid #fff !important;
                   <div class="col-sm-4">
                   <div class="form-group form-float"> 
                    
-                    <div class="form-line input-group">
+                    <div class="input-group">
+                                  <label class="form-label selectlabel">LMP Date</label>
                                   <input type="text" class="form-control datepicker"  name="lmp_date" id="lmp_date" placeholder="select Date" autocomplete="off" value="<?php 
                                   if($bodycontent['antenantalmode']=="EDIT" && $bodycontent['antenantalCaseEditdata']->lmp_date!=''){
                                   echo date('l d M Y', strtotime($bodycontent['antenantalCaseEditdata']->lmp_date));}
 
                                   ?>" 
                                   >
-                        <label class="form-label dateLabel">LMP Date</label>          
+                                 
                       </div>
                      </div>
                   
@@ -1038,22 +1055,22 @@ border-bottom: 0px solid #fff !important;
 
                 <div class="col-sm-2">
                   <div class="form-group form-float"> 
-                    <div class="form-line input-group">
+                    <div class="form-line">
                       <input type="text" class="form-control" name="edd_week" id="edd_week" placeholder="no of week" autocomplete="off" 
                       value="<?php if($bodycontent['antenantalmode']=="EDIT"){
                                   echo $bodycontent['antenantalCaseEditdata']->usg_week;} ?>" 
                                  onKeyup="numericFilter(this);" >
-                        <label class="form-label zindex2">No. of weeks</label>          
+                        <label class="form-label">No. of weeks</label>          
                     </div>
                   </div>
                 </div>
 
                   <div class="col-sm-2">
                       <div class="form-group form-float"> 
-                          <div class="form-line input-group">
+                          <div class="form-line">
                                 <input type="text" class="form-control" name="edd_days" id="edd_days" placeholder="no of day" autocomplete="off" value="<?php if($bodycontent['antenantalmode']=="EDIT" ){
                                     echo $bodycontent['antenantalCaseEditdata']->usg_days;} ?>" onKeyup="numericFilter(this);" >
-                              <label class="form-label zindex2">No of days</label>
+                              <label class="form-label">No of days</label>
                           </div>
                       </div>
                   </div>
@@ -1144,7 +1161,7 @@ border-bottom: 0px solid #fff !important;
 
              <div class="col-sm-12">
               <div id="detail_childHistory" class="customeTblDesign1">
-                    <div class="table-responsive" style="min-height: 400px;">
+                    <div class="table-responsive" style="min-height: 500px;">
                            <?php
                           $childdtlrowno=0;
                           $detailCountchilddtl = 0;
@@ -1197,7 +1214,7 @@ border-bottom: 0px solid #fff !important;
                                             
                 </td>
 
-                  <td> 
+                  <td style="width:100px;"> 
                     <div class="input-group selectyearerr" id="selectyearerr_<?php echo $childdtlrowno; ?>">
                     <label>Year</label>
                                     <select name="selectYear[]" id="selectYear_<?php echo $childdtlrowno; ?>" class="form-control show-tick  selectYear" data-live-search="true" tabindex="-98">
@@ -1221,7 +1238,7 @@ border-bottom: 0px solid #fff !important;
                                 </div>                               
                   </td>
 
-                <td> 
+                <td style="width:100px;"> 
                     <div class="input-group complicationerr" id="complicationerr_<?php echo $childdtlrowno; ?>">
                     <label>Complication(s)</label>
                                     <select name="complicationChild[]" id="complicationChild_<?php echo $childdtlrowno; ?>" class="form-control show-tick complicationChild" data-live-search="true" tabindex="-98" multiple data-selected-text-format="count">
@@ -1250,7 +1267,7 @@ border-bottom: 0px solid #fff !important;
                     </div>                           
                   </td>
 
-              <td> 
+              <td style="width:100px;"> 
                     <div class="input-group medicalproblemerr" id="medicalproblemerr_<?php echo $childdtlrowno; ?>">
                     <label>Medical Problem(s)</label>
                       <select name="medicalproblem[]" id="medicalproblem_<?php echo $childdtlrowno; ?>" class="form-control show-tick medicalproblem"   data-live-search="true" tabindex="-98"
@@ -1279,7 +1296,7 @@ border-bottom: 0px solid #fff !important;
                                 </div>                      
                   </td>
 
-                <td> 
+                <td style="width:100px;"> 
                   <?php 
 
                   if ($previouschilsrow->is_othermedprob=='Y') {
@@ -1321,7 +1338,7 @@ border-bottom: 0px solid #fff !important;
 
                  <!-- added by anil baby weight -->
 
-                 <td> 
+                 <td style="width:100px;"> 
                     <div class="input-group babyweight" id="babyweight_<?php echo $childdtlrowno; ?>">
                     <label>Baby Weight</label>
                       <div class="form-line">
@@ -1333,7 +1350,7 @@ border-bottom: 0px solid #fff !important;
 
 
 
-                  <td> 
+                  <td style="width:100px;"> 
                     <div class="input-group babygendererr" id="babygendererr_<?php echo $childdtlrowno; ?>">
                     <label>Gender</label>
                                     <select name="babygender[]" id="babygender_<?php echo $childdtlrowno; ?>" class="form-control show-tick"   data-live-search="true" tabindex="-98">                             
@@ -1353,7 +1370,7 @@ border-bottom: 0px solid #fff !important;
                             
                   </td>
 
-                  <td> 
+                  <td style="width:100px;"> 
                     <label>Age</label>
                     <div class="input-group babyageerr" id="babyageerr_<?php echo $childdtlrowno; ?>">
                     <span class="input-group-addon"><i class="material-icons"></i> </span>
@@ -1918,7 +1935,7 @@ border-bottom: 0px solid #fff !important;
 
                                             ?>" 
                                             >
-                                  <label class="form-label dateLabel zindex3">TT1 To be Taken on</label>       
+                                  <label class="form-label selectlabel zindex3">TT1 To be Taken on</label>       
                                 </div>
                             </div>
                   </div>
@@ -1931,7 +1948,7 @@ border-bottom: 0px solid #fff !important;
                                             echo date('l d M Y', strtotime($bodycontent['antenantalCaseEditdata']->tt1_taken_on));}
                                         ?>" 
                                             >
-                                  <label class="form-label dateLabel zindex3">TT1 Taken on</label>      
+                                  <label class="form-label selectlabel zindex3">TT1 Taken on</label>      
                               </div>
                           </div>
                   </div>
@@ -1950,7 +1967,7 @@ border-bottom: 0px solid #fff !important;
                                             echo date('l d M Y', strtotime($bodycontent['antenantalCaseEditdata']->tt2_tobe_taken_on));}
                                            ?>" 
                                             >
-                                            <label class="form-label dateLabel zindex3">TT2 To be Taken on</label>
+                                            <label class="form-label selectlabel zindex3">TT2 To be Taken on</label>
                                </div>
                           </div>
                   </div>
@@ -1963,7 +1980,7 @@ border-bottom: 0px solid #fff !important;
 
                                             ?>" 
                                             >
-                                  <label class="form-label dateLabel zindex3">TT2 Taken on</label>       
+                                  <label class="form-label selectlabel zindex3">TT2 Taken on</label>       
                                 </div>
                           </div>
                   </div>
@@ -1985,7 +2002,7 @@ border-bottom: 0px solid #fff !important;
 
                                             ?>" 
                                             >
-                                            <label class="form-label dateLabel zindex3">Tdap To be Taken on</label>        
+                                            <label class="form-label selectlabel zindex3">Tdap To be Taken on</label>        
                               </div>
                           </div>
                 </div>
@@ -1999,7 +2016,7 @@ border-bottom: 0px solid #fff !important;
 
                                           ?>" 
                                           >
-                                <label class="form-label dateLabel zindex3">Tdap Taken on</label>        
+                                <label class="form-label selectlabel zindex3">Tdap Taken on</label>        
                             </div>
                           </div>
                 </div>
@@ -2813,7 +2830,7 @@ border-bottom: 0px solid #fff !important;
                                   if($isDatainvestigation=='Y' && $bodycontent['investigationLatestData']->hb_date!=''){
                                   echo date('d-m-Y', strtotime($bodycontent['investigationLatestData']->hb_date));}?>" 
                                   >
-                                  <label class="form-label upText">Hb Test Date</label>        
+                                  <label class="form-label selectlabel upText">Hb Test Date</label>        
                               </div>
                             </div>
                       </div>
@@ -2835,7 +2852,7 @@ border-bottom: 0px solid #fff !important;
                             if($isDatainvestigation=='Y' && $bodycontent['investigationLatestData']->tc_date!=''){
                             echo date('d-m-Y', strtotime($bodycontent['investigationLatestData']->tc_date));}
                             ?>" > 
-                            <label class="form-label upText">TC Test Date</label>       
+                            <label class="form-label selectlabel upText">TC Test Date</label>       
                         </div>
                       </div>
                     </div>
@@ -2860,7 +2877,7 @@ border-bottom: 0px solid #fff !important;
                         <div class="form-line">
                           <input type="text" class="form-control selinve datepicker2" placeholder="" name="inve_dc_date" id="inve_dc_date" autocomplete="off" value="<?php if($isDatainvestigation=='Y' && $bodycontent['investigationLatestData']->dc_date!=''){
                             echo date('d-m-Y', strtotime($bodycontent['investigationLatestData']->dc_date));}?>" >        
-                            <label class="form-label upText">DC Test Date</label>
+                            <label class="form-label selectlabel upText">DC Test Date</label>
                         </div>
                       </div>
                     </div>
@@ -2882,7 +2899,7 @@ border-bottom: 0px solid #fff !important;
                             <input type="text" class="form-control selinve datepicker2" placeholder="" name="inve_fbs_date" id="inve_fbs_date" autocomplete="off" value="<?php 
                             if($isDatainvestigation=='Y' && $bodycontent['investigationLatestData']->fbs_date!=''){
                             echo date('d-m-Y', strtotime($bodycontent['investigationLatestData']->fbs_date));} ?>">        
-                            <label class="form-label upText">FBS Test Date</label>
+                            <label class="form-label selectlabel upText">FBS Test Date</label>
                         </div>
                       </div>
                     </div>
@@ -2907,7 +2924,7 @@ border-bottom: 0px solid #fff !important;
                             <input type="text" class="form-control selinve datepicker2" placeholder="" name="ppbs_date" id="ppbs_date" autocomplete="off" value="<?php 
                             if($isDatainvestigation=='Y' && $bodycontent['investigationLatestData']->ppbs_date!=''){
                               echo date('d-m-Y', strtotime($bodycontent['investigationLatestData']->ppbs_date));}?>" > 
-                            <label class="form-label upText">PPBS Test Date</label>       
+                            <label class="form-label selectlabel upText">PPBS Test Date</label>       
                           </div>
                       </div>
                     </div>
@@ -2947,7 +2964,7 @@ border-bottom: 0px solid #fff !important;
 
                            ?>" 
                            >   
-                           <label class="form-label upText">VDRL Test Date</label>     
+                           <label class="form-label selectlabel upText">VDRL Test Date</label>     
                          </div>
                          </div>
                     </div>
@@ -2989,7 +3006,7 @@ border-bottom: 0px solid #fff !important;
 
                            ?>" 
                            >  
-                           <label class="form-label upText">HIV 1 Test Date</label>      
+                           <label class="form-label selectlabel upText">HIV 1 Test Date</label>      
                          </div>
                          </div>
                     </div>
@@ -3028,7 +3045,7 @@ border-bottom: 0px solid #fff !important;
 
                             ?>" 
                             >
-                            <label class="form-label upText">HIV 2 Test Date</label> 
+                            <label class="form-label selectlabel upText">HIV 2 Test Date</label> 
 
                         </div>
                       </div>
@@ -3075,7 +3092,7 @@ border-bottom: 0px solid #fff !important;
 
                            ?>" 
                            >  
-                           <label class="form-label upText">Hbs Ag Test Date</label>
+                           <label class="form-label selectlabel upText">Hbs Ag Test Date</label>
 
                          </div>
                          </div>
@@ -3111,7 +3128,7 @@ border-bottom: 0px solid #fff !important;
                           <input type="text" class="form-control selinve datepicker2" placeholder="" name="antihcv_date" id="antihcv_date" autocomplete="off" value="<?php 
                           if($isDatainvestigation=='Y' && $bodycontent['investigationLatestData']->antihcv_date!=''){
                             echo date('d-m-Y', strtotime($bodycontent['investigationLatestData']->antihcv_date));}?>" >  
-                            <label class="form-label upText">Anti HCV Test Date</label>      
+                            <label class="form-label selectlabel upText">Anti HCV Test Date</label>      
                         </div>
 
                       </div>
@@ -3135,7 +3152,7 @@ border-bottom: 0px solid #fff !important;
                           <input type="text" class="form-control selinve datepicker2" placeholder="" name="urine_re_date" id="urine_re_date" autocomplete="off" value="<?php 
                           if($isDatainvestigation=='Y' && $bodycontent['investigationLatestData']->urine_re_date!=''){
                            echo date('d-m-Y', strtotime($bodycontent['investigationLatestData']->urine_re_date));}?>" >        
-                           <label class="form-label upText">Urine R/E Date</label>
+                           <label class="form-label selectlabel upText">Urine R/E Date</label>
                         </div>
                       </div>
                     </div>
@@ -3182,7 +3199,7 @@ border-bottom: 0px solid #fff !important;
                           <input type="text" class="form-control selinve datepicker2" placeholder="" name="cs_sensitive_date" id="cs_sensitive_date" autocomplete="off" value="<?php 
                          if($isDatainvestigation=='Y' && $bodycontent['investigationLatestData']->cs_sensitive_date!=''){
                            echo date('d-m-Y', strtotime($bodycontent['investigationLatestData']->cs_sensitive_date));}?>" >  
-                          <label class="form-label upText">Urine C/S Date</label>      
+                          <label class="form-label selectlabel upText">Urine C/S Date</label>      
                         </div>
                       </div>
                     </div>
@@ -3218,7 +3235,7 @@ border-bottom: 0px solid #fff !important;
 
                            ?>" 
                            >  
-                           <label class="form-label upText">STSH Date</label>      
+                           <label class="form-label selectlabel upText">STSH Date</label>      
                         </div>
                       </div>
                     </div>
@@ -3242,7 +3259,7 @@ border-bottom: 0px solid #fff !important;
 
                             ?>" 
                             >
-                            <label class="form-label upText">S urea Date</label>        
+                            <label class="form-label selectlabel upText">S urea Date</label>        
                         </div>
                       </div>
                     </div>
@@ -3268,7 +3285,7 @@ border-bottom: 0px solid #fff !important;
 
                             ?>" 
                             >
-                            <label class="form-label upText">S creatinine Date</label>        
+                            <label class="form-label selectlabel upText">S creatinine Date</label>        
                         </div>
                       </div>
                   </div>
@@ -3310,7 +3327,7 @@ border-bottom: 0px solid #fff !important;
                    <div class="col-sm-3">
                          <div class="input-group form-float" id="usg_slf_weekerr">
                          <label class="form-label selectlabel zindex3">Thalassemia Screening</label>
-                         <select name="thalassemia_screening_result" id="thalassemia_screening_result" class="form-control selinve show-tick incother"  data-live-search="true" tabindex="-98" data-match='Others' data-dispid='thalassemiaOther'>
+                         <select name="thalassemia_screening_result" id="thalassemia_screening_result" class="form-control selinve show-tick"  data-live-search="true" tabindex="-98">
                          <option value=""> &nbsp; </option>
                          <?php 
 
@@ -3331,14 +3348,25 @@ border-bottom: 0px solid #fff !important;
                     </div>
 
                      <!-- new column added for thalssemia others by anil 24-09-2019 --> 
+                    <?php 
 
-                   <?php $dispthalother = "display:none;"; ?>
+                     if($isDatainvestigation == 'Y' && $bodycontent['investigationLatestData']->thalassemia_screening_result == 'Others'){
 
+                        $dispthalother = "display:block;";
+
+                      }
+                      else{
+                             $dispthalother = "display:none;";
+
+                      }
+
+                     ?>
+                  
                     <div class="col-sm-3" id="thalassemiaOther" style="<?php echo $dispthalother; ?>">
                           <div class="form-group form-float">
                            <div class="form-line ">
                             <input type="text" class="form-control inpinve" name="thalassemia_other" id="thalassemia_other" autocomplete="off" placeholder="" value="<?php
-                             if($isDatainvestigation=='Y'){echo $bodycontent['investigationLatestData']->thalassemia_other;}?>" >
+                             if($isDatainvestigation=='Y'){echo $bodycontent['investigationLatestData']->thalassemia_other; }?>" >
                             <label class="form-label upText">Others</label>
                            </div>
                           </div>
@@ -3350,7 +3378,7 @@ border-bottom: 0px solid #fff !important;
                           <input type="text" class="form-control selinve datepicker2" placeholder="" name="thalassemia_date" id="thalassemia_date" autocomplete="off" value="<?php 
                           if($isDatainvestigation=='Y' && $bodycontent['investigationLatestData']->thalassemia_date!=''){
                             echo date('d-m-Y', strtotime($bodycontent['investigationLatestData']->thalassemia_date));}?>" >        
-                            <label class="form-label upText">Thalassemia Date</label>
+                            <label class="form-label selectlabel upText">Thalassemia Date</label>
                         </div>
                       </div>
                     </div>
@@ -3367,7 +3395,10 @@ border-bottom: 0px solid #fff !important;
                           <input type="text" class="form-control selinve datepicker2" placeholder="" name="usg_scan_date" id="usg_scan_date" autocomplete="off" value="<?php 
                           if($isDatainvestigation=='Y' && $bodycontent['investigationLatestData']->usg_scan_date!=''){
                            echo date('d-m-Y', strtotime($bodycontent['investigationLatestData']->usg_scan_date));}?>" >
-                          <label class="form-label upText">USG dating scan Date</label>        
+                          <label class="form-label selectlabel upText">USG dating scan Date</label> 
+
+                           
+
                          </div>
                       </div>
                     </div>
@@ -3437,7 +3468,7 @@ border-bottom: 0px solid #fff !important;
                             <input type="text" class="form-control selinve datepicker2" placeholder="" name="nt_scan_date" id="nt_scan_date" autocomplete="off" value="<?php 
                             if($isDatainvestigation=='Y' && $bodycontent['investigationLatestData']->nt_scan_date!=''){
                             echo date('d-m-Y', strtotime($bodycontent['investigationLatestData']->nt_scan_date));} ?>" >
-                            <label class="form-label upText">NT scan Date</label>        
+                            <label class="form-label selectlabel upText">NT scan Date</label>        
                         </div>
                       </div>
                   </div>
@@ -3448,7 +3479,7 @@ border-bottom: 0px solid #fff !important;
                             <input type="text" class="form-control selinve datepicker2" placeholder="" name="double_marker_date" id="double_marker_date" autocomplete="off" value="<?php 
                             if($isDatainvestigation=='Y' && $bodycontent['investigationLatestData']->double_marker_date!=''){
                             echo date('d-m-Y', strtotime($bodycontent['investigationLatestData']->double_marker_date));} ?>" >
-                            <label class="form-label upText">Double marker Date</label>        
+                            <label class="form-label selectlabel upText">Double marker Date</label>        
                         </div>
                       </div>
                   </div>
@@ -3698,7 +3729,7 @@ border-bottom: 0px solid #fff !important;
                           <input type="text" class="form-control selinve datepicker2" placeholder="" name="growth_date" id="growth_date" autocomplete="off" value="<?php 
                           if($isDatainvestigation=='Y' && $bodycontent['investigationLatestData']->growth_date!=''){
                             echo date('d-m-Y', strtotime($bodycontent['investigationLatestData']->growth_date));}?>" >   
-                            <label class="form-label upText">Growth scan Date</label>     
+                            <label class="form-label selectlabel upText">Growth scan Date</label>     
                         </div>
                       </div>
                   </div>
@@ -3812,7 +3843,7 @@ border-bottom: 0px solid #fff !important;
                             <input type="text" class="form-control selinve datepicker2" placeholder="" name="doppler_scan_date" id="doppler_scan_date" autocomplete="off" value="<?php 
                             if($isDatainvestigation=='Y' && $bodycontent['investigationLatestData']->doppler_scan_date!=''){
                               echo date('d-m-Y', strtotime($bodycontent['investigationLatestData']->doppler_scan_date));}?>"> 
-                            <label class="form-label upText">Doppler scan Date</label>       
+                            <label class="form-label selectlabel upText">Doppler scan Date</label>       
                           </div>
                       </div>
                   </div>
@@ -3997,7 +4028,7 @@ border-bottom: 0px solid #fff !important;
                           <input type="text" class="form-control selinve datepicker2" placeholder="" name="others_investigation_date" id="others_investigation_date" autocomplete="off" value="<?php 
                           if($isDatainvestigation=='Y' && $bodycontent['investigationLatestData']->others_investigation_date!=''){
                            echo date('d-m-Y', strtotime($bodycontent['investigationLatestData']->others_investigation_date));}?>" > 
-                           <label class="form-label upText">Others Investigation Date</label>       
+                           <label class="form-label selectlabel upText">Others Investigation Date</label>       
                         </div>
                       </div>
                   </div>
@@ -4483,7 +4514,7 @@ border-bottom: 0px solid #fff !important;
 
                           <div class="form-group form-float">
                               <div class="input-group" id="prescription_investigationerr">
-                                  <label class="form-label upText selectlabel zindex3">Investigation Panel</label>
+                                  <label class="form-label selectlabel" style="top:-17px !important;">Investigation Panel</label>
                                   <div id="prescription_investigationpaneldrp">
                                   <select name="prescription_investigationpanel[]" id="prescription_investigationpanel" class="form-control selpres show-tick"  data-live-search="true" tabindex="-98"  multiple data-selected-text-format="count">
                                   
@@ -4619,7 +4650,7 @@ border-bottom: 0px solid #fff !important;
 
                           <div class="form-group form-float">
                               <div class="input-group" id="prescription_investigationerr">
-                                  <label class="form-label upText selectlabel zindex3">Investigation</label>
+                                  <label class="form-label selectlabel" style="top:-17px !important;">Investigation</label>
                                   <div id="prescription_investigationdrp">
                                   <select name="prescription_investigation[]" id="prescription_investigation" class="form-control selpres show-tick"  data-live-search="true" tabindex="-98"  multiple data-selected-text-format="count">
                                   
@@ -4945,8 +4976,8 @@ border-bottom: 0px solid #fff !important;
                                       <!-- <div class="col-sm-2"></div> -->
                          
                                       <div class="col-sm-12">
-                                       <div  id="detail_clinical_exam" class="customeTblDesign1 clinicalTableDesign" style="#border: 1px solid #e49e9e;">
-                                             <div class="table-responsive">
+                                       <div   class="customeTblDesign1 clinicalTableDesign" style="#border: 1px solid #e49e9e;">
+                                             <div class="table-responsive" id="detail_clinical_exam" style="min-height: 450px;">
                                                     <?php
                                                    $cliexmrowno=0;
                                                    $detailCountClinical = 0;

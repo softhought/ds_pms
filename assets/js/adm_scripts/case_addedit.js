@@ -807,6 +807,7 @@ $("#tryingfor").on('change',function(){
   
       
         EddUsgDateCalculation(basepath,seleddbyusg_date);
+        addusgdatingscan(basepath,seleddbyusg_date);
   
   
       });
@@ -819,6 +820,7 @@ $("#tryingfor").on('change',function(){
 
         if (seleddbyusg_date!='') {
              EddUsgDateCalculation(basepath,seleddbyusg_date);
+             addusgdatingscan(basepath,seleddbyusg_date);
 
         }
      
@@ -1867,6 +1869,23 @@ $(document).on('change','.otheranomalyckbx',function(event){
   
     });// End prescription panel
 
+
+ $("#thalassemia_screening_result").change(function(){
+
+ var value = $(this).val();
+
+ if(value == 'Others'){
+
+    $("#thalassemiaOther").css("display","block");
+ }else{
+    $("#thalassemiaOther").css("display","none");
+    $("#thalassemia_other").val("");
+ }
+
+ });    
+
+
+
 }); // end of document ready
 
 
@@ -2823,7 +2842,9 @@ function CallResetAdviceData(basepath){
        var callfrom="Reset Advice";
        $(".advice_area").html("");
 
-       var lmp_date = $('#lmp_date').val();
+       // comment lmp_date because we are using on date usg
+       //var lmp_date = $('#lmp_date').val();
+       var lmp_date = $('#seleddbyusg_date').val();
 
        $.ajax({
         type: "POST",
@@ -2879,3 +2900,45 @@ function CallResetAdviceData(basepath){
         }); /*end ajax call*/
 
 }
+
+function addusgdatingscan(basepath,seleddbyusg_date){
+
+     var edd_week = $('#edd_week').val() || 0;
+     var edd_days = $('#edd_days').val() || 0;
+     var caseID = $('#caseID').val();
+
+
+        $.ajax({
+            type: "POST",
+            url: basepath+'patientcase/addusgdatingscan',
+            dataType: "html",
+            data: {seleddbyusg_date:seleddbyusg_date,edd_week:edd_week,edd_days:edd_days,caseID:caseID},
+            success: function (result) {
+             if(result != '0'){
+               $("#usg_scan_date").val(result);
+            }
+         
+            }, 
+            error: function (jqXHR, exception) {
+              var msg = '';
+                if (jqXHR.status === 0) {
+                    msg = 'Not connect.\n Verify Network.';
+                } else if (jqXHR.status == 404) {
+                    msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status == 500) {
+                    msg = 'Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
+                    msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                    msg = 'Time out error.';
+                } else if (exception === 'abort') {
+                    msg = 'Ajax request aborted.';
+                } else {
+                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                }
+               // alert(msg);  
+            }
+            }); /*end ajax call*/
+
+}
+

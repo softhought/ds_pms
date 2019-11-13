@@ -36,8 +36,7 @@
                 font-family:Verdana, Geneva, sans-serif; 
                 font-size:11px; font-weight:bold;
 	}
-
-         
+        
         
 	.headerdemo {
 		border:1px solid #C0C0C0;
@@ -55,7 +54,6 @@
 
         .spanhead{
         	text-decoration: underline;
-            font-size: 13px;
 
         }
 
@@ -97,12 +95,15 @@ div.footer {
 #content-wrap {
   padding-bottom: 2.5rem;    /* Footer height */
 }
+
 #footer {
   position: absolute;
-  bottom: 20px;
-  width: 90%;
+  bottom: 10px;
+  width: 100%;
   height: 2.5rem;            /* Footer height */
 }
+
+
 </style>
 
 
@@ -111,10 +112,8 @@ div.footer {
     
 
 <body>
-
-  <div id="page-container">
-   <div id="content-wrap">   
-
+ <div id="page-container">
+   <div id="content-wrap">
  <div class='header'>
 
  <?php
@@ -165,7 +164,7 @@ div.footer {
                                    echo date('d-m-Y', strtotime($prescriptionLatestData->created_on));
                                  } }
     ?></span></div>
-    <div class="custom-page-start" style="padding:3px 0;#border:1px solid gray;  ">
+    <div class="custom-page-start" style="padding:3px 0;#height:22.5cm;#border:1px solid gray;  ">
     	
     	<span class="spanhead">Patient Particulars</span>
         <?php
@@ -258,116 +257,65 @@ div.footer {
 
 		<br>
         <div style="#border: 1px solid green; min-height: 200px;"><!--  start of history summery -->
-        <?php if(!empty($antenantalCaseData)){ ?>    
     	<span class="spanhead">History Summary :</span>
-    <?php } ?>
     	<table width="100%"   class="demo_font" style="margin-left: 40px;margin-top: 10px;" >
             
             <?php ?>
-
-             <tr>
-            <?php if($antenantalCaseData->lmp_date!=""){ ?>    
-          
-            <td>LMP Date :  <?php echo date('d-m-Y',strtotime($antenantalCaseData->lmp_date)); ?>&emsp;&emsp;</td>
-               
-           
-            <?php } ?>
-
-             <?php if($antenantalCaseData->edd_date!=""){ ?>    
-            
-                <td>EDD Date :  <?php echo date('d-m-Y',strtotime($antenantalCaseData->edd_date)); ?>&emsp;&emsp;</td>
-               
-            
-            <?php } ?>
-             
-            <?php if($antenantalCaseData->usg_date!=""){ ?>    
-           
-                <td colspan="2">EDD BY USG :  <?php echo date('d-m-Y',strtotime($antenantalCaseData->usg_date));
-                if($antenantalCaseData->usg_week !="0"){ echo  '( by USG done at '.$antenantalCaseData->usg_week.' weeks ';if($antenantalCaseData->usg_days =="0"){echo ' )'; } }if($antenantalCaseData->usg_days !="0"){ echo $antenantalCaseData->usg_days.' and days )'; }?></td>
-                <td> </td>
-            
-            <?php } ?>
-            </tr>
-
             <tr>
-                <?php if($antenantalCaseData){?>
-    			<td>&nbsp;G&nbsp;<sub style="font-size: 7px;"><?php echo $total_parity; ?></sub>&nbsp;P&nbsp;<sub style="font-size: 7px;"><?php echo $antenantalCaseData->parity_term_delivery.' + '.$antenantalCaseData->parity_preterm.' + '.$antenantalCaseData->parity_abortion.' + '.$antenantalCaseData->parity_issue; ?></sub>
-                    &emsp;&emsp;</td>
-                <?php } ?>
+    			<td colspan="2"> <?php if($antenantalCaseData){echo "<span>&#9744;&nbsp;&nbsp;</span>GN :".$total_parity;}?>&nbsp;
     				<!-- [<span>P</span><sub>A+B+C+D</sub>] -->
     				<!-- [ Term Delivery : <?php if($antenantalCaseData){echo $antenantalCaseData->parity_term_delivery;}?>, 
     				Preterm : <?php if($antenantalCaseData){ echo $antenantalCaseData->parity_preterm;}?>, 
     				Abortion : <?php if($antenantalCaseData){echo $antenantalCaseData->parity_abortion;}?>,
     				Issue : <?php if($antenantalCaseData){echo $antenantalCaseData->parity_issue;}?> ]  -->
+    			</td>
     			
-
-                 <?php 
-            if($antenantalCaseData){
-                if($antenantalCaseData->spontaneous_abortion!='' && $antenantalCaseData->spontaneous_abortion!='0'){
-            ?>
-           
-                <td>No.Of Spontaneous Abortion:  <?php echo $antenantalCaseData->spontaneous_abortion;?>&emsp;&emsp;</td>
-               
-
-            <?php }} ?>
-
-           <?php  if($total_suction!=0){ 
-            if(!empty($lastchildBirth->year)){
-
-            if($lastchildBirth->year != ''){
-                $curyear = date("Y"); 
-             $backyear =  $curyear - $lastchildBirth->year;
-             $backyte = '('. $backyear.' years back)';
-         }else{
-
-            $backyte = '';
-         }
-       }else{
-               $backyte = '';
-       }
-
-             
-
-            ?> 
-
-                <td>No. Of Having Previous Suction Evacuation :  <?php echo $total_suction.$backyte;?></td>
-                           
-            <?php } ?>
-
-                			
     		</tr>
 
+             <?php if($antenantalCaseData->lmp_date!=""){ ?>    
             <tr>
-
-             <?php if($total_cesarean!=0){ ?>    
-           
-                <td>No. Of Having Previous CS :  <?php echo $total_cesarean;?>&emsp;&emsp;</td>
-               
-            
-            <?php } ?>
-
-             <?php if($total_ND!=0){ ?>    
-           
-                <td>No. Of Having Previous ND :  <?php echo $total_ND;?>&emsp;&emsp;</td>
-               
-            
-            <?php } ?>
-
-            
-
+                <td><span>&#9744;&nbsp;&nbsp;</span>LMP Date :  <?php echo date('d-m-Y',strtotime($antenantalCaseData->lmp_date)); ?></td>
+                <td> </td>
             </tr>
+            <?php } ?>
+
+            <?php if($antenantalCaseData->edd_date!=""){ ?>    
+            <tr>
+                <td><span>&#9744;&nbsp;&nbsp;</span>EDD Date :  <?php echo date('d-m-Y',strtotime($antenantalCaseData->edd_date)); ?></td>
+                <td> </td>
+            </tr>
+            <?php } ?>
+
+            <?php if($antenantalCaseData->usg_date!=""){ ?>    
+            <tr>
+                <td><span>&#9744;&nbsp;&nbsp;</span>EDD BY USG :  <?php echo date('d-m-Y',strtotime($antenantalCaseData->usg_date)); ?></td>
+                <td> </td>
+            </tr>
+            <?php } ?>
+
+            <?php if($total_cesarean!=0){ ?>    
+    		<tr>
+    			<td><span>&#9744;&nbsp;&nbsp;</span>Having previous LUCS :  <?php echo $total_cesarean;?></td>
+    			<td> </td>
+    		</tr>
+            <?php } 
+
+             if($total_suction!=0){ ?>    
+            <tr>
+                <td><span>&#9744;&nbsp;&nbsp;</span>Having previous MTP :  <?php echo $total_suction;?></td>
+                <td> </td>
+            </tr>
+            <?php }
             
-                      
+             if($lastchildBirth){
             
-            <?php  if(!empty($lastchildBirth)){
-                            
             ?>
     		<tr>
-    			<td>Last child birth :  <?php echo $lastchildBirth->year;?></td>
+    			<td><span>&#9744;&nbsp;&nbsp;</span>Last child birth :  <?php echo $lastchildBirth->year;?></td>
     			<td> </td>
     		</tr>
     		<?php
-             } 
+             }
             ?>
             
             <?php if($antenantalCaseData){
@@ -375,7 +323,7 @@ div.footer {
                 if($antenantalCaseData->procedure_concieve!=''){
                 ?>
     		<tr>
-    			<td colspan="2">Concieved after infertility treatment  <?php
+    			<td><span>&#9744;&nbsp;&nbsp;</span>Concieved after infertility treatment :  <?php
 
     			
     			 echo $antenantalCaseData->procedure_concieve;
@@ -391,12 +339,21 @@ div.footer {
             </tr>
             <?php }?>
 
-                       
-            <?php if ($previousChildHistory) {
+            <?php 
+            if($antenantalCaseData){
+                if($antenantalCaseData->spontaneous_abortion!='' && $antenantalCaseData->spontaneous_abortion!='0'){
+            ?>
+    		<tr>
+    			<td><span>&#9744;&nbsp;&nbsp;</span>Number of spontaneous abortion:  <?php echo $antenantalCaseData->spontaneous_abortion;?></td>
+    			<td> </td>
+    		</tr>
+            <?php }}
+            
+            if ($previousChildHistory) {
             ?>
 
     		<tr>
-    			<td colspan="2">Previous Obstetric History : 	</td>
+    			<td colspan="2"><span>&#9744;&nbsp;&nbsp;</span>With Previous History of: 	</td>
     			
             </tr>
             <?php } ?>
@@ -412,82 +369,29 @@ div.footer {
         <?php
                 foreach ($previousChild as $previouschildrow) {
 				                
-              if ($previouschildrow['complications']!='') {
+                                
+             if ($previouschildrow['year']!='') { $childYear= 'In '.$previouschildrow['year']; }else{ $childYear="";  }
 
-                 $childComplications="Had ".$previouschildrow['complications'];
+             if ($previouschildrow['complications']!='') {
+                 $childComplications="| Complications: ".$previouschildrow['complications'];
              }else{
                  $childComplications="";
-             } 
-
-             if ($previouschildrow['year']!='') { $childYear= ' in '.$previouschildrow['year']; }else{ $childYear="";  }
-
-            
+             }
 
              if ($previouschildrow['med_prob']!='') {
-                $childMedProb=" suffered from ".rtrim($previouschildrow['med_prob'],",Others");
+                $childMedProb="|Medical Problem(s) ".rtrim($previouschildrow['med_prob'],",Others");
 
              }else{
                  $childMedProb="";
              }
                                 
              if ($previouschildrow['med_prob_other']!='') {
-                 $childOtherProb=" & ".$previouschildrow['med_prob_other'];
+                 $childOtherProb="|Others Problem".$previouschildrow['med_prob_other'];
              }else{
                  $childOtherProb=""; 
              }
-
-             if ($previouschildrow['delevery_type']!='') {
-                if($previouschildrow['delevery_type'] == 'SE'){
-                  
-                  $deleverytype=$previouschildrow['delevery_type'];
-
-                }else if($previouschildrow['delevery_type'] == 'CS'){
-
-                     $deleverytype=$previouschildrow['delevery_type'];
-
-                }
-                else if($previouschildrow['delevery_type'] == 'ND'){
-
-                  $deleverytype=$previouschildrow['delevery_type'];
-                }
-
-                             
-             }else{
-                 $deleverytype=""; 
-             }
-
-             if($previouschildrow['babygender']!=''){
-
-                if($previouschildrow['babygender'] == 'Male'){
-                 
-                 $babygen = 'baby boy ';
-                }
-                else if($previouschildrow['babygender'] == 'Female'){
-                 
-                 $babygen = 'baby girl ';
-                }
-                 else if($previouschildrow['babygender'] == 'Other'){
-                 
-                 $babygen = 'other ';
-                }
-                else if($previouschildrow['babygender'] == 'Not Known'){
-                 
-                 $babygen = 'not known ';
-                }
-             }else{
-
-                 $babygen = '';
-             }
-
-             if($previouschildrow['baby_weight'] != ''){
-
-                $babywt = ' of '.$previouschildrow['baby_weight'].'kg';
-             }else{
-
-                $babywt = '';
-             }
                                 
-             echo $childComplications.$childYear.$childMedProb.$childOtherProb.', '.$deleverytype.' done '.$childYear.'( delivered a ' .$babygen.$babywt.' by '.$deleverytype.' had '.$childMedProb.$childOtherProb. ' at that time)'. "<br>";
+             echo $childYear.$childComplications.$childMedProb."<br>";
 
                 }?>
                  </div>
@@ -498,15 +402,28 @@ div.footer {
 
     	<table width="100%"   class="demo_font" style="margin-left: 40px;margin-top: 0px;" >
     		<?php if($diseases!=''){?>
-
-               
             <tr>
-    			<td>Known case of <?php echo $diseases;?> had 
-                 <?php
+    			<td><span>&#9744;&nbsp;&nbsp;</span>With known case of : <?php echo $diseases;?></td>
+    			<td>  </td>
+    		</tr>
+            <?php }
+            if ($surgicaData) {
+            ?>
+
+    		<tr>
+    			<td><span>&#9744;&nbsp;&nbsp;</span>With surgical history of :</td>
+    			<td>  </td>
+    		</tr>
+            <?php }?>
+
+    	</table>
+         
+        <?php
                     $surgicalCount=count($surgicaData);
                 if ($surgicaData) {?>
 
-                 <?php
+  <div style="margin-left:180px;word-wrap: break-word;font-size:10px;margin-top:-15px;">
+                <?php
 
                     foreach ($surgicaData as $surgicadatarow) {
                         $surgicalCount--;
@@ -517,26 +434,19 @@ div.footer {
                             echo $surgicadatarow->surgery_name;
                         }
 
-                        echo ' '.$surgicadatarow->yearback.' years back ';
-                        if ($surgicalCount!=0) {echo " and "; }
+                        echo '('.$surgicadatarow->yearback.' years back) ';
+                        if ($surgicalCount!=0) {echo "|"; }
                        
                     }
              
 
                 ?>
 
-                 
+                   </div>
                 <?php }?>
+               
 
-                </td>
-    			<td>  </td>
-    		</tr>
-            <?php } ?>
-            
 
-    	</table>
-         
-         
 
         <table width="100%"   class="demo_font" style="margin-left: 40px;margin-top:0px;" >
           
@@ -546,7 +456,7 @@ div.footer {
             if($antenantalCaseData->any_allergy!=''){
           ?>
             <tr>
-                <td>With allergy of : <?php 
+                <td><span>&#9744;&nbsp;&nbsp;</span>With allergy of : <?php 
                
                  echo $antenantalCaseData->any_allergy;
                 
@@ -561,7 +471,7 @@ div.footer {
 
             ?>
             <tr>
-                <td colspan="2">   
+                <td colspan="2"><span>&#9744;&nbsp;&nbsp;</span>With Family History of:   
                 </td>
                 
             </tr>  
@@ -571,47 +481,30 @@ div.footer {
   
         <?php
                 if ($familyCompData=='Y') {?>
-             <div style="margin-left:44px;word-wrap: break-word;font-size:10px;margin-top:-5px;">
+             <div style="margin-left:180px;word-wrap: break-word;font-size:10px;margin-top:-15px;">
                 <?php
                     $familyCompCount=0;
                     foreach ($familyComponentList as $familycomponentrow) {
                         $familyCompCount++;
                  if ($familycomponentrow->is_father=='Y' || $familycomponentrow->is_mother=='Y') {
-                        if ($familyCompCount>1) {echo " and ";}
+                        if ($familyCompCount>1) {echo "|";}
                          if ($familycomponentrow->othercomptext!='') {
-                             $component =  $familycomponentrow->othercomptext;
+                             echo $familycomponentrow->othercomptext;
                          }else{
-                             $component = $familycomponentrow->disp_comp_name;
+                             echo $familycomponentrow->component_name;
                          }
 
                         if ($familycomponentrow->is_father=='Y' && $familycomponentrow->is_mother=='Y') {
-                                     echo 'Her father and mother both are '.$component;
+                                     echo '- both father and mother ';
                         }else if($familycomponentrow->is_father=='Y'){
-                            foreach ($familyComponentList as $value) {
-                               if($value->is_father =='Y' && $value->is_mother == 'Y'){
-                                echo 'father has '.$component;
-                                break;
-                            }else{
-                                   echo 'Father has '.$component;
-                                   break;
-                             }
-                            }
-                                 
+                                 echo '- father ';
                         }else if($familycomponentrow->is_mother=='Y'){
-                                 foreach ($familyComponentList as $value) {
-                               if($value->is_father =='Y' && $value->is_mother == 'Y'){
-                                 echo 'mother has '.$component;
-                                break;
-                            }else{
-                                    echo 'Mother has '.$component;
-                                   break;
-                             }
-                                 
+                                 echo '- mother ';
                         }
 
-                        }
+              
 
-                          }
+                    }
 
                      }
 
@@ -624,13 +517,13 @@ div.footer {
                 
 
 
-        <table width="100%"   class="demo_font" style="margin-left: 40px;">
+        <table width="100%"   class="demo_font" style="margin-left: 40px;margin-top: 10px;" >
             <?php 
             if($antenantalCaseData){
                 if($highrisk!=''){
             ?>
             <tr>
-                <td>She is high risk for <?php 
+                <td><span>&#9744;&nbsp;&nbsp;</span>High risk for : <?php 
                 echo $highrisk;
                 ?></td>
                 <td>  </td>
@@ -640,7 +533,7 @@ div.footer {
             ?>
              <?php if ($regularMedicineList) {?>
              <tr>
-                <td>On medication : </td>
+                <td><span>&#9744;&nbsp;&nbsp;</span>On medication : </td>
                 <td>  </td>
             </tr>
              <?php } ?>
@@ -648,14 +541,8 @@ div.footer {
         </table>
         <?php   if ($regularMedicineList) { ?>
         <div style="margin-left:180px;word-wrap: break-word;font-size:10px;margin-top:-15px;">
-        <?php $i=1;
+        <?php
             foreach ($regularMedicineList as $regularmedicinerow) {
-               
-               if($i==1){
-                  echo 'She is on ';
-               }else{
-                  echo 'and ';
-               }
 
                echo $regularmedicinerow->medicine_name.",";
 
@@ -691,7 +578,7 @@ div.footer {
 
                 echo "<br>";
 
-           $i++; } ?>
+            } ?>
         </div>
                 
          <?php
@@ -707,8 +594,7 @@ div.footer {
                     
 
                 ?>
-
-  <br>         
+           
 <span class="spanhead">Investigation :</span>
                         <div style="margin-left:120px;word-wrap: break-word;font-size: 10px;margin-top: -15px;">
                         
@@ -721,7 +607,7 @@ div.footer {
                         }
 
                         if($inveltdata->dc_result!=''){ 
-                            echo "DC : "; echo $inveltdata->dc_result.''.$CI->dateDMY($inveltdata->dc_date)." | ";
+                            echo "DC : "; echo $inveltdata->dc_result.' mcl of blood'.$CI->dateDMY($inveltdata->dc_date)." | ";
                         }
 
                         if($inveltdata->fbs_result!=''){ 
@@ -933,7 +819,7 @@ div.footer {
                    <table width="50%"   class="demo_font" style="margin-left: 0px;margin-top: 10px;" >
               <?php if ($examinationLatestData) {?>
             <tr>
-                <td>First Visit: &nbsp; BMI : <?php  if ($examinationLatestData) {echo $examinationFirstData->exam_bmi;}?></td>
+                <td><span>&#9744;&nbsp;&nbsp;</span>First Visit: &nbsp; BMI : <?php  if ($examinationLatestData) {echo $examinationFirstData->exam_bmi;}?></td>
                <td><span>&nbsp;&nbsp;</span>Weight : <?php  if ($examinationLatestData) {echo $examinationFirstData->exam_weight;}?></td>
             </tr>
                     <?php }?>
@@ -960,31 +846,44 @@ div.footer {
                 ?>
  
 
-      
+
+
+    </div>
+
+
+
+
+</div>
+<!-- <div class='footer'>Footer</div> -->
+<!-- <div class="custom-page-start" style="page-break-before: always;"></div> -->
+
+
+
+<div style="padding:3px 0;#height:22.5cm;" >
+
+
+             
+       
+
+
+
                 <?php
-                if (!empty($clinicalExaminationLatestData)) {
+                if ($clinicalExaminationLatestData) {
                     
 
 ?>
-<br>
  <span class="spanhead">Clinical  Examination :</span>
         <table style="width: 90%;font-size: 10px;margin-left:60px;" cellspacing="2"  >
                         
                             <tr>
-                                <td  align="left">Date  &emsp;</td>
-                                <td  align="left">By LMP&emsp;&emsp;</td>
-                               <!--  <td  align="left">Days by LMP</td> -->
-                                <td  align="left">By USG&emsp;&emsp;</td>
-                                <!-- <td  align="left">Days by USG</td> -->
-                                <td  align="left">Weight&emsp;&emsp;</td>
-                                <td  align="left">BP(mm of Hg)</td>
-                               <!--  <td  align="left">BP(D)</td> -->
-                               <td  align="left">Pallor &emsp;&emsp;</td>
-                                <td  align="left">Oedema &emsp;&emsp;</td>
-                                <td  align="left">Fundal Height&emsp;</td>
-                                <td  align="left">SFH(cm)&emsp;&emsp;</td>
-                                <td  align="left">FHS(/min)&emsp;&emsp;</td>
-                                <td  align="left">Next Appointment Date</td>
+                                <td  align="left">Date  </td>
+                                <td  align="left">Wks. by LMP</td>
+                                <td  align="left">Days by LMP</td>
+                                <td  align="left">Wks. by USG</td>
+                                <td  align="left">Days by USG</td>
+                                <td  align="center">Weight</td>
+                                <td  align="left">BP(S) </td>
+                                <td  align="left">BP(D)</td>
                               
                               
                             </tr>
@@ -993,63 +892,36 @@ div.footer {
                             <tr>
                                  <td><?php 
                                  if($clinicalExaminationLatestData->examination_date!=''){
-                                    echo date('d-m-Y', strtotime($clinicalExaminationLatestData->examination_date));}else{
-                                        echo 'Nil';
-                                    }
-                                ?>&emsp;</td>     <td><?php echo $clinicalExaminationLatestData->weeks_by_lmp.' wks '.$clinicalExaminationLatestData->days_by_lmp.' days';?>&emsp;&emsp;&emsp;&emsp;</td>
-                                <!--  <td align="center"><?php echo $clinicalExaminationLatestData->days_by_lmp;?></td> -->
-                                 <td><?php echo $clinicalExaminationLatestData->weeks_by_usg.' wks '.$clinicalExaminationLatestData->days_by_usg.' days';?>&emsp;&emsp;&emsp;&emsp;</td>
-                                <!--  <td align="center"><?php echo $clinicalExaminationLatestData->days_by_usg;?></td> -->
-                                 <td><?php echo $clinicalExaminationLatestData->cliexm_weight;?> kg.&emsp;&emsp;</td>
-                                 <td><?php echo $clinicalExaminationLatestData->cliexm_bp_s.'/'.$clinicalExaminationLatestData->cliexm_bp_d;?>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</td>
-                                 <!-- <td><?php echo $clinicalExaminationLatestData->cliexm_bp_d;?></td> -->
-                                 <td align="left"><?php  if($clinicalExaminationLatestData->cliexm_pallor == ''){echo 'Nil'; }else{ echo $clinicalExaminationLatestData->cliexm_pallor;} ?>&emsp;&emsp;&emsp;&emsp;</td>
-                                  <td><?php if($clinicalExaminationLatestData->cliexm_oedema == ''){
-                                    echo "Nil"; }else{ echo $clinicalExaminationLatestData->cliexm_oedema; } ?>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</td>
-                                 <td><?php if($clinicalExaminationLatestData->fundal_height == ''){ echo 'Nil'; }else{ echo $clinicalExaminationLatestData->fundal_height; } ?>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</td>
-                                 <td><?php if($clinicalExaminationLatestData->cliexm_sfh == ''){
-                                   echo "Nil"; }else{ echo $clinicalExaminationLatestData->cliexm_sfh; } ?>&emsp;&emsp;</td>
-                                 <td><?php if($clinicalExaminationLatestData->cliexm_fsh == ''){
-                                    echo "Nil"; }else{ echo $clinicalExaminationLatestData->cliexm_fsh; }?>&emsp;&emsp;</td>
-                                 <td colspan="2"><?php 
-
-                                        if($clinicalExaminationLatestData->cliexm_appointment_date!=''){
-                                            echo date('d-m-Y', strtotime($clinicalExaminationLatestData->cliexm_appointment_date));
-                                        }else{
-                                             echo "after ";
-                                                if($clinicalExaminationLatestData->cliexm_after_week!=''){
-                                                    echo $clinicalExaminationLatestData->cliexm_after_week.' weeks ';
-                                                }
-                                                if($clinicalExaminationLatestData->cliexm_after_days!=''){
-                                                    echo $clinicalExaminationLatestData->cliexm_after_days.' days ';
-                                                }
-                                            }
-                                 
-                                 ?>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</td>
+                                    echo date('d-m-Y', strtotime($clinicalExaminationLatestData->examination_date));}
+                                ?></td>
+                                 <td align="center"><?php echo $clinicalExaminationLatestData->weeks_by_lmp;?></td>
+                                 <td align="center"><?php echo $clinicalExaminationLatestData->days_by_lmp;?></td>
+                                 <td align="center"><?php echo $clinicalExaminationLatestData->weeks_by_usg;?></td>
+                                 <td align="center"><?php echo $clinicalExaminationLatestData->days_by_usg;?></td>
+                                 <td align="center"><?php echo $clinicalExaminationLatestData->cliexm_weight;?> kg.</td>
+                                 <td align="center"><?php echo $clinicalExaminationLatestData->cliexm_bp_s;?></td>
+                                 <td align="center"><?php echo $clinicalExaminationLatestData->cliexm_bp_d;?></td>
                                
                             </tr>
 
                            
-                              <!-- <tr>
+                              <tr>
                                 
-                                
+                                <td  align="left">Pallor </td>
                                 <td  align="left">Oedema </td>
                                 <td  align="left">Fundal Height</td>
                                 <td  align="left">SFH(cm)</td>
                                 <td  align="left">FHS(/min)</td>
-                                <td  align="left" colspan="2">Next Appointment Date</td>
+                                <td  align="left" colspan="2">Appointment</td>
                               
-                            </tr> -->
-                           <!--  <tr>
+                            </tr>
+                            <tr>
                                 
-                                 
-                                 <td><?php if($clinicalExaminationLatestData->cliexm_oedema == ''){
-                                    echo "Nil"; }else{ echo $clinicalExaminationLatestData->cliexm_oedema; } ?></td>
-                                 <td><?php if($clinicalExaminationLatestData->fundal_height == ''){ echo 'Nil'; }else{ echo $clinicalExaminationLatestData->fundal_height; } ?></td>
-                                 <td><?php if($clinicalExaminationLatestData->cliexm_sfh == ''){
-                                   echo "Nil"; }else{ echo $clinicalExaminationLatestData->cliexm_sfh; } ?></td>
-                                 <td><?php if($clinicalExaminationLatestData->cliexm_fsh == ''){
-                                    echo "Nil"; }else{ echo $clinicalExaminationLatestData->cliexm_fsh; }?></td>
+                                 <td><?php echo $clinicalExaminationLatestData->cliexm_pallor;?></td>
+                                 <td><?php echo $clinicalExaminationLatestData->cliexm_oedema;?></td>
+                                 <td><?php echo $clinicalExaminationLatestData->fundal_height;?></td>
+                                 <td><?php echo $clinicalExaminationLatestData->cliexm_sfh;?></td>
+                                 <td><?php echo $clinicalExaminationLatestData->cliexm_fsh;?></td>
                                  <td colspan="2"><?php 
 
                                         if($clinicalExaminationLatestData->cliexm_appointment_date!=''){
@@ -1066,7 +938,7 @@ div.footer {
                                  
                                  ?></td>
                                  
-                            </tr> -->
+                            </tr>
                    
                     </table>
                 <?php }?>
@@ -1074,23 +946,22 @@ div.footer {
 
 
 <?php
-        if (!empty($adviceDetailsData)) {
+        if ($adviceDetailsData) {
              
 ?>
 
  <span class="spanhead">Advice: </span>
  <div style="margin-left:50px;word-wrap: break-word;font-size:10px;margin-top:-15px;#border:1px solid red;">
- <?php      $advType="";$i=1;
+ <?php      $advType="";
             foreach ($adviceDetailsData as $advicedetailsrow) {
-                // if ($advType!=$advicedetailsrow['advType']) {
-                //     echo "<br><u>".$advicedetailsrow['advType'].":</u> ";
-                // }
-               
+                if ($advType!=$advicedetailsrow['advType']) {
+                    echo "<br><u>".$advicedetailsrow['advType'].":</u> ";
+                }
               
-              echo "<br>".$i.'.'.substr($advicedetailsrow['advicedtl'], 2);
+              echo "<br>".$advicedetailsrow['advicedtl'];
              
-              //$advType=$advicedetailsrow['advType'];
-          $i++; }
+              $advType=$advicedetailsrow['advType'];
+            }
 
 
  ?>
@@ -1136,6 +1007,8 @@ div.footer {
 </div>
       <?php }?>
 
+
+
 <br>
 <p><?php  if ($prescriptionMedicineList) {
     if($prescriptionLatestData->doctor_note!=''){
@@ -1145,15 +1018,13 @@ div.footer {
 
 
 
-
-
-<?php  if (!empty($prescriptionInvestigationpanel) || $prescriptionInvestigationList) { ?>
 <br>
+<?php  if ($prescriptionInvestigationpanel || $prescriptionInvestigationList) { ?>
+<span class="spanhead">Suggested Investigation :</span>&nbsp;
 
-<table>
+<table style="margin-top: -17px;">
        <tr>
-<td colspan="2" class="spanhead" style="font-family: sans-serif;;width: 26%;vertical-align: top;">Suggested Investigation :</td>
-           <td style="font-size: 10px;width: 74%;vertical-align: bottom;"> <?php 
+           <td style="font-size: 10px;margin-left: 100px; padding-left: 175px;"> <?php 
                                                 $chkcoma=0;
                                                 //created by anil 23-09-2019 
                                                  foreach ($prescriptionInvestigationpanel as $prescriptionInvestigationpanel) {
@@ -1183,7 +1054,6 @@ div.footer {
 
  <?php } ?>
 
-
   
 
             
@@ -1209,39 +1079,35 @@ div.footer {
                                               </span>  
  -->
 <br>
+
 <?php 
-
- if(!empty($clinicalExaminationLatestData->cliexm_appointment_date)){
-                                            echo "<span style='font-size:13px;'>Next Checkup Date :</span><span style='font-size:10px;'>".date('l d M Y', strtotime($clinicalExaminationLatestData->cliexm_appointment_date));
-
-   }                                         
-?>
-<!-- <?php 
 if ($prescriptionMedicineList) {
 if ($prescriptionLatestData->next_checkup_dt!='') {
-                       echo "<span>Next Checkup Date :</span><span style='font-size:10px;'>".date('l d M Y', strtotime($prescriptionLatestData->next_checkup_dt))."</span>";
+                       echo "<span >Next Checkup Date :</span><span style='font-size:10px;'>".date('l d M Y', strtotime($prescriptionLatestData->next_checkup_dt))."</span>";
                      }
 
               }
 
 
-?> -->
+?>
 
 
      
-</div>
-</div>
-  
+
+   </div> 
+</div><!--end of page 2 div -->
+
+
+
+
+
 </div>
 
-<footer id="footer"><hr>
+</div>
+   <footer id="footer"><hr>
  <p class="demo_font" style="text-align: center">
     In case emergency to call 9874746006 /Techno Global Emergency number 9073943772</p></footer>
-
-
-</div>
-
-
+ </div>
 
 </body>
 </html>
