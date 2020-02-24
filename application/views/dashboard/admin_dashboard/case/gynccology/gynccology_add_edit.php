@@ -65,8 +65,13 @@
   z-index: unset !important;
 
 }
+.wPaint-menu{
+    width: 582px !important;
+  }
 
 </style>
+
+
 
 
  <div id="patientCaseManagment">
@@ -171,131 +176,115 @@
                                   
                                     <input type="hidden" name="caseID" id="caseID" value="<?php echo $bodycontent['caseID']; ?>" />
                                     <input type="hidden" name="patientID" id="patientID" value="<?php echo $bodycontent['patientmasterEditdata']->patient_id; ?>" />
-                                                            <div class="demo-masked-input">
-                                                            <div class="row clearfix">
-                                                              <!--<div class="col-sm-2"></div>-->
-                                                                        <div class="col-sm-4">
+                                   <div class="demo-masked-input">
+                                         <div class="row clearfix">
+                                          <!--<div class="col-sm-2"></div>-->
+                                              <div class="col-sm-4">
 
-                                                                            <div class="form-group form-float">
-                                                                                <div class="form-line">
-                                                                                    <input type="text" class="form-control" name="selfmobile" id="selfmobile" autocomplete="off"  onKeyUp="numericFilter(this);" maxlength="10" value="<?php echo $bodycontent['patientmasterEditdata']->selfmobile; ?>" >
-                                                                                    <label class="form-label"> Self Mobile No</label>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
+                                               <div class="form-group form-float">
+                                                     <div class="form-line">
+                            <input type="text" class="form-control" name="selfmobile" id="selfmobile" autocomplete="off"  onKeyUp="numericFilter(this);" maxlength="10" value="<?php echo $bodycontent['patientmasterEditdata']->selfmobile; ?>" >
+                              
+                              <label class="form-label"> Self Mobile No</label>
+                              </div>
+                          </div>
+                              </div>
 
-                                                                        <div class="col-sm-4">
-                                                                            <div class="form-group form-float">
-                                                                                <div class="form-line">
-                                                                                    <input type="text" class="form-control" name="alternate_mobile" id="alternate_mobile" autocomplete="off"  onKeyUp="numericFilter(this);" maxlength="10" value="<?php echo $bodycontent['patientmasterEditdata']->alternate_mobile; ?>" >
-                                                                                    <label class="form-label">Husband /Guardian Mobile</label>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                              </div>
+                          <div class="col-sm-4">
+                           <div class="form-group form-float">
+                               <div class="form-line">
+                      <input type="text" class="form-control" name="alternate_mobile" id="alternate_mobile" autocomplete="off"  onKeyUp="numericFilter(this);" maxlength="10" value="<?php echo $bodycontent['patientmasterEditdata']->alternate_mobile; ?>" >
 
-                                                            <div class="row clearfix">
-                                                              <!-- <div class="col-sm-2"></div> -->
-                                                                        <div class="col-sm-4">
-                                                                            <div class="form-group form-float">
-                                                                                <div class="form-line">
-                                                                                    <input type="text" class="form-control" name="patientname" id="patientname" autocomplete="off" value="<?php echo $bodycontent['patientmasterEditdata']->patientname; ?>" >
-                                                                                    <label class="form-label">Name</label>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
+                          <label class="form-label">Husband /Guardian Mobile</label>
+                              </div>
+                          </div>
+                     </div>
+               </div>
 
-                                                                        <div class="col-sm-4">
-                                                                            <div class="form-group form-float">
-                                                                                <div class="form-line">
-                                                                                    <input type="text" class="form-control" name="patientage" id="patientage" autocomplete="off" value="<?php echo $bodycontent['patientmasterEditdata']->patientage; ?>" >
-                                                                                    <label class="form-label">Age</label>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
+                <div class="row clearfix">
+                  <!-- <div class="col-sm-2"></div> -->
+                    <div class="col-sm-4">
+                       <div class="form-group form-float">
+                        <div class="form-line">
+                          <input type="text" class="form-control" name="patientname" id="patientname" autocomplete="off" value="<?php echo $bodycontent['patientmasterEditdata']->patientname; ?>" >
+                            <label class="form-label">Name</label>
+                        </div>
+                  </div>
+            </div>
 
-                                                                                                
-                                                                                                            
-                                                            </div>
+              <div class="col-sm-4">
+                  <div class="form-group form-float">
+                      <div class="form-line">
+                         <input type="text" class="form-control" name="patientage" id="patientage" autocomplete="off" value="<?php echo $bodycontent['patientmasterEditdata']->patientage; ?>" >
+                              <label class="form-label">Age</label>
+                      </div>
+                  </div>
+              </div>
 
-                                                          <div class="row clearfix">
-                                                            <!-- <div class="col-sm-2"></div> -->
-                                                            <div class="col-sm-4">
-                                                                <div class="form-group form-float">
-                                                                <label class="form-label selectlabel">Gender</label>
-                                                              <select name="gender" id="gender" class="form-control show-tick" data-live-search="true" tabindex="-98">
+        </div>
+
+    <div class="row clearfix">
+      <!-- <div class="col-sm-2"></div> -->
+        <div class="col-sm-4">
+          <div class="form-group form-float">
+                <label class="form-label selectlabel">Gender</label>
+                    <select name="gender" id="gender" class="form-control show-tick" data-live-search="true" tabindex="-98">
                                                               
-                                                                <?php 
-
-                                                                foreach ($bodycontent['genderList'] as $value) {  ?>
-                                                                  <option value="<?php echo $value->id;?>"
+                     <?php 
+                         foreach ($bodycontent['genderList'] as $value) {  ?>
+                             <option value="<?php echo $value->id;?>"
                                                                     
-                                                                      <?php if(($bodycontent['mode']=="EDIT") && $value->id==$bodycontent['patientmasterEditdata']->patientgender){echo "selected";}else{echo "";} ?>    
+                              <?php if(($bodycontent['mode']=="EDIT") && $value->id==$bodycontent['patientmasterEditdata']->patientgender){echo "selected";}else{echo "";} ?>    
                                                                   
 
-                                                                        ><?php echo $value->gender?></option>
-                                                                <?php     } ?>
+                             ><?php echo $value->gender?></option>
+                      <?php     } ?>
                                                                   
-                                                              </select> 
-                                                                            </div>
-                                                                        </div>
+                </select> 
+        </div>
+    </div>
+                                                                                              
+   </div>
 
-                                                                                             
-                                                                                                            
-                                                        </div>
+      <div class="row clearfix">
+         <div class="col-sm-8">
+            <div class="form-group form-float">
+                <div class="form-line">
+                  <textarea rows="1" name="address" id="address" class="form-control no-resize"  style="overflow: hidden; overflow-wrap: break-word; height: 32px;" autocomplete="off"><?php if($bodycontent['mode']=="EDIT"){echo $bodycontent['patientmasterEditdata']->address;} ?></textarea>
+        <label class="form-label">Address</label>
+      </div>
+   </div>
+      </div>
 
-                                                          <div class="row clearfix">
-                                                             
-                                                          <div class="col-sm-8">
-                                                                            <div class="form-group form-float">
-                                                                                <div class="form-line">
-                                                                                    <textarea rows="1" name="address" id="address" class="form-control no-resize"  style="overflow: hidden; overflow-wrap: break-word; height: 32px;" autocomplete="off"
-                                                                                      ><?php if($bodycontent['mode']=="EDIT"){echo $bodycontent['patientmasterEditdata']->address;} ?></textarea>
-                                                                                    <label class="form-label">Address</label>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
+  </div> 
 
-                                                            </div> 
+  </div><!-- end of demo-masked-input-->
 
+    <div class="row clearfix">
+        <div class="col-sm-12">
+            <p id="caseregmsg" class="form_error"></p>
+      </div>
+  </div>
 
-
-                                                            </div><!-- end of demo-masked-input-->
-
-                                                            <div class="row clearfix">
-                                                              <div class="col-sm-12">
-                                                              <p id="caseregmsg" class="form_error"></p>
-                                                              </div>
-                                                            </div>
-
-                                                            <div class="row clearfix">
+<div class="row clearfix">
                                                                 
-                                                                <div class="col-sm-8 colcenter">
+     <div class="col-sm-8 colcenter">
                                                                   
-                                                                  <button type="submit" class="btn bg-pink waves-effect patientupdButton" id="gynpatientbasicsavebtn"><i class="material-icons">cached</i> 
-                                                                    <span><?php echo $bodycontent['btnText']; ?></span>
-                                                                  </button> 
+        <button type="submit" class="btn bg-pink waves-effect patientupdButton" id="gynpatientbasicsavebtn"><i class="material-icons">cached</i> 
+          <span><?php echo $bodycontent['btnText']; ?></span>
+      </button> 
 
-               
-
-                                                                  <span class="btn bg-pink waves-effect loaderbtn" id="gynpatientloaderbtn" style="display:none;"><?php echo $bodycontent['btnTextLoader']; ?></span>
+          <span class="btn bg-pink waves-effect loaderbtn" id="gynpatientloaderbtn" style="display:none;"><?php echo $bodycontent['btnTextLoader']; ?></span>
                                                                         
-                                                                </div>
+    </div>
                                                                 
-                                                                <div class="col-sm-4"></div>
-                                                            </div>
+ <div class="col-sm-4"></div>
+             </div>
 
-                                                                  
+</form>
 
-                                                                      </form>
-
-                                                            
-
-                                                        
-                                    	
-                            </div><!-- end of basic_patient_info_div -->
-
-                             </section>
+  </div><!-- end of basic_patient_info_div -->
+</section>
 
        <form class="form-area" name="GynccologyBasicRecordForm" id="GynccologyBasicRecordForm" enctype="multipart/form-data">
          <input type="hidden" name="ifchiefChangedata" id="ifchiefChangedata" value="N">
@@ -1352,7 +1341,7 @@
             </div>
           <div id="collapseFive_19" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive_19">
             <div class="panel-body"><!-- start of Previous Surgery body -->
-             
+             <input type="hidden" name="changepresur" id="changepresur" value="N">
               <div class="row clearfix" style="">
                          <div class="col-sm-3">
 
@@ -1360,7 +1349,7 @@
                               <div class="input-group " id="previous_surgeryerr">
                               <label class="form-label selectlabel" style="top: -17px;" >Surgery Name</label>
                               <div id="previous_surgerydrp">
-                              <select name="surgeryID" id="surgeryID" class="form-control selpres show-tick changezindex" data-live-search="true" tabindex="-98">
+                              <select name="surgeryID" id="surgeryID" class="form-control show-tick changezindex" data-live-search="true" tabindex="-98">
                               	<option value="0"> &nbsp; </option>
                                         <?php 
                                             foreach ($bodycontent['surgeryList']  as $surgeryList ) { 
@@ -1382,6 +1371,19 @@
 
                         
                         </div>
+
+                        <?php $dispsurg = "display:none;";?>
+
+                         <div class="col-sm-3" id="dispothersurgery" style="<?php echo $dispsurg;  ?>">
+                        <div class="form-group form-float" id="othersurerr">
+                         <div class="form-line" >
+                            <input type="text" class="form-control" name="other_surgery" id="other_surgery" autocomplete="off" value="">
+                               <label class="form-label selectlabel">Other Surgery</label>
+                            </div>
+
+                           </div>
+                         
+                       </div>
 
                        <div class="col-sm-3">
                       <div class="form-group form-float marginall">
@@ -1449,36 +1451,40 @@
 
                             <?php
 
-                if($bodycontent['isgynccologydata'] == 'Y' && $bodycontent['gynccologymasterdetails']->pre_surgery_id != '')
+                if(!empty($bodycontent['previoussurgery']))
                 {
                 	$array = $bodycontent['surgeryList']; 
-                $allsurgery = explode(',', $bodycontent['gynccologymasterdetails']->pre_surgery_id);
-              $allurgerydate = explode(',', $bodycontent['gynccologymasterdetails']->pre_surgery_date); 
-                  for($i=0;$i<count($allsurgery);$i++) 
+               
+                  foreach($bodycontent['previoussurgery'] as $previoussurgeryedit) 
                   {
 
                     $surgeryrowno++;
 
                     foreach ($bodycontent['surgeryList'] as $value) {
-                    	if($value->surgery_id == $allsurgery[$i]){
+                    	if($value->surgery_id == $previoussurgeryedit->surgery_mst_id){
 
+                        if($previoussurgeryedit->surgery_mst_id == '6' || $previoussurgeryedit->other_surgery_name != ''){
+                          $surgeryname =$previoussurgeryedit->other_surgery_name;
+                        }else{
                     		$surgeryname = $value->surgery_name;
+                       }
                     	}
                     }
                     
                 ?>
                 
-           <tr id="rowprevious_surgery_<?php echo $surgeryrowno; ?>" class="row clearfix" >
+          <tr id="rowprevious_surgery_<?php echo $surgeryrowno; ?>" class="row clearfix" >
+            <input type="hidden" name="othersurgery[]" id="othersurgery_<?php echo $surgeryrowno; ?>" value="<?php echo $previoussurgeryedit->other_surgery_name; ?>">
     
     <td style="width:37%;text-align: left;"> 
-						       <input type="hidden" name="surgeryID[]" class="PreviousSurgeryIDcls" id="surgeryID_<?php echo $surgeryrowno; ?>" value="<?php echo $allsurgery[$i]; ?>">   
+						       <input type="hidden" name="surgeryID[]" class="PreviousSurgeryIDcls" id="surgeryID_<?php echo $surgeryrowno; ?>" value="<?php echo $previoussurgeryedit->surgery_mst_id; ?>">   
                    <?php echo $surgeryname;  ?>       
 							        
     </td>
 
     <td style="width:55%;text-align: left;"> 
-						<input type="hidden" name="surgerydate[]" id="surgerydate_<?php echo $surgeryrowno; ?>" value="<?php if($allurgerydate[$i] != '*'){ echo date('Y-m-d',strtotime($allurgerydate[$i])); } else{ echo '*'; }?>">   
-                   <?php if($allurgerydate[$i] != '*'){ echo date('l d M Y',strtotime($allurgerydate[$i])); } ?>    
+						<input type="hidden" name="surgerydate[]" id="surgerydate_<?php echo $surgeryrowno; ?>" value="<?php if($previoussurgeryedit->surgery_date != ''){ echo date('Y-m-d',strtotime($previoussurgeryedit->surgery_date)); } ?>">   
+                   <?php if($previoussurgeryedit->surgery_date != ''){ echo date('l d M Y',strtotime($previoussurgeryedit->surgery_date)); } ?>    
 							        
     </td>
 
@@ -1540,7 +1546,7 @@
             </div>
           <div id="collapseSix_19" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix_19">
             <div class="panel-body"><!-- start of Surgery Planned body -->
-             
+              <input type="hidden" name="changeplandsur" id="changeplandsur" value="N">
               <div class="row clearfix" style="">
                          <div class="col-sm-3">
 
@@ -1568,6 +1574,19 @@
                           </div>
 
                         </div>
+
+                        <?php $dispsurgplanned = "display:none;";?>
+
+                         <div class="col-sm-3" id="dispothersurgeryplan" style="<?php echo $dispsurgplanned;  ?>">
+                        <div class="form-group form-float" id="plansurgerror">
+                         <div class="form-line">
+                            <input type="text" class="form-control" name="other_surgery_planned" id="other_surgery_planned" autocomplete="off" value="">
+                               <label class="form-label selectlabel">Other Surgery</label>
+                            </div>
+
+                           </div>
+                         
+                       </div>
 
                        <div class="col-sm-3">
                       <div class="form-group form-float marginall">
@@ -1635,36 +1654,46 @@
 
                             <?php
 
-                if($bodycontent['isgynccologydata'] == 'Y' && $bodycontent['gynccologymasterdetails']->planned_surgery_id != '')
+                if(!empty($bodycontent['plannedsurgery']))
                 {
                 	$array = $bodycontent['surgeryList']; 
-                $allplannedsurgery = explode(',', $bodycontent['gynccologymasterdetails']->planned_surgery_id);
-                $allplandedsurgerydate = explode(',', $bodycontent['gynccologymasterdetails']->planned_surgery_date); 
-                  for($i=0;$i<count($allplannedsurgery);$i++) 
+               
+                  foreach($bodycontent['plannedsurgery'] as $plannedsurgeryedit) 
                   {
 
                     $surgeryplannedrowno++;
 
                     foreach ($bodycontent['surgeryList'] as $value) {
-                    	if($value->surgery_id == $allplannedsurgery[$i]){
+                    	if($value->surgery_id == $plannedsurgeryedit->surgery_mst_id){
 
-                    		$Plannedsurgeryname = $value->surgery_name;
+
+                        if($plannedsurgeryedit->surgery_mst_id == '6'){
+
+                          $Plannedsurgeryname = $plannedsurgeryedit->other_surgery_name;
+
+                        }else{
+                          $Plannedsurgeryname = $value->surgery_name;
+                        }
+
+                    		
                     	}
                     }
                     
                 ?>
                 
            <tr id="rowplanned_surgery_<?php echo $surgeryplannedrowno; ?>" class="row clearfix" >
+
+            <input type="hidden" name="othersurgeryplan[]" id="othersurgeryplan_<?php echo $surgeryplannedrowno; ?>" value="<?php echo $plannedsurgeryedit->other_surgery_name; ?>">
     
     <td style="width:37%;text-align: left;"> 
-						       <input type="hidden" name="surgeryplaID[]" class="SurgeryPlannedIDcls" id="surgeryplaID_<?php echo $surgeryplannedrowno; ?>" value="<?php echo $allplannedsurgery[$i];?>">   
+						       <input type="hidden" name="surgeryplaID[]" class="SurgeryPlannedIDcls" id="surgeryplaID_<?php echo $surgeryplannedrowno; ?>" value="<?php echo $plannedsurgeryedit->surgery_mst_id; ?>">   
                    <?php echo $Plannedsurgeryname;?>       
 							        
     </td>
 
     <td style="width:55%;text-align: left;"> 
-						       <input type="hidden" name="surgeryPladate[]" id="surgeryPladate_<?php echo $surgeryplannedrowno; ?>" value="<?php if($allplandedsurgerydate[$i] != '*'){ echo date('Y-m-d',strtotime($allplandedsurgerydate[$i])); } else{ echo '*'; } ?>">   
-                  <?php if($allplandedsurgerydate[$i] != '*'){  echo date('l d M Y',strtotime($allplandedsurgerydate[$i])); } ?>       
+						       <input type="hidden" name="surgeryPladate[]" id="surgeryPladate_<?php echo $surgeryplannedrowno; ?>" value="<?php if($plannedsurgeryedit->surgery_date != ''){ echo date('Y-m-d',strtotime($plannedsurgeryedit->surgery_date)); } ?>">   
+                  <?php if($plannedsurgeryedit->surgery_date != ''){  echo date('l d M Y',strtotime($plannedsurgeryedit->surgery_date)); } ?>       
 							        
     </td>
 
@@ -1683,7 +1712,7 @@
 			</td>				
 				
 		
-		</tr>
+		</tr> 
 
 
               <?php   
@@ -2266,7 +2295,8 @@
                     <div class="col-sm-3">
                      <div class="form-group form-float">
                          <div class="input-group ">
-                         <label class="form-label selectlabel zindex3">Period Related Pain </label>
+                         <!-- <label class="form-label selectlabel zindex3">Period Related Pain </label> -->
+                         <label class="form-label selectlabel zindex3">Menstrual Cycle</label>
                          <select name="period_rel_pain" id="period_rel_pain" class="form-control show-tick"  data-live-search="true" tabindex="-98">
                          <option value=""> &nbsp; </option> 
                          <?php 
@@ -3183,7 +3213,7 @@
                          <textarea rows="1" name="incidental_notes" id="incidental_notes" class="form-control no-resize" style="overflow: hidden; overflow-wrap: break-word; height: 32px;" autocomplete="off"><?php if($isincidentalUSG == 'Y'){ echo $bodycontent['AllincidentalUSGData']->incidental_notes; } ?>
                          		
                          	</textarea>
-                            <label class="form-label">Notes</label> 
+                            <label class="form-label">Any Other Relevant Finding</label> 
                        </div>
                       </div>
                    </div>   
@@ -3264,7 +3294,7 @@
                     <div class="row clearfix">  
                     <div class="col-sm-3"></div>   
 
-                   <div class="col-sm-3">
+                   <div class="col-sm-4">
                      <div class="form-group form-float">
                          <div class="input-group ">
                          <label class="form-label selectlabel zindex3">Name Of Operation</label>
@@ -3285,6 +3315,9 @@
                          </div>
                         
                     </div>
+
+                     
+
   
                      <!-- <div class="col-sm-3">
                      <div class="form-group form-float">
@@ -3374,7 +3407,56 @@
                         
                     </div> -->
 
+                  <div class="col-sm-3">
+                      <div class="form-group form-float">
+                       
+                          <label class="form-label selectlabel zindex3">Pain for last</label>
+                         <input type="text" class="form-control"  name="pain_for_last" id="pain_for_last" placeholder="" autocomplete="off" value="<?php if($isStichlineProblem == 'Y'){ echo $bodycontent['AllStichlineProblemData']->pain_for_last; } ?>">  
+                       
+                      </div>
+                      
+                    </div>
+                    
+                                  	
+                  </div>
+
+                  <div class="row clearfix">
                     <div class="col-sm-3">
+                      <label>Associted With :</label>
+                    </div>
+
+                     <div class="col-sm-3">
+                      <div class="form-group form-float">
+                       
+                          <label class="form-label selectlabel zindex3">Swelling For</label>
+                         <input type="text" class="form-control"  name="swelling_stich" id="swelling_stich" placeholder="" autocomplete="off" value="<?php if($isStichlineProblem == 'Y'){ echo $bodycontent['AllStichlineProblemData']->swelling_stich; } ?>">  
+                       
+                      </div>
+                      
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group form-float">
+                       
+                          <label class="form-label selectlabel zindex3">Redness For</label>
+                         <input type="text" class="form-control"  name="redness_stich" id="redness_stich" placeholder="" autocomplete="off" value="<?php if($isStichlineProblem == 'Y'){ echo $bodycontent['AllStichlineProblemData']->redness_stich; } ?>">  
+                       
+                      </div>
+                      
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group form-float">
+                       
+                          <label class="form-label selectlabel zindex3">Discharge For</label>
+                         <input type="text" class="form-control"  name="stich_discharge" id="stich_discharge" placeholder="" autocomplete="off" value="<?php if($isStichlineProblem == 'Y'){ echo $bodycontent['AllStichlineProblemData']->stich_discharge; } ?>">  
+                       
+                      </div>
+                      
+                    </div>
+                  </div>
+
+                  <div class="row clearfix">
+                    <div class="col-sm-3"></div>
+                       <div class="col-sm-3">
                       <div class="form-group form-float">
                        
                           <label class="form-label selectlabel zindex3">Others</label>
@@ -3383,7 +3465,6 @@
                       </div>
                       
                     </div>
-                                  	
                   </div>
  
                                                                   
@@ -3452,7 +3533,7 @@
                        <div class="col-sm-3">
                      <div class="form-group form-float">
                          <div class="input-group ">
-                         <label class="form-label selectlabel zindex3">With Stress Incontinence</label>
+                         <label class="form-label selectlabel zindex3">Stress Incontinence</label>
                          <select name="stress_incontinence" id="stress_incontinence" class="form-control show-tick paindata"  data-live-search="true" tabindex="-98">
                          <option value=""> &nbsp; </option> 
                          <?php 
@@ -3477,7 +3558,7 @@
                    <div class="col-sm-3">
                      <div class="form-group form-float">
                          <div class="input-group ">
-                         <label class="form-label selectlabel zindex3">Difficulty In Wination</label>
+                         <label class="form-label selectlabel zindex3">Difficulty In Urination</label>
                          <select name="diff_in_wination" id="diff_in_wination" class="form-control show-tick"  data-live-search="true" tabindex="-98">
                          <option value=""> &nbsp; </option> 
                          <?php 
@@ -4995,7 +5076,7 @@
                       <div class="form-group form-float">
                        <div class="input-group">
                           <label class="form-label selectlabel zindex3">Chest </label>
-                            <select name="exam_chest" id="exam_chest" class="form-control show-tick dispOther isChangeGenExam"   data-live-search="true" tabindex="-98" placeholder=""
+                            <select name="exam_chest" id="exam_chest" class="form-control show-tick  isChangeGenExam"   data-live-search="true" tabindex="-98"  
                             >
                             <option value="">&nbsp; </option>
                                   <?php
@@ -5030,10 +5111,10 @@
                          }
                                  
                          ?>
-                         <div class="col-sm-3" id="exam_chest_other" style="<?php echo $chestotherdisp; ?>">
+                         <div class="col-sm-3" id="dispexamchesothers" style="<?php echo $chestotherdisp; ?>">
                           <div class="form-group form-float">
                            <div class="form-line">
-                            <input type="text" class="form-control isChangeGenExam" name="exam_chest_other" id="exam_chest_other " autocomplete="off" placeholder="" value="<?php
+                            <input type="text" class="form-control isChangeGenExam" name="exam_chest_other" id="exam_chest_other" autocomplete="off" placeholder="" value="<?php
                              if($isDataExam=='Y'){echo $bodycontent['GeneralExamination']->chest_other;}?>" >
                              <label class="form-label">Other</label>
                            </div>
@@ -5045,7 +5126,7 @@
                       <div class="form-group form-float">
                        <div class="input-group">
                           <label class="form-label selectlabel zindex3">CVS </label>
-                            <select name="exam_cvs" id="exam_cvs" class="form-control show-tick dispOther isChangeGenExam"   data-live-search="true" tabindex="-98" placeholder="test"
+                            <select name="exam_cvs" id="exam_cvs" class="form-control show-tick  isChangeGenExam"   data-live-search="true" tabindex="-98"  
                             >
                              <option value="">&nbsp; </option>
                                   <?php
@@ -5079,7 +5160,7 @@
                          ?>
                       
 
-                          <div class="col-sm-3" id="exam_cvs_other" style="<?php echo $cvsdisp; ?>">
+                          <div class="col-sm-3" id="dispcvsother" style="<?php echo $cvsdisp; ?>">
                           <div class="form-group form-float">
                            <div class="form-line">
                             <input type="text" class="form-control isChangeGenExam" name="exam_cvs_other" id="exam_cvs_other" autocomplete="off" placeholder="" value="<?php
@@ -5138,6 +5219,8 @@
 
             <input type="hidden" name="examination_master_id" id="examination_master_id" value="<?php if($allExamdata == 'Y'){echo $bodycontent['AllExaminationdata']->id; }else{ echo '0'; } ?>">
             <input type="hidden" name="isChangeExamdata" id="isChangeExamdata" value="N">
+
+                    
                   
                                     
                     <div class="row clearfix">
@@ -5175,7 +5258,7 @@
                         }else{
                           $ascitesdisp = "display:none;";
                         }
-
+                       
                           ?>
 
                      <div class="col-sm-4" id="ascitesdata" style="<?php echo $ascitesdisp; ?>">
@@ -5399,9 +5482,56 @@
                          $lumpdatadisp ="display:none;";
                         }
 
-                          ?>
 
-                   <?php $lumpdatadisp ="display:none;"; ?>
+                if($allExamdata == 'Y' && $bodycontent['AllExaminationdata']->is_drawing == 'Y'){ 
+
+                      $chnbtndisp = 'display:block';
+                      $preimgdisp = 'display:block;';
+                      $creatImgdisp = 'display:none;';
+                      $lumimg = $bodycontent['AllExaminationdata']->abdominal_lump_drw;
+
+                  }else{
+
+                     $chnbtndisp = 'display:none';
+                     $preimgdisp = 'display:none;';
+                     $creatImgdisp = 'display:block;';
+                     $lumimg='';
+                  }
+
+              ?>
+
+                  
+
+                    <div class="row clearfix" id="gynlumpdrw"  style="<?php echo $lumpdatadisp; ?>">
+
+                         <div class="row clearfix" id="chngbtn" style="<?php echo $chnbtndisp; ?>">
+                          <div class="col-lg-1"></div>
+                            <div class="col-lg-2">
+                              <button type="button" class="btn btn-primary" id="changeImage">Change Image</button>
+                            </div>
+                         </div> 
+
+                
+                  
+                       <div class="row clearfix" id="PreviousImg" style="<?php echo $preimgdisp; ?>">
+                        <input type="hidden" name="namedrwimage" id="namedrwimage" value="<?php echo $lumimg; ?>">
+                        <div class="col-lg-3"></div>
+                         <div class="col-lg-6" style="border:1px solid black;padding-left: 0%;width: 49%;">
+                           <img src="<?php echo base_url(); ?>assets/gyn-lump-img/<?php echo $lumimg; ?>">
+                         </div>
+                       </div>
+
+                
+
+                   <div class="row clearfix" id="creatImg" style="<?php echo $creatImgdisp; ?>">
+                    <div class="col-lg-12">
+                       <div id="wPaint" style="position:relative; width:500px; height:200px; background-color:#7a7a7a; margin:70px auto 20px auto;"></div>
+
+          
+                      </div>
+                 </div>
+
+               </div>
 
                    <div class="row clearfix" id="lumpdata" style="<?php echo $lumpdatadisp; ?>">
                       <div class="col-sm-4">
@@ -7244,12 +7374,19 @@
                  
                            <div class="form-group row clearfix">
                                     <label class="col-md-2">File Upload</label>
-                                    <div class="col-md-6">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="info_leaflet" name="info_leaflet">
-                                            <label class="custom-file-label" for="info_leaflet"></label>
-                                           
-                                        </div>
+                                  
+                                    <div class="col-sm-6">
+                                      <div class="form-group">
+                                        <div class="input-group" style="border: 1px solid #cddeec;border-radius: 5px;">
+                                          <input type="text" class="form-control" readonly>
+                                            <div class="input-group-btn">
+                                             <span class="fileUpload btn btn-primary" style="ba">
+                                               <span class="upl" id="upload">Browse</span>
+                                               <input type="file" class="upload up" id="info_leaflet" name="info_leaflet" onchange="readURL(this);" />
+                                            </span><!-- btn-orange -->
+                                            </div><!-- btn -->
+                                           </div><!-- group -->
+                                         </div><!-- form-group -->
                                     </div>
                         <div class="col-sm-3 colcenter">
                                                                   
@@ -7260,18 +7397,29 @@
                                                                         
                           </div>
                                 </div>
+
+                  <div class="row clearfix">
+                    
+              </div>
+
+
                   
-               <?php if($bodycontent['isgynccologydata'] == 'Y' && $bodycontent['gynccologymasterdetails']->infomation_leaflet_fileupload != '' ){ ?>        
+                     
              
              <div class="row clearfix">
               
-              <div class="col-sm-3">
+              <div class="col-sm-3" id="infoleflet">
+
+                 <?php if($bodycontent['isgynccologydata'] == 'Y' && $bodycontent['gynccologymasterdetails']->infomation_leaflet_fileupload != '' ){ ?> 
+
                 <a href="<?php echo base_url(); ?>assets/gyn-document/<?php echo $bodycontent['gynccologymasterdetails']->infomation_leaflet_fileupload;  ?>" class="btn btn-primary" download>Download Document</a>
+                 <?php } ?>
               </div> 
+              <div class="col-sm-3" id="recinfoupl"></div>
 
              </div>
 
-           <?php } ?>
+          
 
 
                </div>                 
@@ -7306,12 +7454,19 @@
                 
               <div class="form-group row clearfix">
                                     <label class="col-md-2">File Upload</label>
-                                    <div class="col-md-6">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="consent_form" name="consent_form">
-                                            <label class="custom-file-label" for="validatedCustomFile"></label>
-                                           
-                                        </div>
+                                    
+                                     <div class="col-sm-6">
+                                      <div class="form-group">
+                                        <div class="input-group" style="border: 1px solid #cddeec;border-radius: 5px;">
+                                          <input type="text" class="form-control" readonly>
+                                            <div class="input-group-btn">
+                                             <span class="fileUpload btn btn-primary" style="ba">
+                                               <span class="upl" id="upload">Browse</span>
+                                               <input type="file" class="upload up" id="consent_form" name="consent_form" onchange="readURL(this);" />
+                                            </span><!-- btn-orange -->
+                                            </div><!-- btn -->
+                                           </div><!-- group -->
+                                         </div><!-- form-group -->
                                     </div>
 
                         <div class="col-sm-3 colcenter">
@@ -7324,17 +7479,22 @@
                           </div>
                                 </div>
                                             
-          <?php if($bodycontent['isgynccologydata'] == 'Y' && $bodycontent['gynccologymasterdetails']->consent_formfile_upload != '' ){ ?>        
+                 
              
              <div class="row clearfix">
               
-              <div class="col-sm-3">
+              <div class="col-sm-3" id="cosentupl">
+                 <?php if($bodycontent['isgynccologydata'] == 'Y' && $bodycontent['gynccologymasterdetails']->consent_formfile_upload != '' ){ ?>
                 <a href="<?php echo base_url(); ?>assets/gyn-document/<?php echo $bodycontent['gynccologymasterdetails']->consent_formfile_upload;  ?>" class="btn btn-primary" download>Download Document</a>
+                 <?php } ?>
+              </div>
+              <div class="col-sm-3" id="reccosentfile">
+                
               </div> 
 
              </div>
 
-           <?php } ?>
+          
 
              
                </div>                 
@@ -7436,7 +7596,7 @@
                       </div>
 
                       <div class="row clearfix" style="#border: 1px solid red;">
-                        <div class="col-sm-3">
+                        <!-- <div class="col-sm-3">
                           <div class="form-group form-float">
                           <div class="input-group">
                             <label class="form-label upText selectlabel" style="top: -17px;">Dosage</label>
@@ -7454,8 +7614,8 @@
                             </div>
                           </div>
                         </div>
-
-                        <div class="col-sm-3">
+ -->
+                       <!--  <div class="col-sm-3">
 
                           <div class="form-group form-float">
                             <div class="input-group " >
@@ -7474,7 +7634,16 @@
                             </div>
                           </div>
                         
-                        </div>
+                        </div> -->
+
+                         <div class="col-sm-6">
+                          <div class="form-group form-float">
+                            <div class="form-line ">
+                              <input type="text" class="form-control selpres" name="othermedinstruction" id="othermedinstruction" autocomplete="off" placeholder="" value="to continue" >
+                              <label class="form-label upText">Other Instruction</label>
+                            </div>
+                          </div>
+                      </div>
 
 
 
@@ -7493,7 +7662,7 @@
                           <div class="form-group">
                             <!-- <label class="form-label upText">Action</label> -->
                            <div class="icon-button-demo">
-                            <button type="button" class="btn btn-xs bg-light-green darkthmButton" id="addPresMedicine">
+                            <button type="button" class="btn btn-xs bg-light-green darkthmButton" id="gynaddPresMedicine" style="padding: 6px 37px;">
                               <span class="glyphicon glyphicon-plus" style="margin-top: 0px;"></span> Add
                             </button>
 
@@ -7535,8 +7704,9 @@
                           <th style="width:10%">Category</th>
                           <th style="width:10%">Medicine</th>
                           <th style="width:45%;text-align: center;">Instruction</th>
-                          <th style="width:5%;text-align: center;">Dos.</th>
-                          <th style="width:5%;text-align: center;">Freq.</th>
+                           <th style="width:10%;text-align: center;">Inst. Others</th>
+                         <!--  <th style="width:5%;text-align: center;">Dos.</th>
+                          <th style="width:5%;text-align: center;">Freq.</th> -->
                           <th style="width:5%;text-align: center;">Days</th>
                          
                           <th style="width:5%;align: right;">&nbsp;</th>
@@ -7569,8 +7739,15 @@
              <?php echo $prescriptionmedicine->med_instruction;?>               
       
              </td>
+
+              <td  class="presmedTd"> 
+             
+             <input type="hidden" name="presInstructionothers[]" id="presInstructionothers_<?php echo $presmedrow; ?>" value="<?php echo $prescriptionmedicine->med_instruction_other;?>">   
+             <?php echo $prescriptionmedicine->med_instruction_other;?>               
+      
+             </td>
             
-            <td class="presmedTd" style="text-align: center;"> 
+           <!--  <td class="presmedTd" style="text-align: center;"> 
              
                <input type="hidden" name="presdosage[]" id="presdosage_<?php echo $presmedrow; ?>" value="<?php echo $prescriptionmedicine->dosage;?>">   
                    <?php echo $prescriptionmedicine->dosage;?>                
@@ -7581,7 +7758,7 @@
                             <input type="hidden" name="presfrequency[]" id="presfrequency_<?php echo $presmedrow; ?>" value="<?php echo $prescriptionmedicine->frequency;?>">   
                                 <?php echo $prescriptionmedicine->frequency;?>                
 
-                            </td> 
+                            </td> --> 
                             <td style="text-align: center;" class="presmedTd"> 
                             
                               <input type="hidden" name="presdays[]" id="presdays_<?php echo $presmedrow; ?>" value="<?php echo $prescriptionmedicine->days;?>">   
@@ -7627,7 +7804,7 @@
                           <div class="col-sm-5">
 
                           <div class="form-group form-float">
-                              <div class="input-group" id="prescription_investigationpanel">
+                              <div class="input-group" id="prescription_investigationpaneldiv">
                                   <label class="form-label selectlabel" style="top:-17px !important;">Investigation Panel</label>
                                   <div id="prescription_investigationpaneldrp">
                                   <select name="prescription_investigationpanel[]" id="prescription_investigationpanel" class="form-control show-tick"  data-live-search="true" tabindex="-98"  multiple data-selected-text-format="count">
@@ -7959,23 +8136,37 @@
                                    Print Prescription
                                 </button>   -->
                                 <div class="formgap">
-                                        
-                                    <!-- <button type="button" class="btn bg-deep-purple waves-effect">
-                                      <i class="material-icons">print</i>&nbsp;Print Prescription
-                                    </button>  -->
+                                  <div class="row">
+                                    <div class="col-sm-6">
 
-
-                                  
-                                    <div class="dropzone dz-clickable">
+                                      <div class="dropzone dz-clickable">
                                         <div class="dz-message">
                                             <a href="<?php echo base_url(); ?>gynccology/print_prescription/<?php echo $bodycontent['caseID']; ?>" data-title="Print" target="_blank">  
                                                 <div class="drag-icon-cph">
                                                     <i class="material-icons">print</i>
                                                 </div>
-                                                <h3>Click to print prescription.</h3>
+                                                <h4>Click to print prescription.</h4>
                                             </a>
                                         </div>
                                     </div>
+                                      
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="dropzone dz-clickable">
+                                        <div class="dz-message">
+                                            <a href="<?php echo base_url(); ?>gynccology/preprint/<?php echo $bodycontent['caseID']; ?>" data-title="Print" target="_blank">  
+                                                <div class="drag-icon-cph">
+                                                    <i class="material-icons">print</i>
+                                                </div>
+                                                <h4>Click to print prescription(W/O Dr. Name).</h4>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    </div>
+                                  </div>
+                                                                   
+                                  
          
                                 </div>
 
@@ -7987,20 +8178,9 @@
 <!-- End Print Prescription -->
 
  
-
-
-
-
                         </form>
 					
 					
-                    
-
-                         	
-
-
-
-
                          </div> <!-- End of right side content-->
                
                            <!-- ============ end of left_tab_menu_1_section ========= -->

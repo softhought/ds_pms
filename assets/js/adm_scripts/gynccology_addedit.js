@@ -2,8 +2,11 @@ $(document).ready(function(){
 
  var basepath = $("#basepath").val();
 
-resetprevioussurgery(basepath);
-resetPlannedSurgery(basepath);
+
+ $(".wPaint-menu-icon-img").prop('disabled',true);
+
+//resetprevioussurgery(basepath);
+//resetPlannedSurgery(basepath);
 resetgynInvestigationpanelDropDown(basepath);
 Activechiefcomplaintform();
 
@@ -189,7 +192,7 @@ $(document).on('submit','#gynccologypatientBasicForm',function(event)
 
             var formDataserialize = $("#gynccologypatientBasicForm").serialize();
             formDataserialize = decodeURI(formDataserialize);
-            console.log(formDataserialize);
+           // console.log(formDataserialize);
 
             var formData = { formDatas: formDataserialize };
             $("#gynpatientbasicsavebtn").css('display', 'none');
@@ -266,12 +269,14 @@ $(document).on('submit','#GynccologyBasicRecordForm',function(event)
     {
         event.preventDefault();
 
+         
+
         $(".ischangechiefcomplaint").attr('disabled',false);
         
        
             var formDataserialize = $("#GynccologyBasicRecordForm").serialize();
             formDataserialize = decodeURI(formDataserialize);
-            console.log(formDataserialize);
+            //console.log(formDataserialize);
 
             var formData = { formDatas: formDataserialize };
             $(".gynccologysavebtn").css('display', 'none');
@@ -293,7 +298,10 @@ $(document).on('submit','#GynccologyBasicRecordForm',function(event)
                      //console.log(result);
                     
                     if (result.msg_status == 1) {
-                        imageupload(basepath);  
+                        imageupload(basepath); 
+                        $(".wPaint-menu-icon-name-save").click(); 
+                        $("#changepresur").val('N');
+                        $("#changeplandsur").val('N');     
                       
         	           $(".gynccologysavebtn").removeClass("btn-danger");
         	           $(".gynccologysavebtn").addClass("btn-primary");
@@ -438,20 +446,33 @@ $("#married_status").on('change',function(){
 $(document).on('click','.addPreviousSurgery',function(){
 
           // rowNoUpload++;
+        $("#othersurerr").css("border-bottom","1px solid #fdc8e3");
 
           var rowno=  $("#surgeryrowno").val();
           var surgeryID =  $("#surgeryID").val();
           var surgery_date =  $("#surgery_date").val();
+          var other_surgery =  $("#other_surgery").val();
+         var surgeryval = $("#surgeryID option:selected").text();
          
-       // alert(surgeryID);
+       // alert(other_surgery);
         //console.log(basepath);
         if(surgeryID!='0'){
+
+          if((surgeryID == '6' || surgeryval == 'Others Surgery') && other_surgery == ''){
+         
+             $("#previous_surgeryerr").removeClass("bordererror");
+             $("#othersurerr").css("border-bottom","1px solid red");
+             $("#other_surgery").focus();
+
+          }else{
+
+
         rowno++;
         $.ajax({
             type: "POST",
             url: basepath+'gynccology/addPreviousSurgeryDetail',
             dataType: "html",
-            data: {rowNo:rowno,surgeryID:surgeryID,surgery_date:surgery_date},
+            data: {rowNo:rowno,surgeryID:surgeryID,surgery_date:surgery_date,other_surgery:other_surgery,surgeryval:surgeryval},
             success: function (result) {
                 $("#surgeryrowno").val(rowno);
                 $("#detail_previousSurgery table").css("display","block"); 
@@ -462,7 +483,8 @@ $(document).on('click','.addPreviousSurgery',function(){
 
                 $('#surgeryID').val('0').change();
                 $('#surgery_date').val('').change();
-                resetprevioussurgery(basepath);
+                $("#changepresur").val('Y');
+                //resetprevioussurgery(basepath);
 
            
          
@@ -488,7 +510,7 @@ $(document).on('click','.addPreviousSurgery',function(){
             }
             }); /*end ajax call*/
 
-        }else{
+       } }else{
            
             $("#surgeryID").focus();
             $("#previous_surgeryerr").addClass("bordererror");
@@ -508,7 +530,8 @@ $(document).on('click','.addPreviousSurgery',function(){
 
         //$("tr#rowDocument_"+rowDtlNo[1]+"_"+rowDtlNo[2]).remove();
         $("tr#rowprevious_surgery_"+rowDtlNo[1]).remove();
-        resetprevioussurgery(basepath);
+        $("#changepresur").val('Y');
+        //resetprevioussurgery(basepath);
     });
 
 
@@ -517,21 +540,31 @@ $(document).on('click','.addPreviousSurgery',function(){
 $(document).on('click','.addSurgeryPlanned',function(){
 
           // rowNoUpload++;
-
+          $("#plansurgerror").css("border-bottom","1px solid #fdc8e3");
           var rowno=  $("#surgeryplannedrowno").val();
           var surgeryPlannedID =  $("#surgeryPlannedID").val();
           var surgery_planned_date =  $("#surgery_planned_date").val();
+          var other_surgeryplanned =  $("#other_surgery_planned").val();
+         var surgeryval = $("#surgeryPlannedID option:selected").text();
          
         //alert(surgeryPlannedID);
         //console.log(basepath);
         if(surgeryPlannedID!='0'){
+
+           if((surgeryPlannedID == '6' || surgeryval == 'Others Surgery') && other_surgeryplanned == ''){
+         
+             $("#surgery_plannederr").removeClass("bordererror");
+             $("#plansurgerror").css("border-bottom","1px solid red");
+             $("#other_surgery_planned").focus();
+
+          }else{
 
         rowno++;
         $.ajax({
             type: "POST",
             url: basepath+'gynccology/addPlannedSurgeryDetail',
             dataType: "html",
-            data: {rowNo:rowno,surgeryPlannedID:surgeryPlannedID,surgery_planned_date:surgery_planned_date},
+            data: {rowNo:rowno,surgeryPlannedID:surgeryPlannedID,surgery_planned_date:surgery_planned_date,other_surgeryplanned:other_surgeryplanned,surgeryval:surgeryval},
             success: function (result) {
                 $("#surgeryplannedrowno").val(rowno);
                 $("#detail_PlannedSurgery table").css("display","block"); 
@@ -542,7 +575,9 @@ $(document).on('click','.addSurgeryPlanned',function(){
 
                 $('#surgeryPlannedID').val('0').change();
                 $('#surgery_planned_date').val('').change();
-                resetPlannedSurgery(basepath);
+                $("#changeplandsur").val('Y');
+                //resetPlannedSurgery(basepath);
+
                 
 
            
@@ -569,7 +604,7 @@ $(document).on('click','.addSurgeryPlanned',function(){
             }
             }); /*end ajax call*/
 
-        }else{
+       } }else{
            
             $("#surgeryPlannedID").focus();
             $("#surgery_plannederr").addClass("bordererror");
@@ -589,7 +624,8 @@ $(document).on('click','.addSurgeryPlanned',function(){
 
         //$("tr#rowDocument_"+rowDtlNo[1]+"_"+rowDtlNo[2]).remove();
         $("tr#rowplanned_surgery_"+rowDtlNo[1]).remove();
-        resetPlannedSurgery(basepath);
+        $("#changeplandsur").val('Y');
+        //resetPlannedSurgery(basepath);
     });
 
  $(document).on('keyup paste change click','.gynccologyselpres',function(event){
@@ -1024,28 +1060,42 @@ $(".dayvalueCarryforward").on("keyup",function(){
 
 // start General Examination requried
 
-//comman for other tag using 
-
-$(".dispOther").change(function(event){
-
-  event.stopImmediatePropagation();
-
-var id = $(this).attr("id");
+$('#exam_chest').change(function(){
 
  var value = $(this).val();
+ 
 
- //alert("#"+id+"_other");
+  if(value == 'Other'){
 
- if(value == 'Other'){
-
-    $("#"+id+"_other").css("display","block");
+    $("#dispexamchesothers").css("display","block");
  }else{
 
-   $("#"+id+"_other").css("display","none");
+   $("#dispexamchesothers").css("display","none");
+   $("#exam_chest_other").val("");
+  
  }
-
+ 
 
 });
+
+$('#exam_cvs').change(function(){
+
+ var value = $(this).val();
+ 
+
+  if(value == 'Other'){
+
+    $("#dispcvsother").css("display","block");
+ }else{
+
+   $("#dispcvsother").css("display","none");
+   $("#exam_cvs_other").val("");
+  
+ }
+ 
+
+});
+
 
 
 //bmi calaculation 
@@ -1119,6 +1169,7 @@ $("#abdominal_exam").change(function(){
      $("#ascitesdata").css("display","none");
     $("#lumpdata").css("display","none");
     $(".tenderdata").css("display","block");
+     $("#gynlumpdrw").css('display','none');
     $(".alllumpValue").val("").change();
     $(".ascitesvalue").val("").change();
 
@@ -1127,6 +1178,7 @@ $("#abdominal_exam").change(function(){
        $("#ascitesdata").css("display","none");
       $(".tenderdata").css("display","none");
      $("#lumpdata").css("display","block");
+     $("#gynlumpdrw").css('display','block');
      $(".alltedval").val("N");
      $(".alltedval").prop("checked",false);
       $(".ascitesvalue").val("").change();
@@ -1135,6 +1187,7 @@ $("#abdominal_exam").change(function(){
       $(".tenderdata").css("display","none");
     $("#lumpdata").css("display","none");
     $("#ascitesdata").css("display","block");
+     $("#gynlumpdrw").css('display','none');
      $(".alltedval").val("N");
      $(".alltedval").prop("checked",false);
      $(".alllumpValue").val("").change();
@@ -1143,6 +1196,7 @@ $("#abdominal_exam").change(function(){
       $("#ascitesdata").css("display","none");
     $(".tenderdata").css("display","none");
     $("#lumpdata").css("display","none");
+     $("#gynlumpdrw").css('display','none');
     $(".alltedval").prop("checked",false);
      $(".alltedval").val("N");
     $(".alllumpValue").val("").change();
@@ -1278,8 +1332,8 @@ $(document).on("change keyup",".isChangeinv",function(event){
 
     }else{      
 
-            $("#prescription_investigationpanel").focus();
-            $("#prescription_investigationpanel").addClass("bordererror");
+            $("#prescription_investigationpaneldiv").focus();
+            $("#prescription_investigationpaneldiv").addClass("bordererror");
           
 
     }
@@ -1308,7 +1362,186 @@ $(document).on('click','.delPresGynInvestigationpanel',function(event){
 
 
 
+//file upload js
+
+$(document).on('change','.up', function(){
+            var names = [];
+            var length = $(this).get(0).files.length;
+                for (var i = 0; i < $(this).get(0).files.length; ++i) {
+                    names.push($(this).get(0).files[i].name);
+                }
+                // $("input[name=file]").val(names);
+                if(length>2){
+                  var fileName = names.join(', ');
+                  $(this).closest('.form-group').find('.form-control').attr("value",length+" files selected");
+                }
+                else{
+                    $(this).closest('.form-group').find('.form-control').attr("value",names);
+                }
+       });
+
+//for drawing
+
+       $('#wPaint').wPaint({
+          menuOffsetLeft: -35,
+          menuOffsetTop: -50,
+          saveImg: saveImg,
+          loadImgBg: loadImgBg,
+          loadImgFg: loadImgFg
+        });
+
+   //change in lump drwing
+
+   $("#changeImage").click(function(){
+
+
+      if($("#PreviousImg").is(":visible")){
+
+        $("#PreviousImg").css('display','none');
+        $("#creatImg").css('display','block');
+        $("#changeImage").text('Previous Image');
+        
+      }else{
+
+           $("#PreviousImg").css('display','block');
+           $("#creatImg").css('display','none');
+           $("#changeImage").text('Change Image');
+      }
+
+     
+
+
+   });
+
+
+   //add prescription medicine
+   
+    $(document).on('click','#gynaddPresMedicine',function(event){
+
+        event.stopImmediatePropagation();
+
+          // rowNoUpload++;
+
+          var rowno=  $("#presmedrow").val();
+          var medicine=  $("#prescription_medicine").val();
+         // var dosage=  $("#pres_medicine_dosage").val(); //commented on 18.11.2019
+         // var frequency=  $("#pres_medicine_frequency").val();
+          var days=  $("#pres_medicine_days").val();
+          var medinstruction=  $("#medinstruction").val();
+          var othermedinstruction=  $("#othermedinstruction").val();
+         console.log('medicine:'+medicine);
+           $("#prescription_medicineerr").removeClass("bordererror");
+
+          if (medicine!='0') {
+        console.log(rowno);
+        rowno++;
+        $.ajax({
+            type: "POST",
+            url: basepath+'patientcase/addPrescriptionMedicineDetails',
+            dataType: "html",
+            data: {rowNo:rowno,medicine:medicine,days:days,medinstruction:medinstruction,othermedinstruction:othermedinstruction},
+            success: function (result) {
+                $("#presmedrow").val(rowno);
+                $("#detail_presmed table").css("display","block"); 
+                $("#detail_presmed table tbody").append(result);   
+                $('select').selectpicker();
+              //  $(".demo-masked-input").inputmask();
+                var $demoMaskedInput = $('.demo-masked-input');
+               
+                $('#pres_medicine_days').val('');
+                $('#medinstruction').val('');
+                //$('#othermedinstruction').val('');
+                $('#prescription_medicine').val(0).change();
+                $('#pres_medicine_dosage').val('').change();
+                $('#pres_medicine_frequency').val('').change();
+               
+
+            //Time
+
+            $('.selecttime').bootstrapMaterialDatePicker
+            ({
+                date: false,
+                shortTime: true,
+                format: 'hh:mm a'
+            });
+        
+
+            
+         
+            }, 
+            error: function (jqXHR, exception) {
+              var msg = '';
+                if (jqXHR.status === 0) {
+                    msg = 'Not connect.\n Verify Network.';
+                } else if (jqXHR.status == 404) {
+                    msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status == 500) {
+                    msg = 'Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
+                    msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                    msg = 'Time out error.';
+                } else if (exception === 'abort') {
+                    msg = 'Ajax request aborted.';
+                } else {
+                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                }
+               // alert(msg);  
+            }
+            }); /*end ajax call*/
+
+    }else{      
+
+            $("#prescription_medicine").focus();
+            $("#prescription_medicineerr").addClass("bordererror");
+          
+
+    }
+  
+    }); // End Visiting Details
+
+//previous surgery    
+
+  $(document).on('change','#surgeryID',function(){
+
+
+    var value = $(this).val();
+    var text = $("#surgeryID option:selected").text();
+    if(value == 6 || text == 'Others Surgery'){
+
+      $("#dispothersurgery").css("display","block");
+    }else{
+       $("#dispothersurgery").css("display","none");
+       $("#other_surgery").val("");
+    }
+
+
+  });
+
+  //planned surgery    
+
+  $(document).on('change','#surgeryPlannedID',function(){
+
+
+    var value = $(this).val();
+    var text = $("#surgeryPlannedID option:selected").text();
+    if(value == 6 || text == 'Others Surgery'){
+
+      $("#dispothersurgeryplan").css("display","block");
+    }else{
+       $("#dispothersurgeryplan").css("display","none");
+       $("#other_surgery_planned").val("");
+    }
+
+
+  });  
+  
+
+           
+
 });
+
+
 
 
 
@@ -1558,6 +1791,24 @@ function imageupload(basepath){
                 success: function (result) {
                     //console.log(result);
                     if(result.msg_status == 1){
+
+                      if($("#info_leaflet").val() != ''){
+            
+                        $("#infoleflet").css('display','none');
+                        var infobody = '<a href="'+basepath+'assets/gyn-document/'+result.infofilename+'" class="btn btn-primary" download>Download Document</a>';
+                        $("#recinfoupl").append(infobody);
+                      }
+                      if($("#consent_form").val() != ''){
+
+                        $("#cosentupl").css('display','none');
+                        var cosentbody = '<a href="'+basepath+'assets/gyn-document/'+result.cosentfilename+'" class="btn btn-primary" download>Download Document</a>';
+                        
+                        $("#reccosentfile").append(cosentbody);
+                      }
+
+                      
+
+                     
                       $("#info_leaflet").val("");
                       $("#consent_form").val("");
 
@@ -1591,3 +1842,83 @@ function imageupload(basepath){
 
 }
 
+
+//for drawing
+
+ 
+
+function saveImg(image) {
+    var basepath = $("#basepath").val();
+    var caseID = $("#caseID").val();
+          var _this = this;
+                  //console.log(image); 
+       
+        if(validatecanvas(image)){
+          $.ajax({
+            type: 'POST',
+            url: basepath+'gynccology/uploaddrawing',
+            data: {image: image,caseID:caseID},
+            success: function (resp) {
+
+              // internal function for displaying status messages in the canvas
+              //_this._displayStatus('Image saved successfully'); //comment by anil
+
+              // doesn't have to be json, can be anything
+              // returned from server after upload as long
+              // as it contains the path to the image url
+              // or a base64 encoded png, either will work
+              resp = $.parseJSON(resp);
+
+              // update images array / object or whatever
+              // is being used to keep track of the images
+              // can store path or base64 here (but path is better since it's much smaller)
+             // images.push(resp.img);
+
+              // do something with the image
+              $('#wPaint-img').attr('src', image);
+            }
+          });
+        }
+        }
+
+        function loadImgBg () {
+
+          var basepath = $("#basepath").val();
+         var imag = $("#namedrwimage").val();
+
+          var images = [
+         basepath+'assets/gyn-lump-img/'+imag,
+           ];
+
+          // internal function for displaying background images modal
+          // where images is an array of images (base64 or url path)
+          // NOTE: that if you can't see the bg image changing it's probably
+          // becasue the foregroud image is not transparent.
+          this._showFileModal('bg', images);
+        }
+
+        function loadImgFg () {
+
+          var basepath = $("#basepath").val();
+          var imag = $("#namedrwimage").val();
+
+          var images = [
+         basepath+'assets/gyn-lump-img/'+imag,
+           ];
+
+          // internal function for displaying foreground images modal
+          // where images is an array of images (base64 or url path)
+          this._showFileModal('fg', images);
+        }
+
+
+  function validatecanvas(image){
+
+  var str = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAADICAYAAAAeGRPoAAABm0lEQVR4nO3BgQAAAADDoPlTX+EAVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACvARuiAAG7IxQSAAAAAElFTkSuQmCC'
+
+    if(image == str){
+       return false;
+    }else{
+      return true; 
+    }
+  }

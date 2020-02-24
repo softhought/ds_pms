@@ -1,8 +1,18 @@
+<style>
+  .bootstrap-tagsinput input {
+    border: 1px solid #d7d7d7 !important;
+}
 
+.advCssdrop{
+   border: 1px solid #fdc8e3 !important;
+}
+
+</style>
                   
                         <?php
 						$adviceData=$adviceMasterData;
                           $lebSl=1;
+                           $optSl=0;
                          foreach ($adviceData as $value) {
                              
                             $advsl=1;
@@ -22,8 +32,11 @@
                        ?>:</label>
                        <?php
                        $lebelHeadCount=0;
+
+                      
                         foreach ($value['adviceList'] as $advlistrow) {
                           $isVisable=0;
+                         
                           
                           $is_week_check=$advlistrow->is_week_check;
                           $min_week=$advlistrow->min_week;
@@ -68,13 +81,30 @@
                                 <input type="hidden" id="is_advice_option[]" name="is_advice_option[]" value="<?php echo $advlistrow->is_advice_option;?>">
 
                            
-                        <?php if($advlistrow->is_advice_option=="Y"){?>
+                        <?php if($advlistrow->is_advice_option=="Y"){
+                           $optSl++;
+                          $select_advOption=explode(",",(string)$advlistrow->advice_options); 
+
+                          ?>
                             <div class="row clearfix" >
-                            <div class="col-sm-1"></div>
+                            <div class="col-sm-2 ">
+                            <div class="advCssdrop">
+                              <select name="advice_option_dropdown[]" id="adviceoptiondropdown_<?php echo $optSl;?>" class="form-control selpres show-tick advOptionCls"  data-live-search="true" tabindex="-98"  multiple data-selected-text-format="count">
+                                <?php
+                                foreach ($select_advOption as $key => $value) {?>
+                                  <option value="<?php echo $value;?>"><?php echo $value;?></option>
+
+                               <?php }
+
+                                ?>
+                                                            
+                                    </select> 
+                                    </div>
+                            </div>
                             <div class="col-sm-10" style="margin-bottom: 0px;">
                                   <div class="form-group demo-tagsinput-area">
                                     <div class="form-line">
-                                        <input class="advoptiontag" style="overflow: hidden;" type="text" name="advice_options[]" class="form-control" data-role="tagsinput" value="<?php echo $advlistrow->advice_options;?>">
+                                        <input class="advoptiontag" style="overflow: hidden;" type="text" name="advice_options[]"  id="tagsinputadv_<?php echo $optSl;?>" class="form-control" data-role="tagsinput" value="<?php //echo $advlistrow->advice_options;?>">
                                     </div>
                                 </div>
 
@@ -100,5 +130,5 @@
                         ?>
                    
                         
-
+<input type="hidden" value="<?php echo @$weeks; ?>"> 
              

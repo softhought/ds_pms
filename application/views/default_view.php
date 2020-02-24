@@ -142,8 +142,6 @@
     <!-- Bootstrap Datepicker Plugin Js -->
     <script src="<?php echo(base_url());?>assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 
-   
-
     <!-- Custom Js -->
     <script src="<?php echo(base_url());?>assets/js/admin.js"></script>
     <script src="<?php echo(base_url());?>assets/js/pages/forms/form-wizard.js"></script>
@@ -152,6 +150,10 @@
     <script src="<?php echo(base_url());?>assets/js/pages/forms/basic-form-elements.js"></script>
 
   <!--   <script src="<?php echo(base_url());?>assets/js/pages/forms/advanced-form-elements.js"></script> -->
+
+ <!--  input  timepicker -->
+     <link href="<?php echo(base_url());?>assets/css/jquery.timepicker.min.css" rel="stylesheet">
+    <script src="<?php echo(base_url());?>assets/js/jquery.timepicker.min.js"></script>
 
 
       <!-- Jquery DataTable Plugin Js -->
@@ -175,8 +177,26 @@
     <script src="<?php echo(base_url());?>assets/js/jquery.dropdown.js"></script>
     <script src="<?php echo(base_url());?>assets/js/mock.js"></script>
 
-  <!-- comman js for comman function are used -->
-     <script src="<?php echo(base_url());?>assets\js\adm_scripts\comman.js"></script>
+  <!--  added by anil for drawing -->
+
+   <!-- jQuery UI -->
+      <script type="text/javascript" src="<?php echo base_url(); ?>assets/wPaint/lib/jquery.ui.core.1.10.3.min.js"></script>
+      <script type="text/javascript" src="<?php echo base_url(); ?>assets/wPaint/lib/jquery.ui.widget.1.10.3.min.js"></script>
+      <script type="text/javascript" src="<?php echo base_url(); ?>assets/wPaint/lib/jquery.ui.mouse.1.10.3.min.js"></script>
+      <script type="text/javascript" src="<?php echo base_url(); ?>assets/wPaint/lib/jquery.ui.draggable.1.10.3.min.js"></script>
+      
+      <!-- wColorPicker -->
+      <link rel="Stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/wPaint/lib/wColorPicker.min.css" />
+      <script type="text/javascript" src="<?php echo base_url(); ?>assets/wPaint/lib/wColorPicker.min.js"></script>
+
+      <!-- wPaint -->
+      <link rel="Stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/wPaint/wPaint.min.css" />
+      <script type="text/javascript" src="<?php echo base_url(); ?>assets/wPaint/wPaint.min.js"></script>
+      <script type="text/javascript" src="<?php echo base_url(); ?>assets/wPaint/plugins/main/wPaint.menu.main.min.js"></script>
+      <script type="text/javascript" src="<?php echo base_url(); ?>assets/wPaint/plugins/text/wPaint.menu.text.min.js"></script>
+      <script type="text/javascript" src="<?php echo base_url(); ?>assets/wPaint/plugins/shapes/wPaint.menu.main.shapes.min.js"></script>
+      <script type="text/javascript" src="<?php echo base_url(); ?>assets/wPaint/plugins/file/wPaint.menu.main.file.min.js"></script>
+
     
 
     <style>
@@ -333,7 +353,7 @@
                     <!-- Call Search -->
                     <li><a href="javascript:;" class="js-search" data-close="true">
                         <!-- <i class="material-icons">search</i> -->
-                       <b> Dr. Sutapa Sen </b></a></li>
+                       <b><?php echo $username; ?> </b></a></li>
                     
                   
                    <!--  <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li> -->
@@ -343,6 +363,11 @@
                                     </a>
                                     <ul class="dropdown-menu pull-right">
                                         <li><a href="<?php echo base_url(); ?>changepassword" class="js-search" data-close="true"> Change Password</a></li>
+                                       <?php if($userrole != 5){ ?>
+                                        <li><a href="<?php echo base_url(); ?>Createnewuser" class="js-search" data-close="true"> Create New User</a></li>
+
+                                    <?php } ?>
+
                                         <li><a href="<?php echo base_url(); ?>logout" class="js-search" data-close="true"> Logout</a></li>
                                        
                                     </ul>

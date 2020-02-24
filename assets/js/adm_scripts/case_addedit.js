@@ -1,5 +1,15 @@
 $(document).ready(function(){
 
+  $('input.timepicker2').timepicker();  
+
+   $('.selecttime').bootstrapMaterialDatePicker
+            ({
+                date: false,
+                shortTime: true,
+                format: 'hh:mm a'
+            });
+  
+
 $(document).on('click','#antenantal_left_tab_menu_2',function(e){
      e.preventDefault();
     $(".removezindex").css('z-index','unset');
@@ -52,13 +62,42 @@ $(document).on('click','#antenantal_left_tab_menu_2',function(e){
                     noneSelectedText : '&nbsp;' // by this default 'Nothing selected'
                 });
 
+  
 
-$("#antenantalbtn").addClass("bg-teal");
-$("#antenantalbtn_section").css("display", "block");
-$("#antenantal_left_tab_menu_1").addClass("bg-light-green");
-$("#antenantal_left_tab_menu_1_section").css("display", "block");
+var callfrom = $("#callfrom").val();
+
+if(callfrom == 'preop'){
+
+   
+    $("#preopbtn").addClass("bg-teal");
+    $("#preopbtn_section").css("display", "block");
+    $("#preop_left_tab_menu_1").addClass("bg-light-green");
+    $("#preop_left_tab_menu_1_section").css("display", "block");
+
+}else if(callfrom == 'discharge'){
+
+    $("#dischargebtn").addClass("bg-teal");
+    $("#dischargebtn_section").css("display", "block");
+    $("#discharge_left_tab_menu_1").addClass("bg-light-green");
+    $("#discharge_left_tab_menu_1_section").css("display", "block");
+}else{
+
+     $("#antenantalbtn").addClass("bg-teal");
+    $("#antenantalbtn_section").css("display", "block");
+    $("#antenantal_left_tab_menu_1").addClass("bg-light-green");
+    $("#antenantal_left_tab_menu_1_section").css("display", "block");
+}
+  
+   
+
+// var varil = 'a';
+// getsel(varil);
 
 CallResetAdviceData(basepath);
+getpreopview(basepath,callfrom);
+getdischargeview(basepath,callfrom);
+
+
 
  // $('#investallTable').DataTable(
  //    {
@@ -136,11 +175,15 @@ CallResetAdviceData(basepath);
         }
     });
 
+       
+
  /* Top Tab button on click */
 
  $(document).on('click','.tabtnnonclck',function(){
-
+    
  	var btnid= $(this).attr('id');
+
+    
  	$(".tabbtn").removeClass("bg-teal");
  	$(".tabbtn").addClass("tabtnnonclck");
 
@@ -150,19 +193,38 @@ CallResetAdviceData(basepath);
     $(".treatmentsection").css("display", "none");
 
     $("#"+btnid+"_section").css("display", "block");
+   
+    
+    if(btnid == 'antenantalbtn'){
+
+       
+            $('#antenantal_left_tab_menu_1').click();
+       
+    }else if(btnid == 'preopbtn'){
+        
+            $('#preop_left_tab_menu_1').click();
+       
+    }else if(btnid == 'dischargebtn'){
+        
+            $('#discharge_left_tab_menu_1').click();
+       
+    }
+
 
 
    
 });
 
+
+ 
  /* Left Tab button on click*/
 
  $(document).on('click','.tab_lf_btn',function(){
 
  	var btnid= $(this).attr('id');
- 	$(".tab_lf_btn").removeClass("bg-light-green");
+     $(".tab_lf_btn").removeClass("bg-light-green");
  //	$(".tab_lf_btn").addClass("lefttabtnnonclck");
-
+   
  //	$("#"+btnid).removeClass("tab_lf_btn");
  	$("#"+btnid).addClass("bg-light-green");
 
@@ -1251,10 +1313,11 @@ $(document).on('change','.otheranomalyckbx',function(event){
 
           var rowno=  $("#presmedrow").val();
           var medicine=  $("#prescription_medicine").val();
-          var dosage=  $("#pres_medicine_dosage").val();
-          var frequency=  $("#pres_medicine_frequency").val();
+         // var dosage=  $("#pres_medicine_dosage").val(); //commented on 18.11.2019
+         // var frequency=  $("#pres_medicine_frequency").val();
           var days=  $("#pres_medicine_days").val();
           var medinstruction=  $("#medinstruction").val();
+          var othermedinstruction=  $("#othermedinstruction").val();
          console.log('medicine:'+medicine);
            $("#prescription_medicineerr").removeClass("bordererror");
 
@@ -1265,7 +1328,7 @@ $(document).on('change','.otheranomalyckbx',function(event){
             type: "POST",
             url: basepath+'patientcase/addPrescriptionMedicineDetails',
             dataType: "html",
-            data: {rowNo:rowno,medicine:medicine,dosage:dosage,frequency:frequency,days:days,medinstruction:medinstruction},
+            data: {rowNo:rowno,medicine:medicine,days:days,medinstruction:medinstruction,othermedinstruction:othermedinstruction},
             success: function (result) {
                 $("#presmedrow").val(rowno);
                 $("#detail_presmed table").css("display","block"); 
@@ -1276,6 +1339,7 @@ $(document).on('change','.otheranomalyckbx',function(event){
                
                 $('#pres_medicine_days').val('');
                 $('#medinstruction').val('');
+                //$('#othermedinstruction').val('');
                 $('#prescription_medicine').val(0).change();
                 $('#pres_medicine_dosage').val('').change();
                 $('#pres_medicine_frequency').val('').change();
@@ -1580,13 +1644,16 @@ $(document).on('change','.otheranomalyckbx',function(event){
        var callfrom="Reset Advice";
        $(".advice_area").html("");
 
-       var lmp_date = $('#lmp_date').val();
+       //var lmp_date = $('#lmp_date').val();
+       var seleddbyusg_date = $('#seleddbyusg_date').val();
+       var edd_week = $('#edd_week').val() || 0;
+       var edd_days = $('#edd_days').val() || 0;
 
        $.ajax({
         type: "POST",
         url: basepath+'patientcase/resetAdviceData',
         dataType: "html",
-        data: {callfrom:callfrom,lmp_date:lmp_date},
+        data: {callfrom:callfrom,seleddbyusg_date:seleddbyusg_date,edd_week:edd_week,edd_days:edd_days},
         success: function (result) {
             
            
@@ -1884,7 +1951,216 @@ $(document).on('change','.otheranomalyckbx',function(event){
 
  });    
 
+$(document).on("change"," .addcss",function(event){
+    event.stopImmediatePropagation();
 
+    var value = $(this).val();
+
+    if(value == '26'){
+
+        $('button[data-id = prescription_investigation]').css({'white-space':'inherit','height':'100%','overflow':'hidden'});
+
+    }else{
+
+         $('button[data-id = prescription_investigation]').css({'white-space':'nowrap','height':'100%','overflow':'hidden'});
+    }
+
+   
+
+});
+
+
+
+$(document).on('change','.advOptionCls',function(event){
+     event.stopImmediatePropagation();
+        
+        var currRowID = $(this).attr('id');
+        console.log('currow : '+currRowID);
+        var rowDtlNo = currRowID.split('_');
+
+          var advoption = "";
+
+          var flag=1;
+
+        $.each($("#"+currRowID+" option:selected"), function(){            
+
+         if (flag==1) {
+            advoption+=$(this).val();flag++;
+         }else{
+            advoption+=","+$(this).val();
+         }
+
+       
+
+        });
+
+        console.log(advoption);
+         $("#tagsinputadv_"+rowDtlNo[1]).val(advoption);
+         $("#tagsinputadv_"+rowDtlNo[1]).tagsinput('add', advoption, {preventPost: true});
+   $("input.advoptiontag").tagsinput('items');    
+
+
+});
+
+
+/* Diseases in Medical History add more */
+
+$(document).on('click','.addMorediseases',function(){
+
+          // rowNoUpload++;
+         
+          var rowno=  $("#diseasesrowno").val();
+          var diseasesID =  $("#seldiseasesID").val();
+
+          var otherdiseases = $("#otherdiseases").val();
+          var diseases_years =  $("#diseases_years").val();
+         
+         
+       // alert(surgeryID);
+        //console.log(basepath);
+        if(diseasesID!=''){
+        rowno++;
+        $.ajax({
+            type: "POST",
+            url: basepath+'patientcase/addDiseasesDetail',
+            dataType: "html",
+            data: {rowNo:rowno,diseasesID:diseasesID,diseases_years:diseases_years,otherdiseases:otherdiseases},
+            success: function (result) {
+                $("#diseasesrowno").val(rowno);
+                $("#detail_diseases table").css("display","block"); 
+                $("#detail_diseases table tbody").append(result);   
+                $('select').selectpicker();
+              //  $(".demo-masked-input").inputmask();
+                var $demoMaskedInput = $('.demo-masked-input');
+
+                $('#seldiseasesID').val('').change();
+                $('#diseases_years').val('').change();
+                $('#otherdiseases').val('').change();
+                
+
+           
+         
+            }, 
+            error: function (jqXHR, exception) {
+              var msg = '';
+                if (jqXHR.status === 0) {
+                    msg = 'Not connect.\n Verify Network.';
+                } else if (jqXHR.status == 404) {
+                    msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status == 500) {
+                    msg = 'Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
+                    msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                    msg = 'Time out error.';
+                } else if (exception === 'abort') {
+                    msg = 'Ajax request aborted.';
+                } else {
+                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                }
+               // alert(msg);  
+            }
+            }); /*end ajax call*/
+
+        }else{
+           
+            $("#seldiseasesID").focus();
+            $("#sel_diseaseserr").addClass("bordererror");
+           
+        }
+  
+    });
+
+// Delete diseases Table Row
+
+    $(document).on('click','.delPrediseases',function(){
+        
+        var currRowID = $(this).attr('id');
+        var rowDtlNo = currRowID.split('_');
+       // console.log(rowDtlNo[1]);
+        console.log(currRowID);
+
+        //$("tr#rowDocument_"+rowDtlNo[1]+"_"+rowDtlNo[2]).remove();
+        $("tr#rowpre_diseases_"+rowDtlNo[1]).remove();
+        
+    });
+
+$("#seldiseasesID").change(function(){
+
+
+  var value = $(this).val();
+ 
+
+   if(value == '12'){
+
+      $("#other_diseases").css("display","block");
+   }else{
+    $("#other_diseases").css("display","none");
+   }
+
+    });
+
+
+//add for reset time in prescription tab
+
+$(".reset_time").click(function(){
+
+$("#pretimefrom").val("");
+
+
+});
+
+//added by anil on 10-12-2019 for dignosis summary
+
+$(".changeValues").click(function(){
+
+  var str = $(this).attr('id');
+  var idval = str.split('_');
+  var dignosis = $(this).attr('data-digname');
+
+
+  if($(this).prop('checked')==true){
+
+    $("#dignosis_checkvalue_"+idval[2]).val('Y');
+
+    if(dignosis == 'Others'){
+
+        $("#Otherdig_"+idval[2]).css("display","block");
+
+    }
+
+  }else{
+
+     $("#dignosis_checkvalue_"+idval[2]).val('N');
+     if(dignosis == 'Others'){
+
+        $("#otherdiagnosis_"+idval[2]).val('');
+
+        $("#Otherdig_"+idval[2]).css("display","none");
+     }
+     
+  }
+ 
+
+});
+
+$(document).on('click','.digdatachg',function(){
+
+  $('#isDignosisChange').val('Y');
+
+
+});
+
+
+$('.redirectbtn').click(function(){
+
+    var url = $(this).attr('data-url');
+
+    window.location.href=url;
+});
+
+  
+  
 
 }); // end of document ready
 
@@ -2407,11 +2683,13 @@ function formatPrescription(callback, id, basepath) {
 
 
             });
-         
+
+          tbody4 = '';
+          var thead4 = '';
           if(data['investigation'].length > 0){
             var thead4 = '<tr class="expandrowDetails"><th colspan="5" style="width:10%;">Investigation</th></tr>'; 
           }else{
-            var tbody4 = '';
+            
            }
             $.each(data['investigation'], function(i, datas) {
 
@@ -2844,13 +3122,15 @@ function CallResetAdviceData(basepath){
 
        // comment lmp_date because we are using on date usg
        //var lmp_date = $('#lmp_date').val();
-       var lmp_date = $('#seleddbyusg_date').val();
+       var seleddbyusg_date = $('#seleddbyusg_date').val();
+       var edd_week = $('#edd_week').val() || 0;
+       var edd_days = $('#edd_days').val() || 0;
 
        $.ajax({
         type: "POST",
         url: basepath+'patientcase/resetAdviceData',
         dataType: "html",
-        data: {callfrom:callfrom,lmp_date:lmp_date},
+        data: {callfrom:callfrom,seleddbyusg_date:seleddbyusg_date,edd_week:edd_week,edd_days:edd_days},
         success: function (result) {
             
            
@@ -2941,4 +3221,124 @@ function addusgdatingscan(basepath,seleddbyusg_date){
             }); /*end ajax call*/
 
 }
+
+
+//Per op data preview
+
+function getpreopview(basepath,callfrom){
+
+
+ var caseID = $('#caseID').val();
+ var occupation = $('#wifeoccupation option:selected').text();
+ var bloodgroup = $('#wifebloodgroup option:selected').text();
+
+  
+   $("#preoploderbtn").css("display","block");
+
+
+
+       $.ajax({
+            type: "POST",
+            url: basepath+'patientcase/view_preop',
+            dataType: "html",
+            data: {caseID:caseID,occupation:occupation,bloodgroup:bloodgroup},
+            success: function (result) {
+                
+                $("#preopbtn_section").html(result);
+
+                if(callfrom == 'preop'){
+                    $('#preop_left_tab_menu_1').click();
+                    $('#antenantalbtn').addClass('tabtnnonclck');
+                }
+
+                
+                $("#preoploderbtn").css("display","none");
+
+           
+         
+            }, 
+            error: function (jqXHR, exception) {
+              var msg = '';
+                if (jqXHR.status === 0) {
+                    msg = 'Not connect.\n Verify Network.';
+                } else if (jqXHR.status == 404) {
+                    msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status == 500) {
+                    msg = 'Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
+                    msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                    msg = 'Time out error.';
+                } else if (exception === 'abort') {
+                    msg = 'Ajax request aborted.';
+                } else {
+                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                }
+               // alert(msg);  
+            }
+
+            }); /*end ajax call*/
+   
+
+
+
+
+}
+
+//discharge data preview
+
+function getdischargeview(basepath,callfrom){
+
+
+ var caseID = $('#caseID').val();
+ //var occupation = $('#wifeoccupation option:selected').text();
+ var bloodgroup = $('#wifebloodgroup option:selected').text();
+
+
+
+       $.ajax({
+            type: "POST",
+            url: basepath+'patientcase/viewdischarge',
+            dataType: "html",
+            data: {caseID:caseID,bloodgroup:bloodgroup},
+            success: function (result) {
+                
+                $("#dischargebtn_section").html(result);
+               
+                 if(callfrom == 'discharge'){
+
+                    $('#discharge_left_tab_menu_1').click();
+                    $('#antenantalbtn').addClass('tabtnnonclck');
+                }
+           
+         
+            }, 
+            error: function (jqXHR, exception) {
+              var msg = '';
+                if (jqXHR.status === 0) {
+                    msg = 'Not connect.\n Verify Network.';
+                } else if (jqXHR.status == 404) {
+                    msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status == 500) {
+                    msg = 'Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
+                    msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                    msg = 'Time out error.';
+                } else if (exception === 'abort') {
+                    msg = 'Ajax request aborted.';
+                } else {
+                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                }
+               // alert(msg);  
+            }
+
+            }); /*end ajax call*/
+   
+
+
+
+
+}
+
 

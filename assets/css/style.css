@@ -8481,10 +8481,6 @@ label {
   display: none;
 }
 
-#infatelity_case_div,#Inf_new_patient_div,#Inf_existing_patient_div,.Infnewundertreatsec{
-  display: none;
-}
-
 .shadowUnset{
  box-shadow: unset !important; 
 }
@@ -8580,5 +8576,47 @@ label {
   border-color: black;
   border-top: hidden;
   border-bottom: hidden;
+}
+
+
+/*add new css by anil on 23-12-2019*/
+
+.it .btn-orange
+{
+    background-color: blue;
+    border-color: #777!important;
+    color: #777;
+    text-align: left;
+    width:100%;
+}
+.it input.form-control
+{
+    
+    border:none;
+    margin-bottom:0px;
+    border-radius: 0px;
+    border-bottom: 1px solid #ddd;
+    box-shadow: none;
+}
+.it .form-control:focus
+{
+    border-color: #ff4d0d;
+    box-shadow: none;
+    outline: none;
+}
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
 }
 

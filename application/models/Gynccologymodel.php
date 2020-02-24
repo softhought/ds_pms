@@ -273,4 +273,84 @@ public function getPreviousSurgeryWhereIn($surgeryIDs){
   }
 
 
+  public function getprintSurgerydtl($where){
+
+  	$data = array();
+		
+		
+		$query = $this->db->select("surgery_details.*,surgery_master.surgery_name")
+				          ->from('surgery_details')
+				          ->join('surgery_master','surgery_master.surgery_id = surgery_details.surgery_mst_id','INNER')
+				          ->where($where)
+		                  ->get();
+		#echo $this->db->last_query();
+		if($query->num_rows() > 0) 
+		   {
+				foreach($query->result() as $rows)
+				{
+					$data[] = $rows;
+				}
+		   }
+		   return $data;
+
+
+  }
+
+  public function getcheifcomplaintdtl($table,$caseID){
+
+  	$data = array();
+	
+	$where = array(''.$table.'.case_master_id'=>$caseID);	
+		
+		$query = $this->db->select("
+			                ".$table.".*,
+			                gynccology_chief_complaints_details.year as complaintyear,
+			                gynccology_chief_complaints_details.month as complaintmonth,
+			                gynccology_chief_complaints_details.day as complaintday,
+
+			                ")
+				          ->from($table)
+				          ->join('gynccology_chief_complaints_details',''.$table.'.complaint_details_id = gynccology_chief_complaints_details.id','INNER')
+				          ->where($where)
+				          ->get();
+	 # echo $this->db->last_query();
+		if($query->num_rows() > 0) 
+		   {
+				foreach($query->result() as $rows)
+				{
+					$data = $rows;
+				}
+		   }
+		   return $data;
+
+
+  }
+
+
+  public function getlastgyninvestigation($caseID){
+
+  	$data = array();
+		
+    $where = array('case_master_id'=>$caseID);		
+		
+	$query = $this->db->select("*")
+				          ->from('gynaaecology_investigation')
+				          ->where($where)
+				          ->order_by("id","desc")
+				          ->limit(1)
+		                  ->get();
+		#echo $this->db->last_query();
+		if($query->num_rows() > 0) 
+		   {
+				foreach($query->result() as $rows)
+				{
+					$data = $rows;
+				}
+		   }
+		   return $data;
+
+
+  }
+
+
 }

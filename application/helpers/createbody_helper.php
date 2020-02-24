@@ -12,6 +12,8 @@ if ( ! function_exists('createbody_method'))
 	 $CI->load->model('menumodel','',TRUE);
 	 $CI->load->model('login_model','',TRUE);
 	 $CI->load->library('template');
+	 $CI->load->library('session');
+     $CI->load->model('commondatamodel','commondatamodel',TRUE);
 	 /* leftmenu */
 	
 	 $left_menu = $CI->menumodel->getAllAdministrativeMenu('menu_master');
@@ -20,6 +22,21 @@ if ( ! function_exists('createbody_method'))
 	 $data['bodyview'] = $body_content_page;
 	 $data['leftmenusidebar'] = '';
 	 $data['headermenu'] = $body_content_header;
+     $session = $CI->session->userdata('user_data');
+     $whereId = array('user_id'=>$session['userid']);
+     $data['userrole'] = $CI->commondatamodel->getSingleRowByWhereCls('user_master',$whereId)->user_role;
+
+     if($data['userrole'] == 5){
+
+
+     	$data['username'] = $CI->commondatamodel->getSingleRowByWhereCls('user_master',$whereId)->user_name;
+     	
+     }else{
+
+     	$wheredocId = array('doctor_id'=>$session['userid']); 
+     	$data['username'] = $CI->commondatamodel->getSingleRowByWhereCls('doctor_master',$wheredocId)->doctor_name;
+
+     }
 
 	
 	 $CI->template->setHeader($heared_menu_content);

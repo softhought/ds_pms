@@ -50,12 +50,12 @@
 	}
         .demo_font{
             font-family:Verdana, Geneva, sans-serif;
-		font-size:10px;	
+		       font-size:13px;	
         }
 
         .spanhead{
         	text-decoration: underline;
-            font-size: 13px;
+            font-size: 16px;
 
         }
 
@@ -153,7 +153,7 @@ div.footer {
 
     <hr>
  
-    <div style="text-align:right;font-size:10px;"><span >Case No:<?php
+    <div style="text-align:right;font-size:12px;"><span >Case No:<?php
                             if($patientCaseData){
                                     echo $patientCaseData->case_no;
                                     
@@ -173,7 +173,7 @@ div.footer {
                  
         ?>
 
-    	<table width="100%"   class="demo_font" style="margin-left: 40px;margin-top: 10px;" >
+    	<table width="100%"   class="demo_font" style="margin-left: 40px;margin-top: 10px;font-size: 13px;" >
     		<tr>
     			<td width="7%">Name : </td>
     			<td width="35%"><?php echo $patientmasterData->patientname;?></td>
@@ -200,7 +200,7 @@ div.footer {
     		</tr>
     		<tr>
     			<td width="15%">Address :</td>
-    			<td colspan="1"><?php echo $patientmasterData->address;?></td>
+    			<td colspan="2" style="word-break: break-all;"><?php echo $patientmasterData->address;?></td>
     		</tr>
     		<tr>
     			<td colspan="3">&nbsp;</td>
@@ -261,7 +261,7 @@ div.footer {
         <?php if(!empty($antenantalCaseData)){ ?>    
     	<span class="spanhead">History Summary :</span>
     <?php } ?>
-    	<table width="100%"   class="demo_font" style="margin-left: 40px;margin-top: 10px;" >
+    	<table width="100%"   class="demo_font" style="margin-left: 40px;margin-top: 10px;font-size: 12px;" >
             
             <?php ?>
 
@@ -283,14 +283,14 @@ div.footer {
             <?php if($antenantalCaseData->usg_date!=""){ ?>    
            
                 <td colspan="2">EDD BY USG :  <?php echo date('d-m-Y',strtotime($antenantalCaseData->usg_date));
-                if($antenantalCaseData->usg_week !="0"){ echo  '( by USG done at '.$antenantalCaseData->usg_week.' weeks ';if($antenantalCaseData->usg_days =="0"){echo ' )'; } }if($antenantalCaseData->usg_days !="0"){ echo $antenantalCaseData->usg_days.' and days )'; }?></td>
+                if($antenantalCaseData->usg_week !="0"){ echo  '(by USG done at '.$antenantalCaseData->usg_week.' wks ';if($antenantalCaseData->usg_days =="0"){echo ' )'; } }if($antenantalCaseData->usg_days !="0"){ echo '& ';echo $antenantalCaseData->usg_days.' days)'; }?></td>
                 <td> </td>
             
             <?php } ?>
             </tr>
 
             <tr>
-                <?php if($antenantalCaseData){?>
+                <?php if($antenantalCaseData){ ?>
     			<td>&nbsp;G&nbsp;<sub style="font-size: 7px;"><?php echo $total_parity; ?></sub>&nbsp;P&nbsp;<sub style="font-size: 7px;"><?php echo $antenantalCaseData->parity_term_delivery.' + '.$antenantalCaseData->parity_preterm.' + '.$antenantalCaseData->parity_abortion.' + '.$antenantalCaseData->parity_issue; ?></sub>
                     &emsp;&emsp;</td>
                 <?php } ?>
@@ -312,11 +312,11 @@ div.footer {
             <?php }} ?>
 
            <?php  if($total_suction!=0){ 
-            if(!empty($lastchildBirth->year)){
+            if(!empty($LastSuctionEvacatuion)){
 
-            if($lastchildBirth->year != ''){
+            if($LastSuctionEvacatuion->year != ''){
                 $curyear = date("Y"); 
-             $backyear =  $curyear - $lastchildBirth->year;
+             $backyear =  $curyear - $LastSuctionEvacatuion->year;
              $backyte = '('. $backyear.' years back)';
          }else{
 
@@ -330,7 +330,7 @@ div.footer {
 
             ?> 
 
-                <td>No. Of Having Previous Suction Evacuation :  <?php echo $total_suction.$backyte;?></td>
+                <td>No. Of  Previous Suction Evacuation :  <?php echo $total_suction.$backyte;?></td>
                            
             <?php } ?>
 
@@ -341,14 +341,14 @@ div.footer {
 
              <?php if($total_cesarean!=0){ ?>    
            
-                <td>No. Of Having Previous CS :  <?php echo $total_cesarean;?>&emsp;&emsp;</td>
+                <td>No. Of  Previous CS :  <?php echo $total_cesarean;?>&emsp;&emsp;</td>
                
             
             <?php } ?>
 
              <?php if($total_ND!=0){ ?>    
            
-                <td>No. Of Having Previous ND :  <?php echo $total_ND;?>&emsp;&emsp;</td>
+                <td>No. Of  Previous ND :  <?php echo $total_ND;?>&emsp;&emsp;</td>
                
             
             <?php } ?>
@@ -360,14 +360,24 @@ div.footer {
                       
             
             <?php  if(!empty($lastchildBirth)){
-                            
+                   if ($lastchildBirth->year!='') {
+                       
+                     
+                               
             ?>
     		<tr>
-    			<td>Last child birth :  <?php echo $lastchildBirth->year;?></td>
+    			<td>Last child birth :  <?php 
+          $currentYear=date('Y');
+          $lastBirthYear=$lastchildBirth->year;
+          $yearDiff=($currentYear-$lastBirthYear);
+
+          echo $yearDiff." years back.";
+
+          ?></td>
     			<td> </td>
     		</tr>
     		<?php
-             } 
+              } }
             ?>
             
             <?php if($antenantalCaseData){
@@ -392,7 +402,7 @@ div.footer {
             <?php }?>
 
                        
-            <?php if ($previousChildHistory) {
+            <?php if (!empty($previousChildHistory)) {
             ?>
 
     		<tr>
@@ -408,75 +418,59 @@ div.footer {
 
 
 		if ($previousChildHistory) { ?>
-             <div style="margin-left:180px;word-wrap: break-word;font-size:10px;margin-top:-15px;">
-        <?php
+             <div style="margin-left:195px;word-wrap: break-word;font-size:13px;margin-top:-19px;">
+        <?php $count = 1;
                 foreach ($previousChild as $previouschildrow) {
+               
+                 if($count == 1){
+
+                    $pregnancycount = $count."<span><sup>st</sup> pregnancy </span>"; 
+                 }elseif($count == 2){
+
+                   $pregnancycount = $count."<span><sup>nd</sup> pregnancy </span>";
+                 }elseif($count == 3){
+                   $pregnancycount = $count."<span><sup>rd</sup> pregnancy </span>";
+                 }else{
+                    $pregnancycount = $count."<span><sup>th</sup> pregnancy </span>";
+                 }
 				                
               if ($previouschildrow['complications']!='') {
 
-                 $childComplications="Had ".$previouschildrow['complications'];
+                 $childComplications="had ".$previouschildrow['complications'];
              }else{
                  $childComplications="";
              } 
 
-             if ($previouschildrow['year']!='') { $childYear= ' in '.$previouschildrow['year']; }else{ $childYear="";  }
+             if ($previouschildrow['year']!='') { $childYear= ' done in '.$previouschildrow['year']; }else{ $childYear="";  }
 
             
 
              if ($previouschildrow['med_prob']!='') {
                 $childMedProb=" suffered from ".rtrim($previouschildrow['med_prob'],",Others");
-
+                $hasMedProwithoutOther=rtrim($previouschildrow['med_prob'],",Others");
              }else{
                  $childMedProb="";
+                 $hasMedProwithoutOther="";
              }
                                 
              if ($previouschildrow['med_prob_other']!='') {
-                 $childOtherProb=" & ".$previouschildrow['med_prob_other'];
+                  if ($hasMedProwithoutOther!='') {
+                    $childOtherProb=" & ".$previouschildrow['med_prob_other'];
+                  }else{
+                    $childOtherProb=$previouschildrow['med_prob_other'];
+                  }
+                
              }else{
                  $childOtherProb=""; 
              }
 
              if ($previouschildrow['delevery_type']!='') {
-                if($previouschildrow['delevery_type'] == 'SE'){
-                  
-                  $deleverytype=$previouschildrow['delevery_type'];
 
-                }else if($previouschildrow['delevery_type'] == 'CS'){
-
-                     $deleverytype=$previouschildrow['delevery_type'];
-
-                }
-                else if($previouschildrow['delevery_type'] == 'ND'){
-
-                  $deleverytype=$previouschildrow['delevery_type'];
-                }
-
+                
+                $deleverytype=$previouschildrow['delevery_type'];
                              
              }else{
                  $deleverytype=""; 
-             }
-
-             if($previouschildrow['babygender']!=''){
-
-                if($previouschildrow['babygender'] == 'Male'){
-                 
-                 $babygen = 'baby boy ';
-                }
-                else if($previouschildrow['babygender'] == 'Female'){
-                 
-                 $babygen = 'baby girl ';
-                }
-                 else if($previouschildrow['babygender'] == 'Other'){
-                 
-                 $babygen = 'other ';
-                }
-                else if($previouschildrow['babygender'] == 'Not Known'){
-                 
-                 $babygen = 'not known ';
-                }
-             }else{
-
-                 $babygen = '';
              }
 
              if($previouschildrow['baby_weight'] != ''){
@@ -486,32 +480,102 @@ div.footer {
 
                 $babywt = '';
              }
-                                
-             echo $childComplications.$childYear.$childMedProb.$childOtherProb.', '.$deleverytype.' done '.$childYear.'( delivered a ' .$babygen.$babywt.' by '.$deleverytype.' had '.$childMedProb.$childOtherProb. ' at that time)'. "<br>";
 
-                }?>
+             if($previouschildrow['babygender']!='' and ($previouschildrow['delevery_type'] == 'CS' || $previouschildrow['delevery_type'] == 'ND')){
+                $babygen = '';
+               
+
+                if($previouschildrow['babygender'] == 'Male'){
+                 
+                 $babygen = '( delivered a baby boy '.$babywt.' )';
+                }
+                else if($previouschildrow['babygender'] == 'Female'){
+                 
+                 $babygen = '( delivered a baby girl '.$babywt.' )';
+                }
+                else if($previouschildrow['babygender'] == 'Other'){
+                 
+                 $babygen = '( delivered a Other '.$babywt.' )';
+                }
+                else if($previouschildrow['babygender'] == 'Not Known'){
+                 
+                 $babygen = '( delivered a Not Known '.$babywt.' )';
+                }
+                 
+             }else{
+
+                 $babygen = '';
+             }
+
+             
+                                
+             echo $pregnancycount.$childComplications.$childMedProb.$childOtherProb.', '.$deleverytype.$childYear.$babygen. "<br>";
+
+               $count++; }?>
                  </div>
                 <?php
 
                 }?>
                
 
-    	<table width="100%"   class="demo_font" style="margin-left: 40px;margin-top: 0px;" >
-    		<?php if($diseases!=''){?>
+    	<table width="100%"   class="demo_font" style="margin-left: 40px;margin-top: 0px;font-size: 13px;" >
+    		
 
-               
+              
             <tr>
-    			<td>Known case of <?php echo $diseases;?> had 
-                 <?php
-                    $surgicalCount=count($surgicaData);
-                if ($surgicaData) {?>
+    			<td> <?php if(!empty($Alldiseasesdata) || !empty($surgicaData)){ ?>Known case of <?php } ?> 
+               <?php $countdise = 1;
+                  if(!empty($Alldiseasesdata)){ 
 
-                 <?php
+               foreach ($Alldiseasesdata as $Alldiseasesdata) {
+                if($Alldiseasesdata->diseases_years != ''){
+
+                 $disesyear = $Alldiseasesdata->diseases_years.' years back';
+                }else{
+                   $disesyear = '';
+                }
+                if($Alldiseasesdata->other_diseases == ''){
+
+                  if($countdise == 1){
+
+                     echo $Alldiseasesdata->diseases_name.' '.$disesyear; 
+                  }else{
+                     echo ', '.$Alldiseasesdata->diseases_name.' '.$disesyear; 
+                  }
+
+                 
+
+                }else{
+                  if($countdise == 1){
+
+                     echo $Alldiseasesdata->other_diseases.' '.$disesyear; 
+                  }else{
+
+                    echo ', '.$Alldiseasesdata->other_diseases.' '.$disesyear;
+                  }
+
+                  
+                }
+
+               $countdise++; } } ?>
+            <?php
+               if($countdise > 1){
+                $surfonttext = '| ';
+               }else{ 
+                
+                $surfonttext = '';
+               } 
+                    $surgicalCount=count($surgicaData);
+                if (!empty($surgicaData)) { ?>
+                 
+                 <?php   $surcount = 1;
 
                     foreach ($surgicaData as $surgicadatarow) {
                         $surgicalCount--;
+                        if ($surcount==1) {echo $surfonttext; }
 
                         if ($surgicadatarow->other_surgery_name!='') {
+
                             echo $surgicadatarow->other_surgery_name;
                         }else{   
                             echo $surgicadatarow->surgery_name;
@@ -520,7 +584,7 @@ div.footer {
                         echo ' '.$surgicadatarow->yearback.' years back ';
                         if ($surgicalCount!=0) {echo " and "; }
                        
-                    }
+                    $surcount++; }
              
 
                 ?>
@@ -531,14 +595,14 @@ div.footer {
                 </td>
     			<td>  </td>
     		</tr>
-            <?php } ?>
+            
             
 
     	</table>
          
          
 
-        <table width="100%"   class="demo_font" style="margin-left: 40px;margin-top:0px;" >
+        <table width="100%"   class="demo_font" style="margin-left: 40px;margin-top:0px;font-size: 13px;" >
           
           <?php 
            if($antenantalCaseData){
@@ -571,7 +635,7 @@ div.footer {
   
         <?php
                 if ($familyCompData=='Y') {?>
-             <div style="margin-left:44px;word-wrap: break-word;font-size:10px;margin-top:-5px;">
+             <div style="margin-left:44px;word-wrap: break-word;font-size:13px;margin-top:-5px;">
                 <?php
                     $familyCompCount=0;
                     foreach ($familyComponentList as $familycomponentrow) {
@@ -624,7 +688,7 @@ div.footer {
                 
 
 
-        <table width="100%"   class="demo_font" style="margin-left: 40px;">
+        <table width="100%"   class="demo_font" style="margin-left: 40px; font-size: 13px;">
             <?php 
             if($antenantalCaseData){
                 if($highrisk!=''){
@@ -647,7 +711,7 @@ div.footer {
 
         </table>
         <?php   if ($regularMedicineList) { ?>
-        <div style="margin-left:180px;word-wrap: break-word;font-size:10px;margin-top:-15px;">
+        <div style="margin-left:180px;word-wrap: break-word;font-size:13px;margin-top:-15px;">
         <?php $i=1;
             foreach ($regularMedicineList as $regularmedicinerow) {
                
@@ -710,7 +774,7 @@ div.footer {
 
   <br>         
 <span class="spanhead">Investigation :</span>
-                        <div style="margin-left:120px;word-wrap: break-word;font-size: 10px;margin-top: -15px;">
+                        <div style="margin-left:120px;word-wrap: break-word;font-size: 13px;margin-top: -15px;">
                         
                         <?php if($inveltdata->hb_result!=''){                          
                           echo "Hb : "; echo $inveltdata->hb_result.' gm/dl'.$CI->dateDMY($inveltdata->hb_date)." | ";       
@@ -755,9 +819,20 @@ div.footer {
                         if($inveltdata->urine_re_result!=''){
                          echo "Urine R/E : "; echo $inveltdata->urine_re_result.$CI->dateDMY($inveltdata->urine_re_date)." | ";
                         }
+                        if($inveltdata->urine_re_notes!=''){
+                         echo "Urine R/E Notes: "; echo $inveltdata->urine_re_notes." | ";
+                        }
+
+                        if($inveltdata->urine_re_others!=''){
+                         echo "Urine R/E Others: "; echo $inveltdata->urine_re_others." | ";
+                        }
 
                         if($inveltdata->cs_sensitive_to_result!=''){ 
-                            echo "Urine C/S : "; echo $inveltdata->cs_sensitive_to_result.$CI->dateDMY($inveltdata->cs_sensitive_date)." | ";
+                            echo "Urine C/S Others : "; echo $inveltdata->cs_sensitive_to_result." | ";
+                        } 
+
+                        if($inveltdata->cs_sensitive_others!=''){ 
+                            echo "Urine C/S : "; echo $inveltdata->cs_sensitive_others.$CI->dateDMY($inveltdata->cs_sensitive_date)." | ";
                         } 
 
                         if($inveltdata->stsh_result!=''){ 
@@ -765,20 +840,28 @@ div.footer {
                         } 
 
                         if($inveltdata->s_urea_result!=''){
-                         echo "S urea : "; echo $inveltdata->s_urea_result.$CI->dateDMY($inveltdata->s_urea_date)." | ";
+                         echo "S urea : "; echo $inveltdata->s_urea_result.' mg/dl'.$CI->dateDMY($inveltdata->s_urea_date)." | ";
                         }
 
                        if($inveltdata->s_creatinine_result!=''){ 
-                        echo "S creatinine : "; echo $inveltdata->s_creatinine_result.$CI->dateDMY($inveltdata->s_creatinine_date)." | ";
+                        echo "S creatinine : "; echo $inveltdata->s_creatinine_result.' mg/dl'.$CI->dateDMY($inveltdata->s_creatinine_date)." | ";
 
                         }
 
-                        if($inveltdata->combined_test_result!=''){
-                         echo "Combined Test : "; echo $inveltdata->combined_test_result.$CI->dateDMY($inveltdata->combined_test_date)." | ";
-                        }
+                        // if($inveltdata->combined_test_result!=''){
+                        //  echo "Combined Test : "; echo $inveltdata->combined_test_result.$CI->dateDMY($inveltdata->combined_test_date)." | ";
+                        // }
 
-                        if($inveltdata->thalassemia_result!=''){
-                          echo "Thalassemia : "; echo $inveltdata->thalassemia_result.$CI->dateDMY($inveltdata->thalassemia_date)." | ";
+                        if($inveltdata->thalassemia_screening_result!=''){
+                          echo "Thalassemia Screening : "; echo $inveltdata->thalassemia_screening_result.$CI->dateDMY($inveltdata->thalassemia_date)." | ";
+                        } 
+
+                        if($inveltdata->thalassemia_other!=''){
+                          echo "Thalassemia Others : "; echo $inveltdata->thalassemia_other.$CI->dateDMY($inveltdata->thalassemia_date)." | ";
+                        } 
+
+                         if($inveltdata->usg_scan_date!=''){
+                          echo "USG dating scan Date:".$CI->dateDMY($inveltdata->usg_scan_date)." | ";
                         } 
 
 
@@ -793,38 +876,53 @@ div.footer {
                                     echo $inveltdata->usg_slf_day.' day ';
                                 }
 
-                                echo $CI->dateDMY($inveltdata->usg_scan_date)." | ";
+                               echo " | ";
 
                             
                           }
 
+                        if($inveltdata->nt_scan!=''){
+                          echo "NT scan:".$inveltdata->nt_scan.' mm'.$CI->dateDMY($inveltdata->nt_scan_date)." | ";
+                        } 
+
+                        if($inveltdata->double_marker_date!=''){
+                          echo "Double marker Date:".$CI->dateDMY($inveltdata->double_marker_date)." | ";
+                        } 
+
                     if($inveltdata->nt_scan_lowerrisk!='' || $inveltdata->nt_scan_highrisk!=''){ 
-                             echo "NT scan + Double marker : ";
+                           
                              if ($inveltdata->nt_scan_lowerrisk!='' && $inveltdata->nt_scan_lowerrisk!='0') {
-                                echo 'Low risk for '.$inveltdata->nt_scan_lowerrisk;
+                                echo '1st Trimester Screening Low Risk For :'.$inveltdata->nt_scan_lowerrisk;
+                                echo " | ";
                              }
 
                              if ($inveltdata->nt_scan_highrisk!='' && $inveltdata->nt_scan_highrisk!='0') {
-                                 echo '  High risk for '.$inveltdata->nt_scan_highrisk;
+                                 echo '  1st Trimester Screening High Risk For :'.$inveltdata->nt_scan_highrisk;
                              }
-                              echo $CI->dateDMY($inveltdata->nt_scan_date)." | ";
+                              echo " | ";
                             
                            
                    }
 
+                     if($inveltdata->anomaly_scan_date!=''){
+                          echo "Anomaly scan Date:".$CI->dateDMY($inveltdata->anomaly_scan_date)." | ";
+                        }
+                          
+
                     if($inveltdata->anomaly_slf_week!='' || $inveltdata->anomaly_slf_day!=''){ 
 
-                         echo "Anomaly scan : ";
+                        // echo "Anomaly scan : ";
+                          echo "Anomaly : ";
 
                          if ($inveltdata->anomaly_slf_week!='') {
-                            echo 'SLF of '.$inveltdata->anomaly_slf_week.' week ';
+                            echo 'SLF of '.$inveltdata->anomaly_slf_week.' weeks ';
                          }
 
                          if ($inveltdata->anomaly_slf_day!='') {
-                           echo $inveltdata->anomaly_slf_day.' day '; 
+                           echo $inveltdata->anomaly_slf_day.' days '; 
                          }
 
-                          echo $CI->dateDMY($inveltdata->anomaly_scan_date)." | ";
+                          echo " | ";
 
                           
                     }
@@ -842,60 +940,130 @@ div.footer {
                     }
 
 
+                      if($inveltdata->growth_date!=''){
+                          echo "Growth scan Date:".$CI->dateDMY($inveltdata->growth_date)." | ";
+                        
+                         } 
                     if($inveltdata->growth_slf_week!='' || $inveltdata->growth_slf_day!=''){ 
 
-                        echo "Growth scan : "; 
+                        //echo "Growth scan : "; 
+                      if($inveltdata->growth_date==''){
+                        echo "Growth: ";
+                      }
+                        
                         if ($inveltdata->growth_slf_week!='') {
-                            echo 'SLF of '.$inveltdata->growth_slf_week.' week ';
+                            echo 'SLF of '.$inveltdata->growth_slf_week.' weeks ';
                         }
                         if ($inveltdata->growth_slf_day!='') {
-                         echo $inveltdata->growth_slf_day.' day '; 
+                         echo $inveltdata->growth_slf_day.' days '; 
                         }
 
-                         echo $CI->dateDMY($inveltdata->growth_date)." | ";
+                         echo " | ";
 
                      }
 
                     if($inveltdata->growth_presentation!=''){
-                      echo "Growth Presentation: ".$inveltdata->growth_presentation." | ";
+                      if($inveltdata->growth_slf_week =='' && $inveltdata->growth_slf_day=='' && $inveltdata->growth_date==''){
+                      
+                        echo "Growth "; 
+                        echo "Presentation: ".$inveltdata->growth_presentation." | ";
+                      }else{
+
+                        echo "Presentation: ".$inveltdata->growth_presentation." | ";
+                      }
+                      
 
                     } 
 
                     if($inveltdata->growth_afi!=''){
-                     echo  "Growth AFI(".$inveltdata->growth_afi.")  | ";
+
+                      if($inveltdata->growth_slf_week =='' && $inveltdata->growth_slf_day=='' && $inveltdata->growth_date=='' && $inveltdata->growth_presentation==''){
+                      
+                        echo "Growth "; 
+                        echo  "AFI(".$inveltdata->growth_afi.")  | ";
+                      }else{
+                        echo  "AFI(".$inveltdata->growth_afi.")  | ";
+                      }
+
+                     
                     }
 
                     if($inveltdata->growth_liquor!=''){
-                         echo "Growth Liquor: ".$inveltdata->growth_liquor." | ";
+
+                       if($inveltdata->growth_slf_week =='' && $inveltdata->growth_slf_day=='' && $inveltdata->growth_date=='' && $inveltdata->growth_presentation=='' && $inveltdata->growth_afi == ''){
+                      
+                         echo "Growth "; 
+                         echo "Liquor: ".$inveltdata->growth_liquor." | ";
+                       }else{
+
+                         echo "Liquor: ".$inveltdata->growth_liquor." | ";
+                       }
                     }
+
+                  
+                     if($inveltdata->doppler_scan_date!=''){
+                          echo "Doppler scan Date:".$CI->dateDMY($inveltdata->doppler_scan_date)." | ";
+                        }
+
 
                     if($inveltdata->doppler_slf_week!='' || $inveltdata->doppler_slf_day!=''){
                      
-                         echo "Doppler scan : "; 
+                         //echo "Doppler scan : "; 
+                      if($inveltdata->doppler_scan_date==''){
+                        echo "Doppler: ";
+                      }
+                          
                          if ($inveltdata->doppler_slf_week!='') {
-                                echo 'SLF of '.$inveltdata->doppler_slf_week.' week ';
+
+                                echo 'SLF of '.$inveltdata->doppler_slf_week.' weeks ';
                          }
                          if ($inveltdata->doppler_slf_day!='') {
-                            echo $inveltdata->doppler_slf_day.' day  ';
+                            echo $inveltdata->doppler_slf_day.' days  ';
                          }
 
-                         echo $CI->dateDMY($inveltdata->doppler_scan_date)." | ";
+                         echo " | ";
                   
                     } 
+                       
+                    
 
                     if($inveltdata->doppler_presentation!=''){
+
+                       if($inveltdata->doppler_slf_week == '' && $inveltdata->doppler_slf_day == '' && $inveltdata->doppler_scan_date==''){
+                          
+                          echo "Doppler ";
+                          echo "Presentation: ".$inveltdata->doppler_presentation." | ";
+                       }else{
+                        echo "Presentation: ".$inveltdata->doppler_presentation." | ";
+                       }             
                        
-                       echo "Doppler Presentation: ".$inveltdata->doppler_presentation." | ";
                     }
 
                     if($inveltdata->doppler_afi!=''){
-                     echo  "Doppler AFI(".$inveltdata->doppler_afi.")  | ";
+
+                       if($inveltdata->doppler_slf_week == '' && $inveltdata->doppler_slf_day == '' && $inveltdata->doppler_scan_date=='' && $inveltdata->doppler_presentation==''){
+                         
+                         echo "Doppler ";
+                         echo  "AFI(".$inveltdata->doppler_afi.")  | ";
+                       }else{
+                         echo  "AFI(".$inveltdata->doppler_afi.")  | ";
+                       }
+                    
                     }
 
                      if($inveltdata->doppler_liquor!=''){
-                         echo "Doppler Liquor: ".$inveltdata->doppler_liquor." | ";
-                     }
 
+                      if($inveltdata->doppler_slf_week == '' && $inveltdata->doppler_slf_day == '' && $inveltdata->doppler_scan_date=='' && $inveltdata->doppler_presentation=='' && $inveltdata->doppler_afi==''){
+                         
+                        echo "Doppler ";
+                        echo "Liquor: ".$inveltdata->doppler_liquor." | ";
+
+                      }else{
+                         echo "Liquor: ".$inveltdata->doppler_liquor." | "; 
+                      }
+                        
+                     }
+                     
 
                      if($inveltdata->doppler_checkbox=='Normal'){
 
@@ -930,13 +1098,13 @@ div.footer {
                        
                       
 
-                   <table width="50%"   class="demo_font" style="margin-left: 0px;margin-top: 10px;" >
-              <?php if ($examinationLatestData) {?>
+                   <table width="50%"   class="demo_font" style="margin-left: 0px;margin-top: 10px;font-size: 13px;" >
+              <?php if (!empty($examinationLatestData)) { ?>
             <tr>
-                <td>First Visit: &nbsp; BMI : <?php  if ($examinationLatestData) {echo $examinationFirstData->exam_bmi;}?></td>
-               <td><span>&nbsp;&nbsp;</span>Weight : <?php  if ($examinationLatestData) {echo $examinationFirstData->exam_weight;}?></td>
+                <td> <?php if($examinationLatestData->exam_bmi != '' || $examinationLatestData->exam_weight != ''){ ?>First Visit: &nbsp; <?php  if ($examinationLatestData->exam_bmi != '') { echo "BMI :";echo $examinationLatestData->exam_bmi.' kg/m'.'<sup>2</sup>';}?></td>
+               <td><span>&nbsp;&nbsp;</span> <?php  if ($examinationLatestData->exam_weight != '') { echo 'Weight :'; echo $examinationLatestData->exam_weight.' kg.'; }?></td>
             </tr>
-                    <?php }?>
+                    <?php } }?>
 
             
         </table>
@@ -968,64 +1136,172 @@ div.footer {
 ?>
 <br>
  <span class="spanhead">Clinical  Examination :</span>
-        <table style="width: 90%;font-size: 10px;margin-left:60px;" cellspacing="2"  >
+        <table style="width: 100%;font-size: 10px;margin-left:60px;color: black;" cellspacing="1"  >
                         
                             <tr>
-                                <td  align="left">Date  &emsp;</td>
-                                <td  align="left">By LMP&emsp;&emsp;</td>
+                                <td  align="left" style="width: 10%;">Date</td>
+                                <td  align="center" style="width: 11%;">By LMP</td>
                                <!--  <td  align="left">Days by LMP</td> -->
-                                <td  align="left">By USG&emsp;&emsp;</td>
+                                <td  align="center" style="width: 9%;">By USG</td>
                                 <!-- <td  align="left">Days by USG</td> -->
-                                <td  align="left">Weight&emsp;&emsp;</td>
-                                <td  align="left">BP(mm of Hg)</td>
+                                <td  align="left" style="width: 7%;">Weight</td>
+                                <td  align="left" style="width: 11%;">BP(mm of Hg)</td>
                                <!--  <td  align="left">BP(D)</td> -->
-                               <td  align="left">Pallor &emsp;&emsp;</td>
-                                <td  align="left">Oedema &emsp;&emsp;</td>
-                                <td  align="left">Fundal Height&emsp;</td>
-                                <td  align="left">SFH(cm)&emsp;&emsp;</td>
-                                <td  align="left">FHS(/min)&emsp;&emsp;</td>
-                                <td  align="left">Next Appointment Date</td>
+                               <td  align="center" style="width: 6%;">Pallor</td>
+                                <td  align="left" style="width: 8%;">Oedema</td>
+                                <td  align="left" style="width: 11%;">Fundal Height</td>
+                                <td  align="left" style="width: 8%;">SFH(cm)</td>
+                                <td  align="left" style="width: 8%;">FHS(/min)</td>
+                                <td  align="left" style="width: 12%;">Next Appn. Date</td>
                               
                               
                             </tr>
                             
                                 
                             <tr>
-                                 <td><?php 
+                                 <td style="width: 10%;"><?php 
                                  if($clinicalExaminationLatestData->examination_date!=''){
                                     echo date('d-m-Y', strtotime($clinicalExaminationLatestData->examination_date));}else{
-                                        echo 'Nil';
+                                        echo '';
                                     }
-                                ?>&emsp;</td>     <td><?php echo $clinicalExaminationLatestData->weeks_by_lmp.' wks '.$clinicalExaminationLatestData->days_by_lmp.' days';?>&emsp;&emsp;&emsp;&emsp;</td>
+                                ?></td>     
+                                <td align="center" style="width: 11%;"><?php
+                                      if($clinicalExaminationLatestData->weeks_by_lmp == '' && $clinicalExaminationLatestData->days_by_lmp == ''){
+                                         echo '';
+                                      }
+                                     elseif($clinicalExaminationLatestData->weeks_by_lmp != '0' && $clinicalExaminationLatestData->days_by_lmp != '0'){
+                                      
+                                       echo $clinicalExaminationLatestData->weeks_by_lmp.' wks '.$clinicalExaminationLatestData->days_by_lmp.' days';
+
+                                     }elseif($clinicalExaminationLatestData->days_by_lmp != '0'){
+
+                                       echo $clinicalExaminationLatestData->days_by_lmp.' days';
+                                     }elseif($clinicalExaminationLatestData->weeks_by_lmp != '0'){
+
+                                       echo $clinicalExaminationLatestData->weeks_by_lmp.' wks';
+                                     }else{
+                                        echo '';
+                                     }
+                                    ?>
+                                   
+                                 </td>
                                 <!--  <td align="center"><?php echo $clinicalExaminationLatestData->days_by_lmp;?></td> -->
-                                 <td><?php echo $clinicalExaminationLatestData->weeks_by_usg.' wks '.$clinicalExaminationLatestData->days_by_usg.' days';?>&emsp;&emsp;&emsp;&emsp;</td>
+                                 <td align="center" style="width: 11%;"><?php 
+
+                                    if($clinicalExaminationLatestData->weeks_by_usg == '' && $clinicalExaminationLatestData->days_by_usg == ''){
+                                         echo '';
+                                      }
+                                     elseif($clinicalExaminationLatestData->weeks_by_usg != '0' && $clinicalExaminationLatestData->days_by_usg != '0'){
+                                      
+                                       echo $clinicalExaminationLatestData->weeks_by_usg.' wks '.$clinicalExaminationLatestData->days_by_usg.' days';
+
+                                     }elseif($clinicalExaminationLatestData->days_by_usg != '0'){
+
+                                       echo $clinicalExaminationLatestData->days_by_usg.' days';
+                                     }elseif($clinicalExaminationLatestData->weeks_by_usg != '0'){
+
+                                       echo $clinicalExaminationLatestData->weeks_by_usg.' wks';
+                                     }else{
+                                      echo '';
+                                     }
+
+
+                                     ?></td>
                                 <!--  <td align="center"><?php echo $clinicalExaminationLatestData->days_by_usg;?></td> -->
-                                 <td><?php echo $clinicalExaminationLatestData->cliexm_weight;?> kg.&emsp;&emsp;</td>
-                                 <td><?php echo $clinicalExaminationLatestData->cliexm_bp_s.'/'.$clinicalExaminationLatestData->cliexm_bp_d;?>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</td>
+                                 <td align="center" style="width: 6%;"><?php
+
+                                   if($clinicalExaminationLatestData->cliexm_weight != '' && $clinicalExaminationLatestData->cliexm_weight != '0'){
+                                     
+                                     echo $clinicalExaminationLatestData->cliexm_weight.' kg.';
+
+                                     }else{
+                                            echo '';
+                                     }
+                                     ?> 
+                                   
+                                  </td>
+
+                                 <td align="center" style="width: 11%;"><?php 
+                                    
+                                    if($clinicalExaminationLatestData->cliexm_bp_s != '' && $clinicalExaminationLatestData->cliexm_bp_d != ''){
+
+                                       echo $clinicalExaminationLatestData->cliexm_bp_s.'/'.$clinicalExaminationLatestData->cliexm_bp_d; 
+                                    }else{
+
+                                       echo '';
+                                    }
+
+                               ?>
+                                   
+
+                                 </td>
                                  <!-- <td><?php echo $clinicalExaminationLatestData->cliexm_bp_d;?></td> -->
-                                 <td align="left"><?php  if($clinicalExaminationLatestData->cliexm_pallor == ''){echo 'Nil'; }else{ echo $clinicalExaminationLatestData->cliexm_pallor;} ?>&emsp;&emsp;&emsp;&emsp;</td>
-                                  <td><?php if($clinicalExaminationLatestData->cliexm_oedema == ''){
-                                    echo "Nil"; }else{ echo $clinicalExaminationLatestData->cliexm_oedema; } ?>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</td>
-                                 <td><?php if($clinicalExaminationLatestData->fundal_height == ''){ echo 'Nil'; }else{ echo $clinicalExaminationLatestData->fundal_height; } ?>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</td>
-                                 <td><?php if($clinicalExaminationLatestData->cliexm_sfh == ''){
-                                   echo "Nil"; }else{ echo $clinicalExaminationLatestData->cliexm_sfh; } ?>&emsp;&emsp;</td>
-                                 <td><?php if($clinicalExaminationLatestData->cliexm_fsh == ''){
-                                    echo "Nil"; }else{ echo $clinicalExaminationLatestData->cliexm_fsh; }?>&emsp;&emsp;</td>
-                                 <td colspan="2"><?php 
+                                 <td align="center" style="width: 7%;"><?php  
+                                 if($clinicalExaminationLatestData->cliexm_pallor == '')
+                                  {
+                                    echo ''; 
+                                    }
+
+                                 else{ echo $clinicalExaminationLatestData->cliexm_pallor;} ?>
+                                   
+                                 </td>
+                                  <td align="center" style="width: 8%;"><?php 
+                                  if($clinicalExaminationLatestData->cliexm_oedema == '')
+                                  {
+                                    echo "";
+                                     }
+                                    else{ echo $clinicalExaminationLatestData->cliexm_oedema; } ?>
+                                      
+                                    </td>
+                                 <td align="center" style="width: 11%;"><?php
+
+                                   if($clinicalExaminationLatestData->fundal_height == ''){ 
+                                    echo ''; 
+                                  }else{ 
+                                    echo $clinicalExaminationLatestData->fundal_height; 
+                                  } 
+                                    ?>
+                                    
+                                  </td>
+                                 <td align="center" style="width: 8%;"><?php 
+                                 if($clinicalExaminationLatestData->cliexm_sfh == ''){
+
+                                   echo "";
+                                    }
+                                     else{ 
+                                    echo $clinicalExaminationLatestData->cliexm_sfh;
+
+                                    } ?>
+                                    
+                                  </td>
+                                 <td align="center" style="width: 8%;"><?php 
+                                 if($clinicalExaminationLatestData->cliexm_fsh == ''){
+
+                                    echo ""; 
+                                  }else{ 
+                                    echo $clinicalExaminationLatestData->cliexm_fsh;
+
+                                  }  ?>
+                                    
+                                  </td>
+                                 <td style="width: 14%;"><?php 
 
                                         if($clinicalExaminationLatestData->cliexm_appointment_date!=''){
                                             echo date('d-m-Y', strtotime($clinicalExaminationLatestData->cliexm_appointment_date));
                                         }else{
-                                             echo "after ";
+                                           if($clinicalExaminationLatestData->cliexm_after_week!='' || $clinicalExaminationLatestData->cliexm_after_days!=''){
+                                                echo "After ";
+                                           }
                                                 if($clinicalExaminationLatestData->cliexm_after_week!=''){
-                                                    echo $clinicalExaminationLatestData->cliexm_after_week.' weeks ';
+                                                    echo $clinicalExaminationLatestData->cliexm_after_week.' wks ';
                                                 }
                                                 if($clinicalExaminationLatestData->cliexm_after_days!=''){
-                                                    echo $clinicalExaminationLatestData->cliexm_after_days.' days ';
+                                                echo $clinicalExaminationLatestData->cliexm_after_days.' days';
                                                 }
+                                           
                                             }
                                  
-                                 ?>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</td>
+                                 ?></td>
                                
                             </tr>
 
@@ -1071,6 +1347,103 @@ div.footer {
                     </table>
                 <?php }?>
 
+<br>
+<?php  $isdiag = 'N';
+   if(!empty($diagnosisList)){
+
+    $cnt = 0;
+
+  foreach ($diagnosisList as $diagnosischeck) {
+
+     if($diagnosischeck->is_diagnosis == 'Y'){
+
+         $isdiag = 'Y';
+         $cnt++;
+
+     }
+
+   }
+
+   }  ?>
+ <?php if($isdiag == 'Y'){ ?><span class="spanhead">Diagnosis Summary :</span> <?php } ?>
+    <div style="margin-left:160px;word-wrap: break-word;font-size:13px;margin-top:-17px;#border:1px solid red;">
+
+          
+      <?php if($antenantalCaseData){ 
+           
+           if($isdiag == 'Y'){
+        ?>
+
+          &nbsp;G&nbsp;<sub style="font-size: 9px;"><?php echo $total_parity; ?></sub>&nbsp;P&nbsp;<sub style="font-size: 7px;"><?php echo $antenantalCaseData->parity_term_delivery.' + '.$antenantalCaseData->parity_preterm.' + '.$antenantalCaseData->parity_abortion.' + '.$antenantalCaseData->parity_issue; ?></sub> &nbsp;at&nbsp;
+                    
+                <?php } }  
+                        if (!empty($clinicalExaminationLatestData)) {
+
+                          if($isdiag == 'Y'){  
+
+                       if($clinicalExaminationLatestData->weeks_by_lmp == '' && 
+                                $clinicalExaminationLatestData->days_by_lmp == ''){
+                                         echo '';
+                                      }
+                                     elseif($clinicalExaminationLatestData->weeks_by_lmp != '0' && $clinicalExaminationLatestData->days_by_lmp != '0'){
+                                      
+                                       echo $clinicalExaminationLatestData->weeks_by_lmp.' wks '.$clinicalExaminationLatestData->days_by_lmp.' days ';
+
+                                        echo 'gestation';
+
+                                     }elseif($clinicalExaminationLatestData->days_by_lmp != '0'){
+
+                                       echo $clinicalExaminationLatestData->days_by_lmp.' days ';
+                                       echo 'gestation';
+                                     }elseif($clinicalExaminationLatestData->weeks_by_lmp != '0'){
+
+                                       echo $clinicalExaminationLatestData->weeks_by_lmp.' wks ';
+                                       echo 'gestation';
+                                     }else{
+                                        echo '';
+                                     }
+                                    ?>
+                          
+
+                         <?php } } ?>
+
+                        <?php  if($isdiag = 'Y'){
+                            $diag = 1;
+                            $cont = count($diagnosisList);
+
+                        foreach ($diagnosisList as $diagnosisList) {
+                          
+                            if($diagnosisList->is_diagnosis == 'Y'){
+
+                              if($diagnosisList->dignosis_name == 'Others'){
+
+                                echo $diagnosisList->otherdiagnosis;
+                              }
+                               else{
+                                  
+                                  if($diag  ==  $cnt){
+
+                                    echo $diagnosisList->dignosis_name;
+
+                                  }else{
+                                    echo $diagnosisList->dignosis_name.', ';
+                                  }
+                                   $diag++;
+                                 
+                               }
+                              
+
+                            }
+
+
+                       }  } ?>          
+                      
+                            
+              
+
+        </div>
+
+<br>
 
 
 <?php
@@ -1079,15 +1452,19 @@ div.footer {
 ?>
 
  <span class="spanhead">Advice: </span>
- <div style="margin-left:50px;word-wrap: break-word;font-size:10px;margin-top:-15px;#border:1px solid red;">
+ <div style="margin-left:65px;word-wrap: break-word;font-size:13px;margin-top:-17px;#border:1px solid red;">
+  
  <?php      $advType="";$i=1;
             foreach ($adviceDetailsData as $advicedetailsrow) {
                 // if ($advType!=$advicedetailsrow['advType']) {
                 //     echo "<br><u>".$advicedetailsrow['advType'].":</u> ";
                 // }
                
+                 if($i!=1){
+                 echo "<br>";
+                }
               
-              echo "<br>".$i.'.'.substr($advicedetailsrow['advicedtl'], 2);
+              echo $i.'.'.substr($advicedetailsrow['advicedtl'], 2);
              
               //$advType=$advicedetailsrow['advType'];
           $i++; }
@@ -1103,40 +1480,51 @@ div.footer {
 
 <?php
       if ($prescriptionMedicineList) {
-          
+         
+        
 
 ?>
 <br>
 <span class="spanhead">Prescription :</span>
- <div style="margin-left:120px;word-wrap: break-word;font-size:10px;margin-top:-15px;">
-     <?php
+ <div style="margin-left:120px;word-wrap: break-word;font-size:13px;margin-top:-15px;">
+     <?php     $i=1;
                       foreach ($prescriptionMedicineList as $prescriptionmedicinerow) {
-                      
+                             echo $i++.'. ';
+                             echo $prescriptionmedicinerow->medicine_shortype." ";
                              echo $prescriptionmedicinerow->medicine_name.",";
                              echo $prescriptionmedicinerow->med_instruction." ";
-                            
-
-                             if($prescriptionmedicinerow->dosage!=''){
-                             echo " (dose:".$prescriptionmedicinerow->dosage.") ";
+                             if ($prescriptionmedicinerow->med_instruction_other!='') {
+                                echo $prescriptionmedicinerow->med_instruction_other;
                              }
+                           
+                             
+                             if ($prescriptionmedicinerow->days!='') {
+                               echo " for ".$prescriptionmedicinerow->days." days.";
+                             }
+                             
+                            
+                             // commented on 18.11.2019
+                            //  if($prescriptionmedicinerow->dosage!=''){
+                            //  echo " (dose:".$prescriptionmedicinerow->dosage.") ";
+                            //  }
 
                 
-                            if($prescriptionmedicinerow->frequency=="OD"){
-                                  echo "once a day ";
-                            }else if($prescriptionmedicinerow->frequency=="BD"){
-                                  echo "twice a day ";
-                            }else if($prescriptionmedicinerow->frequency=="TDS"){
-                                 echo "thrice a day ";
-                            }else if($prescriptionmedicinerow->frequency=="HS"){
-                                 echo"at bedtime ";
-                            }
+                            // if($prescriptionmedicinerow->frequency=="OD"){
+                            //       echo "once a day ";
+                            // }else if($prescriptionmedicinerow->frequency=="BD"){
+                            //       echo "twice a day ";
+                            // }else if($prescriptionmedicinerow->frequency=="TDS"){
+                            //      echo "thrice a day ";
+                            // }else if($prescriptionmedicinerow->frequency=="HS"){
+                            //      echo"at bedtime ";
+                            // }
 
                            echo "<br>";
                        }?>
 </div>
       <?php }?>
 
-<br>
+
 <p><?php  if ($prescriptionMedicineList) {
     if($prescriptionLatestData->doctor_note!=''){
         echo '<span class="spanhead">Doctor Note :</span> '.$prescriptionLatestData->doctor_note."<br>";
@@ -1152,8 +1540,8 @@ div.footer {
 
 <table>
        <tr>
-<td colspan="2" class="spanhead" style="font-family: sans-serif;;width: 26%;vertical-align: top;">Suggested Investigation :</td>
-           <td style="font-size: 10px;width: 74%;vertical-align: bottom;"> <?php 
+<td colspan="2" class="spanhead" style="font-family: sans-serif;width: 28%;vertical-align: top;">Suggested Investigation :</td>
+           <td style="font-size: 13px;width: 72%;vertical-align: bottom;"> <?php 
                                                 $chkcoma=0;
                                                 //created by anil 23-09-2019 
                                                  foreach ($prescriptionInvestigationpanel as $prescriptionInvestigationpanel) {
@@ -1209,12 +1597,28 @@ div.footer {
                                               </span>  
  -->
 <br>
-<?php 
+<?php $nextCheckupdt = '';
+  if(!empty($clinicalExaminationLatestData)){
 
- if(!empty($clinicalExaminationLatestData->cliexm_appointment_date)){
-                                            echo "<span style='font-size:13px;'>Next Checkup Date :</span><span style='font-size:10px;'>".date('l d M Y', strtotime($clinicalExaminationLatestData->cliexm_appointment_date));
+      if($clinicalExaminationLatestData->cliexm_appointment_date != ''){
 
-   }                                         
+           $nextCheckupdt = date('l d M Y', strtotime($clinicalExaminationLatestData->cliexm_appointment_date));
+
+      }elseif($clinicalExaminationLatestData->cliexm_after_week != '' && $clinicalExaminationLatestData->cliexm_after_days != ''){
+
+           $nextCheckupdt = 'After '.$clinicalExaminationLatestData->cliexm_after_week.' weeks '.$clinicalExaminationLatestData->cliexm_after_days.' days ';
+      }elseif($clinicalExaminationLatestData->cliexm_after_week != ''){
+
+           $nextCheckupdt = 'After '.$clinicalExaminationLatestData->cliexm_after_week.' weeks';
+      }elseif($clinicalExaminationLatestData->cliexm_after_days != ''){
+        $nextCheckupdt = 'After '.$clinicalExaminationLatestData->cliexm_after_days.' days';
+      }
+
+ if($nextCheckupdt != ''){
+                                            echo "<span style='font-size:16px;'>Next Checkup Date :</span><span style='font-size:13px;'>".' '.$nextCheckupdt;
+
+   } 
+   }                                        
 ?>
 <!-- <?php 
 if ($prescriptionMedicineList) {
@@ -1227,6 +1631,34 @@ if ($prescriptionLatestData->next_checkup_dt!='') {
 
 ?> -->
 
+<table style="font-size:13px;margin-left: -4px;">
+  <tr>
+    <td>
+      <?php if($prescriptionLatestData->prescription_weekdays != '' || $prescriptionLatestData->premobile_no != '' || $prescriptionLatestData->prescription_time != ''){
+        echo "For appointment call ";
+      } 
+       if($prescriptionLatestData->premobile_no){
+
+        echo $prescriptionLatestData->premobile_no.' ';
+
+      }
+      if($prescriptionLatestData->prescription_weekdays != ''){
+
+        echo $prescriptionLatestData->prescription_weekdays.' ';
+      }
+     
+      if($prescriptionLatestData->prescription_time){
+
+        echo $prescriptionLatestData->prescription_time.' ';
+
+      }
+
+      ?>
+    </td>
+  </tr>
+
+  </table>
+
 
      
 </div>
@@ -1236,7 +1668,7 @@ if ($prescriptionLatestData->next_checkup_dt!='') {
 
 <footer id="footer"><hr>
  <p class="demo_font" style="text-align: center">
-    In case emergency to call 9874746006 /Techno Global Emergency number 9073943772</p></footer>
+    In case of emergency to call 9874746006 /Techno Global Emergency number 9073943772</p></footer>
 
 
 </div>

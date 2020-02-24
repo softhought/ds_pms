@@ -15,14 +15,22 @@
 							        
 				</td>
 
-				<td  class="presmedTd"> 
+			<td  class="presmedTd"> 
              
 			 <input type="hidden" name="presInstruction[]" id="presInstruction_<?php echo $rowno; ?>" value="<?php echo $medinstruction?>">   
 				 <?php echo $medinstruction;?>                
 
 			 </td>
+
+			 <td  class="presmedTd"> 
+             
+			 <input type="hidden" name="presInstructionothers[]" id="presInstructionothers_<?php echo $rowno; ?>" value="<?php echo $othermedinstruction?>">   
+				 <?php echo $othermedinstruction;?>                
+
+			 </td>
+					
 						
-				<td  class="presmedTd" style="text-align: center;"> 
+				<!-- <td  class="presmedTd" style="text-align: center;"> 
 						 
                <input type="hidden" name="presdosage[]" id="presdosage_<?php echo $rowno; ?>" value="<?php echo $dosage?>">   
                    <?php echo $dosage;?>                
@@ -33,7 +41,7 @@
                <input type="hidden" name="presfrequency[]" id="presfrequency_<?php echo $rowno; ?>" value="<?php echo $frequency?>">   
                    <?php echo $frequency;?>                
 
-               </td> 
+               </td> --> 
 			   <td  class="presmedTd" style="text-align: center;"> 
              
                <input type="hidden" name="presdays[]" id="presdays_<?php echo $rowno; ?>" value="<?php echo $days?>">   

@@ -35,6 +35,11 @@ border-bottom: 0px solid #fff !important;
 </style> -->
 
 <style>
+   .spanhead{
+          text-decoration: underline;
+            font-size: 16px;
+
+        }
   .inner{
   max-height: 230px !important;
 }
@@ -50,13 +55,14 @@ border-bottom: 0px solid #fff !important;
 }
 </style>
 
-
+ 
 <div id="patientCaseManagment">
 
 
 
   <input type="hidden" name="mode" id="mode" value="<?php echo $bodycontent['mode']; ?>" />
    <input type="hidden" name="caseID" id="caseID" value="<?php echo $bodycontent['caseID']; ?>" />
+   <input type="hidden" name="callfrom" id="callfrom" value="<?php echo $bodycontent['callfrom']; ?>" />
           <?php echo $bodycontent['patientmasterEditdata']->patientname; ?>     
 
     <section class="content mainSectionPCasecard" >
@@ -155,6 +161,8 @@ border-bottom: 0px solid #fff !important;
                                     <button type="button" class="btn btn-block btn-xs waves-effect tab_lf_btn"  id="antenantal_left_tab_menu_5"><span><i class="material-icons">looks_one</i></span>&nbsp;First Examination</button>
                                     <button type="button" class="btn btn-block btn-xs waves-effect tab_lf_btn"  id="antenantal_left_tab_menu_9"><span><i class="material-icons">note_add</i></span>&nbsp;Clinical Examination</button>
                                      <button type="button" class="btn btn-block btn-xs waves-effect tab_lf_btn"  id="antenantal_left_tab_menu_6"><span><i class="material-icons">local_pharmacy</i></span>&nbsp;Investigation</button> 
+
+                                      <button type="button" class="btn btn-block btn-xs waves-effect tab_lf_btn prescription_menu_btn"  id="antenantal_left_tab_menu_10"><span><i class="material-icons">chrome_reader_mode</i></span>&nbsp;Diagnosis Summary</button>
                                    
                                      <button type="button" class="btn btn-block btn-xs waves-effect tab_lf_btn prescription_menu_btn"  id="antenantal_left_tab_menu_7"><span><i class="material-icons">note</i></span>&nbsp;Prescription</button>
 
@@ -416,11 +424,11 @@ border-bottom: 0px solid #fff !important;
 					         foreach ($bodycontent['occupationList'] as $value) {  ?>
 					         <option value="<?php echo $value->occupation_id;?>"
 
-					         <?php if(($bodycontent['antenantalmode']=="EDIT") && $value->occupation_id==$bodycontent['antenantalCaseEditdata']->wife_occupation){echo "selected";}else{echo "";} ?>
+					         <?php if(($bodycontent['antenantalmode']=="EDIT") && $value->occupation_id==$bodycontent['antenantalCaseEditdata']->wife_occupation){echo "selected";  }else{echo "";} ?>
 					                                        
 					                                      
 
-					          ><?php echo $value->occupation?></option>
+					          ><?php echo $value->occupation; ?></option>
 					          <?php     } ?>
 					                                   
 					          </select>   
@@ -587,7 +595,7 @@ border-bottom: 0px solid #fff !important;
 					         <option value="0"> &nbsp; </option>
 					         <?php 
 
-					         foreach ($bodycontent['OnetoOtherDropDown'] as $tryingyear) {  ?>
+					         foreach ($bodycontent['tryingforDropDown'] as $tryingyear) {  ?>
 					         <option value="<?php echo $tryingyear;?>"
 
 					         <?php if(($bodycontent['antenantalmode']=="EDIT") && $tryingyear==$bodycontent['antenantalCaseEditdata']->trying_for_year){echo "selected";}else{echo "";} ?>
@@ -1220,7 +1228,7 @@ border-bottom: 0px solid #fff !important;
                                     <select name="selectYear[]" id="selectYear_<?php echo $childdtlrowno; ?>" class="form-control show-tick  selectYear" data-live-search="true" tabindex="-98">
                                       <option value="">&nbsp;</option>
                                         <?php
-                                            for ($i=2000; $i <= date('Y'); $i++) {     
+                                            for ($i=1980; $i <= date('Y'); $i++) {     
                                         ?>
                                           <option value="<?php echo $i;?>"
                                             <?php
@@ -1718,6 +1726,12 @@ border-bottom: 0px solid #fff !important;
              </div>
          </div>
 
+   <?php if(!empty($bodycontent['patientDieases'])){
+       $patientDieases = 'Y';
+   }else{
+    $patientDieases = 'N';
+   } ?>      
+
          <div class="panel panel-col-teal">
            <div class="panel-heading" role="tab" id="headingThree_19">
                <h4 class="panel-title">
@@ -1732,30 +1746,21 @@ border-bottom: 0px solid #fff !important;
                                        
              <!-- <div class="col-sm-2"></div> -->
 
+
               <div class="col-sm-4">
 
 
                       <div class="form-group form-float">
                         <div class="input-group" id="sel_diseaseserr">
                           <label class="form-label selectlabel zindex3">Diseases</label>
-                          <select name="sel_diseases" id="sel_diseases" class="form-control show-tick sel_diseases"  data-live-search="true" tabindex="-98" multiple data-selected-text-format="count" >
-                          <!--  <option value="0"> &nbsp; </option> -->
+                          <select name="seldiseasesID" id="seldiseasesID" class="form-control show-tick"  data-live-search="true" tabindex="-98">
+                           <option value=""> &nbsp; </option>
                           <?php 
 
                           foreach ($bodycontent['diseasesList'] as $diseaseslist) {  ?>
                           <option value="<?php echo $diseaseslist->diseases_id;?>"
 
-                            <?php
-                              if($bodycontent['antenantalmode']=="EDIT"){
-                                $selected_diseases=explode(",",(string)$bodycontent['antenantalCaseEditdata']->diseases_ids);
-                                      if (in_array($diseaseslist->diseases_id, $selected_diseases)) {
-                                            echo 'selected';
-                                        }
-
-                                    }
-
-                            ?>
-                                                          
+                                                                                     
                                                         
 
                             ><?php echo $diseaseslist->diseases_name;?></option>
@@ -1763,30 +1768,186 @@ border-bottom: 0px solid #fff !important;
                                                     
                             </select> 
 
-                            <input type="hidden" name="sel_diseasesValues" id="sel_diseasesValues" value="<?php if($bodycontent['antenantalmode']=="EDIT"){ echo $bodycontent['antenantalCaseEditdata']->diseases_ids;}?>">  
-                              <input type="hidden" name="isOtherDiseases" id="isOtherDiseases" value="<?php  if($bodycontent['antenantalmode']=="EDIT"){echo $bodycontent['antenantalCaseEditdata']->is_other_diseases;}else{ echo "N";}?>">
+                            <!-- <input type="hidden" name="sel_diseasesValues" id="sel_diseasesValues" value="<?php if($bodycontent['antenantalmode']=="EDIT"){ echo $bodycontent['antenantalCaseEditdata']->diseases_ids;}?>"> -->  
+                             <!--  <input type="hidden" name="isOtherDiseases" id="isOtherDiseases" value="<?php  if($patientDieases=="Y"){echo $bodycontent['patientDieases']->is_others_diseases;}else{ echo "N";}?>"> -->
                         </div>
                       </div>
 
                       
                  </div>
-                 <?php
+                 <!-- <?php
 
-                 if(($bodycontent['antenantalmode']=="EDIT") && $bodycontent['antenantalCaseEditdata']->is_other_diseases=='Y'){$disp_oth_dis='display:block;';}else{$disp_oth_dis='display:none;';}
+                 if(($bodycontent['patientDieases']=="Y") && $bodycontent['patientDieases']->is_others_diseases=='Y'){$disp_oth_dis='display:block;';}else{$disp_oth_dis='display:none;';}
 
-                 ?>
+                 ?> -->
+                 <?php $disp_oth_dis='display:none;'; ?>
 
-                 <div class="col-sm-2" id="other_diseases_col" style="<?php echo $disp_oth_dis;?>" >
+                 <div class="col-sm-2" id="other_diseases" style="<?php echo $disp_oth_dis;?>" >
                       <div class="input-group" >
                       <label>Others Diseases</label>
                          <div class="form-line">
-                         <input type="text" class="form-control" name="other_diseases" id="other_diseases" autocomplete="off"  placeholder="Others" value="<?php if($bodycontent['antenantalmode']=="EDIT"){ echo $bodycontent['antenantalCaseEditdata']->other_diseases;}?>" > 
+                         <input type="text" class="form-control" name="otherdiseases" id="otherdiseases" autocomplete="off"  placeholder="Others" value="" > 
                         </div> 
                     </div>  
 
                   </div>
+
+                   <<div class="col-sm-3">
+                        <div class="form-group form-float" >
+                         <div class="form-line">
+                            <input type="text" class="form-control" name="diseases_years" id="diseases_years" autocomplete="off" value="">
+                               <label class="form-label selectlabel zindex3">Years Back</label>
+                            </div>
+
+                           </div>
+                         
+                       </div>
+
+
+
+                    <div class="col-sm-2">
+                          <div class="form-group">
+                            <!-- <label class="form-label upText">Action</label>  -->
+                            <div class="icon-button-demo">
+                                <button type="button" class="btn bg-pink waves-effect addMorediseases">
+                                    <i class="material-icons">add</i>
+                                </button>
+                            </div>
+                           </div>
+                      </div>
     
             </div>
+
+            <!-- start Diseases Details -->
+
+             <div class="row clearfix">
+                                      
+            
+
+             <div class="col-sm-8">
+              <div  id="detail_diseases" class="customeTblDesign1" style="#border: 1px solid #e49e9e;">
+                    <div class="table-responsive">
+                           <?php
+                          $diseasesrowno=0;
+                                                   
+
+                          // For Table style Purpose
+                          if($patientDieases=="Y")
+                          {
+                            $style_var = "display:block;width:100%;";
+                          }
+                          else
+                          {
+                            $style_var = "display:none;width:100%;";
+                          }
+                        ?>
+
+                    
+                    <table class="table  no-footer" style="<?php echo $style_var; ?>">
+                        <thead>
+                   <input type="hidden" name="rowno" id="rowno" value="0">      
+                          
+                        </thead>
+                        <tbody>
+
+                            <?php
+
+                if($patientDieases=="Y")
+                {
+                 
+                
+                  foreach($bodycontent['patientDieases'] as $AllpatientDieases) 
+                  {
+
+                    $diseasesrowno++;
+                    $diseasesyear  = $AllpatientDieases->diseases_years;
+
+                    foreach ($bodycontent['diseasesList'] as $value) {
+
+                      if($value->diseases_id == $AllpatientDieases->diseases_id){
+
+                          
+
+                          if($value->diseases_name == 'Others'){
+
+                            $diseasename = $AllpatientDieases->other_diseases;
+
+                          }else{
+                                $diseasename = $value->diseases_name;
+                          }
+
+                      }
+                    }
+
+                     
+                      
+
+                   
+                    
+                ?>
+                
+           <tr id="rowpre_diseases_<?php echo $diseasesrowno; ?>" class="row clearfix" >
+
+     <input type="hidden" name="otherdiseases[]" id="otherdiseases_<?php echo $diseasesrowno; ?>" value="<?php echo $AllpatientDieases->other_diseases; ?>">
+
+    <td style="width:37%;text-align: left;"> 
+                   <input type="hidden" name="diseasesID[]" class="diseasesIDcls" id="diseasesID_<?php echo $diseasesrowno; ?>" value="<?php echo $AllpatientDieases->diseases_id; ?>">   
+                   <?php echo $diseasename;  ?>       
+                      
+    </td>
+
+    <td style="width:55%;text-align: left;"> 
+            <input type="hidden" name="dieseasesYer[]" id="dieseasesYer_<?php echo $diseasesrowno; ?>" value="<?php echo $AllpatientDieases->diseases_years; ?>"> <?php echo $diseasesyear; ?>  
+                      
+                      
+    </td>
+
+     
+
+            <td style="vertical-align: middle;">
+              <?php 
+                  if ($diseasesrowno!=0) {
+                  
+              ?> 
+      <a href="javascript:;" class="delPrediseases" id="deldiseasesRow_<?php echo $diseasesrowno; ?>" title="Delete">
+          <i class="material-icons thmdarkTxtcolor">delete</i>
+            <?php } ?> 
+
+        </a>
+      </td>       
+        
+    
+    </tr>
+
+
+              <?php   
+                  }
+                }
+
+                  ?>
+                    <input type="hidden" name="diseasesrowno" id="diseasesrowno" value="<?php echo $diseasesrowno;?>">      
+                    
+                        </tbody>
+                    </table>
+                        
+                    </div>
+                  
+                    
+                  </div>
+
+
+                </div>
+              </div>
+
+ <!-- End Diseases Details -->
+
+
+
+
+
+
+
+
 
               <div class="row clearfix">
                 <!-- <div class="col-sm-2"> </div>                       -->
@@ -3157,7 +3318,7 @@ border-bottom: 0px solid #fff !important;
                       </div>
                     </div>
                     <!-- new column creted for R/E Notes by anil 23-09-2019 -->
-                     <div class="col-sm-3">
+                     <div class="col-sm-6">
                           <div class="form-group form-float">
                            <div class="form-line ">
                             <input type="text" class="form-control inpinve" name="urine_re_notes" id="urine_re_notes" autocomplete="off" placeholder="" value="<?php
@@ -3167,7 +3328,15 @@ border-bottom: 0px solid #fff !important;
                           </div>
                      </div>
 
-                      <div class="col-sm-3">
+                   
+
+
+               
+               </div>
+               <!-- created new row for Urine C/S by anil 23-09-2019 -->
+
+               <div class="row clearfix formrowgap">
+                  <div class="col-sm-3">
                           <div class="form-group form-float">
                            <div class="form-line ">
                             <input type="text" class="form-control inpinve" name="urine_re_others" id="urine_re_others" autocomplete="off" placeholder="" value="<?php
@@ -3176,13 +3345,6 @@ border-bottom: 0px solid #fff !important;
                            </div>
                           </div>
                      </div>
-
-
-               
-               </div>
-               <!-- created new row for Urine C/S by anil 23-09-2019 -->
-
-               <div class="row clearfix formrowgap">
                    <div class="col-sm-3">
                           <div class="form-group form-float">
                            <div class="form-line">
@@ -3809,7 +3971,15 @@ border-bottom: 0px solid #fff !important;
                          for ($groafi=0; $groafi <=30 ; $groafi++) { 
                             ?>
                          <option value="<?php echo $groafi;?>"
-                         <?php if(($isDatainvestigation=='Y') && $groafi==$bodycontent['investigationLatestData']->growth_afi){echo "selected";}else{echo "";} ?>
+                         <?php if(($isDatainvestigation=='Y') && $bodycontent['investigationLatestData']->growth_afi!=''){
+                          if (($groafi==$bodycontent['investigationLatestData']->growth_afi)) {
+                            echo "selected";
+                          }
+                          
+                        }else{echo "";} 
+
+
+                         ?>
                           ><?php echo $groafi;?></option>
                           <?php     } ?>                                                   
                           </select>                           
@@ -3920,7 +4090,12 @@ border-bottom: 0px solid #fff !important;
                          for ($dropafi=0; $dropafi <=30 ; $dropafi++) { 
                             ?>
                          <option value="<?php echo $dropafi;?>"
-                         <?php if(($isDatainvestigation=='Y') && $dropafi==$bodycontent['investigationLatestData']->doppler_afi){echo "selected";}else{echo "";} ?>
+                         <?php if(($isDatainvestigation=='Y') && $bodycontent['investigationLatestData']->doppler_afi!=''){
+                          if ($dropafi==$bodycontent['investigationLatestData']->doppler_afi) {
+                           echo "selected";
+                          }
+                          
+                          }else{echo "";} ?>
                           ><?php echo $dropafi;?></option>
                           <?php     } ?>                                                   
                           </select>                           
@@ -3957,7 +4132,7 @@ border-bottom: 0px solid #fff !important;
                          <?php 
                          
                          if ($isDatainvestigation=='Y') {
-                         if($bodycontent['investigationLatestData']->doppler_checkbox=='Normal'){ echo "checked";} }else{ echo "checked";}
+                         if($bodycontent['investigationLatestData']->doppler_checkbox=='Normal'){ echo "checked";} }else{ echo "";}
                          ?> 
                           > <label for="doppler_checkbox">Within normal limit</label> &nbsp;&nbsp;
 
@@ -3967,7 +4142,7 @@ border-bottom: 0px solid #fff !important;
                       </div>
                   </div>
 
-                  <div class="col-sm-2">
+                  <div class="col-sm-3">
                           <div class="form-group form-float">
                             <div class="form-line ">
                               <input type="text" class="form-control inpinve" name="umbilical_artery_pi" id="umbilical_artery_pi" autocomplete="off" placeholder="" value="<?php
@@ -4012,7 +4187,7 @@ border-bottom: 0px solid #fff !important;
 
                   <div class="row clearfix formrowgap">
 
-                  <div class="col-sm-3">
+                  <div class="col-sm-6">
                           <div class="form-group form-float">
                            <div class="form-line ">
                             <input type="text" class="form-control inpinve" name="others_investigation" id="others_investigation" autocomplete="off" placeholder="" value="<?php
@@ -4323,7 +4498,7 @@ border-bottom: 0px solid #fff !important;
                       </div>
 
                       <div class="row clearfix" style="#border: 1px solid red;">
-                        <div class="col-sm-3">
+                    <!--     <div class="col-sm-3">
                           <div class="form-group form-float">
                           <div class="input-group">
                             <label class="form-label upText selectlabel zindex3">Dosage</label>
@@ -4340,9 +4515,9 @@ border-bottom: 0px solid #fff !important;
                               </select> 
                             </div>
                           </div>
-                        </div>
+                        </div> -->
 
-                        <div class="col-sm-3">
+                        <!-- <div class="col-sm-3">
 
                           <div class="form-group form-float">
                             <div class="input-group " >
@@ -4361,9 +4536,16 @@ border-bottom: 0px solid #fff !important;
                             </div>
                           </div>
                         
-                        </div>
+                        </div> -->
 
-
+                        <div class="col-sm-6">
+                          <div class="form-group form-float">
+                            <div class="form-line ">
+                              <input type="text" class="form-control selpres" name="othermedinstruction" id="othermedinstruction" autocomplete="off" placeholder="" value="to continue" >
+                              <label class="form-label upText">Other Instruction</label>
+                            </div>
+                          </div>
+                      </div>
 
                       <div class="col-sm-3">
                           <div class="form-group form-float">
@@ -4422,8 +4604,9 @@ border-bottom: 0px solid #fff !important;
                           <th style="width:10%">Category</th>
                           <th style="width:10%">Medicine</th>
                           <th style="width:45%;text-align: center;">Instruction</th>
-                          <th style="width:5%;text-align: center;">Dos.</th>
-                          <th style="width:5%;text-align: center;">Freq.</th>
+                          <th style="width:10%;text-align: center;">Inst. Others</th>
+                          <!-- <th style="width:5%;text-align: center;">Dos.</th>
+                          <th style="width:5%;text-align: center;">Freq.</th> -->
                           <th style="width:5%;text-align: center;">Days</th>
                          
                           <th style="width:5%;align: right;">&nbsp;</th>
@@ -4456,8 +4639,15 @@ border-bottom: 0px solid #fff !important;
              <?php echo $prescriptionmedicine->med_instruction;?>               
       
              </td>
+
+             <td  class="presmedTd"> 
+             
+             <input type="hidden" name="presInstructionothers[]" id="presInstructionothers_<?php echo $rowno; ?>" value="<?php echo $prescriptionmedicine->med_instruction_other;?>">   
+             <?php echo $prescriptionmedicine->med_instruction_other;?>               
+      
+             </td>
             
-            <td class="presmedTd" style="text-align: center;"> 
+            <!-- <td class="presmedTd" style="text-align: center;"> 
              
                <input type="hidden" name="presdosage[]" id="presdosage_<?php echo $presmedrow; ?>" value="<?php echo $prescriptionmedicine->dosage;?>">   
                    <?php echo $prescriptionmedicine->dosage;?>                
@@ -4468,7 +4658,7 @@ border-bottom: 0px solid #fff !important;
                             <input type="hidden" name="presfrequency[]" id="presfrequency_<?php echo $presmedrow; ?>" value="<?php echo $prescriptionmedicine->frequency;?>">   
                                 <?php echo $prescriptionmedicine->frequency;?>                
 
-                            </td> 
+                            </td>  -->
                             <td style="text-align: center;" class="presmedTd"> 
                             
                               <input type="hidden" name="presdays[]" id="presdays_<?php echo $presmedrow; ?>" value="<?php echo $prescriptionmedicine->days;?>">   
@@ -4652,7 +4842,7 @@ border-bottom: 0px solid #fff !important;
                               <div class="input-group" id="prescription_investigationerr">
                                   <label class="form-label selectlabel" style="top:-17px !important;">Investigation</label>
                                   <div id="prescription_investigationdrp">
-                                  <select name="prescription_investigation[]" id="prescription_investigation" class="form-control selpres show-tick"  data-live-search="true" tabindex="-98"  multiple data-selected-text-format="count">
+                                  <select name="prescription_investigation[]" id="prescription_investigation" class="form-control addcss selpres show-tick"  data-live-search="true" tabindex="-98"  multiple data-selected-text-format="count">
                                   
                                   <?php 
 
@@ -4785,7 +4975,7 @@ border-bottom: 0px solid #fff !important;
                                             </div>
                            </div>
 
-                   <div class="col-sm-3">
+                   <!-- <div class="col-sm-3">
                       <div class="form-group form-float">
                      
                       <div class="form-line">
@@ -4794,10 +4984,68 @@ border-bottom: 0px solid #fff !important;
                            <label class="form-label">Next Checkup Date</label>      
                          </div>
                          </div>
-                  </div>
+                  </div> -->
  
                    
                    </div>
+                
+                <div class="row clearfix">
+                  <div class="col-sm-2">
+                    <label>For Appoontment Call : </label>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group form-float">
+                              <div class="input-group" id="weekdayserr">
+                                  <label class="form-label selectlabel" style="top:-17px !important;">Weekdays</label>
+                                  <div id="weekdaysdrp">
+                                  <select name="weekdays" id="weekdays" class="form-control selpres show-tick"  data-live-search="true" tabindex="-98">
+                                  <option value="">&nbsp;</option>
+                                  <?php 
+
+                                  foreach ($bodycontent['DaysList'] as $DaysList) {  ?>
+                                  <option value="<?php echo $DaysList->day_name;?>"
+
+                                    <?php if($isDataprescription=='Y' && $bodycontent['prescriptionLatestData']->prescription_weekdays == $DaysList->day_name){ echo 'selected'; } ?>
+
+                                    ><?php echo $DaysList->day_name;?></option>
+                                    <?php     } ?>
+                                                            
+                                    </select> 
+                                    </div>
+                                </div>
+                          </div>
+                  </div>
+                
+                <div class="col-sm-3">
+                  <div class="form-group form-float">
+                     <div class="form-line">
+                            <input type="text" class="form-control" name="weeksmobile" id="weeksmobile" autocomplete="off"  onKeyUp="numericFilter(this);" maxlength="10" value="<?php if($isDataprescription=='Y'){ echo $bodycontent['prescriptionLatestData']->premobile_no; } ?>" >
+                                  <label class="form-label">Mobile No</label>
+                        </div>
+                  </div>
+                  
+                </div>
+
+                <div class="col-sm-2">
+                  <div class="input-group fromTimeerr" id="fromTimeerr">
+                             <span class="input-group-addon">
+                              <i class="material-icons">access_time</i>
+                               </span>
+                             <div class="form-line">
+                               <input type="text" name="pretimefrom" id="pretimefrom" class="form-control selecttime" placeholder="Ex:11:59 pm" value="<?php if($isDataprescription=='Y'){ echo $bodycontent['prescriptionLatestData']->prescription_time; } ?>">
+                                 </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+                  <button type="button" class="btn bg-deep-purple waves-effect reset_time" style="background-color: #9f0f6e !important;">
+                                  
+                                    <i class="material-icons">cached</i>
+                                </button>
+                </div>
+
+                </div>
+
            <input type="hidden" name="ischangePrescription" id="ischangePrescription" value="N">
                       <br>
                 <div class="row clearfix"><!-- start of save and error row-->
@@ -4911,7 +5159,8 @@ border-bottom: 0px solid #fff !important;
                                       <i class="material-icons">print</i>&nbsp;Print Prescription
                                     </button>  -->
 
-
+                                    <div class="row clearfix">
+                                    <div class="col-sm-6">
                                   
                                     <div class="dropzone dz-clickable">
                                         <div class="dz-message">
@@ -4919,10 +5168,26 @@ border-bottom: 0px solid #fff !important;
                                                 <div class="drag-icon-cph">
                                                     <i class="material-icons">print</i>
                                                 </div>
-                                                <h3>Click to print prescription.</h3>
+                                                <h3>Click to print (Blank Paper)</h3>
                                             </a>
                                         </div>
                                     </div>
+
+                                 </div> 
+                                  <div class="col-sm-6">
+
+                                     <div class="dropzone dz-clickable">
+                                        <div class="dz-message">
+                                            <a href="<?php echo base_url(); ?>patientcase/pre_print_prescription/<?php echo $bodycontent['caseID']; ?>" data-title="Print" target="_blank">  
+                                                <div class="drag-icon-cph">
+                                                    <i class="material-icons">print</i>
+                                                </div>
+                                                <h3>Click to print (Pre Printed Stationery)</h3>
+                                            </a>
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
                             
 
                             
@@ -5021,7 +5286,7 @@ border-bottom: 0px solid #fff !important;
                                          
                                     <tr >
                          
-                                    <td style="width: 10%;"> 
+                                    <td style="width: 12%;"> 
                                           <label>Date</label>
                                           <div class="input-group " >
                                           
@@ -5189,7 +5454,7 @@ border-bottom: 0px solid #fff !important;
                                       
      </td>
 
-     <td style="width: 10%;"> 
+     <td style="width: 12%;"> 
                <label>Appointment</label>
                <div class="input-group " id="cliexm_appointment_dateerr_<?php echo $cliexmrowno; ?>">
               
@@ -5287,14 +5552,100 @@ border-bottom: 0px solid #fff !important;
 
                            </section>
                            
-                           </form>
+                           
                
                            <!-- ============ end of antenantal_left_tab_menu_9_section ========= -->
 
 
-                                    		
 
 
+      <!-- ======= start of antenantal_left_tab_menu_10_section ============ -->
+
+                               <section class="antenantalDataSection patientBlockSection " id="antenantal_left_tab_menu_10_section">
+                            <center class="headingtitile_patient"><h5 class="title_head">&#9733; Diagnosis Summary</h5></center>
+                            <br>
+
+                             <div class="formgap">
+
+                            <div class="row clearfix">
+                              
+
+                               <input type="hidden" name="isDignosisChange" id="isDignosisChange" value="N">
+                                <?php $digno = 1;
+                                 foreach ($bodycontent['diagnosisList'] as $diagnosisList) { ?> 
+
+                                   <?php if($diagnosisList->dignosis_name != 'Others'){ ?> 
+                                    <div class="col-sm-5">       
+                                    <?php }else{ ?>
+                                      <div class="col-sm-3">
+                                      <?php } ?>
+                                      <div class="form-group form-group">
+                                             <div class="input-group">
+                                       <input type="hidden" name="dignosisdetail[]" id="dignosisdetail_<?php echo $digno;?>" value="<?php echo $diagnosisList->id; ?>">                       
+                                      <input type="checkbox" name="dignosissumm[]" id="dignosis_checkbox_<?php echo $digno;?>" class="filled-in chk-col-deep-purple changeValues digdatachg" data-digname = "<?php echo $diagnosisList->dignosis_name; ?>" value="<?php echo $diagnosisList->id; ?>" <?php if ($bodycontent['antenantalmode']=="EDIT"){ if($diagnosisList->is_diagnosis == 'Y'){ echo 'checked'; } } ?>>
+                                           <label for="dignosis_checkbox_<?php echo $digno;?>"><?php echo $diagnosisList->dignosis_name; ?></label> &nbsp;&nbsp;&nbsp;&nbsp;
+                                                 
+                                                 <input type="hidden" name="dignosis_checkvalue[]" id="dignosis_checkvalue_<?php echo $digno;?>" value="<?php if ($bodycontent['antenantalmode']=="EDIT" && $diagnosisList->is_diagnosis != ''){ echo $diagnosisList->is_diagnosis; }else{ echo "N"; } ?>">
+                                              </div>  
+                                      </div>
+                                   </div>
+
+                                   <?php  $diagoth = "display:none;";
+                                   if ($bodycontent['antenantalmode']=="EDIT" && $diagnosisList->is_diagnosis == 'Y' && $diagnosisList->dignosis_name == 'Others'){ 
+                                     
+                                     $diagoth = "display:block;";
+                                   }else{
+
+                                    $diagoth = "display:none;";
+                                   }
+
+                                    ?>
+
+                             <div class="col-sm-4" id="Otherdig_<?php echo $digno; ?>" style="<?php echo  $diagoth; ?>">
+
+                              <div class="form-group form-float">
+                                      <div class="form-line">
+                                             <input type="text" class="form-control digdatachg" name="otherdiagnosis[]" id="otherdiagnosis_<?php echo $digno; ?>" autocomplete="off" value=" <?php if ($bodycontent['antenantalmode']=="EDIT"){ echo $diagnosisList->otherdiagnosis; } ?>" >
+                                                <label class="form-label">Other Diagnosis</label>
+                                            </div>
+                                    </div>
+                              
+                            </div>
+                                 
+                                <?php $digno++; } ?>
+
+                              
+                              
+
+                            </div>
+                            
+
+                      
+                         </div>
+                         
+    <!-- ------------------------------------------------------------------------------------------------------ -->
+
+                              <br>
+                                          <div class="row clearfix"><!-- start of save and error row-->
+                                        <div class="col-sm-2"> </div>
+                                        <div class="col-sm-6">
+                                        <p id="antenatelmsg" class="form_error"></p>
+                                        </div>
+                                        <div class="col-sm-2">
+                                                            
+                                          <button type="submit" class="btn bg-pink waves-effect antenatelbasicsavebtn"><?php echo $bodycontent['antenantalbtnText']; ?></button> 
+
+                                          <span class="btn bg-pink waves-effect loaderbtn" id="loaderbtn" style="display:none;"> <?php echo $bodycontent['antenantalbtnTextLoader']; ?></span>
+                                                                  
+                                        </div>
+                                        </div><!-- start of save and error row-->
+                            <br>
+
+                           </section>
+                           
+                          
+                 </form>
+                           <!-- ============ end of antenantal_left_tab_menu_10_section ========= -->
 
                                     	</div><!-- start of right side content-->
                                     	
@@ -5314,23 +5665,17 @@ border-bottom: 0px solid #fff !important;
 
 
 <!-- ======================================= start of preopbtn_section ============================================== -->
-          <section class="treatmentsection" id="preopbtn_section">
 
-                  <!-- <center><h3> Pre Operation Section </h3></center> -->
-                  
-                  <div class="dropzone dz-clickable">
-                        <div class="dz-message">
-                            <div class="drag-icon-cph">
-                              <i class="material-icons thmTxtcolor2">pregnant_woman</i>
-                            </div>
-                            <h3 class="txtColorGrey">Pre Operation Section</h3>
-                            <em class="txtColorGrey">(Upcoming section)</em>
-                        </div>
-                  </div>
+<div style="text-align: center;padding: 56px;display: none;" id="preoploderbtn">
+    <img src="<?php echo base_url(); ?>assets/images/verify_logo.gif" style="width: 5%;">
+  </div>
+   <section class="treatmentsection" id="preopbtn_section">
 
 
+   </section>
 
-          </section>
+<!-- <div id="preopsection"> </div> -->
+
 
 <!-- ======================================= end of preopbtn_section ============================================== -->
 
@@ -5360,21 +5705,15 @@ border-bottom: 0px solid #fff !important;
 
 
 <!-- ======================================= start of dischargebtn_section ============================================== -->
-          <section class="treatmentsection" id="dischargebtn_section">
+ <section class="treatmentsection" id="dischargebtn_section">
+  
+  </section>
+        <!-- <div id="dischargesec">
 
-                  <!-- <center><h3> Discharge section </h3></center> -->
-                  <div class="dropzone dz-clickable">
-                        <div class="dz-message">
-                            <div class="drag-icon-cph">
-                              <i class="material-icons thmTxtcolor2">local_hotel</i>
-                            </div>
-                            <h3 class="txtColorGrey">Discharge Section</h3>
-                            <em class="txtColorGrey">(Upcoming section)</em>
-                        </div>
-                  </div>
 
-          	</section>
-
+          
+        </div>
+ -->
 <!-- ======================================= end of dischargebtn_section ============================================== -->
 
 

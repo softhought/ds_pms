@@ -135,12 +135,12 @@ $("#newcasebtn").addClass("bg-teal");
                         $("#cls_response_msg").text(result.msg_data);
                     }
                     
-                    $("#loaderbtn").css('display', 'none');
+                    // $("#loaderbtn").css('display', 'none');
                     
-                    $("#caseregsavebtn").css({
-                        "display": "block",
-                        "margin": "0 auto"
-                    });
+                    // $("#caseregsavebtn").css({
+                    //     "display": "block",
+                    //     "margin": "0 auto"
+                    // });
                   
                 }, 
                 error: function (jqXHR, exception) {
@@ -275,7 +275,7 @@ $("#newcasebtn").addClass("bg-teal");
 
             var formData = { formDatas: formDataserialize };
             $("#extpcaseregsavebtn").css('display', 'none');
-            $("#loaderbtn").css('display', 'block');
+            $("#extploaderbtn").css('display', 'block');
         
 
             //console.log(formData);
@@ -301,12 +301,12 @@ $("#newcasebtn").addClass("bg-teal");
                         $("#cls_response_msg").text(result.msg_data);
                     }
                     
-                    $("#loaderbtn").css('display', 'none');
+                    // $("#loaderbtn").css('display', 'none');
                     
-                    $("#extpcaseregsavebtn").css({
-                        "display": "block",
-                        "margin": "0 auto"
-                    });
+                    // $("#extpcaseregsavebtn").css({
+                    //     "display": "block",
+                    //     "margin": "0 auto"
+                    // });
                   
                 }, 
                 error: function (jqXHR, exception) {

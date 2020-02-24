@@ -578,9 +578,10 @@ class Patientcasemodel extends CI_Model{
       $where = [
                 "prescription_medicine_dtl.prescription_mst_id" => $prescription_id
             ];
-            $query = $this->db->select("prescription_medicine_dtl.*,medicine_master.medicine_name,medicine_category.category,medicine_category.med_cat_id")
+            $query = $this->db->select("prescription_medicine_dtl.*,medicine_master.medicine_name,medicine_category.category,medicine_category.med_cat_id,medicine_type.medicine_type,medicine_type.medicine_shortype")
                     ->from('prescription_medicine_dtl')
                     ->join('medicine_master','medicine_master.medicine_id = prescription_medicine_dtl.medicine_id','LEFT')
+                    ->join('medicine_type','medicine_type.medicine_type_id = medicine_master.medicine_type','LEFT')
                     ->join('medicine_category','medicine_category.med_cat_id=medicine_master.category_id','LEFT')
                     ->where($where)
                     ->get();
@@ -686,7 +687,7 @@ class Patientcasemodel extends CI_Model{
 
     public function getLastChildBirthByCase($case_master_id)
     {
-
+        $delevery_type = array('CS', 'ND');
         $data = [];
         $where = array(
                         'previous_child_birth_history.case_master_id' =>$case_master_id
@@ -695,12 +696,13 @@ class Patientcasemodel extends CI_Model{
         $this->db->select("*")
                 ->from('previous_child_birth_history')
                 ->where($where)
-                ->where('previous_child_birth_history.babyage >','0')
+               // ->where('previous_child_birth_history.babyage >','0')
+                ->where_in('delevery_type', $delevery_type )
                 ->order_by("previous_child_birth_history.child_dtl_id", "DESC")
                 ->limit(1);
         $query = $this->db->get();
         
-        #echo $this->db->last_query();
+    #echo $this->db->last_query();
         
         if($query->num_rows()> 0)
         {
@@ -725,9 +727,9 @@ class Patientcasemodel extends CI_Model{
                     ->from('previous_child_birth_history')
                     ->join('gender_master','previous_child_birth_history.babygender = gender_master.id','INEER')
                     ->where($where)
-                    ->order_by("previous_child_birth_history.child_dtl_id", "DESC")
+                    ->order_by("previous_child_birth_history.year", "asc")
                     ->get();
-                
+                 #echo $this->db->last_query();
                 if($query->num_rows()> 0)
                 {
                   
@@ -1110,7 +1112,8 @@ class Patientcasemodel extends CI_Model{
         $data = array();
         $this->db->select("*")
                 ->from('investigation_component')
-                ->where_not_in('investigation_comp_id',$ignorarray);
+                ->where_not_in('investigation_comp_id',$ignorarray)
+                ->order_by('inv_component_name');
         $query = $this->db->get();
         #echo $this->db->last_query();
 
@@ -1313,6 +1316,37 @@ public function getInvestigationpanelComponentWhereNotIn($ignorarray)
         }
     }
 
+
+    public function getLastSectionEvacatuionByCase($case_master_id)
+    {
+        $delevery_type = array('SE');
+        $data = [];
+        $where = array(
+                        'previous_child_birth_history.case_master_id' =>$case_master_id
+
+                        );
+        $this->db->select("*")
+                ->from('previous_child_birth_history')
+                ->where($where)
+                ->where_in('delevery_type', $delevery_type )
+                ->order_by("previous_child_birth_history.year", "DESC")
+                ->limit(1);
+        $query = $this->db->get();
+        
+   # echo $this->db->last_query();
+        
+        if($query->num_rows()> 0)
+        {
+           $row = $query->row();
+           return $data = $row;
+             
+        }
+        else
+        {
+            return $data;
+        }
+    }
+
  public function getTotalNdByCase($case_master_id)
     {
 
@@ -1345,10 +1379,12 @@ public function getInvestigationpanelComponentWhereNotIn($ignorarray)
  public function getAlloccupation(){
 
      $data = [];
+     $where = array('is_active' => 'Y' );
 
      $this->db->select("*")
                 ->from('occupation_master')
-                ->order_by('occupation'); 
+                ->where($where)
+                ->order_by("occupation", "asc"); 
         $query = $this->db->get();
         
         //echo $this->db->last_query();
@@ -1372,10 +1408,12 @@ public function getInvestigationpanelComponentWhereNotIn($ignorarray)
  public function getAlleducation(){
 
      $data = [];
+     $where = array('is_active' => 'Y' );
 
      $this->db->select("*")
                 ->from('education_qualification')
-                ->order_by('qualification'); 
+                ->where($where)
+                ->order_by("qualification", "asc"); 
         $query = $this->db->get();
         
         //echo $this->db->last_query();
@@ -1394,6 +1432,64 @@ public function getInvestigationpanelComponentWhereNotIn($ignorarray)
         }
 
  }   
+
+ public function getAlldiseasebycaseId($caseId){
+
+     $data = [];
+     $where = array('case_master_id' => $caseId );
+
+     $this->db->select("patient_dieases.*,diseases_master.diseases_name")
+                ->from('patient_dieases')
+                ->join('diseases_master','patient_dieases.diseases_id = diseases_master.diseases_id','INNER')
+                ->where($where);
+                
+        $query = $this->db->get();
+        
+        //echo $this->db->last_query();
+        
+        if($query->num_rows()> 0)
+        {
+           foreach ($query->result() as $rows)
+                    {
+                        $data[] = $rows;
+                    }
+             return $data;
+        }
+        else
+        {
+            return $data;
+        }
+
+ }   
+
+
+ public function getDiagnosisDetails($case_master_id)
+    {
+     $data = [];
+     
+            $query = $this->db->select("*")
+                    ->from('diagnosis_master')
+                    ->join('diagnosis_details',"diagnosis_master.id=diagnosis_details.diagnosis_master_id and diagnosis_details.case_master_id='".$case_master_id."'",'LEFT')
+                    ->get();
+                #q();
+                if($query->num_rows()> 0)
+                {
+                  
+                       
+                    foreach ($query->result() as $rows)
+                    {
+                        $data[] = $rows;
+                    }
+                    return $data;
+                  
+                     
+                }
+                
+                return $data;
+    
+    }
+
+
 
      //end by anil
 

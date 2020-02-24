@@ -2,6 +2,7 @@
     
 
     <tr id="rowplanned_surgery_<?php echo $surgeryplannedrowno; ?>" class="row clearfix" >
+    	<input type="hidden" name="othersurgeryplan[]" id="othersurgeryplan_<?php echo $surgeryplannedrowno; ?>" value="<?php echo $othersurgeryplanned; ?>">
     
     <td style="width:37%;text-align: left;"> 
 						       <input type="hidden" name="surgeryplaID[]" class="SurgeryPlannedIDcls" id="surgeryplaID_<?php echo $surgeryplannedrowno; ?>" value="<?php echo $surgeryID;?>">   
@@ -10,7 +11,7 @@
     </td>
 
     <td style="width:55%;text-align: left;"> 
-						       <input type="hidden" name="surgeryPladate[]" id="surgeryPladate_<?php echo $surgeryplannedrowno; ?>" value="<?php if($surgery_planned_date != ''){ echo date('Y-m-d',strtotime($surgery_planned_date)); } else{ echo '*'; } ?>">   
+						       <input type="hidden" name="surgeryPladate[]" id="surgeryPladate_<?php echo $surgeryplannedrowno; ?>" value="<?php if($surgery_planned_date != ''){ echo date('Y-m-d',strtotime($surgery_planned_date)); }  ?>">   
                    <?php if($surgery_planned_date != ''){  echo date('l d M Y',strtotime($surgery_planned_date)); } ?>       
 							        
     </td>

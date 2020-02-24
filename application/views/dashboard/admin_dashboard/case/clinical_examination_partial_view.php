@@ -23,7 +23,7 @@ table.gridtable
 
 
      <!-- <td> <b>Sl.</b><label class="form-label" style="margin-top: 12px;" > <?php echo $cliexmrowno; ?>.</label></td> -->
-     <td style="width: 10%;"> 
+     <td style="width: 12%;"> 
                <label>Date</label>
                <div class="input-group examination_dateerr" id="examination_dateerr_<?php echo $cliexmrowno; ?>">
               
@@ -189,7 +189,7 @@ table.gridtable
                                       
      </td>
 
-     <td style="width: 10%;"> 
+     <td style="width: 12%;"> 
                <label>Appointment</label>
                <div class="input-group " id="cliexm_appointment_dateerr_<?php echo $cliexmrowno; ?>">
               
